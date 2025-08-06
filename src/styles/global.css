@@ -1,7 +1,43 @@
 @import 'tailwindcss';
 
+@theme {
+  /* Colores principales usando la nueva sintaxis de Tailwind v4 */
+  --color-primary: #3b82f6; /* Azul vibrante */
+  --color-primary-foreground: #f8fafc;
+
+  --color-secondary: #f1f5f9; /* Gris claro */
+  --color-secondary-foreground: #0f172a;
+
+  --color-destructive: #ef4444; /* Rojo intenso */
+  --color-destructive-foreground: #f8fafc;
+
+  --color-muted: #f1f5f9;
+  --color-muted-foreground: #64748b;
+
+  --color-accent: #f1f5f9;
+  --color-accent-foreground: #0f172a;
+
+  /* Colores de fondo y texto */
+  --color-background: #ffffff;
+  --color-foreground: #0f172a;
+  --color-card: #ffffff;
+  --color-card-foreground: #0f172a;
+  --color-popover: #ffffff;
+  --color-popover-foreground: #0f172a;
+
+  /* Bordes y elementos de UI */
+  --color-border: #e2e8f0;
+  --color-input: #e2e8f0;
+  --color-ring: #3b82f6;
+
+  /* Radio de border */
+  --radius: 0.5rem;
+}
+
+/* Variables CSS compatibles con shadcn/ui para backward compatibility */
 @layer base {
   :root {
+    /* Mapeo de las nuevas variables a formato HSL para shadcn/ui */
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
     --card: 0 0% 100%;
@@ -12,16 +48,15 @@
     --primary-foreground: 210 40% 98%;
     --secondary: 210 40% 96%;
     --secondary-foreground: 222.2 84% 4.9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
     --muted: 210 40% 96%;
     --muted-foreground: 215.4 16.3% 46.9%;
     --accent: 210 40% 96%;
     --accent-foreground: 222.2 84% 4.9%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
     --ring: 221.2 83.2% 53.3%;
-    --radius: 0.5rem;
   }
 
   .dark {
@@ -35,15 +70,25 @@
     --primary-foreground: 222.2 84% 4.9%;
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 50.6%;
+    --destructive-foreground: 210 40% 98%;
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
     --accent: 217.2 32.6% 17.5%;
     --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 224.3 76.3% 94.1%;
+
+    /* Actualizar variables Tailwind v4 para tema oscuro */
+    --color-background: #0f172a;
+    --color-foreground: #f8fafc;
+    --color-primary: #60a5fa;
+    --color-primary-foreground: #0f172a;
+    --color-secondary: #334155;
+    --color-secondary-foreground: #f8fafc;
+    --color-destructive: #f87171;
+    --color-destructive-foreground: #f8fafc;
   }
 
   * {
@@ -54,16 +99,17 @@
   body {
     background-color: hsl(var(--background));
     color: hsl(var(--foreground));
-  }
-}
-
-@layer base {
-  :root {
-    --color-primary: #3b82f6;
-  }
-
-  * {
-    box-sizing: border-box;
+    font-family:
+      ui-sans-serif,
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      'Segoe UI',
+      Roboto,
+      'Helvetica Neue',
+      Arial,
+      'Noto Sans',
+      sans-serif;
   }
 }
 

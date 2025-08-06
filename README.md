@@ -45,7 +45,20 @@ Todas las props personalizadas de la librería usan el prefijo `$` para evitar c
 - `$size` - Tamaño del componente
 - `$custom` - Clases personalizadas de Tailwind CSS
 
-## 🧩 Componentes Disponibles
+## 🎨 Personalización de Colores
+
+La librería utiliza un sistema de variables CSS que permite personalizar completamente los colores desde tu proyecto Next.js:
+
+```css
+/* En tu globals.css */
+:root {
+  --primary: 142 76% 36%; /* Verde corporativo */
+  --secondary: 24 9.8% 10%; /* Gris oscuro */
+  --destructive: 0 84.2% 60.2%; /* Rojo de alerta */
+}
+```
+
+**📖 [Ver Guía Completa de Personalización](./CUSTOMIZATION.md)** - Incluye ejemplos, paletas predefinidas y mejores prácticas.## 🧩 Componentes Disponibles
 
 ### Button
 

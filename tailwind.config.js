@@ -3,6 +3,8 @@ module.exports = {
   content: ['./src/**/*.{js,ts,jsx,tsx}', './.storybook/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
+      // Las variables de Tailwind v4 se mapean automáticamente
+      // Solo mantenemos las variables HSL para compatibilidad con shadcn/ui
       colors: {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',

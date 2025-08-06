@@ -173,6 +173,126 @@ export const WithShadows: Story = {
     },
   },
 };
+
+export const VisualDifferences: Story = {
+  render: () => (
+    <div className="p-8 space-y-8 bg-gray-50 min-h-screen">
+      <div className="bg-white p-6 rounded-lg shadow-sm border">
+        <h2 className="text-2xl font-bold mb-6 text-gray-900">
+          Diferencias Visuales de Variantes
+        </h2>
+
+        <div className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-3">
+              <h3 className="font-semibold text-lg text-gray-700">
+                Default (Primary)
+              </h3>
+              <Button $variant="default" className="w-full">
+                Botón Principal - Azul Vibrante
+              </Button>
+              <p className="text-sm text-gray-600">
+                Usa{' '}
+                <code className="bg-gray-100 px-2 py-1 rounded">
+                  bg-primary
+                </code>{' '}
+                - Color principal del sistema (azul)
+              </p>
+            </div>
+
+            <div className="space-y-3">
+              <h3 className="font-semibold text-lg text-gray-700">Secondary</h3>
+              <Button $variant="secondary" className="w-full">
+                Botón Secundario - Gris Claro
+              </Button>
+              <p className="text-sm text-gray-600">
+                Usa{' '}
+                <code className="bg-gray-100 px-2 py-1 rounded">
+                  bg-secondary
+                </code>{' '}
+                - Gris neutro para acciones secundarias
+              </p>
+            </div>
+
+            <div className="space-y-3">
+              <h3 className="font-semibold text-lg text-gray-700">
+                Destructive
+              </h3>
+              <Button $variant="destructive" className="w-full">
+                Botón Destructivo - Rojo
+              </Button>
+              <p className="text-sm text-gray-600">
+                Usa{' '}
+                <code className="bg-gray-100 px-2 py-1 rounded">
+                  bg-destructive
+                </code>{' '}
+                - Rojo para acciones peligrosas
+              </p>
+            </div>
+
+            <div className="space-y-3">
+              <h3 className="font-semibold text-lg text-gray-700">Outline</h3>
+              <Button $variant="outline" className="w-full">
+                Botón con Borde
+              </Button>
+              <p className="text-sm text-gray-600">
+                Fondo transparente con{' '}
+                <code className="bg-gray-100 px-2 py-1 rounded">border</code> -
+                Para acciones suaves
+              </p>
+            </div>
+
+            <div className="space-y-3">
+              <h3 className="font-semibold text-lg text-gray-700">Ghost</h3>
+              <Button $variant="ghost" className="w-full">
+                Botón Fantasma
+              </Button>
+              <p className="text-sm text-gray-600">
+                Sin fondo, hover sutil - Para navegación y acciones discretas
+              </p>
+            </div>
+
+            <div className="space-y-3">
+              <h3 className="font-semibold text-lg text-gray-700">Link</h3>
+              <Button $variant="link" className="w-full">
+                Botón como Enlace
+              </Button>
+              <p className="text-sm text-gray-600">
+                Estilo de enlace con{' '}
+                <code className="bg-gray-100 px-2 py-1 rounded">underline</code>{' '}
+                - Para navegación
+              </p>
+            </div>
+          </div>
+
+          <div className="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-400">
+            <h4 className="font-semibold text-blue-900 mb-2">
+              💡 Personalización de Colores
+            </h4>
+            <p className="text-blue-800 text-sm">
+              Los colores se basan en variables CSS que pueden ser
+              personalizadas por el proyecto consumidor. Modifica las variables{' '}
+              <code>--primary</code>, <code>--secondary</code>,{' '}
+              <code>--destructive</code>
+              en el CSS global de tu aplicación Next.js para cambiar la paleta
+              de colores.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  ),
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        story:
+          'Vista detallada de las diferencias visuales entre todas las variantes de botón con explicaciones sobre su uso y personalización.',
+      },
+    },
+  },
+};
+
 export const CustomBackgrounds: Story = {
   render: () => (
     <div className="flex flex-wrap gap-4 p-4">
@@ -198,6 +318,105 @@ export const CustomBackgrounds: Story = {
       description: {
         story:
           'Ejemplos de cómo usar $custom para sobrescribir completamente los estilos de fondo y color.',
+      },
+    },
+  },
+};
+
+export const TailwindV4Colors: Story = {
+  render: () => (
+    <div className="p-8 space-y-8 bg-gray-50">
+      <div className="bg-white p-6 rounded-lg shadow-sm border">
+        <h2 className="text-2xl font-bold mb-6 text-gray-900">
+          Tailwind v4 - Colores Nativos
+        </h2>
+
+        <div className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-3">
+              <h3 className="font-semibold text-lg">Variables CSS Nativas</h3>
+              <p className="text-sm text-gray-600 mb-4">
+                Estos botones usan{' '}
+                <code className="bg-gray-100 px-2 py-1 rounded">
+                  bg-primary
+                </code>
+                ,{' '}
+                <code className="bg-gray-100 px-2 py-1 rounded">
+                  bg-secondary
+                </code>
+                , etc. directamente desde las variables de Tailwind v4
+              </p>
+              <div className="space-y-2">
+                <Button $variant="default" className="w-full">
+                  bg-primary nativo
+                </Button>
+                <Button $variant="secondary" className="w-full">
+                  bg-secondary nativo
+                </Button>
+                <Button $variant="destructive" className="w-full">
+                  bg-destructive nativo
+                </Button>
+                <Button $variant="outline" className="w-full">
+                  border nativo
+                </Button>
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              <h3 className="font-semibold text-lg">
+                Variables CSS Personalizadas
+              </h3>
+              <p className="text-sm text-gray-600 mb-4">
+                Estos usan{' '}
+                <code className="bg-gray-100 px-2 py-1 rounded">$custom</code>{' '}
+                con clases de Tailwind v4
+              </p>
+              <div className="space-y-2">
+                <Button
+                  $custom="bg-blue-500 text-white hover:bg-blue-600"
+                  className="w-full">
+                  bg-blue-500 (Tailwind v4)
+                </Button>
+                <Button
+                  $custom="bg-green-500 text-white hover:bg-green-600"
+                  className="w-full">
+                  bg-green-500 (Tailwind v4)
+                </Button>
+                <Button
+                  $custom="bg-purple-500 text-white hover:bg-purple-600"
+                  className="w-full">
+                  bg-purple-500 (Tailwind v4)
+                </Button>
+                <Button
+                  $custom="bg-red-500 text-white hover:bg-red-600"
+                  className="w-full">
+                  bg-red-500 (Tailwind v4)
+                </Button>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-400">
+            <h4 className="font-semibold text-blue-900 mb-2">
+              🆕 Tailwind v4 Compatibility
+            </h4>
+            <p className="text-blue-800 text-sm">
+              Esta librería es compatible con Tailwind CSS v4. Las variables se
+              definen usando <code>@theme</code>y se mapean automáticamente a
+              clases como <code>bg-primary</code>, <code>text-primary</code>,
+              etc.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  ),
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        story:
+          'Demuestra la compatibilidad con Tailwind CSS v4 y cómo las variables CSS se mapean automáticamente.',
       },
     },
   },

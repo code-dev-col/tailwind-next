@@ -1,0 +1,72 @@
+import { BaseProps } from '@/types';
+import React from 'react';
+import { cn } from '@/utils/cn';
+
+export type ButtonVariant =
+  | 'default'
+  | 'destructive'
+  | 'outline'
+  | 'secondary'
+  | 'ghost'
+  | 'link';
+
+export type ButtonSize = 'default' | 'sm' | 'lg' | 'icon';
+
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+    BaseProps {
+  $variant?: ButtonVariant;
+  $size?: ButtonSize;
+  $asChild?: boolean;
+}
+
+const buttonVariants = {
+  variant: {
+    default: 'bg-primary text-primary-foreground hover:bg-primary/90',
+    destructive:
+      'bg-destructive text-destructive-foreground hover:bg-destructive/90',
+    outline:
+      'border border-input bg-background hover:bg-accent hover:text-accent-foreground',
+    secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
+    ghost: 'hover:bg-accent hover:text-accent-foreground',
+    link: 'text-primary underline-offset-4 hover:underline',
+  },
+  size: {
+    default: 'h-10 px-4 py-2',
+    sm: 'h-9 rounded-md px-3',
+    lg: 'h-11 rounded-md px-8',
+    icon: 'h-10 w-10',
+  },
+};
+
+export function Button({
+  className = '',
+  $variant = 'default',
+  $size = 'default',
+  children,
+  $custom,
+  ...props
+}: ButtonProps) {
+  const baseClasses =
+    'inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 shadow-sm';
+
+  const variantClasses = buttonVariants.variant[$variant];
+  const sizeClasses = buttonVariants.size[$size];
+
+  // Si hay $custom, le damos prioridad sobre las variantes
+  const combinedClasses = $custom
+    ? cn(
+        baseClasses,
+        sizeClasses, // Mantenemos el tamaño
+        className,
+        $custom // $custom sobrescribe las variantes
+      )
+    : cn(baseClasses, variantClasses, sizeClasses, className);
+
+  return (
+    <button className={combinedClasses} {...props}>
+      {children}
+    </button>
+  );
+}
+

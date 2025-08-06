@@ -1,0 +1,14 @@
+# ignore storybook
+/.storybook
+
+# ignore .vscode
+/.vscode
+
+#ignore node_modules
+/node_modules
+
+# ignore build output
+/dist
+
+# ignore logs
+*.log

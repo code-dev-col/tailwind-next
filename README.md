@@ -206,4 +206,3 @@ El sistema de estilos funciona con la siguiente prioridad:
 ## 📄 Licencia
 
 MIT
-

@@ -58,7 +58,13 @@ La librería utiliza un sistema de variables CSS que permite personalizar comple
 }
 ```
 
-**📖 [Ver Guía Completa de Personalización](./CUSTOMIZATION.md)** - Incluye ejemplos, paletas predefinidas y mejores prácticas.## 🧩 Componentes Disponibles
+**📖 [Ver Guía Completa de Personalización](./CUSTOMIZATION.md)** - Incluye ejemplos, paletas predefinidas y mejores prácticas.
+
+## 📋 Documentación para Desarrolladores
+
+- **[📋 Guía de Desarrollo](./DEVELOPMENT_GUIDE.md)** - Estándares, patrones y checklist obligatorio
+- **[🎨 Patrones de Degradados](./GRADIENTS_GUIDE.md)** - Biblioteca de degradados y mejores prácticas
+- **[🎨 Personalización](./CUSTOMIZATION.md)** - Cómo personalizar colores en tu proyecto## 🧩 Componentes Disponibles
 
 ### Button
 

@@ -493,3 +493,113 @@ export const AllVariantsShowcase: Story = {
   },
 };
 
+export const GradientUtilities: Story = {
+  render: () => (
+    <div className="p-8 space-y-8 bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen">
+      <div className="bg-white p-6 rounded-lg shadow-sm border">
+        <h2 className="text-2xl font-bold mb-6 text-gray-900">
+          🎨 Utilidades de Degradados
+        </h2>
+
+        <div className="space-y-8">
+          {/* Degradados de Estado */}
+          <div>
+            <h3 className="text-lg font-semibold mb-4">Degradados de Estado</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <Button $custom="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white">
+                Primary Gradient
+              </Button>
+              <Button $custom="bg-gradient-to-r from-green-400 to-blue-500 hover:from-green-500 hover:to-blue-600 text-white">
+                Success Gradient
+              </Button>
+              <Button $custom="bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white">
+                Danger Gradient
+              </Button>
+            </div>
+          </div>
+
+          {/* Degradados Corporativos */}
+          <div>
+            <h3 className="text-lg font-semibold mb-4">
+              Degradados Corporativos
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <Button $custom="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white">
+                Corporate Blue
+              </Button>
+              <Button $custom="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white">
+                Corporate Green
+              </Button>
+              <Button $custom="bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-700 hover:to-violet-700 text-white">
+                Corporate Purple
+              </Button>
+            </div>
+          </div>
+
+          {/* Degradados Modernos */}
+          <div>
+            <h3 className="text-lg font-semibold mb-4">Degradados Modernos</h3>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+              <Button $custom="bg-gradient-to-r from-orange-400 to-pink-400 hover:from-orange-500 hover:to-pink-500 text-white">
+                Sunset
+              </Button>
+              <Button $custom="bg-gradient-to-r from-cyan-400 to-blue-400 hover:from-cyan-500 hover:to-blue-500 text-white">
+                Ocean
+              </Button>
+              <Button $custom="bg-gradient-to-r from-green-500 to-teal-500 hover:from-green-600 hover:to-teal-600 text-white">
+                Forest
+              </Button>
+              <Button $custom="bg-gradient-to-r from-purple-400 via-pink-400 to-red-400 hover:from-purple-500 hover:via-pink-500 hover:to-red-500 text-white">
+                Aurora
+              </Button>
+            </div>
+          </div>
+
+          {/* Efectos Especiales */}
+          <div>
+            <h3 className="text-lg font-semibold mb-4">Efectos Especiales</h3>
+            <div className="relative bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 p-8 rounded-lg">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <Button $custom="bg-gradient-to-br from-white/20 to-white/5 backdrop-blur-sm text-white border border-white/20 hover:bg-white/10">
+                  Glass Effect
+                </Button>
+                <Button $custom="bg-gradient-to-br from-black/20 to-black/5 backdrop-blur-sm text-white border border-white/20 hover:bg-black/10">
+                  Dark Glass
+                </Button>
+              </div>
+              <p className="text-white/80 text-sm mt-4 text-center">
+                Efectos de vidrio con backdrop-blur para elementos modernos
+              </p>
+            </div>
+          </div>
+
+          <div className="bg-gradient-to-r from-indigo-50 to-purple-50 p-6 rounded-lg border-l-4 border-indigo-400">
+            <h4 className="font-semibold text-indigo-900 mb-2">
+              🎯 Cómo usar las utilidades
+            </h4>
+            <pre className="text-indigo-800 text-sm bg-indigo-100 p-3 rounded overflow-x-auto">
+              {`import { gradients, useGradient } from 'tailwind-next';
+
+// Usando la utilidad
+<Button $custom={gradients.primary}>Primary Button</Button>
+
+// Con hook
+const gradient = useGradient('sunset');
+<Button $custom={gradient}>Sunset Button</Button>`}
+            </pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  ),
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        story:
+          'Demuestra el uso de las utilidades de degradados incluidas en la librería para crear efectos visuales modernos y consistentes.',
+      },
+    },
+  },
+};
+

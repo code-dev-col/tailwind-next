@@ -1,9 +1,21 @@
 import React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
+import {
+  FaDownload,
+  FaPlus,
+  FaArrowRight,
+  FaArrowLeft,
+  FaHeart,
+  FaStar,
+  FaCheck,
+  FaTimes,
+  FaHome,
+  FaUser,
+} from 'react-icons/fa';
 import { Button, ButtonProps } from './Button';
 
 const meta: Meta<typeof Button> = {
-  title: 'Components/Button',
+  title: 'Atoms/Button',
   component: Button,
   parameters: {
     layout: 'centered',
@@ -598,6 +610,123 @@ const gradient = useGradient('sunset');
       description: {
         story:
           'Demuestra el uso de las utilidades de degradados incluidas en la librería para crear efectos visuales modernos y consistentes.',
+      },
+    },
+  },
+};
+
+export const WithIcons: Story = {
+  render: () => (
+    <div className="p-8 space-y-8">
+      <div>
+        <h2 className="text-2xl font-bold mb-4">Buttons with Left Icons</h2>
+        <div className="flex flex-wrap gap-4">
+          <Button $iconLeft={FaPlus}>Add Item</Button>
+          <Button $iconLeft={FaDownload} $variant="secondary">
+            Download
+          </Button>
+          <Button $iconLeft={FaCheck} $variant="destructive">
+            Confirm Delete
+          </Button>
+          <Button $iconLeft={FaHeart} $variant="outline">
+            Like
+          </Button>
+          <Button $iconLeft={FaHome} $variant="ghost">
+            Home
+          </Button>
+        </div>
+      </div>
+
+      <div>
+        <h2 className="text-2xl font-bold mb-4">Buttons with Right Icons</h2>
+        <div className="flex flex-wrap gap-4">
+          <Button $iconRight={FaArrowRight}>Continue</Button>
+          <Button $iconRight={FaArrowRight} $variant="secondary">
+            Next Step
+          </Button>
+          <Button $iconRight={FaTimes} $variant="destructive">
+            Cancel
+          </Button>
+          <Button $iconRight={FaUser} $variant="outline">
+            Profile
+          </Button>
+        </div>
+      </div>
+
+      <div>
+        <h2 className="text-2xl font-bold mb-4">Icon Only Buttons</h2>
+        <div className="flex flex-wrap gap-4">
+          <Button $iconLeft={FaPlus} $size="icon" aria-label="Add" />
+          <Button
+            $iconLeft={FaDownload}
+            $size="icon"
+            $variant="secondary"
+            aria-label="Download"
+          />
+          <Button
+            $iconLeft={FaCheck}
+            $size="icon"
+            $variant="destructive"
+            aria-label="Confirm"
+          />
+          <Button
+            $iconLeft={FaHeart}
+            $size="icon"
+            $variant="outline"
+            aria-label="Like"
+          />
+          <Button
+            $iconLeft={FaHome}
+            $size="icon"
+            $variant="ghost"
+            aria-label="Home"
+          />
+        </div>
+      </div>
+
+      <div>
+        <h2 className="text-2xl font-bold mb-4">Different Sizes with Icons</h2>
+        <div className="flex flex-wrap items-center gap-4">
+          <Button $iconLeft={FaStar} $size="sm">
+            Small
+          </Button>
+          <Button $iconLeft={FaStar}>Default</Button>
+          <Button $iconLeft={FaStar} $size="lg">
+            Large
+          </Button>
+        </div>
+      </div>
+
+      <div>
+        <h2 className="text-2xl font-bold mb-4">
+          Custom Gradient Buttons with Icons
+        </h2>
+        <div className="flex flex-wrap gap-4">
+          <Button
+            $iconLeft={FaDownload}
+            $custom="bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:from-blue-600 hover:to-purple-700">
+            Download
+          </Button>
+          <Button
+            $iconRight={FaArrowRight}
+            $custom="bg-gradient-to-r from-green-500 to-teal-600 text-white hover:from-green-600 hover:to-teal-700">
+            Continue
+          </Button>
+          <Button
+            $iconLeft={FaPlus}
+            $custom="bg-gradient-to-r from-orange-500 to-red-600 text-white hover:from-orange-600 hover:to-red-700">
+            Add New
+          </Button>
+        </div>
+      </div>
+    </div>
+  ),
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        story:
+          'Demuestra cómo usar iconos de react-icons con el componente Button usando las props $iconLeft y $iconRight.',
       },
     },
   },

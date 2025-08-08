@@ -1,6 +1,7 @@
 import { BaseProps } from '@/types';
 import React from 'react';
 import { cn } from '@/utils/cn';
+import { IconType } from 'react-icons';
 
 export type ButtonVariant =
   | 'default'
@@ -18,6 +19,8 @@ export interface ButtonProps
   $variant?: ButtonVariant;
   $size?: ButtonSize;
   $asChild?: boolean;
+  $iconLeft?: IconType;
+  $iconRight?: IconType;
 }
 
 const buttonVariants = {
@@ -45,6 +48,8 @@ export function Button({
   $size = 'default',
   children,
   $custom,
+  $iconLeft,
+  $iconRight,
   ...props
 }: ButtonProps) {
   const baseClasses =
@@ -52,6 +57,22 @@ export function Button({
 
   const variantClasses = buttonVariants.variant[$variant];
   const sizeClasses = buttonVariants.size[$size];
+
+  // Obtener el tamaño del icono basado en el tamaño del botón
+  const getIconSize = () => {
+    switch ($size) {
+      case 'sm':
+        return 'w-4 h-4';
+      case 'lg':
+        return 'w-5 h-5';
+      case 'icon':
+        return 'w-4 h-4';
+      default:
+        return 'w-4 h-4';
+    }
+  };
+
+  const iconClasses = getIconSize();
 
   // Si hay $custom, le damos prioridad sobre las variantes
   const combinedClasses = $custom
@@ -65,7 +86,13 @@ export function Button({
 
   return (
     <button className={combinedClasses} {...props}>
+      {$iconLeft && (
+        <$iconLeft className={cn(iconClasses, children ? 'mr-2' : '')} />
+      )}
       {children}
+      {$iconRight && (
+        <$iconRight className={cn(iconClasses, children ? 'ml-2' : '')} />
+      )}
     </button>
   );
 }

@@ -8,6 +8,7 @@ interface InputProps extends BaseProps {
   $size?: 'default' | 'sm' | 'lg';
   $custom?: string;
   $store?: string; // Nombre del store de Zustand
+  id?: string;
   placeholder?: string;
   type?: 'text' | 'email' | 'password' | 'number' | 'tel' | 'url' | 'search';
   disabled?: boolean;

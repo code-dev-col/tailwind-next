@@ -37,6 +37,8 @@ Basándome en la calidad actual, aquí están los componentes esenciales para un
 ✅ Container - Componente de Estructura
 ✅ GridAreas - Coponente de Estructura
 ✅ GridAreasField - Coponente de Estructura
+✅ Grid - Coponente de Estructura
+✅ Center - Coponente de Estructura
 🆕 Select - Formulario
 🆕 TextArea - Formulario
 

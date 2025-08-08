@@ -279,4 +279,3 @@ $maxItemWidth = 'calc(50% - 1rem)';
 // ✅ Solución: responsive o flexible
 <Grid $maxItemWidth="min(400px, 90vw)">
 ```
-

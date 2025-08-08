@@ -35,6 +35,7 @@ export {
   type GridAreasProps,
   type GridAreasFieldProps,
 } from './components/atoms/GridAreas';
+export { Grid, type GridProps } from './components/atoms/Grid';
 export { cn } from './utils/cn';
 export * from './utils/gradients';
 export { registerStore } from './stores/example';

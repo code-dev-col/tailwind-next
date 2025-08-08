@@ -35,7 +35,11 @@ Basándome en la calidad actual, aquí están los componentes esenciales para un
 ✅ Separator - Divisores visuales
 ✅ Skeleton - Loading states
 ✅ Container - Componente de Estructura
-✅ GridAreas - Coponente de Estructura 
+✅ GridAreas - Coponente de Estructura
+✅ GridAreasField - Coponente de Estructura
+🆕 Select - Formulario
+🆕 TextArea - Formulario
+
 🔸 MOLECULES (Combinaciones)
 🆕 Card - Contenedores de contenido
 🆕 FormField - Input + Label + Error

@@ -58,7 +58,7 @@ import { GridAreas, GridAreasField } from 'tailwind-next';
 
 Elemento individual que se posiciona en un área específica del grid.
 
-### Props Principales
+### Props Principales-
 
 - `$area` (obligatorio): Nombre del área donde se posicionará
 - `$width`: Ancho del elemento
@@ -204,4 +204,3 @@ Los componentes soportan tanto clases de Tailwind como valores CSS personalizado
 4. **Combina con Tailwind**: Aprovecha las clases de Tailwind para estilos adicionales usando la prop `className`.
 
 5. **Gradientes y sombras**: Utiliza los gradientes predefinidos de la librería y `shadow-sm` por defecto en elementos interactivos.
-

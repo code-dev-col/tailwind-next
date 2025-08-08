@@ -28,12 +28,12 @@ Basándome en la calidad actual, aquí están los componentes esenciales para un
 🔹 ATOMS (Elementos básicos)
 ✅ Button (completado)
 ✅ Input (completado)
-🆕 Badge - Etiquetas y estados
-🆕 Avatar - Imágenes de usuario
-🆕 Icon - Iconografía consistente
-🆕 Label - Etiquetas de formulario
-🆕 Separator - Divisores visuales
-🆕 Skeleton - Loading states
+✅ Badge - Etiquetas y estados
+✅ Avatar - Imágenes de usuario
+✅ Icon - Iconografía consistente
+✅ Label - Etiquetas de formulario
+✅ Separator - Divisores visuales
+✅ Skeleton - Loading states
 🔸 MOLECULES (Combinaciones)
 🆕 Card - Contenedores de contenido
 🆕 FormField - Input + Label + Error

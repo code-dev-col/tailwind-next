@@ -34,6 +34,8 @@ Basándome en la calidad actual, aquí están los componentes esenciales para un
 ✅ Label - Etiquetas de formulario
 ✅ Separator - Divisores visuales
 ✅ Skeleton - Loading states
+✅ Container - Componente de Estructura
+✅ GridAreas - Coponente de Estructura 
 🔸 MOLECULES (Combinaciones)
 🆕 Card - Contenedores de contenido
 🆕 FormField - Input + Label + Error

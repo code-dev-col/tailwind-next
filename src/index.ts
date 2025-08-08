@@ -29,6 +29,12 @@ export {
   type ContainerTextAlign,
   type CursorType,
 } from './components/atoms/Container';
+export {
+  GridAreas,
+  GridAreasField,
+  type GridAreasProps,
+  type GridAreasFieldProps,
+} from './components/atoms/GridAreas';
 export { cn } from './utils/cn';
 export * from './utils/gradients';
 export { registerStore } from './stores/example';

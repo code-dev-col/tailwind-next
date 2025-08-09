@@ -1,23 +1,22 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { create } from 'zustand';
 import { Input } from './Input';
+import { useInputStore } from '../../../stores/example';
 
-// Store de ejemplo para las stories
-const useExampleStore = create<{
-  value: string;
-  setValue: (value: string) => void;
-}>((set) => ({
-  value: '',
-  setValue: (value) => set({ value }),
-}));
-
-// Registrar store globalmente para el ejemplo
-if (typeof window !== 'undefined') {
-  (window as any).__zustand_stores = {
-    ...(window as any).__zustand_stores,
-    exampleStore: useExampleStore,
-  };
+// Store simple para demostrar el patrón storeKey
+interface DemoFormStore {
+  name: string;
+  email: string;
+  setName: (name: string) => void;
+  setEmail: (email: string) => void;
 }
+
+const useDemoFormStore = create<DemoFormStore>()((set) => ({
+  name: '',
+  email: '',
+  setName: (name) => set({ name }),
+  setEmail: (email) => set({ email }),
+}));
 
 const meta: Meta<typeof Input> = {
   title: 'Atoms/Input',
@@ -144,8 +143,8 @@ export const InputTypes: Story = {
 export const WithZustandStore: Story = {
   render: () => {
     const StoreExample = () => {
-      const value = useExampleStore((state) => state.value);
-      const setValue = useExampleStore((state) => state.setValue);
+      const value = useInputStore((state) => state.value);
+      const setValue = useInputStore((state) => state.setValue);
 
       return (
         <div className="flex flex-col gap-4 w-80">
@@ -153,7 +152,10 @@ export const WithZustandStore: Story = {
             <label className="text-sm font-medium mb-2 block">
               Input with Zustand Store
             </label>
-            <Input $store="exampleStore" placeholder="Type something..." />
+            <Input
+              $storeString="exampleInputStore"
+              placeholder="Type something..."
+            />
           </div>
           <div className="p-3 bg-muted rounded-md">
             <p className="text-sm font-medium mb-1">Store Value:</p>
@@ -167,7 +169,7 @@ export const WithZustandStore: Story = {
             </button>
             <button
               onClick={() => setValue('')}
-              className="px-3 py-1 bg-secondary text-secondary-foreground rounded text-sm hover:bg-secondary/80">
+              className="px-3 py-1 bg-muted text-muted-foreground rounded text-sm hover:bg-muted/80">
               Clear
             </button>
           </div>
@@ -196,5 +198,46 @@ export const States: Story = {
       </div>
     </div>
   ),
+};
+
+export const WithStoreKey: Story = {
+  render: () => {
+    const StoreKeyExample = () => {
+      const formData = useDemoFormStore();
+
+      return (
+        <div className="flex flex-col gap-4 w-80">
+          <div>
+            <label className="text-sm font-medium mb-2 block">
+              Input with storeKey Pattern (New)
+            </label>
+            <Input
+              $store={useDemoFormStore}
+              storeKey="name"
+              placeholder="Type your name..."
+            />
+          </div>
+          <div className="p-3 bg-muted rounded-md">
+            <p className="text-sm font-medium mb-1">Store Value (name):</p>
+            <code className="text-xs">{formData.name || '(empty)'}</code>
+          </div>
+          <div className="flex gap-2">
+            <button
+              onClick={() => formData.setName('John Doe')}
+              className="px-3 py-1 bg-primary text-primary-foreground rounded text-sm hover:bg-primary/90">
+              Set "John Doe"
+            </button>
+            <button
+              onClick={() => formData.setName('')}
+              className="px-3 py-1 bg-muted text-muted-foreground rounded text-sm hover:bg-muted/80">
+              Clear
+            </button>
+          </div>
+        </div>
+      );
+    };
+
+    return <StoreKeyExample />;
+  },
 };
 

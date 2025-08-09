@@ -2,6 +2,17 @@ export * from './types';
 // Export components
 export { Button, type ButtonProps } from './components/atoms/Button';
 export { Input, type InputProps } from './components/atoms/Input';
+export { TextArea, type TextAreaProps } from './components/atoms/TextArea';
+export {
+  Dropdown,
+  type DropdownProps,
+  type DropdownOption,
+} from './components/atoms/Dropdown';
+export {
+  RadioButton,
+  type RadioButtonProps,
+} from './components/atoms/RadioButton';
+export { CheckBox, type CheckBoxProps } from './components/atoms/CheckBox';
 export { Icon, type IconProps } from './components/atoms/Icon';
 export { Badge, type BadgeProps } from './components/atoms/Badge';
 export { Avatar, type AvatarProps } from './components/atoms/Avatar';

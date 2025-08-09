@@ -4,7 +4,7 @@ import { StoreApi, UseBoundStore } from 'zustand';
 import { cn } from '../../../utils/cn';
 import type { BaseProps } from '../../../types';
 
-interface InputProps<T extends Record<string, any> = any> extends BaseProps {
+interface TextAreaProps<T extends Record<string, any> = any> extends BaseProps {
   $variant?: 'default' | 'destructive' | 'ghost';
   $size?: 'default' | 'sm' | 'lg';
   $custom?: string;
@@ -19,15 +19,19 @@ interface InputProps<T extends Record<string, any> = any> extends BaseProps {
   // Props normales
   id?: string;
   placeholder?: string;
-  type?: 'text' | 'email' | 'password' | 'number' | 'tel' | 'url' | 'search';
   disabled?: boolean;
   readOnly?: boolean;
+  rows?: number;
+  cols?: number;
+  maxLength?: number;
   value?: string;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  onFocus?: (e: React.FocusEvent<HTMLTextAreaElement>) => void;
+  onBlur?: (e: React.FocusEvent<HTMLTextAreaElement>) => void;
 }
 
-const inputVariants = {
-  base: 'flex h-10 w-full rounded-md border px-3 py-2 text-sm shadow-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-all duration-200',
+const textAreaVariants = {
+  base: 'flex min-h-[80px] w-full rounded-md border px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 resize-vertical transition-all duration-200',
   variants: {
     variant: {
       default:
@@ -38,9 +42,9 @@ const inputVariants = {
         'border-transparent bg-accent hover:bg-accent/80 focus-visible:bg-background focus-visible:border-input focus-visible:shadow-md',
     },
     size: {
-      default: 'h-10 px-3 py-2',
-      sm: 'h-9 px-3 text-xs',
-      lg: 'h-11 px-4 text-base',
+      default: 'min-h-[80px] px-3 py-2 text-sm',
+      sm: 'min-h-[60px] px-3 py-2 text-xs',
+      lg: 'min-h-[120px] px-4 py-3 text-base',
     },
   },
   defaultVariants: {
@@ -51,7 +55,6 @@ const inputVariants = {
 
 // Función helper para obtener el store
 const getZustandStore = (storeName: string) => {
-  // Buscar el store en el objeto global (patron común en Zustand)
   if (typeof window !== 'undefined') {
     const globalStores = (window as any).__zustand_stores || {};
     return globalStores[storeName];
@@ -59,7 +62,7 @@ const getZustandStore = (storeName: string) => {
   return null;
 };
 
-const InputComponent = <T extends Record<string, any> = any>(
+const TextAreaComponent = <T extends Record<string, any> = any>(
   {
     className,
     $variant,
@@ -68,12 +71,12 @@ const InputComponent = <T extends Record<string, any> = any>(
     $store,
     storeKey,
     $storeString,
-    type = 'text',
+    rows = 4,
     value: controlledValue,
     onChange: controlledOnChange,
     ...props
-  }: InputProps<T>,
-  ref: React.Ref<HTMLInputElement>
+  }: TextAreaProps<T>,
+  ref: React.Ref<HTMLTextAreaElement>
 ) => {
   // Patrón storeKey (nuevo y preferido)
   const storeValue =
@@ -103,7 +106,7 @@ const InputComponent = <T extends Record<string, any> = any>(
   const finalValue = storeValue ?? stringStoreValue ?? controlledValue ?? '';
   const finalSetter = storeSetter ?? stringStoreSetter;
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newValue = e.target.value;
 
     if (finalSetter) {
@@ -116,15 +119,15 @@ const InputComponent = <T extends Record<string, any> = any>(
   };
 
   return (
-    <input
-      type={type}
+    <textarea
       className={cn(
-        inputVariants.base,
-        inputVariants.variants.variant[$variant || 'default'],
-        inputVariants.variants.size[$size || 'default'],
+        textAreaVariants.base,
+        textAreaVariants.variants.variant[$variant || 'default'],
+        textAreaVariants.variants.size[$size || 'default'],
         className,
         $custom
       )}
+      rows={rows}
       value={finalValue}
       onChange={handleChange}
       ref={ref}
@@ -133,14 +136,14 @@ const InputComponent = <T extends Record<string, any> = any>(
   );
 };
 
-const Input = React.forwardRef(InputComponent) as <
+const TextArea = React.forwardRef(TextAreaComponent) as <
   T extends Record<string, any> = any,
 >(
-  props: InputProps<T> & { ref?: React.Ref<HTMLInputElement> }
+  props: TextAreaProps<T> & { ref?: React.Ref<HTMLTextAreaElement> }
 ) => React.ReactElement;
 
 // Asignar displayName para debugging
-(Input as any).displayName = 'Input';
+(TextArea as any).displayName = 'TextArea';
 
-export { Input, type InputProps };
+export { TextArea, type TextAreaProps };
 

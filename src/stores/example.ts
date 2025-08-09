@@ -7,11 +7,55 @@ interface InputStore {
   clearValue: () => void;
 }
 
-// Store de ejemplo
-export const useInputStore = create<InputStore>((set) => ({
+// Ejemplo de store para checkboxes múltiples
+interface MultiCheckStore {
+  value: string[];
+  setValue: (value: string[]) => void;
+  clearValue: () => void;
+}
+
+// Ejemplo de store para boolean (checkbox único)
+interface BooleanStore {
+  value: boolean;
+  setValue: (value: boolean) => void;
+  clearValue: () => void;
+}
+
+// Stores de ejemplo para demos - usando sintaxis correcta de TypeScript con currying
+export const useInputStore = create<InputStore>()((set) => ({
   value: '',
   setValue: (value) => set({ value }),
   clearValue: () => set({ value: '' }),
+}));
+
+export const useTextAreaStore = create<InputStore>()((set) => ({
+  value: 'Contenido inicial del textarea conectado a Zustand',
+  setValue: (value) => set({ value }),
+  clearValue: () => set({ value: '' }),
+}));
+
+export const useDropdownStore = create<InputStore>()((set) => ({
+  value: 'es',
+  setValue: (value) => set({ value }),
+  clearValue: () => set({ value: '' }),
+}));
+
+export const useRadioStore = create<InputStore>()((set) => ({
+  value: 'medium',
+  setValue: (value) => set({ value }),
+  clearValue: () => set({ value: '' }),
+}));
+
+export const useSingleCheckStore = create<BooleanStore>()((set) => ({
+  value: true,
+  setValue: (value) => set({ value }),
+  clearValue: () => set({ value: false }),
+}));
+
+export const useMultiCheckStore = create<MultiCheckStore>()((set) => ({
+  value: ['javascript', 'react'],
+  setValue: (value) => set({ value }),
+  clearValue: () => set({ value: [] }),
 }));
 
 // Función helper para registrar stores globalmente
@@ -24,7 +68,13 @@ export const registerStore = (name: string, store: any) => {
   }
 };
 
-// Ejemplo de uso:
-// registerStore('myInputStore', useInputStore);
-// <Input $store="myInputStore" placeholder="Connected input" />
+// Auto-registrar stores de ejemplo
+if (typeof window !== 'undefined') {
+  registerStore('exampleInputStore', useInputStore);
+  registerStore('exampleTextAreaStore', useTextAreaStore);
+  registerStore('exampleDropdownStore', useDropdownStore);
+  registerStore('exampleRadioStore', useRadioStore);
+  registerStore('exampleSingleCheckStore', useSingleCheckStore);
+  registerStore('exampleMultiCheckStore', useMultiCheckStore);
+}
 

@@ -1,9 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Input } from './Input';
-import {
-  useInputExamples,
-  useExamplesStore,
-} from '../../../stores/examplesStore';
+import { useInputExamplesStore } from '../../../stores/inputExamples.store';
 
 const meta: Meta<typeof Input> = {
   title: 'Atoms/Input',
@@ -127,78 +124,93 @@ export const InputTypes: Story = {
   ),
 };
 
-export const WithZustandStore: Story = {
+export const WithStoreKey: Story = {
   render: () => {
-    const {
-      basicInput,
-      setBasicInput,
-      emailInput,
-      setEmailInput,
-      nameInput,
-      setNameInput,
-    } = useInputExamples();
-
-    const { getInputCount } = useExamplesStore();
-
     return (
       <div className="flex flex-col gap-4 w-80">
         <div className="mb-4 p-4 bg-blue-50 rounded-lg">
           <p className="text-sm font-medium text-blue-800">
-            Campos activos en el store: {getInputCount()}
+            Patrón StoreKey - Conexión automática al store
           </p>
           <p className="text-xs text-blue-600 mt-1">
-            Estos valores se mantienen sincronizados globalmente usando slices
-            de Zustand
+            Los componentes se conectan automáticamente usando $store y storeKey
           </p>
         </div>
 
         <div>
           <label className="text-sm font-medium mb-2 block">
-            Input básico con store
+            Username con storeKey
           </label>
           <Input
-            value={basicInput}
-            onChange={(e) => setBasicInput(e.target.value)}
-            placeholder="Escribe algo..."
+            $store={useInputExamplesStore}
+            storeKey="usernameInput"
+            placeholder="Ingresa tu username..."
           />
         </div>
 
         <div>
           <label className="text-sm font-medium mb-2 block">
-            Email con store
+            Email con storeKey
           </label>
           <Input
             type="email"
-            value={emailInput}
-            onChange={(e) => setEmailInput(e.target.value)}
-            placeholder="tu@email.com"
+            $store={useInputExamplesStore}
+            storeKey="emailInput"
+            placeholder="tu@ejemplo.com"
           />
         </div>
 
         <div>
           <label className="text-sm font-medium mb-2 block">
-            Nombre con store
+            Nombre con storeKey
           </label>
           <Input
-            value={nameInput}
-            onChange={(e) => setNameInput(e.target.value)}
-            placeholder="Tu nombre"
+            $store={useInputExamplesStore}
+            storeKey="nameInput"
+            placeholder="Tu nombre completo"
           />
         </div>
 
         <div className="p-3 bg-muted rounded-md">
-          <p className="text-sm font-medium mb-2">Valores del Store:</p>
+          <p className="text-sm font-medium mb-2">🔄 StoreKey Pattern:</p>
           <div className="space-y-1 text-xs">
-            <div>
-              <strong>Básico:</strong> {basicInput || '(vacío)'}
-            </div>
-            <div>
-              <strong>Email:</strong> {emailInput || '(vacío)'}
-            </div>
-            <div>
-              <strong>Nombre:</strong> {nameInput || '(vacío)'}
-            </div>
+            <p>• Conexión automática sin value/onChange</p>
+            <p>• Estado sincronizado automáticamente</p>
+            <p>• Menos código, menos errores</p>
           </div>
+        </div>
+
+        <div className="flex gap-2 flex-wrap">
+          <button
+            onClick={() =>
+              useInputExamplesStore.getState().setUsernameInput('john_doe')
+            }
+            className="px-3 py-1 bg-primary text-primary-foreground rounded text-sm hover:bg-primary/90">
+            Set Username
+          </button>
+          <button
+            onClick={() =>
+              useInputExamplesStore.getState().setEmailInput('john@example.com')
+            }
+            className="px-3 py-1 bg-primary text-primary-foreground rounded text-sm hover:bg-primary/90">
+            Set Email
+          </button>
+          <button
+            onClick={() =>
+              useInputExamplesStore.getState().setNameInput('Juan Pérez')
+            }
+            className="px-3 py-1 bg-primary text-primary-foreground rounded text-sm hover:bg-primary/90">
+            Set Nombre
+          </button>
+          <button
+            onClick={() => {
+              useInputExamplesStore.getState().setUsernameInput('');
+              useInputExamplesStore.getState().setEmailInput('');
+              useInputExamplesStore.getState().setNameInput('');
+            }}
+            className="px-3 py-1 bg-muted text-muted-foreground rounded text-sm hover:bg-muted/80">
+            Clear All
+          </button>
         </div>
       </div>
     );
@@ -224,162 +236,89 @@ export const States: Story = {
   ),
 };
 
-export const WithStoreKey: Story = {
-  render: () => {
-    const { usernameInput, setUsernameInput, emailInput, setEmailInput } =
-      useInputExamples();
+export const CharacterCounter: Story = {
+  render: () => (
+    <div className="flex flex-col gap-6 w-96">
+      <div>
+        <h3 className="text-lg font-semibold mb-4">
+          Contador de Caracteres con StoreKey
+        </h3>
+        <p className="text-sm text-muted-foreground mb-4">
+          Solo patrón storeKey - sin acceso manual al store
+        </p>
+      </div>
 
-    return (
-      <div className="flex flex-col gap-4 w-80">
+      <div className="space-y-4">
         <div>
-          <label className="text-sm font-medium mb-2 block">
-            Username con store integrado
-          </label>
-          <Input
-            value={usernameInput}
-            onChange={(e) => setUsernameInput(e.target.value)}
-            placeholder="Ingresa tu username..."
-          />
+          <label className="text-sm font-medium mb-2 block">Sin límite</label>
+          <Input placeholder="Este input no tiene límite de caracteres" />
+          <p className="text-xs text-muted-foreground mt-1">
+            Sin contador ni restricciones
+          </p>
         </div>
 
         <div>
           <label className="text-sm font-medium mb-2 block">
-            Email con store integrado
+            Límite de 30 caracteres con storeKey
+          </label>
+          <Input
+            $maxCharacters={30}
+            placeholder="Máximo 30 caracteres..."
+            $store={useInputExamplesStore}
+            storeKey="limitedInput"
+          />
+          <p className="text-xs text-muted-foreground mt-1">
+            El contador aparece automáticamente usando storeKey
+          </p>
+        </div>
+
+        <div>
+          <label className="text-sm font-medium mb-2 block">
+            Límite corto - 15 caracteres
+          </label>
+          <Input
+            $maxCharacters={15}
+            placeholder="Solo 15 chars"
+            $store={useInputExamplesStore}
+            storeKey="shortLimitInput"
+          />
+          <p className="text-xs text-muted-foreground mt-1">
+            Se vuelve rojo cuando excedes el límite
+          </p>
+        </div>
+
+        <div>
+          <label className="text-sm font-medium mb-2 block">
+            Email con límite de 50
           </label>
           <Input
             type="email"
-            value={emailInput}
-            onChange={(e) => setEmailInput(e.target.value)}
-            placeholder="tu@ejemplo.com"
+            $maxCharacters={50}
+            placeholder="tu-email@ejemplo.com"
+            $store={useInputExamplesStore}
+            storeKey="emailLimitInput"
           />
-        </div>
-
-        <div className="p-3 bg-muted rounded-md">
-          <p className="text-sm font-medium mb-2">Valores actuales:</p>
-          <div className="space-y-1 text-xs">
-            <div>
-              <strong>Username:</strong> {usernameInput || '(vacío)'}
-            </div>
-            <div>
-              <strong>Email:</strong> {emailInput || '(vacío)'}
-            </div>
-          </div>
-        </div>
-
-        <div className="flex gap-2">
-          <button
-            onClick={() => setUsernameInput('john_doe')}
-            className="px-3 py-1 bg-primary text-primary-foreground rounded text-sm hover:bg-primary/90">
-            Set Username
-          </button>
-          <button
-            onClick={() => setEmailInput('john@example.com')}
-            className="px-3 py-1 bg-primary text-primary-foreground rounded text-sm hover:bg-primary/90">
-            Set Email
-          </button>
-          <button
-            onClick={() => {
-              setUsernameInput('');
-              setEmailInput('');
-            }}
-            className="px-3 py-1 bg-muted text-muted-foreground rounded text-sm hover:bg-muted/80">
-            Clear All
-          </button>
-        </div>
-      </div>
-    );
-  },
-};
-
-export const CharacterCounter: Story = {
-  render: () => {
-    const {
-      limitedInput,
-      setLimitedInput,
-      shortLimitInput,
-      setShortLimitInput,
-      emailLimitInput,
-      setEmailLimitInput,
-    } = useInputExamples();
-
-    return (
-      <div className="flex flex-col gap-6 w-96">
-        <div>
-          <h3 className="text-lg font-semibold mb-4">
-            Contador de Caracteres en Input
-          </h3>
-        </div>
-
-        <div className="space-y-4">
-          <div>
-            <label className="text-sm font-medium mb-2 block">Sin límite</label>
-            <Input placeholder="Este input no tiene límite de caracteres" />
-            <p className="text-xs text-muted-foreground mt-1">
-              Sin contador ni restricciones
-            </p>
-          </div>
-
-          <div>
-            <label className="text-sm font-medium mb-2 block">
-              Límite de 30 caracteres con store
-            </label>
-            <Input
-              $maxCharacters={30}
-              placeholder="Máximo 30 caracteres..."
-              value={limitedInput}
-              onChange={(e) => setLimitedInput(e.target.value)}
-            />
-            <p className="text-xs text-muted-foreground mt-1">
-              El contador aparece automáticamente
-            </p>
-          </div>
-
-          <div>
-            <label className="text-sm font-medium mb-2 block">
-              Límite corto - 15 caracteres
-            </label>
-            <Input
-              $maxCharacters={15}
-              placeholder="Solo 15 chars"
-              value={shortLimitInput}
-              onChange={(e) => setShortLimitInput(e.target.value)}
-            />
-            <p className="text-xs text-muted-foreground mt-1">
-              Se vuelve rojo cuando excedes el límite
-            </p>
-          </div>
-
-          <div>
-            <label className="text-sm font-medium mb-2 block">
-              Email con límite de 50
-            </label>
-            <Input
-              type="email"
-              $maxCharacters={50}
-              placeholder="tu-email@ejemplo.com"
-              value={emailLimitInput}
-              onChange={(e) => setEmailLimitInput(e.target.value)}
-            />
-            <p className="text-xs text-muted-foreground mt-1">
-              Prueba con un email largo para ver el comportamiento
-            </p>
-          </div>
-        </div>
-
-        <div className="p-4 bg-purple-50 rounded-lg border border-purple-200">
-          <p className="text-xs font-medium mb-1">
-            🔢 Características del contador:
+          <p className="text-xs text-muted-foreground mt-1">
+            Prueba con un email largo para ver el comportamiento
           </p>
-          <ul className="text-xs text-purple-700 space-y-1">
-            <li>• Aparece automáticamente cuando se define $maxCharacters</li>
-            <li>• Previene escritura más allá del límite</li>
-            <li>• Cambia a rojo cuando se excede (visual)</li>
-            <li>• Usa fuente tabular para evitar saltos</li>
-          </ul>
         </div>
       </div>
-    );
-  },
+
+      <div className="p-4 bg-purple-50 rounded-lg border border-purple-200">
+        <p className="text-xs font-medium mb-1">
+          🔢 Características del contador con storeKey:
+        </p>
+        <ul className="text-xs text-purple-700 space-y-1">
+          <li>• Conexión automática al store con $store y storeKey</li>
+          <li>• Aparece automáticamente cuando se define $maxCharacters</li>
+          <li>• Previene escritura más allá del límite</li>
+          <li>• Cambia a rojo cuando se excede (visual)</li>
+          <li>• Usa fuente tabular para evitar saltos</li>
+          <li>• SIN acceso manual al store - solo storeKey</li>
+        </ul>
+      </div>
+    </div>
+  ),
 };
 
 export const CounterVariants: Story = {
@@ -400,6 +339,8 @@ export const CounterVariants: Story = {
             $variant="default"
             $maxCharacters={25}
             placeholder="Variante default"
+            $store={useInputExamplesStore}
+            storeKey="basicInput"
           />
         </div>
 
@@ -411,6 +352,8 @@ export const CounterVariants: Story = {
             $variant="destructive"
             $maxCharacters={25}
             placeholder="Variante destructive"
+            $store={useInputExamplesStore}
+            storeKey="passwordInput"
           />
         </div>
 
@@ -422,6 +365,8 @@ export const CounterVariants: Story = {
             $variant="ghost"
             $maxCharacters={25}
             placeholder="Variante ghost"
+            $store={useInputExamplesStore}
+            storeKey="searchInput"
           />
         </div>
       </div>
@@ -430,7 +375,7 @@ export const CounterVariants: Story = {
         <p className="text-xs font-medium mb-1">✨ Integración perfecta:</p>
         <p className="text-xs text-muted-foreground">
           El contador se adapta automáticamente al color de la variante cuando
-          se excede el límite.
+          se excede el límite usando solo storeKey.
         </p>
       </div>
     </div>
@@ -442,10 +387,10 @@ export const SecurityFeatures: Story = {
     <div className="flex flex-col gap-6 w-96">
       <div>
         <h3 className="text-lg font-semibold mb-4">
-          🔒 Funcionalidades de Seguridad
+          🔒 Funcionalidades de Seguridad con StoreKey
         </h3>
         <p className="text-sm text-muted-foreground mb-4">
-          Protección automática contra inyecciones SQL y XSS
+          Protección automática usando solo patrón storeKey
         </p>
       </div>
 
@@ -458,6 +403,8 @@ export const SecurityFeatures: Story = {
             $security="form"
             $showSecurityWarnings={true}
             placeholder="Intenta escribir: &lt;script&gt; o ' OR 1=1"
+            $store={useInputExamplesStore}
+            storeKey="securityBasicInput"
           />
           <p className="text-xs text-muted-foreground mt-1">
             Detecta patrones SQL y XSS, muestra advertencias
@@ -472,9 +419,11 @@ export const SecurityFeatures: Story = {
             $security="form"
             $sanitizeOnChange={true}
             placeholder="Los caracteres peligrosos se escapan automáticamente"
+            $store={useInputExamplesStore}
+            storeKey="securitySanitizeInput"
           />
           <p className="text-xs text-muted-foreground mt-1">
-            Limpia el input automáticamente al escribir
+            Limpia el input automáticamente al escribir usando storeKey
           </p>
         </div>
 
@@ -487,6 +436,8 @@ export const SecurityFeatures: Story = {
             $blockUnsafeInput={true}
             $showSecurityWarnings={true}
             placeholder="Intenta escribir caracteres peligrosos"
+            $store={useInputExamplesStore}
+            storeKey="securityBlockInput"
           />
           <p className="text-xs text-muted-foreground mt-1">
             Bloquea completamente el input inseguro
@@ -496,14 +447,16 @@ export const SecurityFeatures: Story = {
 
       <div className="bg-red-50 border border-red-200 rounded-lg p-4">
         <p className="text-xs font-medium mb-2">
-          🛡️ Protecciones implementadas:
+          🛡️ Protecciones implementadas con storeKey:
         </p>
         <div className="space-y-1 text-xs text-muted-foreground">
+          <p>• Conexión automática al store sin props value/onChange</p>
           <p>• Detección de inyecciones SQL</p>
           <p>• Prevención de ataques XSS</p>
           <p>• Sanitización automática de caracteres</p>
           <p>• Validación en tiempo real</p>
           <p>• Presets de seguridad predefinidos</p>
+          <p>• Solo patrón storeKey - sin hooks manuales</p>
         </div>
       </div>
     </div>

@@ -74,6 +74,7 @@ interface ContainerProps extends BaseProps {
 
   // Visual effects
   $boxShadow?: string;
+  $isShadow?: boolean; // Nuevo prop para habilitar shadow por defecto
   $opacity?: number;
   $transform?: string;
   $filter?: string;
@@ -245,6 +246,7 @@ const buildClassName = (props: ContainerProps): string => {
     $borderWidth,
     $borderStyle = 'solid',
     $boxShadow,
+    $isShadow = false, // Por defecto sin shadow
     $opacity,
     $overflow,
     $overflowX,
@@ -291,7 +293,14 @@ const buildClassName = (props: ContainerProps): string => {
   if ($borderWidth && $borderWidth.includes('border-'))
     classes.push($borderWidth);
   classes.push(containerVariants.borderStyle[$borderStyle]);
-  if ($boxShadow && $boxShadow.includes('shadow')) classes.push($boxShadow);
+
+  // Shadow logic: $boxShadow tiene prioridad sobre $isShadow
+  if ($boxShadow && $boxShadow.includes('shadow')) {
+    classes.push($boxShadow);
+  } else if ($isShadow) {
+    classes.push('shadow-sm'); // Shadow por defecto según las instrucciones
+  }
+
   if ($opacity !== undefined) classes.push(`opacity-${$opacity}`);
   if ($overflow) classes.push(containerVariants.overflow[$overflow]);
   if ($overflowX) classes.push(containerVariants.overflowX[$overflowX]);
@@ -325,6 +334,7 @@ const Container: React.FC<ContainerProps> = (props) => {
     $borderColor,
     $borderWidth,
     $boxShadow,
+    $isShadow,
     $opacity,
     $transform,
     $filter,

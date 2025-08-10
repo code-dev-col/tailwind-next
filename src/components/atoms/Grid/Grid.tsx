@@ -16,11 +16,12 @@ interface GridProps extends BaseProps {
     | 'evenly'; // Alineación horizontal
   $alignItems?: 'start' | 'end' | 'center' | 'baseline' | 'stretch'; // Alineación vertical
   $zIndex?: string | number; // z-index del grid
+  $isShadow?: boolean; // Habilitar sombra por defecto
   $custom?: string;
 }
 
 const gridVariants = {
-  base: 'grid transition-all duration-200 shadow-sm',
+  base: 'grid transition-all duration-200',
   justifyContent: {
     start: 'justify-start',
     end: 'justify-end',
@@ -59,6 +60,7 @@ const Grid = React.forwardRef<HTMLDivElement, GridProps>(
       $justifyContent = 'center',
       $alignItems = 'start',
       $zIndex,
+      $isShadow = false,
       $custom,
       ...props
     },
@@ -97,6 +99,9 @@ const Grid = React.forwardRef<HTMLDivElement, GridProps>(
       // Alineaciones
       gridVariants.justifyContent[$justifyContent],
       gridVariants.alignItems[$alignItems],
+
+      // Shadow condicional
+      $isShadow ? 'shadow-sm' : '',
 
       className,
       $custom

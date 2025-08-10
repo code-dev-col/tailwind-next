@@ -44,6 +44,10 @@ const meta: Meta<typeof Grid> = {
       control: 'text',
       description: 'z-index del grid (z-10, 100, etc.)',
     },
+    $isShadow: {
+      control: 'boolean',
+      description: 'Si el grid debe tener sombra',
+    },
   },
 };
 
@@ -507,6 +511,103 @@ export const CustomSizing: Story = {
               ))}
             </Grid>
           </Container>
+        </Container>
+      </Container>
+    </Container>
+  ),
+};
+
+export const ShadowToggle: Story = {
+  render: () => (
+    <Container
+      $padding="p-6"
+      $backgroundColor="bg-gray-50"
+      className="space-y-8">
+      <Text as="h2" $size="2xl" $weight="bold" className="text-center">
+        Control de Sombra
+      </Text>
+
+      <Text $variant="muted" className="text-center mb-8">
+        Comparación entre Grid con y sin sombra
+      </Text>
+
+      {/* Grid sin sombra */}
+      <Container>
+        <Text as="h3" $size="lg" $weight="semibold" className="mb-4">
+          Sin sombra ($isShadow=false - por defecto)
+        </Text>
+        <Container
+          $backgroundColor="bg-white"
+          $padding="p-6"
+          $borderRadius="rounded-lg">
+          <Grid $isShadow={false} $maxGridWidth="800px" $gap="1rem">
+            {Array.from({ length: 4 }, (_, i) => (
+              <Container
+                key={i}
+                $backgroundColor="bg-blue-50"
+                $padding="p-4"
+                $borderRadius="rounded-lg"
+                $borderWidth="border"
+                $borderColor="border-blue-200"
+                $textAlign="center">
+                <Text $weight="bold" $color="text-blue-700">
+                  Item {i + 1}
+                </Text>
+                <Text $size="sm" $variant="muted">
+                  Grid sin sombra
+                </Text>
+              </Container>
+            ))}
+          </Grid>
+        </Container>
+      </Container>
+
+      {/* Grid con sombra */}
+      <Container>
+        <Text as="h3" $size="lg" $weight="semibold" className="mb-4">
+          Con sombra ($isShadow=true)
+        </Text>
+        <Container
+          $backgroundColor="bg-white"
+          $padding="p-6"
+          $borderRadius="rounded-lg">
+          <Grid $isShadow={true} $maxGridWidth="800px" $gap="1rem">
+            {Array.from({ length: 4 }, (_, i) => (
+              <Container
+                key={i}
+                $backgroundColor="bg-green-50"
+                $padding="p-4"
+                $borderRadius="rounded-lg"
+                $borderWidth="border"
+                $borderColor="border-green-200"
+                $textAlign="center">
+                <Text $weight="bold" $color="text-green-700">
+                  Item {i + 1}
+                </Text>
+                <Text $size="sm" $variant="muted">
+                  Grid con sombra
+                </Text>
+              </Container>
+            ))}
+          </Grid>
+        </Container>
+      </Container>
+
+      {/* Información */}
+      <Container
+        $backgroundColor="bg-blue-50"
+        $padding="p-4"
+        $borderRadius="rounded-lg"
+        $borderWidth="border"
+        $borderColor="border-blue-200">
+        <Text as="h4" $weight="semibold" className="mb-2">
+          💡 Información sobre $isShadow:
+        </Text>
+        <Container as="ul" className="text-sm space-y-1">
+          <li>• Por defecto, el Grid NO tiene sombra ($isShadow=false)</li>
+          <li>• Usa $isShadow=true para agregar shadow-sm al Grid</li>
+          <li>• Mantiene consistencia con el componente Container</li>
+          <li>• Útil para elevar visualmente el Grid del fondo</li>
         </Container>
       </Container>
     </Container>

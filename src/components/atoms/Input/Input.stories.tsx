@@ -1,22 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { create } from 'zustand';
 import { Input } from './Input';
-import { useInputStore } from '../../../stores/example';
-
-// Store simple para demostrar el patrón storeKey
-interface DemoFormStore {
-  name: string;
-  email: string;
-  setName: (name: string) => void;
-  setEmail: (email: string) => void;
-}
-
-const useDemoFormStore = create<DemoFormStore>()((set) => ({
-  name: '',
-  email: '',
-  setName: (name) => set({ name }),
-  setEmail: (email) => set({ email }),
-}));
+import {
+  useInputExamples,
+  useExamplesStore,
+} from '../../../stores/examplesStore';
 
 const meta: Meta<typeof Input> = {
   title: 'Atoms/Input',
@@ -142,42 +129,79 @@ export const InputTypes: Story = {
 
 export const WithZustandStore: Story = {
   render: () => {
-    const StoreExample = () => {
-      const value = useInputStore((state) => state.value);
-      const setValue = useInputStore((state) => state.setValue);
+    const {
+      basicInput,
+      setBasicInput,
+      emailInput,
+      setEmailInput,
+      nameInput,
+      setNameInput,
+    } = useInputExamples();
 
-      return (
-        <div className="flex flex-col gap-4 w-80">
-          <div>
-            <label className="text-sm font-medium mb-2 block">
-              Input with Zustand Store
-            </label>
-            <Input
-              $storeString="exampleInputStore"
-              placeholder="Type something..."
-            />
-          </div>
-          <div className="p-3 bg-muted rounded-md">
-            <p className="text-sm font-medium mb-1">Store Value:</p>
-            <code className="text-xs">{value || '(empty)'}</code>
-          </div>
-          <div className="flex gap-2">
-            <button
-              onClick={() => setValue('Hello World!')}
-              className="px-3 py-1 bg-primary text-primary-foreground rounded text-sm hover:bg-primary/90">
-              Set "Hello World!"
-            </button>
-            <button
-              onClick={() => setValue('')}
-              className="px-3 py-1 bg-muted text-muted-foreground rounded text-sm hover:bg-muted/80">
-              Clear
-            </button>
+    const { getInputCount } = useExamplesStore();
+
+    return (
+      <div className="flex flex-col gap-4 w-80">
+        <div className="mb-4 p-4 bg-blue-50 rounded-lg">
+          <p className="text-sm font-medium text-blue-800">
+            Campos activos en el store: {getInputCount()}
+          </p>
+          <p className="text-xs text-blue-600 mt-1">
+            Estos valores se mantienen sincronizados globalmente usando slices
+            de Zustand
+          </p>
+        </div>
+
+        <div>
+          <label className="text-sm font-medium mb-2 block">
+            Input básico con store
+          </label>
+          <Input
+            value={basicInput}
+            onChange={(e) => setBasicInput(e.target.value)}
+            placeholder="Escribe algo..."
+          />
+        </div>
+
+        <div>
+          <label className="text-sm font-medium mb-2 block">
+            Email con store
+          </label>
+          <Input
+            type="email"
+            value={emailInput}
+            onChange={(e) => setEmailInput(e.target.value)}
+            placeholder="tu@email.com"
+          />
+        </div>
+
+        <div>
+          <label className="text-sm font-medium mb-2 block">
+            Nombre con store
+          </label>
+          <Input
+            value={nameInput}
+            onChange={(e) => setNameInput(e.target.value)}
+            placeholder="Tu nombre"
+          />
+        </div>
+
+        <div className="p-3 bg-muted rounded-md">
+          <p className="text-sm font-medium mb-2">Valores del Store:</p>
+          <div className="space-y-1 text-xs">
+            <div>
+              <strong>Básico:</strong> {basicInput || '(vacío)'}
+            </div>
+            <div>
+              <strong>Email:</strong> {emailInput || '(vacío)'}
+            </div>
+            <div>
+              <strong>Nombre:</strong> {nameInput || '(vacío)'}
+            </div>
           </div>
         </div>
-      );
-    };
-
-    return <StoreExample />;
+      </div>
+    );
   },
 };
 
@@ -202,42 +226,287 @@ export const States: Story = {
 
 export const WithStoreKey: Story = {
   render: () => {
-    const StoreKeyExample = () => {
-      const formData = useDemoFormStore();
+    const { usernameInput, setUsernameInput, emailInput, setEmailInput } =
+      useInputExamples();
 
-      return (
-        <div className="flex flex-col gap-4 w-80">
-          <div>
-            <label className="text-sm font-medium mb-2 block">
-              Input with storeKey Pattern (New)
-            </label>
-            <Input
-              $store={useDemoFormStore}
-              storeKey="name"
-              placeholder="Type your name..."
-            />
-          </div>
-          <div className="p-3 bg-muted rounded-md">
-            <p className="text-sm font-medium mb-1">Store Value (name):</p>
-            <code className="text-xs">{formData.name || '(empty)'}</code>
-          </div>
-          <div className="flex gap-2">
-            <button
-              onClick={() => formData.setName('John Doe')}
-              className="px-3 py-1 bg-primary text-primary-foreground rounded text-sm hover:bg-primary/90">
-              Set "John Doe"
-            </button>
-            <button
-              onClick={() => formData.setName('')}
-              className="px-3 py-1 bg-muted text-muted-foreground rounded text-sm hover:bg-muted/80">
-              Clear
-            </button>
+    return (
+      <div className="flex flex-col gap-4 w-80">
+        <div>
+          <label className="text-sm font-medium mb-2 block">
+            Username con store integrado
+          </label>
+          <Input
+            value={usernameInput}
+            onChange={(e) => setUsernameInput(e.target.value)}
+            placeholder="Ingresa tu username..."
+          />
+        </div>
+
+        <div>
+          <label className="text-sm font-medium mb-2 block">
+            Email con store integrado
+          </label>
+          <Input
+            type="email"
+            value={emailInput}
+            onChange={(e) => setEmailInput(e.target.value)}
+            placeholder="tu@ejemplo.com"
+          />
+        </div>
+
+        <div className="p-3 bg-muted rounded-md">
+          <p className="text-sm font-medium mb-2">Valores actuales:</p>
+          <div className="space-y-1 text-xs">
+            <div>
+              <strong>Username:</strong> {usernameInput || '(vacío)'}
+            </div>
+            <div>
+              <strong>Email:</strong> {emailInput || '(vacío)'}
+            </div>
           </div>
         </div>
-      );
-    };
 
-    return <StoreKeyExample />;
+        <div className="flex gap-2">
+          <button
+            onClick={() => setUsernameInput('john_doe')}
+            className="px-3 py-1 bg-primary text-primary-foreground rounded text-sm hover:bg-primary/90">
+            Set Username
+          </button>
+          <button
+            onClick={() => setEmailInput('john@example.com')}
+            className="px-3 py-1 bg-primary text-primary-foreground rounded text-sm hover:bg-primary/90">
+            Set Email
+          </button>
+          <button
+            onClick={() => {
+              setUsernameInput('');
+              setEmailInput('');
+            }}
+            className="px-3 py-1 bg-muted text-muted-foreground rounded text-sm hover:bg-muted/80">
+            Clear All
+          </button>
+        </div>
+      </div>
+    );
   },
+};
+
+export const CharacterCounter: Story = {
+  render: () => {
+    const {
+      limitedInput,
+      setLimitedInput,
+      shortLimitInput,
+      setShortLimitInput,
+      emailLimitInput,
+      setEmailLimitInput,
+    } = useInputExamples();
+
+    return (
+      <div className="flex flex-col gap-6 w-96">
+        <div>
+          <h3 className="text-lg font-semibold mb-4">
+            Contador de Caracteres en Input
+          </h3>
+        </div>
+
+        <div className="space-y-4">
+          <div>
+            <label className="text-sm font-medium mb-2 block">Sin límite</label>
+            <Input placeholder="Este input no tiene límite de caracteres" />
+            <p className="text-xs text-muted-foreground mt-1">
+              Sin contador ni restricciones
+            </p>
+          </div>
+
+          <div>
+            <label className="text-sm font-medium mb-2 block">
+              Límite de 30 caracteres con store
+            </label>
+            <Input
+              $maxCharacters={30}
+              placeholder="Máximo 30 caracteres..."
+              value={limitedInput}
+              onChange={(e) => setLimitedInput(e.target.value)}
+            />
+            <p className="text-xs text-muted-foreground mt-1">
+              El contador aparece automáticamente
+            </p>
+          </div>
+
+          <div>
+            <label className="text-sm font-medium mb-2 block">
+              Límite corto - 15 caracteres
+            </label>
+            <Input
+              $maxCharacters={15}
+              placeholder="Solo 15 chars"
+              value={shortLimitInput}
+              onChange={(e) => setShortLimitInput(e.target.value)}
+            />
+            <p className="text-xs text-muted-foreground mt-1">
+              Se vuelve rojo cuando excedes el límite
+            </p>
+          </div>
+
+          <div>
+            <label className="text-sm font-medium mb-2 block">
+              Email con límite de 50
+            </label>
+            <Input
+              type="email"
+              $maxCharacters={50}
+              placeholder="tu-email@ejemplo.com"
+              value={emailLimitInput}
+              onChange={(e) => setEmailLimitInput(e.target.value)}
+            />
+            <p className="text-xs text-muted-foreground mt-1">
+              Prueba con un email largo para ver el comportamiento
+            </p>
+          </div>
+        </div>
+
+        <div className="p-4 bg-purple-50 rounded-lg border border-purple-200">
+          <p className="text-xs font-medium mb-1">
+            🔢 Características del contador:
+          </p>
+          <ul className="text-xs text-purple-700 space-y-1">
+            <li>• Aparece automáticamente cuando se define $maxCharacters</li>
+            <li>• Previene escritura más allá del límite</li>
+            <li>• Cambia a rojo cuando se excede (visual)</li>
+            <li>• Usa fuente tabular para evitar saltos</li>
+          </ul>
+        </div>
+      </div>
+    );
+  },
+};
+
+export const CounterVariants: Story = {
+  render: () => (
+    <div className="flex flex-col gap-6 w-96">
+      <div>
+        <h3 className="text-lg font-semibold mb-4">
+          Contador en Diferentes Variantes
+        </h3>
+      </div>
+
+      <div className="space-y-4">
+        <div>
+          <label className="text-sm font-medium mb-2 block">
+            Default con contador
+          </label>
+          <Input
+            $variant="default"
+            $maxCharacters={25}
+            placeholder="Variante default"
+          />
+        </div>
+
+        <div>
+          <label className="text-sm font-medium mb-2 block">
+            Destructive con contador
+          </label>
+          <Input
+            $variant="destructive"
+            $maxCharacters={25}
+            placeholder="Variante destructive"
+          />
+        </div>
+
+        <div>
+          <label className="text-sm font-medium mb-2 block">
+            Ghost con contador
+          </label>
+          <Input
+            $variant="ghost"
+            $maxCharacters={25}
+            placeholder="Variante ghost"
+          />
+        </div>
+      </div>
+
+      <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+        <p className="text-xs font-medium mb-1">✨ Integración perfecta:</p>
+        <p className="text-xs text-muted-foreground">
+          El contador se adapta automáticamente al color de la variante cuando
+          se excede el límite.
+        </p>
+      </div>
+    </div>
+  ),
+};
+
+export const SecurityFeatures: Story = {
+  render: () => (
+    <div className="flex flex-col gap-6 w-96">
+      <div>
+        <h3 className="text-lg font-semibold mb-4">
+          🔒 Funcionalidades de Seguridad
+        </h3>
+        <p className="text-sm text-muted-foreground mb-4">
+          Protección automática contra inyecciones SQL y XSS
+        </p>
+      </div>
+
+      <div className="space-y-6">
+        <div>
+          <label className="text-sm font-medium mb-2 block">
+            Seguridad básica (mostrar advertencias)
+          </label>
+          <Input
+            $security="form"
+            $showSecurityWarnings={true}
+            placeholder="Intenta escribir: &lt;script&gt; o ' OR 1=1"
+          />
+          <p className="text-xs text-muted-foreground mt-1">
+            Detecta patrones SQL y XSS, muestra advertencias
+          </p>
+        </div>
+
+        <div>
+          <label className="text-sm font-medium mb-2 block">
+            Sanitización automática
+          </label>
+          <Input
+            $security="form"
+            $sanitizeOnChange={true}
+            placeholder="Los caracteres peligrosos se escapan automáticamente"
+          />
+          <p className="text-xs text-muted-foreground mt-1">
+            Limpia el input automáticamente al escribir
+          </p>
+        </div>
+
+        <div>
+          <label className="text-sm font-medium mb-2 block">
+            Bloqueo de input inseguro
+          </label>
+          <Input
+            $security="username"
+            $blockUnsafeInput={true}
+            $showSecurityWarnings={true}
+            placeholder="Intenta escribir caracteres peligrosos"
+          />
+          <p className="text-xs text-muted-foreground mt-1">
+            Bloquea completamente el input inseguro
+          </p>
+        </div>
+      </div>
+
+      <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+        <p className="text-xs font-medium mb-2">
+          🛡️ Protecciones implementadas:
+        </p>
+        <div className="space-y-1 text-xs text-muted-foreground">
+          <p>• Detección de inyecciones SQL</p>
+          <p>• Prevención de ataques XSS</p>
+          <p>• Sanitización automática de caracteres</p>
+          <p>• Validación en tiempo real</p>
+          <p>• Presets de seguridad predefinidos</p>
+        </div>
+      </div>
+    </div>
+  ),
 };
 

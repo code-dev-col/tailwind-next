@@ -95,6 +95,10 @@ const meta: Meta<typeof Container> = {
       control: 'text',
       description: 'Sombra (shadow-lg, 0 4px 6px rgba(0,0,0,0.1), etc.)',
     },
+    $isShadow: {
+      control: 'boolean',
+      description: 'Habilitar sombra por defecto (shadow-sm)',
+    },
     $overflow: {
       control: 'select',
       options: ['visible', 'hidden', 'scroll', 'auto'],
@@ -375,6 +379,111 @@ export const BordersAndShadows: Story = {
         $boxShadow="shadow-2xl">
         Circular
       </Container>
+    </div>
+  ),
+};
+
+export const ShadowToggle: Story = {
+  render: () => (
+    <div className="space-y-6">
+      <div>
+        <h4 className="mb-4 text-lg font-semibold">
+          Demostración del prop $isShadow
+        </h4>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <Container
+            $padding="p-6"
+            $backgroundColor="bg-white"
+            $borderRadius="rounded-lg"
+            $isShadow={false}>
+            <div className="text-center">
+              <h5 className="font-medium mb-2">Sin sombra</h5>
+              <p className="text-gray-600 text-sm">$isShadow={`{false}`}</p>
+            </div>
+          </Container>
+
+          <Container
+            $padding="p-6"
+            $backgroundColor="bg-white"
+            $borderRadius="rounded-lg"
+            $isShadow={true}>
+            <div className="text-center">
+              <h5 className="font-medium mb-2">Con sombra por defecto</h5>
+              <p className="text-gray-600 text-sm">$isShadow={`{true}`}</p>
+            </div>
+          </Container>
+        </div>
+      </div>
+
+      <div>
+        <h4 className="mb-4 text-lg font-semibold">
+          Prioridad: $boxShadow sobre $isShadow
+        </h4>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <Container
+            $padding="p-6"
+            $backgroundColor="bg-blue-50"
+            $borderRadius="rounded-lg"
+            $isShadow={true}>
+            <div className="text-center">
+              <h5 className="font-medium mb-2">Solo $isShadow</h5>
+              <p className="text-gray-600 text-sm">shadow-sm aplicado</p>
+            </div>
+          </Container>
+
+          <Container
+            $padding="p-6"
+            $backgroundColor="bg-purple-50"
+            $borderRadius="rounded-lg"
+            $isShadow={true}
+            $boxShadow="shadow-xl">
+            <div className="text-center">
+              <h5 className="font-medium mb-2">$boxShadow + $isShadow</h5>
+              <p className="text-gray-600 text-sm">
+                $boxShadow tiene prioridad (shadow-xl)
+              </p>
+            </div>
+          </Container>
+        </div>
+      </div>
+
+      <div>
+        <h4 className="mb-4 text-lg font-semibold">Casos de uso comunes</h4>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <Container
+            $padding="p-4"
+            $backgroundColor="bg-white"
+            $borderRadius="rounded-lg"
+            $isShadow={true}>
+            <h6 className="font-medium mb-2">Card básica</h6>
+            <p className="text-sm text-gray-600">
+              Usa $isShadow para cards simples
+            </p>
+          </Container>
+
+          <Container
+            $padding="p-4"
+            $backgroundColor="bg-white"
+            $borderRadius="rounded-lg"
+            $isShadow={true}
+            $cursor="pointer"
+            $transition="transition-all duration-200 hover:shadow-lg">
+            <h6 className="font-medium mb-2">Card interactiva</h6>
+            <p className="text-sm text-gray-600">Hover para más sombra</p>
+          </Container>
+
+          <Container
+            $padding="p-4"
+            $backgroundColor="bg-white"
+            $borderRadius="rounded-lg"
+            $isShadow={true}
+            $borderWidth="border"
+            $borderColor="border-gray-200">
+            <h6 className="font-medium mb-2">Card con borde</h6>
+            <p className="text-sm text-gray-600">Sombra + borde sutil</p>
+          </Container>
+        </div>
+      </div>
     </div>
   ),
 };

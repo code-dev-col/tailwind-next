@@ -44,6 +44,10 @@ interface InputProps<T extends Record<string, any> = any> extends BaseProps {
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onSecurityThreat?: (threats: string[], value: string) => void;
+  onSecurityClear?: (
+    reason: 'blocked' | 'sanitizedClear',
+    threats: string[]
+  ) => void; // Callback cuando se limpia el input por seguridad
 }
 
 const inputVariants = {
@@ -97,12 +101,16 @@ const InputComponent = <T extends Record<string, any> = any>(
     value: controlledValue,
     onChange: controlledOnChange,
     onSecurityThreat,
+    onSecurityClear,
     maxLength,
     ...props
   }: InputProps<T>,
   ref: React.Ref<HTMLInputElement>
 ) => {
   const [securityWarnings, setSecurityWarnings] = useState<string[]>([]);
+  const [wasClearedReason, setWasClearedReason] = useState<
+    null | 'blocked' | 'sanitizedClear'
+  >(null);
 
   // Patrón storeKey (nuevo y preferido)
   const storeValue =
@@ -156,34 +164,38 @@ const InputComponent = <T extends Record<string, any> = any>(
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let newValue = e.target.value;
 
-    // Validar seguridad antes de procesar
     if ($security) {
       const validation = validateInputSecurity(newValue, securityOptions);
-
-      // Si hay amenazas de seguridad
       if (!validation.isValid) {
-        // Disparar callback de amenaza si existe
-        if (onSecurityThreat) {
-          onSecurityThreat(validation.threats, newValue);
-        }
+        if (onSecurityThreat) onSecurityThreat(validation.threats, newValue);
+        if ($showSecurityWarnings) setSecurityWarnings(validation.threats);
 
-        // Actualizar warnings para mostrar
-        if ($showSecurityWarnings) {
-          setSecurityWarnings(validation.threats);
-        }
-
-        // Si está configurado para bloquear input inseguro, no procesar
+        // Bloqueo: limpiar y salir
         if ($blockUnsafeInput) {
+          if (finalSetter) finalSetter('');
+          setWasClearedReason('blocked');
+          if (controlledOnChange) {
+            const syntheticEvent = {
+              ...e,
+              target: { ...e.target, value: '' },
+            } as React.ChangeEvent<HTMLInputElement>;
+            controlledOnChange(syntheticEvent);
+          }
+          if (onSecurityClear) onSecurityClear('blocked', validation.threats);
           return;
         }
-
-        // Si está configurado para sanitizar, usar el valor sanitizado
+        // Sanitización agresiva: limpiar completamente
         if ($sanitizeOnChange) {
-          newValue = validation.sanitized;
+          if (validation.sanitized !== newValue) {
+            newValue = '';
+            setWasClearedReason('sanitizedClear');
+            if (onSecurityClear)
+              onSecurityClear('sanitizedClear', validation.threats);
+          }
         }
       } else {
-        // Limpiar warnings si el input es válido
         setSecurityWarnings([]);
+        if (wasClearedReason) setWasClearedReason(null);
       }
     }
 
@@ -263,6 +275,21 @@ const InputComponent = <T extends Record<string, any> = any>(
           </Text>
         ))}
       </div>
+    );
+  }
+
+  if (wasClearedReason) {
+    additionalElements.push(
+      <Text
+        key="security-cleared"
+        $size="xs"
+        $variant="destructive"
+        className="flex items-center gap-1">
+        <span className="text-red-500">🧹</span>
+        {wasClearedReason === 'blocked'
+          ? 'Entrada bloqueada y limpiada por amenaza.'
+          : 'Entrada limpiada por sanitización de seguridad.'}
+      </Text>
     );
   }
 

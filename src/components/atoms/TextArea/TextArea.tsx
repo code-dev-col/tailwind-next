@@ -50,6 +50,10 @@ interface TextAreaProps<T extends Record<string, any> = any> extends BaseProps {
   onFocus?: (e: React.FocusEvent<HTMLTextAreaElement>) => void;
   onBlur?: (e: React.FocusEvent<HTMLTextAreaElement>) => void;
   onSecurityThreat?: (threats: string[], value: string) => void;
+  onSecurityClear?: (
+    reason: 'blocked' | 'sanitizedClear',
+    threats: string[]
+  ) => void; // Callback cuando se limpia por seguridad
 }
 
 const textAreaVariants = {
@@ -126,12 +130,16 @@ const TextAreaComponent = <T extends Record<string, any> = any>(
     value: controlledValue,
     onChange: controlledOnChange,
     onSecurityThreat,
+    onSecurityClear,
     maxLength,
     ...props
   }: TextAreaProps<T>,
   ref: React.Ref<HTMLTextAreaElement>
 ) => {
   const [securityWarnings, setSecurityWarnings] = useState<string[]>([]);
+  const [wasClearedReason, setWasClearedReason] = useState<
+    null | 'blocked' | 'sanitizedClear'
+  >(null);
 
   // Patrón storeKey (nuevo y preferido)
   const storeValue =
@@ -188,31 +196,33 @@ const TextAreaComponent = <T extends Record<string, any> = any>(
     // Validar seguridad antes de procesar
     if ($security) {
       const validation = validateInputSecurity(newValue, securityOptions);
-
-      // Si hay amenazas de seguridad
       if (!validation.isValid) {
-        // Disparar callback de amenaza si existe
-        if (onSecurityThreat) {
-          onSecurityThreat(validation.threats, newValue);
-        }
-
-        // Actualizar warnings para mostrar
-        if ($showSecurityWarnings) {
-          setSecurityWarnings(validation.threats);
-        }
-
-        // Si está configurado para bloquear input inseguro, no procesar
+        if (onSecurityThreat) onSecurityThreat(validation.threats, newValue);
+        if ($showSecurityWarnings) setSecurityWarnings(validation.threats);
+        // Bloqueo
         if ($blockUnsafeInput) {
+          if (finalSetter) finalSetter('');
+          setWasClearedReason('blocked');
+          if (controlledOnChange) {
+            const syntheticEvent = {
+              ...e,
+              target: { ...e.target, value: '' },
+            } as React.ChangeEvent<HTMLTextAreaElement>;
+            controlledOnChange(syntheticEvent);
+          }
+          if (onSecurityClear) onSecurityClear('blocked', validation.threats);
           return;
         }
-
-        // Si está configurado para sanitizar, usar el valor sanitizado
-        if ($sanitizeOnChange) {
-          newValue = validation.sanitized;
+        // Sanitización agresiva
+        if ($sanitizeOnChange && validation.sanitized !== newValue) {
+          newValue = '';
+          setWasClearedReason('sanitizedClear');
+          if (onSecurityClear)
+            onSecurityClear('sanitizedClear', validation.threats);
         }
       } else {
-        // Limpiar warnings si el input es válido
         setSecurityWarnings([]);
+        if (wasClearedReason) setWasClearedReason(null);
       }
     }
 
@@ -248,17 +258,27 @@ const TextAreaComponent = <T extends Record<string, any> = any>(
     dynamicStyles['fieldSizing'] = 'content';
   }
 
-  const textAreaElement = (
+  // Determinar variante visual
+  const getVariant = () => {
+    if (shouldShowSecurityVariant) return 'destructive';
+    if (isOverLimit) return 'destructive';
+    return $variant || 'default';
+  };
+
+  // Añadir advertencias de seguridad (similar a Input) y limpiar valor si se requiere
+  const showWarnings = $showSecurityWarnings && securityWarnings.length > 0;
+
+  // Si se decidió limpiar por amenaza y sanitización/bloqueo, ya se aplicó en handleChange.
+
+  const textAreaCore = (
     <textarea
       className={cn(
         textAreaVariants.base,
-        textAreaVariants.variants.variant[$variant || 'default'],
+        textAreaVariants.variants.variant[getVariant()],
         textAreaVariants.variants.size[$size || 'default'],
         textAreaVariants.variants.resize[$isResize ? 'true' : 'false'],
         textAreaVariants.variants.autoSizing[$isAutoSizing ? 'true' : 'false'],
-        // Aplicar clase Tailwind si es válida
         $height && isValidTailwindClass($height) ? $height : '',
-        // Clase de error si excede el límite
         isOverLimit ? 'border-destructive ring-destructive' : '',
         className,
         $custom
@@ -273,16 +293,10 @@ const TextAreaComponent = <T extends Record<string, any> = any>(
     />
   );
 
-  // Si no hay límite de caracteres, devolver solo el textarea
-  if (!effectiveMaxLength) {
-    return textAreaElement;
-  }
-
-  // Si hay límite de caracteres, envolver con el contador
-  return (
-    <div className="w-full">
-      {textAreaElement}
-      <div className="flex justify-end mt-1">
+  const additional: React.ReactNode[] = [];
+  if (effectiveMaxLength) {
+    additional.push(
+      <div key="char-counter" className="flex justify-end mt-1">
         <Text
           $size="xs"
           $variant={isOverLimit ? 'destructive' : 'muted'}
@@ -290,6 +304,48 @@ const TextAreaComponent = <T extends Record<string, any> = any>(
           {currentLength}/{effectiveMaxLength}
         </Text>
       </div>
+    );
+  }
+  if (showWarnings) {
+    additional.push(
+      <div key="security-warnings" className="space-y-1 mt-1">
+        {securityWarnings.map((w, i) => (
+          <Text
+            key={i}
+            $size="xs"
+            $variant="destructive"
+            className="flex items-center gap-1">
+            <span className="text-red-500">⚠️</span>
+            {w}
+          </Text>
+        ))}
+      </div>
+    );
+  }
+
+  if (wasClearedReason) {
+    additional.push(
+      <Text
+        key="security-cleared"
+        $size="xs"
+        $variant="destructive"
+        className="flex items-center gap-1">
+        <span className="text-red-500">🧹</span>
+        {wasClearedReason === 'blocked'
+          ? 'Entrada bloqueada y limpiada por amenaza.'
+          : 'Entrada limpiada por sanitización de seguridad.'}
+      </Text>
+    );
+  }
+
+  if (additional.length === 0 && !effectiveMaxLength) {
+    return textAreaCore;
+  }
+
+  return (
+    <div className="w-full">
+      {textAreaCore}
+      {additional.length > 0 && <div>{additional}</div>}
     </div>
   );
 };

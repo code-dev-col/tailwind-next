@@ -1,15 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useStore } from 'zustand';
 import { StoreApi, UseBoundStore } from 'zustand';
 import { cn } from '../../../utils/cn';
 import type { BaseProps } from '../../../types';
 import { Text } from '../Text';
 import {
-  validateInputSecurity,
-  useSecurityValidation,
   getSecurityPreset,
   type SecurityOptions,
 } from '../../../utils/security';
+import { useSecureField } from '../../../utils/useSecureField';
 
 interface InputProps<T extends Record<string, any> = any> extends BaseProps {
   $variant?: 'default' | 'destructive' | 'ghost';
@@ -107,11 +106,6 @@ const InputComponent = <T extends Record<string, any> = any>(
   }: InputProps<T>,
   ref: React.Ref<HTMLInputElement>
 ) => {
-  const [securityWarnings, setSecurityWarnings] = useState<string[]>([]);
-  const [wasClearedReason, setWasClearedReason] = useState<
-    null | 'blocked' | 'sanitizedClear'
-  >(null);
-
   // Patrón storeKey (nuevo y preferido)
   const storeValue =
     $store && storeKey
@@ -140,88 +134,40 @@ const InputComponent = <T extends Record<string, any> = any>(
   const finalValue = storeValue ?? stringStoreValue ?? controlledValue ?? '';
   const finalSetter = storeSetter ?? stringStoreSetter;
 
-  // Configuración de seguridad
-  const securityOptions: SecurityOptions =
-    typeof $security === 'string'
+  const securityOptions: SecurityOptions | undefined = $security
+    ? typeof $security === 'string'
       ? getSecurityPreset($security)
-      : $security || { level: 'basic' };
+      : $security
+    : undefined;
 
-  // Validación de seguridad en tiempo real
-  const securityValidation = useSecurityValidation(finalValue, securityOptions);
-
-  // Lógica para maxCharacters
-  const effectiveMaxLength = $maxCharacters || maxLength;
-  const currentLength = finalValue.length;
-  const isOverLimit = effectiveMaxLength
-    ? currentLength > effectiveMaxLength
-    : false;
-
-  // Determinar si hay amenazas de seguridad
-  const hasSecurityThreats = securityValidation.hasThreats;
-  const shouldShowSecurityVariant =
-    hasSecurityThreats && ($showSecurityWarnings || $blockUnsafeInput);
+  const secureField = useSecureField({
+    value: finalValue,
+    setter: finalSetter,
+    security: securityOptions,
+    sanitizeOnChange: $sanitizeOnChange,
+    showSecurityWarnings: $showSecurityWarnings,
+    blockUnsafeInput: $blockUnsafeInput,
+    maxCharacters: $maxCharacters,
+    maxLengthProp: maxLength,
+    onSecurityThreat,
+    onSecurityClear,
+    onChangeExternal: (processed) => {
+      if (controlledOnChange) {
+        const syntheticEvent = {
+          target: { value: processed },
+        } as React.ChangeEvent<HTMLInputElement>;
+        controlledOnChange(syntheticEvent);
+      }
+    },
+  });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let newValue = e.target.value;
-
-    if ($security) {
-      const validation = validateInputSecurity(newValue, securityOptions);
-      if (!validation.isValid) {
-        if (onSecurityThreat) onSecurityThreat(validation.threats, newValue);
-        if ($showSecurityWarnings) setSecurityWarnings(validation.threats);
-
-        // Bloqueo: limpiar y salir
-        if ($blockUnsafeInput) {
-          if (finalSetter) finalSetter('');
-          setWasClearedReason('blocked');
-          if (controlledOnChange) {
-            const syntheticEvent = {
-              ...e,
-              target: { ...e.target, value: '' },
-            } as React.ChangeEvent<HTMLInputElement>;
-            controlledOnChange(syntheticEvent);
-          }
-          if (onSecurityClear) onSecurityClear('blocked', validation.threats);
-          return;
-        }
-        // Sanitización agresiva: limpiar completamente
-        if ($sanitizeOnChange) {
-          if (validation.sanitized !== newValue) {
-            newValue = '';
-            setWasClearedReason('sanitizedClear');
-            if (onSecurityClear)
-              onSecurityClear('sanitizedClear', validation.threats);
-          }
-        }
-      } else {
-        setSecurityWarnings([]);
-        if (wasClearedReason) setWasClearedReason(null);
-      }
-    }
-
-    // Aplicar límite de caracteres si está definido
-    if (effectiveMaxLength && newValue.length > effectiveMaxLength) {
-      newValue = newValue.slice(0, effectiveMaxLength);
-    }
-
-    if (finalSetter) {
-      finalSetter(newValue);
-    }
-
-    if (controlledOnChange) {
-      // Crear un nuevo evento con el valor procesado
-      const syntheticEvent = {
-        ...e,
-        target: { ...e.target, value: newValue },
-      } as React.ChangeEvent<HTMLInputElement>;
-      controlledOnChange(syntheticEvent);
-    }
+    secureField.handleChange(e.target.value);
   };
 
-  // Determinar variante del input basada en estado
   const getInputVariant = () => {
-    if (shouldShowSecurityVariant) return 'destructive';
-    if (isOverLimit) return 'destructive';
+    if (secureField.shouldShowSecurityVariant) return 'destructive';
+    if (secureField.isOverLimit) return 'destructive';
     return $variant || 'default';
   };
 
@@ -235,9 +181,9 @@ const InputComponent = <T extends Record<string, any> = any>(
         className,
         $custom
       )}
-      value={finalValue}
+      value={secureField.value}
       onChange={handleChange}
-      maxLength={effectiveMaxLength}
+      maxLength={secureField.effectiveMaxLength}
       ref={ref}
       {...props}
     />
@@ -247,24 +193,24 @@ const InputComponent = <T extends Record<string, any> = any>(
   const additionalElements = [];
 
   // Contador de caracteres
-  if (effectiveMaxLength) {
+  if (secureField.effectiveMaxLength) {
     additionalElements.push(
       <div key="char-counter" className="flex justify-end">
         <Text
           $size="xs"
-          $variant={isOverLimit ? 'destructive' : 'muted'}
+          $variant={secureField.isOverLimit ? 'destructive' : 'muted'}
           className="tabular-nums">
-          {currentLength}/{effectiveMaxLength}
+          {secureField.currentLength}/{secureField.effectiveMaxLength}
         </Text>
       </div>
     );
   }
 
   // Advertencias de seguridad
-  if ($showSecurityWarnings && securityWarnings.length > 0) {
+  if ($showSecurityWarnings && secureField.securityWarnings.length > 0) {
     additionalElements.push(
       <div key="security-warnings" className="space-y-1">
-        {securityWarnings.map((warning, index) => (
+        {secureField.securityWarnings.map((warning, index) => (
           <Text
             key={index}
             $size="xs"
@@ -278,7 +224,7 @@ const InputComponent = <T extends Record<string, any> = any>(
     );
   }
 
-  if (wasClearedReason) {
+  if (secureField.wasClearedReason) {
     additionalElements.push(
       <Text
         key="security-cleared"
@@ -286,7 +232,7 @@ const InputComponent = <T extends Record<string, any> = any>(
         $variant="destructive"
         className="flex items-center gap-1">
         <span className="text-red-500">🧹</span>
-        {wasClearedReason === 'blocked'
+        {secureField.wasClearedReason === 'blocked'
           ? 'Entrada bloqueada y limpiada por amenaza.'
           : 'Entrada limpiada por sanitización de seguridad.'}
       </Text>

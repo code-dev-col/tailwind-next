@@ -1,0 +1,115 @@
+/* Design Tokens & Theme (Tailwind v4 @theme block)
+ * Estos tokens definen la base semántica de la librería.
+ * Consumidores pueden hacer override importando este archivo primero
+ * y redefiniendo variables en un scope (:root.dark, .brand-x, etc.).
+ */
+
+:root {
+  /* Colores base (HSL sin hsl()) - Pastel Refresh */
+  --color-background: 0 0% 100%; /* Blanco neutro */
+  --color-foreground: 228 30% 10%; /* Texto principal ligeramente suavizado (antes muy oscuro) */
+  --color-muted: 220 40% 97%; /* Fondo sutil más luminoso */
+  --color-muted-foreground: 225 15% 42%; /* Texto secundario menos contrastado */
+  --color-border: 220 25% 88%; /* Bordes suaves */
+  --color-input: 220 25% 92%; /* Fondo inputs pastel */
+  --color-ring: 250 70% 66%; /* Anillo enfoque acorde con nuevo primary */
+
+  /* Primarios & semánticos (pastel pero con contraste suficiente para texto claro) */
+  --color-primary: 250 70% 60%; /* Indigo-lavanda suave */
+  --color-primary-foreground: 0 0% 100%;
+  --color-secondary: 195 60% 55%; /* Azul turquesa pastel */
+  --color-secondary-foreground: 0 0% 100%;
+  --color-destructive: 358 65% 58%; /* Rojo coral suave */
+  --color-destructive-foreground: 0 0% 100%;
+  --color-accent: 275 55% 65%; /* Violeta rosado claro */
+  --color-accent-foreground: 256 30% 18%;
+  --color-popover: 0 0% 100%;
+  --color-popover-foreground: 228 30% 10%;
+  --color-card: 0 0% 100%;
+  --color-card-foreground: 228 30% 10%;
+
+  /* Radii */
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-full: 9999px;
+
+  /* Sombras (referencia, Tailwind utilidades shadow-* ya existen) */
+  --shadow-focus:
+    0 0 0 2px hsl(var(--color-background)), 0 0 0 4px hsl(var(--color-ring));
+
+  /* Tipografía */
+  --font-sans: ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+
+  /* Espaciado escala semántica */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+
+  /* Gradientes semánticos (pastel) */
+  --gradient-primary: linear-gradient(
+    90deg,
+    hsl(245 70% 65%) 0%,
+    hsl(275 55% 68%) 60%,
+    hsl(295 50% 70%) 100%
+  );
+  --gradient-danger: linear-gradient(
+    90deg,
+    hsl(355 70% 65%) 0%,
+    hsl(5 65% 62%) 50%,
+    hsl(15 60% 60%) 100%
+  );
+  --gradient-success: linear-gradient(
+    90deg,
+    hsl(150 45% 55%) 0%,
+    hsl(160 45% 58%) 50%,
+    hsl(170 50% 60%) 100%
+  );
+}
+
+/* Dark mode tokens (ejemplo) */
+:root.dark {
+  /* Dark Pastel (fondo gris azulado suave, no negro puro) */
+  --color-background: 228 18% 11%;
+  --color-foreground: 210 25% 96%;
+  --color-muted: 228 15% 18%;
+  --color-muted-foreground: 228 12% 65%;
+  --color-border: 228 16% 25%;
+  --color-input: 228 16% 22%;
+  --color-ring: 250 70% 70%;
+  --color-primary: 255 75% 72%;
+  --color-primary-foreground: 228 18% 11%;
+  --color-secondary: 190 55% 65%;
+  --color-secondary-foreground: 228 18% 11%;
+  --color-destructive: 0 60% 66%;
+  --color-destructive-foreground: 228 18% 11%;
+  --color-accent: 275 55% 72%;
+  --color-accent-foreground: 228 18% 11%;
+  --color-popover: 228 18% 11%;
+  --color-popover-foreground: 210 25% 96%;
+  --color-card: 228 18% 11%;
+  --color-card-foreground: 210 25% 96%;
+}
+
+/* Helper classes opcionales (mínimas) */
+.bg-gradient-primary {
+  background-image: var(--gradient-primary);
+}
+.bg-gradient-danger {
+  background-image: var(--gradient-danger);
+}
+.bg-gradient-success {
+  background-image: var(--gradient-success);
+}
+

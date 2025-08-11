@@ -54,6 +54,9 @@ export const gradients = {
 
 export type GradientKey = keyof typeof gradients;
 
+// Lista cache para random
+const _gradientKeys: GradientKey[] = Object.keys(gradients) as GradientKey[];
+
 /**
  * Hook para obtener un degradado por clave
  * @param key - Clave del degradado
@@ -113,6 +116,25 @@ export const isValidGradientKey = (key: string): key is GradientKey => {
  */
 export const getAvailableGradients = (): GradientKey[] => {
   return Object.keys(gradients) as GradientKey[];
+};
+
+/**
+ * Obtener un degradado aleatorio, opcionalmente filtrando por prefijo o exclusiones
+ */
+export const getRandomGradient = (options?: {
+  startsWith?: string;
+  exclude?: GradientKey[];
+}): { key: GradientKey; classes: string } => {
+  let pool = _gradientKeys;
+  if (options?.startsWith) {
+    pool = pool.filter((k) => k.startsWith(options.startsWith!));
+  }
+  if (options?.exclude?.length) {
+    const excludeSet = new Set(options.exclude);
+    pool = pool.filter((k) => !excludeSet.has(k));
+  }
+  const key = pool[Math.floor(Math.random() * pool.length)] || _gradientKeys[0];
+  return { key, classes: gradients[key] };
 };
 
 /**

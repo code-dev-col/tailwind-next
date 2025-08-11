@@ -5,6 +5,7 @@ import { Container } from '../Container';
 import { Button } from '../Button';
 import { Text } from '../Text';
 import { Label } from '../Label';
+import { useDropdownExamplesStore } from '../../../stores/dropdownExamples.store';
 
 const meta: Meta<typeof Dropdown> = {
   title: 'Atoms/Dropdown',
@@ -24,9 +25,9 @@ const meta: Meta<typeof Dropdown> = {
       options: ['default', 'sm', 'lg'],
       description: 'Tamaño del dropdown',
     },
-    $store: {
-      control: 'text',
-      description: 'Nombre del store de Zustand para manejo de estado',
+    storeKey: {
+      control: false,
+      description: 'Clave interna usada por el patrón storeKey',
     },
     placeholder: {
       control: 'text',
@@ -58,10 +59,14 @@ const countryOptions = [
 ];
 
 export const Default: Story = {
-  args: {
-    options: basicOptions,
-    placeholder: 'Seleccionar opción...',
-  },
+  render: () => (
+    <Dropdown
+      $store={useDropdownExamplesStore}
+      storeKey="defaultDropdown"
+      options={basicOptions}
+      placeholder="Seleccionar opción..."
+    />
+  ),
 };
 
 export const Variants: Story = {
@@ -69,12 +74,19 @@ export const Variants: Story = {
     <Container className="space-y-4 w-80">
       <div>
         <Label>Default</Label>
-        <Dropdown options={basicOptions} placeholder="Dropdown por defecto" />
+        <Dropdown
+          $store={useDropdownExamplesStore}
+          storeKey="variantDefault"
+          options={basicOptions}
+          placeholder="Dropdown por defecto"
+        />
       </div>
       <div>
         <Label>Destructive</Label>
         <Dropdown
           $variant="destructive"
+          $store={useDropdownExamplesStore}
+          storeKey="variantDestructive"
           options={basicOptions}
           placeholder="Dropdown con error"
         />
@@ -83,6 +95,8 @@ export const Variants: Story = {
         <Label>Ghost</Label>
         <Dropdown
           $variant="ghost"
+          $store={useDropdownExamplesStore}
+          storeKey="variantGhost"
           options={basicOptions}
           placeholder="Dropdown transparente"
         />
@@ -98,18 +112,27 @@ export const Sizes: Story = {
         <Label>Small</Label>
         <Dropdown
           $size="sm"
+          $store={useDropdownExamplesStore}
+          storeKey="sizeSm"
           options={basicOptions}
           placeholder="Dropdown pequeño"
         />
       </div>
       <div>
         <Label>Default</Label>
-        <Dropdown options={basicOptions} placeholder="Dropdown normal" />
+        <Dropdown
+          $store={useDropdownExamplesStore}
+          storeKey="sizeDefault"
+          options={basicOptions}
+          placeholder="Dropdown normal"
+        />
       </div>
       <div>
         <Label>Large</Label>
         <Dropdown
           $size="lg"
+          $store={useDropdownExamplesStore}
+          storeKey="sizeLg"
           options={basicOptions}
           placeholder="Dropdown grande"
         />
@@ -118,23 +141,36 @@ export const Sizes: Story = {
   ),
 };
 
-export const WithZustandStore: Story = {
+export const WithStoreKey: Story = {
+  name: 'With Store Key',
   render: () => (
     <Container className="space-y-4 w-80">
       <Text as="h3" $weight="semibold">
-        Dropdown conectado a Zustand Store
+        Dropdown conectado (storeKey)
       </Text>
       <div>
-        <Label htmlFor="zustand-dropdown">País</Label>
+        <Label htmlFor="country-storekey">País</Label>
         <Dropdown
-          id="zustand-dropdown"
-          $storeString="exampleDropdownStore"
+          id="country-storekey"
+          $store={useDropdownExamplesStore}
+          storeKey="country"
           options={countryOptions}
           placeholder="Seleccionar país"
         />
       </div>
+      <div className="flex gap-2 pt-2">
+        <Button
+          $variant="outline"
+          onClick={() => useDropdownExamplesStore.getState().setCountry('es')}>
+          Set España
+        </Button>
+        <Button
+          onClick={() => useDropdownExamplesStore.getState().setCountry('')}>
+          Clear
+        </Button>
+      </div>
       <Text $size="sm" $variant="muted">
-        La selección se sincroniza automáticamente con el store
+        Estado aislado mediante clave en un único store.
       </Text>
     </Container>
   ),
@@ -155,6 +191,8 @@ export const FormExample: Story = {
           <Label htmlFor="country">País</Label>
           <Dropdown
             id="country"
+            $store={useDropdownExamplesStore}
+            storeKey="formCountry"
             options={countryOptions}
             placeholder="Seleccionar país"
           />
@@ -164,6 +202,8 @@ export const FormExample: Story = {
           <Label htmlFor="language">Idioma</Label>
           <Dropdown
             id="language"
+            $store={useDropdownExamplesStore}
+            storeKey="formLanguage"
             options={[
               { value: 'es', label: 'Español' },
               { value: 'en', label: 'English' },
@@ -179,6 +219,8 @@ export const FormExample: Story = {
           <Dropdown
             id="timezone"
             $variant="ghost"
+            $store={useDropdownExamplesStore}
+            storeKey="formTimezone"
             options={[
               { value: 'utc-3', label: 'UTC-3 (Buenos Aires)' },
               { value: 'utc-2', label: 'UTC-2 (Brasília)' },
@@ -190,8 +232,26 @@ export const FormExample: Story = {
         </div>
 
         <div className="flex gap-2 pt-2">
-          <Button $variant="default">Guardar</Button>
-          <Button $variant="outline">Cancelar</Button>
+          <Button
+            $variant="default"
+            onClick={() => {
+              const s = useDropdownExamplesStore.getState();
+              // Simulación submit
+              console.log('Submit form values:', {
+                country: s.formCountry,
+                language: s.formLanguage,
+                timezone: s.formTimezone,
+              });
+            }}>
+            Guardar
+          </Button>
+          <Button
+            $variant="outline"
+            onClick={() =>
+              useDropdownExamplesStore.getState().clearAllDropdowns()
+            }>
+            Limpiar
+          </Button>
         </div>
       </div>
     </Container>
@@ -203,16 +263,28 @@ export const States: Story = {
     <Container className="space-y-4 w-80">
       <div>
         <Label>Normal</Label>
-        <Dropdown options={basicOptions} placeholder="Dropdown normal" />
+        <Dropdown
+          $store={useDropdownExamplesStore}
+          storeKey="stateNormal"
+          options={basicOptions}
+          placeholder="Dropdown normal"
+        />
       </div>
       <div>
         <Label>Con valor seleccionado</Label>
-        <Dropdown options={basicOptions} value="option2" />
+        <Dropdown
+          $store={useDropdownExamplesStore}
+          storeKey="stateSelected"
+          options={basicOptions}
+          placeholder="Con valor"
+        />
       </div>
       <div>
         <Label>Deshabilitado</Label>
         <Dropdown
           disabled
+          $store={useDropdownExamplesStore}
+          storeKey="stateDisabled"
           options={basicOptions}
           placeholder="Dropdown deshabilitado"
         />
@@ -220,6 +292,8 @@ export const States: Story = {
       <div>
         <Label>Con opciones deshabilitadas</Label>
         <Dropdown
+          $store={useDropdownExamplesStore}
+          storeKey="stateWithDisabledOptions"
           options={[
             { value: 'option1', label: 'Opción disponible' },
             { value: 'option2', label: 'Opción deshabilitada', disabled: true },

@@ -31,7 +31,7 @@ interface RadioButtonProps<T extends Record<string, any> = any>
 }
 
 const radioButtonVariants = {
-  base: 'aspect-square h-4 w-4 rounded-full border shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-all duration-200',
+  base: 'aspect-square h-4 w-4 focus:outline-none  disabled:cursor-not-allowed disabled:opacity-50',
   variants: {
     variant: {
       default:
@@ -39,7 +39,7 @@ const radioButtonVariants = {
       destructive:
         'border-destructive text-destructive hover:border-destructive/80 focus-visible:ring-destructive focus-visible:shadow-md',
       ghost:
-        'border-muted text-muted-foreground hover:border-primary/50 hover:text-primary focus-visible:shadow-md',
+        'border-muted text-muted-foreground hover:border-primary/50 hover:text-primary',
     },
     size: {
       default: 'h-4 w-4',
@@ -169,14 +169,6 @@ const RadioButtonComponent = <T extends Record<string, any> = any>(
               $size === 'lg' && 'inset-[3px]',
               $size === 'default' && 'inset-[3px]'
             )}>
-            <div
-              className={cn(
-                'rounded-full bg-current',
-                $size === 'sm' && 'h-1.5 w-1.5',
-                $size === 'lg' && 'h-2.5 w-2.5',
-                $size === 'default' && 'h-2 w-2'
-              )}
-            />
           </div>
         )}
       </div>
@@ -220,4 +212,5 @@ const RadioButton = React.forwardRef(RadioButtonComponent) as <
 (RadioButton as any).displayName = 'RadioButton';
 
 export { RadioButton, type RadioButtonProps };
+
 

@@ -95,23 +95,26 @@ const CheckBoxComponent = <T extends Record<string, any> = any>(
   const checkboxId = id || React.useId();
 
   // Patrón storeKey (nuevo y preferido)
-  const storeValue = $store && storeKey 
-    ? $store((state) => {
-        const stateValue = state[storeKey];
-        // Manejar tanto arrays como booleanos
-        if (value && Array.isArray(stateValue)) {
-          return stateValue.includes(value);
-        }
-        return Boolean(stateValue);
-      })
-    : undefined;
+  const storeValue =
+    $store && storeKey
+      ? $store((state) => {
+          const stateValue = state[storeKey];
+          // Manejar tanto arrays como booleanos
+          if (value && Array.isArray(stateValue)) {
+            return stateValue.includes(value);
+          }
+          return Boolean(stateValue);
+        })
+      : undefined;
 
-  const storeSetter = $store && storeKey
-    ? $store((state) => {
-        const setterName = `set${String(storeKey).charAt(0).toUpperCase()}${String(storeKey).slice(1)}` as keyof T;
-        return state[setterName] as (value: any) => void;
-      })
-    : undefined;
+  const storeSetter =
+    $store && storeKey
+      ? $store((state) => {
+          const setterName =
+            `set${String(storeKey).charAt(0).toUpperCase()}${String(storeKey).slice(1)}` as keyof T;
+          return state[setterName] as (value: any) => void;
+        })
+      : undefined;
 
   // Patrón string store (actual - para compatibilidad)
   const zustandStore = $storeString ? getZustandStore($storeString) : null;
@@ -129,154 +132,146 @@ const CheckBoxComponent = <T extends Record<string, any> = any>(
     : undefined;
 
   // Determinar valor y setter finales
-  const finalIsChecked = storeValue ?? stringStoreValue ?? controlledChecked ?? false;
-  const finalSetter = storeSetter ?? stringStoreSetter;    // Ref interno para manejar indeterminate state
-    const internalRef = React.useRef<HTMLInputElement>(null);
-    const combinedRef = ref || internalRef;
+  const finalIsChecked =
+    storeValue ?? stringStoreValue ?? controlledChecked ?? false;
+  const finalSetter = storeSetter ?? stringStoreSetter; // Ref interno para manejar indeterminate state
+  const internalRef = React.useRef<HTMLInputElement>(null);
+  const combinedRef = ref || internalRef;
 
-    // Efecto para manejar estado indeterminado
-    React.useEffect(() => {
-      if (combinedRef && 'current' in combinedRef && combinedRef.current) {
-        combinedRef.current.indeterminate = indeterminate;
-      }
-    }, [combinedRef, indeterminate]);
+  // Efecto para manejar estado indeterminado
+  React.useEffect(() => {
+    if (combinedRef && 'current' in combinedRef && combinedRef.current) {
+      combinedRef.current.indeterminate = indeterminate;
+    }
+  }, [combinedRef, indeterminate]);
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      const newChecked = e.target.checked;
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newChecked = e.target.checked;
 
-      if (finalSetter) {
-        if (value) {
-          // Manejo de arrays para múltiples checkboxes
-          // Para el patrón storeKey, necesitamos obtener el estado actual
-          if ($store && storeKey) {
-            const currentState = $store.getState();
-            const currentValue = Array.isArray(currentState[storeKey])
-              ? currentState[storeKey]
-              : [];
-            
-            const newValue = newChecked
-              ? [...currentValue, value]
-              : (currentValue as any[]).filter((v: string) => v !== value);
-            finalSetter(newValue);
-          } else if (zustandStore) {
-            // Para el patrón legacy
-            const currentValue = Array.isArray(zustandStore.getState().value)
-              ? zustandStore.getState().value
-              : [];
-            
-            const newValue = newChecked
-              ? [...currentValue, value]
-              : currentValue.filter((v: string) => v !== value);
-            finalSetter(newValue);
-          }
-        } else {
-          // Checkbox simple (boolean)
-          finalSetter(newChecked);
+    if (finalSetter) {
+      if (value) {
+        // Manejo de arrays para múltiples checkboxes
+        // Para el patrón storeKey, necesitamos obtener el estado actual
+        if ($store && storeKey) {
+          const currentState = $store.getState();
+          const currentValue = Array.isArray(currentState[storeKey])
+            ? currentState[storeKey]
+            : [];
+
+          const newValue = newChecked
+            ? [...currentValue, value]
+            : (currentValue as any[]).filter((v: string) => v !== value);
+          finalSetter(newValue);
+        } else if (zustandStore) {
+          // Para el patrón legacy
+          const currentValue = Array.isArray(zustandStore.getState().value)
+            ? zustandStore.getState().value
+            : [];
+
+          const newValue = newChecked
+            ? [...currentValue, value]
+            : currentValue.filter((v: string) => v !== value);
+          finalSetter(newValue);
         }
+      } else {
+        // Checkbox simple (boolean)
+        finalSetter(newChecked);
       }
+    }
 
-      if (controlledOnChange) {
-        controlledOnChange(newChecked, value, e);
-      }
-    };
-    return (
-      <div className="flex items-start space-x-2">
-        <div className="relative">
-          <input
-            type="checkbox"
-            className={cn(
-              checkBoxVariants.base,
-              checkBoxVariants.variants.variant[$variant || 'default'],
-              checkBoxVariants.variants.size[$size || 'default'],
-              className,
-              $custom
-            )}
-            id={checkboxId}
-            value={value}
-            checked={finalIsChecked}
-            onChange={handleChange}
-            data-state={
-              indeterminate
-                ? 'indeterminate'
-                : finalIsChecked
-                  ? 'checked'
-                  : 'unchecked'
-            }
-            ref={combinedRef}
-            {...props}
-          />
-
-          {/* Icono de check cuando está checked */}
-          {(finalIsChecked || indeterminate) && (
-            <div
-              className={cn(
-                'absolute inset-0 flex items-center justify-center pointer-events-none text-current',
-                finalIsChecked && 'text-primary-foreground',
-                $variant === 'destructive' &&
-                  finalIsChecked &&
-                  'text-destructive-foreground',
-                $variant === 'ghost' && finalIsChecked && 'text-accent-foreground'
-              )}>
-              {indeterminate ? (
-                // Icono de estado indeterminado (línea horizontal)
-                <svg
-                  className={cn(
-                    'fill-current',
-                    $size === 'sm' && 'h-2 w-2',
-                    $size === 'lg' && 'h-3 w-3',
-                    $size === 'default' && 'h-2.5 w-2.5'
-                  )}
-                  viewBox="0 0 16 16">
-                  <path d="M4 8h8v1H4z" />
-                </svg>
-              ) : (
-                // Icono de check
-                <svg
-                  className={cn(
-                    'fill-current',
-                    $size === 'sm' && 'h-2 w-2',
-                    $size === 'lg' && 'h-3 w-3',
-                    $size === 'default' && 'h-2.5 w-2.5'
-                  )}
-                  viewBox="0 0 16 16">
-                  <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z" />
-                </svg>
-              )}
-            </div>
+    if (controlledOnChange) {
+      controlledOnChange(newChecked, value, e);
+    }
+  };
+  return (
+    <div className="flex items-start space-x-2">
+      <div className="relative">
+        <input
+          type="checkbox"
+          className={cn(
+            checkBoxVariants.base,
+            checkBoxVariants.variants.variant[$variant || 'default'],
+            checkBoxVariants.variants.size[$size || 'default'],
+            className,
+            $custom
           )}
-        </div>
+          id={checkboxId}
+          value={value}
+          checked={finalIsChecked}
+          onChange={handleChange}
+          data-state={
+            indeterminate
+              ? 'indeterminate'
+              : finalIsChecked
+                ? 'checked'
+                : 'unchecked'
+          }
+          ref={combinedRef}
+          {...props}
+        />
 
-        {(label || description) && (
-          <div className="grid gap-1.5 leading-none">
-            {label && (
-              <label
-                htmlFor={checkboxId}
+        {/* Icono de check cuando está checked */}
+        {(finalIsChecked || indeterminate) && (
+          <div
+            className={cn(
+              'absolute inset-0 flex items-center justify-center pointer-events-none text-current',
+              finalIsChecked && 'text-primary-foreground',
+              $variant === 'destructive' &&
+                finalIsChecked &&
+                'text-destructive-foreground',
+              $variant === 'ghost' && finalIsChecked && 'text-accent-foreground'
+            )}>
+            {indeterminate ? (
+              // Icono de estado indeterminado (línea horizontal)
+              <svg
                 className={cn(
-                  labelVariants.base,
-                  labelVariants.sizes[$size || 'default']
-                )}>
-                {label}
-              </label>
-            )}
-            {description && (
-              <p
-                className={cn(
-                  'text-muted-foreground',
-                  $size === 'sm' && 'text-xs',
-                  $size === 'lg' && 'text-sm',
-                  $size === 'default' && 'text-xs'
-                )}>
-                {description}
-              </p>
+                  'fill-current',
+                  $size === 'sm' && 'h-2 w-2',
+                  $size === 'lg' && 'h-3 w-3',
+                  $size === 'default' && 'h-2.5 w-2.5'
+                )}
+                viewBox="0 0 16 16">
+                <path d="M4 8h8v1H4z" />
+              </svg>
+            ) : (
+              ''
             )}
           </div>
         )}
       </div>
-    );
-  };
 
+      {(label || description) && (
+        <div className="grid gap-1.5 leading-none">
+          {label && (
+            <label
+              htmlFor={checkboxId}
+              className={cn(
+                labelVariants.base,
+                labelVariants.sizes[$size || 'default']
+              )}>
+              {label}
+            </label>
+          )}
+          {description && (
+            <p
+              className={cn(
+                'text-muted-foreground',
+                $size === 'sm' && 'text-xs',
+                $size === 'lg' && 'text-sm',
+                $size === 'default' && 'text-xs'
+              )}>
+              {description}
+            </p>
+          )}
+        </div>
+      )}
+    </div>
+  );
+};
 
-const CheckBox = React.forwardRef(CheckBoxComponent) as <T extends Record<string, any> = any>(
+const CheckBox = React.forwardRef(CheckBoxComponent) as <
+  T extends Record<string, any> = any,
+>(
   props: CheckBoxProps<T> & { ref?: React.Ref<HTMLInputElement> }
 ) => React.ReactElement;
 

@@ -20,6 +20,7 @@ export { Label, type LabelProps } from './components/atoms/Label';
 export { Separator, type SeparatorProps } from './components/atoms/Separator';
 export { Skeleton, type SkeletonProps } from './components/atoms/Skeleton';
 export { ListItem, type ListItemProps } from './components/atoms/ListItem';
+export { Link, type LinkProps } from './components/atoms/Link';
 export {
   Text,
   type TextProps,

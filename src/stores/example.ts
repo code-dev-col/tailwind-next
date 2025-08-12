@@ -82,4 +82,5 @@ if (typeof window !== 'undefined') {
 export { useInputExamples } from './inputExamples.store';
 export { useDropdownExamplesStore } from './dropdownExamples.store';
 export { useImageExamples } from './imageExamples.store';
+export { useSpinnerExamples } from './spinnerExamples.store';
 

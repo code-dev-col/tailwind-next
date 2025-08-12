@@ -27,6 +27,11 @@ export {
   type NextImageProps,
 } from './components/atoms/Image';
 export {
+  Spinner,
+  type SpinnerProps,
+  type SpinnerType,
+} from './components/atoms/Spinner';
+export {
   Text,
   type TextProps,
   type TextElement,

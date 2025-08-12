@@ -22,6 +22,11 @@ export { Skeleton, type SkeletonProps } from './components/atoms/Skeleton';
 export { ListItem, type ListItemProps } from './components/atoms/ListItem';
 export { Link, type LinkProps } from './components/atoms/Link';
 export {
+  Image,
+  type ImageProps,
+  type NextImageProps,
+} from './components/atoms/Image';
+export {
   Text,
   type TextProps,
   type TextElement,

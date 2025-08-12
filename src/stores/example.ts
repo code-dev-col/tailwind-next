@@ -78,3 +78,8 @@ if (typeof window !== 'undefined') {
   registerStore('exampleMultiCheckStore', useMultiCheckStore);
 }
 
+// Re-export stores disponibles para fácil acceso
+export { useInputExamples } from './inputExamples.store';
+export { useDropdownExamplesStore } from './dropdownExamples.store';
+export { useImageExamples } from './imageExamples.store';
+

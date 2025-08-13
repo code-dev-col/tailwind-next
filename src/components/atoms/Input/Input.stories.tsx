@@ -463,3 +463,225 @@ export const SecurityFeatures: Story = {
   ),
 };
 
+export const NeumorphicEffects: Story = {
+  render: () => (
+    <div className="p-8 bg-background max-w-4xl mx-auto">
+      <div className="space-y-8">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold mb-2">Inputs Neumórficos</h2>
+          <p className="text-muted-foreground">
+            Campos de entrada con efectos neumórficos para una UI moderna y
+            táctil
+          </p>
+        </div>
+
+        {/* Inputs Básicos Neumórficos */}
+        <div className="space-y-4">
+          <h3 className="text-lg font-semibold">Estilos Neumórficos Básicos</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <label className="text-sm font-medium">
+                Input Hundido (Inner)
+              </label>
+              <Input
+                placeholder="Efecto hundido..."
+                $custom="shadow-neumorphic-inner focus:shadow-neumorphic-inner-soft transition-all duration-200"
+              />
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Input Elevado</label>
+              <Input
+                placeholder="Efecto elevado..."
+                $custom="shadow-neumorphic focus:shadow-neumorphic-soft transition-all duration-200"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Variantes de Sombra */}
+        <div className="space-y-4">
+          <h3 className="text-lg font-semibold">Variantes de Sombra</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Sombra Suave</label>
+              <Input
+                placeholder="Sombra suave..."
+                $custom="shadow-neumorphic-soft focus:shadow-neumorphic transition-all duration-200"
+              />
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Sombra Intensa</label>
+              <Input
+                placeholder="Sombra intensa..."
+                $custom="shadow-neumorphic focus:shadow-neumorphic-inner transition-all duration-200"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Inputs con Gradientes */}
+        <div className="space-y-4">
+          <h3 className="text-lg font-semibold">Con Gradientes de Fondo</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Gradiente Primary</label>
+              <div className="p-4 bg-gradient-primary rounded-lg">
+                <Input
+                  placeholder="Input sobre gradiente..."
+                  $custom="shadow-neumorphic-inner bg-background/90 backdrop-blur-sm focus:bg-background transition-all duration-200"
+                />
+              </div>
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Gradiente Secondary</label>
+              <div className="p-4 bg-gradient-secondary rounded-lg">
+                <Input
+                  placeholder="Input sobre gradiente..."
+                  $custom="shadow-neumorphic-inner bg-background/90 backdrop-blur-sm focus:bg-background transition-all duration-200"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Estados de Formulario */}
+        <div className="space-y-4">
+          <h3 className="text-lg font-semibold">Estados de Formulario</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-green-700">
+                  Estado Válido
+                </label>
+                <Input
+                  placeholder="Entrada válida"
+                  value="texto@valido.com"
+                  $custom="shadow-neumorphic-inner border-green-300 focus:border-green-500 bg-green-50/50 transition-all duration-200"
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-red-700">
+                  Estado Error
+                </label>
+                <Input
+                  placeholder="Entrada con error"
+                  value="texto-invalido"
+                  $custom="shadow-neumorphic-inner border-red-300 focus:border-red-500 bg-red-50/50 transition-all duration-200"
+                />
+                <p className="text-xs text-red-600">
+                  Este campo contiene errores
+                </p>
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-blue-700">
+                  Estado Focus
+                </label>
+                <Input
+                  placeholder="Campo enfocado"
+                  $custom="shadow-neumorphic-inner-soft border-blue-400 ring-2 ring-blue-200 bg-blue-50/30 transition-all duration-200"
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-500">
+                  Estado Disabled
+                </label>
+                <Input
+                  placeholder="Campo deshabilitado"
+                  disabled
+                  $custom="shadow-neumorphic-inner-soft opacity-60 cursor-not-allowed"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Formulario Completo */}
+        <div className="space-y-4">
+          <h3 className="text-lg font-semibold">
+            Formulario Neumórfico Completo
+          </h3>
+          <div className="bg-muted/30 p-6 rounded-2xl shadow-neumorphic">
+            <div className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium">Nombre</label>
+                  <Input
+                    placeholder="Tu nombre..."
+                    $custom="shadow-neumorphic-inner focus:shadow-neumorphic-inner-soft transition-all duration-200"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium">Apellido</label>
+                  <Input
+                    placeholder="Tu apellido..."
+                    $custom="shadow-neumorphic-inner focus:shadow-neumorphic-inner-soft transition-all duration-200"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Email</label>
+                <Input
+                  type="email"
+                  placeholder="tu@email.com"
+                  $custom="shadow-neumorphic-inner focus:shadow-neumorphic-inner-soft transition-all duration-200"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Mensaje</label>
+                <textarea
+                  placeholder="Escribe tu mensaje aquí..."
+                  rows={4}
+                  className="w-full px-3 py-2 rounded-md border border-input bg-background shadow-neumorphic-inner focus:shadow-neumorphic-inner-soft focus:outline-none focus:ring-2 focus:ring-ring/20 transition-all duration-200 resize-none"
+                />
+              </div>
+
+              <button className="w-full px-4 py-2 bg-gradient-primary text-white rounded-md shadow-neumorphic hover:shadow-neumorphic-soft transition-all duration-200 font-medium">
+                Enviar Formulario
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Información de Implementación */}
+        <div className="bg-muted/50 p-6 rounded-lg">
+          <h3 className="text-lg font-semibold mb-3">
+            Clases para Inputs Neumórficos
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+            <div>
+              <h4 className="font-medium mb-2">Sombras Recomendadas:</h4>
+              <ul className="space-y-1 text-muted-foreground font-mono">
+                <li>• shadow-neumorphic-inner (hundido)</li>
+                <li>• shadow-neumorphic-inner-soft (suave)</li>
+                <li>• focus:shadow-neumorphic-inner-soft</li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-medium mb-2">Transiciones:</h4>
+              <ul className="space-y-1 text-muted-foreground font-mono">
+                <li>• transition-all duration-200</li>
+                <li>• focus:ring-2 ring-ring/20</li>
+                <li>• backdrop-blur-sm (con gradientes)</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  ),
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        story:
+          'Demuestra el uso de efectos neumórficos en inputs para crear una experiencia de formulario moderna y táctil.',
+      },
+    },
+  },
+};
+

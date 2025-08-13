@@ -732,3 +732,167 @@ export const WithIcons: Story = {
   },
 };
 
+export const NeumorphicEffects: Story = {
+  render: () => (
+    <div className="p-8 bg-background">
+      <div className="space-y-8">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold mb-2">Efectos Neumórficos</h2>
+          <p className="text-muted-foreground">
+            Botones con estilos neumórficos usando las nuevas sombras CSS
+            variables
+          </p>
+        </div>
+
+        {/* Botones Neumórficos Básicos */}
+        <div className="space-y-4">
+          <h3 className="text-lg font-semibold">Sombras Neumórficas</h3>
+          <div className="flex gap-4 flex-wrap">
+            <Button
+              $variant="default"
+              $custom="shadow-neumorphic transition-neumorphic hover:shadow-neumorphic-soft">
+              Neumórfico Básico
+            </Button>
+            <Button
+              $variant="secondary"
+              $custom="shadow-neumorphic-soft transition-neumorphic hover:shadow-neumorphic">
+              Neumórfico Suave
+            </Button>
+            <Button
+              $variant="outline"
+              $custom="shadow-neumorphic-inner transition-neumorphic hover:shadow-neumorphic-inner-soft">
+              Hundido
+            </Button>
+          </div>
+        </div>
+
+        {/* Botones con Gradientes + Neumórfico */}
+        <div className="space-y-4">
+          <h3 className="text-lg font-semibold">Gradientes + Neumórfico</h3>
+          <div className="flex gap-4 flex-wrap">
+            <Button $custom="bg-gradient-primary shadow-neumorphic transition-neumorphic hover:shadow-neumorphic-soft text-white">
+              Primary Gradient
+            </Button>
+            <Button $custom="bg-gradient-secondary shadow-neumorphic transition-neumorphic hover:shadow-neumorphic-soft text-white">
+              Secondary Gradient
+            </Button>
+            <Button $custom="bg-gradient-accent shadow-neumorphic transition-neumorphic hover:shadow-neumorphic-soft text-white">
+              Accent Gradient
+            </Button>
+          </div>
+        </div>
+
+        {/* Tamaños con Neumórfico */}
+        <div className="space-y-4">
+          <h3 className="text-lg font-semibold">Tamaños Neumórficos</h3>
+          <div className="flex gap-4 items-center flex-wrap">
+            <Button
+              $size="sm"
+              $custom="shadow-neumorphic-soft transition-neumorphic hover:shadow-neumorphic">
+              Pequeño
+            </Button>
+            <Button
+              $size="default"
+              $custom="shadow-neumorphic transition-neumorphic hover:shadow-neumorphic-soft">
+              Normal
+            </Button>
+            <Button
+              $size="lg"
+              $custom="shadow-neumorphic transition-neumorphic hover:shadow-neumorphic-soft">
+              Grande
+            </Button>
+          </div>
+        </div>
+
+        {/* Botones con Iconos + Neumórfico */}
+        <div className="space-y-4">
+          <h3 className="text-lg font-semibold">Con Iconos + Neumórfico</h3>
+          <div className="flex gap-4 flex-wrap">
+            <Button
+              $iconLeft={FaDownload}
+              $custom="shadow-neumorphic transition-neumorphic hover:shadow-neumorphic-soft bg-gradient-primary text-white">
+              Descargar
+            </Button>
+            <Button
+              $iconRight={FaArrowRight}
+              $custom="shadow-neumorphic transition-neumorphic hover:shadow-neumorphic-soft bg-gradient-success text-white">
+              Continuar
+            </Button>
+            <Button
+              $size="icon"
+              $iconLeft={FaHeart}
+              $custom="shadow-neumorphic transition-neumorphic hover:shadow-neumorphic-soft bg-gradient-danger text-white"
+            />
+          </div>
+        </div>
+
+        {/* Estados Interactivos */}
+        <div className="space-y-4">
+          <h3 className="text-lg font-semibold">Estados Interactivos</h3>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="text-center space-y-2">
+              <Button $custom="shadow-neumorphic transition-neumorphic">
+                Normal
+              </Button>
+              <p className="text-xs text-muted-foreground">Estado reposo</p>
+            </div>
+            <div className="text-center space-y-2">
+              <Button $custom="shadow-neumorphic-soft transition-neumorphic transform -translate-y-1">
+                Hover
+              </Button>
+              <p className="text-xs text-muted-foreground">Al pasar mouse</p>
+            </div>
+            <div className="text-center space-y-2">
+              <Button $custom="shadow-neumorphic-inner transition-neumorphic">
+                Pressed
+              </Button>
+              <p className="text-xs text-muted-foreground">Al presionar</p>
+            </div>
+            <div className="text-center space-y-2">
+              <Button
+                disabled
+                $custom="shadow-neumorphic-inner-soft opacity-50">
+                Disabled
+              </Button>
+              <p className="text-xs text-muted-foreground">Deshabilitado</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Información de Implementación */}
+        <div className="bg-muted/50 p-6 rounded-lg">
+          <h3 className="text-lg font-semibold mb-3">Clases CSS Disponibles</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+            <div>
+              <h4 className="font-medium mb-2">Sombras Neumórficas:</h4>
+              <ul className="space-y-1 text-muted-foreground font-mono">
+                <li>• shadow-neumorphic</li>
+                <li>• shadow-neumorphic-soft</li>
+                <li>• shadow-neumorphic-inner</li>
+                <li>• shadow-neumorphic-inner-soft</li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-medium mb-2">Transiciones:</h4>
+              <ul className="space-y-1 text-muted-foreground font-mono">
+                <li>• transition-neumorphic</li>
+                <li>• hover:shadow-neumorphic-soft</li>
+                <li>• active:shadow-neumorphic-inner</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  ),
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        story:
+          'Demuestra el uso de efectos neumórficos con las nuevas sombras CSS variables para crear una UI moderna y táctil.',
+      },
+    },
+  },
+};
+

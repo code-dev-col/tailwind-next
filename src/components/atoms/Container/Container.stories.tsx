@@ -665,6 +665,401 @@ export const ResponsiveLayout: Story = {
   ),
 };
 
+export const NeumorphicEffects: Story = {
+  render: () => (
+    <div className="p-8 bg-gradient-to-br from-gray-100 to-gray-200 min-h-screen">
+      <div className="max-w-6xl mx-auto space-y-12">
+        {/* Header */}
+        <div className="text-center space-y-4">
+          <h2 className="text-3xl font-bold text-gray-800">
+            Efectos Neumórficos - Container
+          </h2>
+          <p className="text-gray-600 max-w-2xl mx-auto">
+            Descubre cómo el componente Container puede crear efectos
+            neumórficos modernos para layouts y estructuras
+          </p>
+        </div>
+
+        {/* Basic Neumorphic Containers */}
+        <section className="space-y-6">
+          <h3 className="text-xl font-semibold text-gray-800">
+            Contenedores Neumórficos Básicos
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <Container
+              $padding="p-8"
+              $borderRadius="rounded-2xl"
+              $backgroundColor="bg-gray-100"
+              $custom="shadow-neumorphic transition-neumorphic hover:shadow-neumorphic-soft">
+              <div className="text-center">
+                <h4 className="text-lg font-semibold text-gray-700 mb-3">
+                  Contenedor Básico
+                </h4>
+                <p className="text-gray-600 text-sm">
+                  Efecto neumórfico estándar con sombras suaves
+                </p>
+              </div>
+            </Container>
+
+            <Container
+              $padding="p-8"
+              $borderRadius="rounded-2xl"
+              $backgroundColor="bg-gray-100"
+              $custom="shadow-neumorphic-soft transition-neumorphic hover:shadow-neumorphic">
+              <div className="text-center">
+                <h4 className="text-lg font-semibold text-gray-700 mb-3">
+                  Contenedor Suave
+                </h4>
+                <p className="text-gray-600 text-sm">
+                  Sombras más sutiles para elementos secundarios
+                </p>
+              </div>
+            </Container>
+
+            <Container
+              $padding="p-8"
+              $borderRadius="rounded-2xl"
+              $backgroundColor="bg-gray-100"
+              $custom="shadow-neumorphic-inner transition-neumorphic">
+              <div className="text-center">
+                <h4 className="text-lg font-semibold text-gray-700 mb-3">
+                  Contenedor Hundido
+                </h4>
+                <p className="text-gray-600 text-sm">
+                  Efecto de profundidad hacia adentro
+                </p>
+              </div>
+            </Container>
+          </div>
+        </section>
+
+        {/* Layout Structures */}
+        <section className="space-y-6">
+          <h3 className="text-xl font-semibold text-gray-800">
+            Estructuras de Layout Neumórficas
+          </h3>
+
+          {/* Card Layout */}
+          <Container
+            $padding="p-8"
+            $borderRadius="rounded-3xl"
+            $backgroundColor="bg-gray-100"
+            $custom="shadow-neumorphic">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              <Container
+                $padding="p-6"
+                $borderRadius="rounded-xl"
+                $backgroundColor="bg-gray-100"
+                $custom="shadow-neumorphic-inner-soft">
+                <h4 className="text-md font-semibold text-gray-700 mb-3">
+                  Sidebar
+                </h4>
+                <div className="space-y-3">
+                  <Container
+                    $padding="p-3"
+                    $borderRadius="rounded-lg"
+                    $backgroundColor="bg-gray-100"
+                    $custom="shadow-neumorphic-inner transition-neumorphic hover:shadow-neumorphic-inner-soft cursor-pointer">
+                    <span className="text-sm text-gray-600">Navegación 1</span>
+                  </Container>
+                  <Container
+                    $padding="p-3"
+                    $borderRadius="rounded-lg"
+                    $backgroundColor="bg-gray-100"
+                    $custom="shadow-neumorphic-inner transition-neumorphic hover:shadow-neumorphic-inner-soft cursor-pointer">
+                    <span className="text-sm text-gray-600">Navegación 2</span>
+                  </Container>
+                </div>
+              </Container>
+
+              <div className="lg:col-span-2 space-y-4">
+                <Container
+                  $padding="p-6"
+                  $borderRadius="rounded-xl"
+                  $backgroundColor="bg-gray-100"
+                  $custom="shadow-neumorphic-soft">
+                  <h4 className="text-lg font-semibold text-gray-700 mb-4">
+                    Contenido Principal
+                  </h4>
+                  <p className="text-gray-600 mb-4">
+                    Esta es una demostración de un layout completo usando
+                    efectos neumórficos. Cada sección tiene profundidad visual
+                    única.
+                  </p>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <Container
+                      $padding="p-4"
+                      $borderRadius="rounded-lg"
+                      $backgroundColor="bg-gray-100"
+                      $custom="shadow-neumorphic-inner transition-neumorphic hover:shadow-neumorphic cursor-pointer">
+                      <div className="text-center">
+                        <div className="text-2xl font-bold text-blue-600 mb-1">
+                          24
+                        </div>
+                        <div className="text-xs text-gray-600">Proyectos</div>
+                      </div>
+                    </Container>
+                    <Container
+                      $padding="p-4"
+                      $borderRadius="rounded-lg"
+                      $backgroundColor="bg-gray-100"
+                      $custom="shadow-neumorphic-inner transition-neumorphic hover:shadow-neumorphic cursor-pointer">
+                      <div className="text-center">
+                        <div className="text-2xl font-bold text-green-600 mb-1">
+                          87%
+                        </div>
+                        <div className="text-xs text-gray-600">Completado</div>
+                      </div>
+                    </Container>
+                  </div>
+                </Container>
+              </div>
+            </div>
+          </Container>
+        </section>
+
+        {/* Interactive Dashboard */}
+        <section className="space-y-6">
+          <h3 className="text-xl font-semibold text-gray-800">
+            Dashboard Neumórfico Interactivo
+          </h3>
+          <Container
+            $padding="p-8"
+            $borderRadius="rounded-3xl"
+            $backgroundColor="bg-gray-100"
+            $custom="shadow-neumorphic">
+            {/* Header del Dashboard */}
+            <Container
+              $display="flex"
+              $justifyContent="between"
+              $alignItems="center"
+              $padding="p-6 mb-6"
+              $borderRadius="rounded-xl"
+              $backgroundColor="bg-gray-100"
+              $custom="shadow-neumorphic-inner-soft">
+              <div>
+                <h4 className="text-xl font-bold text-gray-800">
+                  Panel de Control
+                </h4>
+                <p className="text-sm text-gray-600">
+                  Gestión de proyectos neumórfica
+                </p>
+              </div>
+              <Container
+                $padding="px-6 py-3"
+                $borderRadius="rounded-full"
+                $backgroundColor="bg-gray-100"
+                $cursor="pointer"
+                $custom="shadow-neumorphic transition-neumorphic hover:shadow-neumorphic-soft">
+                <span className="text-sm font-medium text-gray-700">
+                  + Nuevo
+                </span>
+              </Container>
+            </Container>
+
+            {/* Grid de Métricas */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+              {[
+                { label: 'Usuarios', value: '1,234', color: 'text-blue-600' },
+                { label: 'Ventas', value: '$89K', color: 'text-green-600' },
+                {
+                  label: 'Conversión',
+                  value: '12.5%',
+                  color: 'text-orange-600',
+                },
+                {
+                  label: 'Crecimiento',
+                  value: '+23%',
+                  color: 'text-purple-600',
+                },
+              ].map((metric, index) => (
+                <Container
+                  key={index}
+                  $padding="p-6"
+                  $borderRadius="rounded-xl"
+                  $backgroundColor="bg-gray-100"
+                  $cursor="pointer"
+                  $custom="shadow-neumorphic-inner transition-neumorphic hover:shadow-neumorphic-inner-soft group">
+                  <div className="text-center">
+                    <div
+                      className={`text-2xl font-bold ${metric.color} mb-2 transition-transform group-hover:scale-110`}>
+                      {metric.value}
+                    </div>
+                    <div className="text-sm text-gray-600">{metric.label}</div>
+                  </div>
+                </Container>
+              ))}
+            </div>
+
+            {/* Área de Gráficos Simulada */}
+            <Container
+              $padding="p-8"
+              $borderRadius="rounded-xl"
+              $backgroundColor="bg-gray-100"
+              $custom="shadow-neumorphic-inner">
+              <h5 className="text-lg font-semibold text-gray-700 mb-6">
+                Análisis de Rendimiento
+              </h5>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <Container
+                  $padding="p-6"
+                  $borderRadius="rounded-lg"
+                  $backgroundColor="bg-gray-100"
+                  $custom="shadow-neumorphic-soft">
+                  <div className="h-32 bg-gradient-to-r from-blue-400 to-purple-500 rounded-lg opacity-20 mb-4"></div>
+                  <p className="text-sm text-gray-600 text-center">
+                    Gráfico de Barras Neumórfico
+                  </p>
+                </Container>
+                <Container
+                  $padding="p-6"
+                  $borderRadius="rounded-lg"
+                  $backgroundColor="bg-gray-100"
+                  $custom="shadow-neumorphic-soft">
+                  <div className="h-32 bg-gradient-to-br from-green-400 to-teal-500 rounded-full opacity-20 mb-4 mx-auto w-32"></div>
+                  <p className="text-sm text-gray-600 text-center">
+                    Gráfico Circular Neumórfico
+                  </p>
+                </Container>
+              </div>
+            </Container>
+          </Container>
+        </section>
+
+        {/* Form Layout Neumórfico */}
+        <section className="space-y-6">
+          <h3 className="text-xl font-semibold text-gray-800">
+            Formulario con Layout Neumórfico
+          </h3>
+          <Container
+            $maxWidth="max-w-2xl"
+            $margin="mx-auto"
+            $padding="p-8"
+            $borderRadius="rounded-3xl"
+            $backgroundColor="bg-gray-100"
+            $custom="shadow-neumorphic">
+            <h4 className="text-xl font-semibold text-gray-800 mb-6 text-center">
+              Contacto Neumórfico
+            </h4>
+
+            <div className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <Container
+                  $padding="p-4"
+                  $borderRadius="rounded-xl"
+                  $backgroundColor="bg-gray-100"
+                  $custom="shadow-neumorphic-inner-soft focus-within:shadow-neumorphic-inner transition-neumorphic">
+                  <input
+                    type="text"
+                    placeholder="Nombre"
+                    className="w-full bg-transparent outline-none text-gray-700 placeholder-gray-500"
+                  />
+                </Container>
+                <Container
+                  $padding="p-4"
+                  $borderRadius="rounded-xl"
+                  $backgroundColor="bg-gray-100"
+                  $custom="shadow-neumorphic-inner-soft focus-within:shadow-neumorphic-inner transition-neumorphic">
+                  <input
+                    type="email"
+                    placeholder="Email"
+                    className="w-full bg-transparent outline-none text-gray-700 placeholder-gray-500"
+                  />
+                </Container>
+              </div>
+
+              <Container
+                $padding="p-4"
+                $borderRadius="rounded-xl"
+                $backgroundColor="bg-gray-100"
+                $custom="shadow-neumorphic-inner-soft focus-within:shadow-neumorphic-inner transition-neumorphic">
+                <textarea
+                  placeholder="Mensaje"
+                  rows={4}
+                  className="w-full bg-transparent outline-none text-gray-700 placeholder-gray-500 resize-none"
+                />
+              </Container>
+
+              <Container
+                $padding="py-4 px-8"
+                $borderRadius="rounded-full"
+                $backgroundColor="bg-gray-100"
+                $cursor="pointer"
+                $margin="mx-auto"
+                $width="w-fit"
+                $custom="shadow-neumorphic transition-neumorphic hover:shadow-neumorphic-soft active:shadow-neumorphic-inner">
+                <span className="text-gray-700 font-medium">
+                  Enviar Mensaje
+                </span>
+              </Container>
+            </div>
+          </Container>
+        </section>
+
+        {/* Guía de Implementación */}
+        <section className="space-y-6">
+          <h3 className="text-xl font-semibold text-gray-800">
+            Guía de Implementación
+          </h3>
+          <Container
+            $padding="p-8"
+            $borderRadius="rounded-2xl"
+            $backgroundColor="bg-gray-100"
+            $custom="shadow-neumorphic-inner">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <div>
+                <h4 className="text-lg font-semibold text-gray-700 mb-4">
+                  Clases CSS Disponibles
+                </h4>
+                <div className="space-y-3 text-sm">
+                  <div className="flex justify-between">
+                    <code className="bg-gray-200 px-2 py-1 rounded text-xs">
+                      shadow-neumorphic
+                    </code>
+                    <span className="text-gray-600">Efecto principal</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <code className="bg-gray-200 px-2 py-1 rounded text-xs">
+                      shadow-neumorphic-soft
+                    </code>
+                    <span className="text-gray-600">Efecto suave</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <code className="bg-gray-200 px-2 py-1 rounded text-xs">
+                      shadow-neumorphic-inner
+                    </code>
+                    <span className="text-gray-600">Efecto hundido</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <code className="bg-gray-200 px-2 py-1 rounded text-xs">
+                      transition-neumorphic
+                    </code>
+                    <span className="text-gray-600">Transiciones suaves</span>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <h4 className="text-lg font-semibold text-gray-700 mb-4">
+                  Mejores Prácticas
+                </h4>
+                <ul className="space-y-2 text-sm text-gray-600">
+                  <li>• Usa bg-gray-100 como fondo base</li>
+                  <li>• Combina con border-radius grandes (rounded-xl+)</li>
+                  <li>• Añade transition-neumorphic para interactividad</li>
+                  <li>• Usa efectos inner para campos de entrada</li>
+                  <li>• Mantén consistencia en toda la interfaz</li>
+                </ul>
+              </div>
+            </div>
+          </Container>
+        </section>
+      </div>
+    </div>
+  ),
+};
+
 export const ComplexExample: Story = {
   render: () => (
     <Container

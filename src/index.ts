@@ -13,6 +13,7 @@ export {
   type RadioButtonProps,
 } from './components/atoms/RadioButton';
 export { CheckBox, type CheckBoxProps } from './components/atoms/CheckBox';
+export { Switch, type SwitchProps } from './components/atoms/Switch';
 export { Icon, type IconProps } from './components/atoms/Icon';
 export { Badge, type BadgeProps } from './components/atoms/Badge';
 export { Avatar, type AvatarProps } from './components/atoms/Avatar';

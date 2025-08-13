@@ -1,77 +1,99 @@
 /* Design Tokens & Theme (Tailwind v4 @theme block)
- * Estos tokens definen la base semántica de la librería para generar utilidades de Tailwind
+ * Colores mejorados + Sombras neumórficas para UI moderna
+ * Mantiene paleta pastel obligatoria según instrucciones de desarrollo
  */
 
 @theme {
-  /* Colores base - formato HSL para Tailwind v4 */
-  --color-background: hsl(0 0% 100%);
-  --color-foreground: hsl(228 30% 10%);
-  --color-muted: hsl(220 40% 97%);
-  --color-muted-foreground: hsl(225 15% 42%);
-  --color-border: hsl(220 25% 88%);
-  --color-input: hsl(220 25% 92%);
-  --color-ring: hsl(250 70% 66%);
+  /* Colores base mejorados - Mejor contraste y legibilidad */
+  --color-background: hsl(230 20% 98%);
+  --color-foreground: hsl(230 15% 15%);
+  --color-muted: hsl(230 20% 95%);
+  --color-muted-foreground: hsl(230 10% 45%);
+  --color-border: hsl(230 15% 90%);
+  --color-input: hsl(230 15% 93%);
+  --color-ring: hsl(245 65% 70%);
 
-  /* Primarios & semánticos */
-  --color-primary: hsl(250 70% 60%);
+  /* Primarios & semánticos - Híbrido: mejoras + obligatorios */
+  --color-primary: hsl(245 65% 65%);
   --color-primary-foreground: hsl(0 0% 100%);
-  --color-secondary: hsl(195 60% 55%);
+  --color-secondary: hsl(
+    195 60% 55%
+  ); /* MANTENER: turquesa pastel obligatorio */
   --color-secondary-foreground: hsl(0 0% 100%);
-  --color-destructive: hsl(358 65% 58%);
+  --color-destructive: hsl(358 65% 58%); /* MANTENER: coral suave obligatorio */
   --color-destructive-foreground: hsl(0 0% 100%);
-  --color-accent: hsl(275 55% 65%);
-  --color-accent-foreground: hsl(256 30% 18%);
+  --color-accent: hsl(270 50% 75%);
+  --color-accent-foreground: hsl(230 15% 25%);
   --color-popover: hsl(0 0% 100%);
-  --color-popover-foreground: hsl(228 30% 10%);
+  --color-popover-foreground: hsl(230 15% 15%);
   --color-card: hsl(0 0% 100%);
-  --color-card-foreground: hsl(228 30% 10%);
+  --color-card-foreground: hsl(230 15% 15%);
 
-  /* Radii */
+  /* Radii - Expandido para más opciones */
   --radius-xs: 2px;
   --radius-sm: 4px;
   --radius-md: 6px;
   --radius-lg: 8px;
   --radius-xl: 12px;
+  --radius-2xl: 16px;
   --radius-full: 9999px;
+
+  /* Sombras neumórficas para UI moderna */
+  --shadow-neumorphic-light:
+    8px 8px 16px hsl(230 20% 90%), -8px -8px 16px hsl(0 0% 100%);
+  --shadow-neumorphic-light-soft:
+    4px 4px 12px hsl(230 20% 92%), -4px -4px 12px hsl(0 0% 100%);
+  --shadow-neumorphic-inner:
+    inset 4px 4px 8px hsl(230 20% 90%), inset -4px -4px 8px hsl(0 0% 100%);
+  --shadow-neumorphic-inner-soft:
+    inset 2px 2px 6px hsl(230 20% 92%), inset -2px -2px 6px hsl(0 0% 100%);
 }
 
 /* Variables CSS adicionales para compatibilidad con shadcn/ui */
 :root {
-  /* Mapeo para shadcn/ui (HSL sin hsl()) */
-  --background: 0 0% 100%;
-  --foreground: 228 30% 10%;
-  --muted: 220 40% 97%;
-  --muted-foreground: 225 15% 42%;
-  --border: 220 25% 88%;
-  --input: 220 25% 92%;
-  --ring: 250 70% 66%;
-  --primary: 250 70% 60%;
+  /* Mapeo mejorado para shadcn/ui (HSL sin hsl()) */
+  --background: 230 20% 98%;
+  --foreground: 230 15% 15%;
+  --muted: 230 20% 95%;
+  --muted-foreground: 230 10% 45%;
+  --border: 230 15% 90%;
+  --input: 230 15% 93%;
+  --ring: 245 65% 70%;
+  --primary: 245 65% 65%;
   --primary-foreground: 0 0% 100%;
-  --secondary: 195 60% 55%;
+  --secondary: 195 60% 55%; /* MANTENER: obligatorio */
   --secondary-foreground: 0 0% 100%;
-  --destructive: 358 65% 58%;
+  --destructive: 358 65% 58%; /* MANTENER: obligatorio */
   --destructive-foreground: 0 0% 100%;
-  --accent: 275 55% 65%;
-  --accent-foreground: 256 30% 18%;
+  --accent: 270 50% 75%;
+  --accent-foreground: 230 15% 25%;
   --popover: 0 0% 100%;
-  --popover-foreground: 228 30% 10%;
+  --popover-foreground: 230 15% 15%;
   --card: 0 0% 100%;
-  --card-foreground: 228 30% 10%;
+  --card-foreground: 230 15% 15%;
   --radius: 6px;
 
-  /* Sombras y gradientes */
+  /* Sombras y gradientes actualizados */
   --shadow-focus: 0 0 0 2px hsl(var(--background)), 0 0 0 4px hsl(var(--ring));
+
+  /* Gradientes mejorados con nuevos colores */
   --gradient-primary: linear-gradient(
     90deg,
-    hsl(245 70% 65%) 0%,
-    hsl(275 55% 68%) 60%,
-    hsl(295 50% 70%) 100%
+    hsl(240 65% 65%) 0%,
+    hsl(250 65% 70%) 60%,
+    hsl(260 70% 75%) 100%
+  );
+  --gradient-secondary: linear-gradient(
+    90deg,
+    hsl(190 60% 55%) 0%,
+    hsl(200 60% 58%) 50%,
+    hsl(210 65% 60%) 100%
   );
   --gradient-danger: linear-gradient(
     90deg,
-    hsl(355 70% 65%) 0%,
-    hsl(5 65% 62%) 50%,
-    hsl(15 60% 60%) 100%
+    hsl(355 65% 58%) 0%,
+    hsl(5 65% 60%) 50%,
+    hsl(15 60% 62%) 100%
   );
   --gradient-success: linear-gradient(
     90deg,
@@ -79,61 +101,118 @@
     hsl(160 45% 58%) 50%,
     hsl(170 50% 60%) 100%
   );
+  --gradient-accent: linear-gradient(
+    90deg,
+    hsl(265 50% 75%) 0%,
+    hsl(275 50% 78%) 50%,
+    hsl(285 55% 80%) 100%
+  );
+
+  /* Sombras neumórficas como CSS variables para uso directo */
+  --shadow-neumorphic-light:
+    8px 8px 16px hsl(230 20% 90%), -8px -8px 16px hsl(0 0% 100%);
+  --shadow-neumorphic-light-soft:
+    4px 4px 12px hsl(230 20% 92%), -4px -4px 12px hsl(0 0% 100%);
+  --shadow-neumorphic-inner:
+    inset 4px 4px 8px hsl(230 20% 90%), inset -4px -4px 8px hsl(0 0% 100%);
+  --shadow-neumorphic-inner-soft:
+    inset 2px 2px 6px hsl(230 20% 92%), inset -2px -2px 6px hsl(0 0% 100%);
 }
 
-/* Dark mode tokens */
+/* Dark mode tokens mejorados */
 :root.dark {
-  /* @theme variables for dark mode */
-  --color-background: hsl(228 18% 11%);
-  --color-foreground: hsl(210 25% 96%);
-  --color-muted: hsl(228 15% 18%);
-  --color-muted-foreground: hsl(228 12% 65%);
-  --color-border: hsl(228 16% 25%);
-  --color-input: hsl(228 16% 22%);
-  --color-ring: hsl(250 70% 70%);
-  --color-primary: hsl(255 75% 72%);
-  --color-primary-foreground: hsl(228 18% 11%);
-  --color-secondary: hsl(190 55% 65%);
-  --color-secondary-foreground: hsl(228 18% 11%);
-  --color-destructive: hsl(0 60% 66%);
-  --color-destructive-foreground: hsl(228 18% 11%);
-  --color-accent: hsl(275 55% 72%);
-  --color-accent-foreground: hsl(228 18% 11%);
-  --color-popover: hsl(228 18% 11%);
-  --color-popover-foreground: hsl(210 25% 96%);
-  --color-card: hsl(228 18% 11%);
-  --color-card-foreground: hsl(210 25% 96%);
+  /* @theme variables for dark mode - Consistencia mejorada */
+  --color-background: hsl(230 15% 12%);
+  --color-foreground: hsl(230 20% 95%);
+  --color-muted: hsl(230 15% 18%);
+  --color-muted-foreground: hsl(230 10% 60%);
+  --color-border: hsl(230 15% 25%);
+  --color-input: hsl(230 15% 20%);
+  --color-ring: hsl(245 65% 70%);
+  --color-primary: hsl(245 65% 70%);
+  --color-primary-foreground: hsl(230 15% 12%);
+  --color-secondary: hsl(195 60% 65%); /* Turquesa más claro en dark */
+  --color-secondary-foreground: hsl(230 15% 12%);
+  --color-destructive: hsl(358 65% 65%); /* Coral más claro en dark */
+  --color-destructive-foreground: hsl(230 15% 12%);
+  --color-accent: hsl(270 50% 80%);
+  --color-accent-foreground: hsl(230 15% 12%);
+  --color-popover: hsl(230 15% 12%);
+  --color-popover-foreground: hsl(230 20% 95%);
+  --color-card: hsl(230 15% 12%);
+  --color-card-foreground: hsl(230 20% 95%);
 
-  /* shadcn/ui compatibility */
-  --background: 228 18% 11%;
-  --foreground: 210 25% 96%;
-  --muted: 228 15% 18%;
-  --muted-foreground: 228 12% 65%;
-  --border: 228 16% 25%;
-  --input: 228 16% 22%;
-  --ring: 250 70% 70%;
-  --primary: 255 75% 72%;
-  --primary-foreground: 228 18% 11%;
-  --secondary: 190 55% 65%;
-  --secondary-foreground: 228 18% 11%;
-  --destructive: 0 60% 66%;
-  --destructive-foreground: 228 18% 11%;
-  --accent: 275 55% 72%;
-  --accent-foreground: 228 18% 11%;
-  --popover: 228 18% 11%;
-  --popover-foreground: 210 25% 96%;
-  --card: 228 18% 11%;
-  --card-foreground: 210 25% 96%;
+  /* shadcn/ui compatibility - Dark mode mejorado */
+  --background: 230 15% 12%;
+  --foreground: 230 20% 95%;
+  --muted: 230 15% 18%;
+  --muted-foreground: 230 10% 60%;
+  --border: 230 15% 25%;
+  --input: 230 15% 20%;
+  --ring: 245 65% 70%;
+  --primary: 245 65% 70%;
+  --primary-foreground: 230 15% 12%;
+  --secondary: 195 60% 65%;
+  --secondary-foreground: 230 15% 12%;
+  --destructive: 358 65% 65%;
+  --destructive-foreground: 230 15% 12%;
+  --accent: 270 50% 80%;
+  --accent-foreground: 230 15% 12%;
+  --popover: 230 15% 12%;
+  --popover-foreground: 230 20% 95%;
+  --card: 230 15% 12%;
+  --card-foreground: 230 20% 95%;
+
+  /* Sombras neumórficas para dark mode */
+  --shadow-neumorphic-light:
+    8px 8px 16px hsl(230 15% 8%), -8px -8px 16px hsl(230 15% 16%);
+  --shadow-neumorphic-light-soft:
+    4px 4px 12px hsl(230 15% 10%), -4px -4px 12px hsl(230 15% 14%);
+  --shadow-neumorphic-inner:
+    inset 4px 4px 8px hsl(230 15% 8%), inset -4px -4px 8px hsl(230 15% 16%);
+  --shadow-neumorphic-inner-soft:
+    inset 2px 2px 6px hsl(230 15% 10%), inset -2px -2px 6px hsl(230 15% 14%);
 }
 
-/* Helper classes opcionales (mínimas) */
+/* Helper classes opcionales - Expandidas con nuevos estilos */
 .bg-gradient-primary {
   background-image: var(--gradient-primary);
+}
+.bg-gradient-secondary {
+  background-image: var(--gradient-secondary);
 }
 .bg-gradient-danger {
   background-image: var(--gradient-danger);
 }
 .bg-gradient-success {
   background-image: var(--gradient-success);
+}
+.bg-gradient-accent {
+  background-image: var(--gradient-accent);
+}
+
+/* Clases de sombra neumórfica para uso directo */
+.shadow-neumorphic {
+  box-shadow: var(--shadow-neumorphic-light);
+}
+.shadow-neumorphic-soft {
+  box-shadow: var(--shadow-neumorphic-light-soft);
+}
+.shadow-neumorphic-inner {
+  box-shadow: var(--shadow-neumorphic-inner);
+}
+.shadow-neumorphic-inner-soft {
+  box-shadow: var(--shadow-neumorphic-inner-soft);
+}
+
+/* Clases de transición mejoradas para UI moderna */
+.transition-neumorphic {
+  transition: all 200ms ease-in-out;
+}
+.transition-neumorphic:hover {
+  transform: translateY(-1px);
+}
+.transition-neumorphic:active {
+  transform: translateY(0);
 }
 

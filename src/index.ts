@@ -14,6 +14,7 @@ export {
 } from './components/atoms/RadioButton';
 export { CheckBox, type CheckBoxProps } from './components/atoms/CheckBox';
 export { Switch, type SwitchProps } from './components/atoms/Switch';
+export { Progress, type ProgressProps } from './components/atoms/Progress';
 export { Icon, type IconProps } from './components/atoms/Icon';
 export { Badge, type BadgeProps } from './components/atoms/Badge';
 export { Avatar, type AvatarProps } from './components/atoms/Avatar';

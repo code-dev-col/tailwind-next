@@ -81,6 +81,13 @@ export {
 export { Grid, type GridProps } from './components/atoms/Grid';
 export { Center, type CenterProps } from './components/atoms/Center';
 export {
+  Breadcrumb,
+  BreadcrumbBuilder,
+  type BreadcrumbProps,
+  type BreadcrumbBuilderProps,
+  type BreadcrumbItem,
+} from './components/atoms/Breadcrumb';
+export {
   UnorderedList,
   type UnorderedListProps,
 } from './components/molecules/UnorderedList';

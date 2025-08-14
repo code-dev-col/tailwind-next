@@ -1,51 +1,147 @@
 import React from 'react';
 import { cn } from '../../../utils/cn';
 import type { BaseProps } from '../../../types';
+import type { UseBoundStore, StoreApi } from 'zustand';
 
-interface AvatarProps extends BaseProps {
+interface AvatarProps<T extends Record<string, any> = any> extends BaseProps {
+  // Store integration
+  $store?: UseBoundStore<StoreApi<T>>;
+  storeKey?: keyof T;
+
+  // Variants
   $variant?: 'default' | 'circle' | 'square';
   $size?: 'xs' | 'sm' | 'default' | 'lg' | 'xl' | '2xl';
-  $custom?: string;
+
+  // Theme.css color scheme
+  $colorScheme?:
+    | 'default'
+    | 'secondary'
+    | 'destructive'
+    | 'accent'
+    | 'muted'
+    | 'minimal'
+    | 'custom';
+
+  // Content
   src?: string;
   alt?: string;
   fallback?: string;
+
+  // Interactions
   onClick?: () => void;
+
+  // Status indicators
+  $status?: 'online' | 'away' | 'busy' | 'offline' | 'none';
+  $statusPosition?: 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left';
+
+  // Styling
+  $custom?: string;
 }
 
+/**
+ * Generate fallback initials from name or email
+ */
+const generateFallback = (name?: string): string => {
+  if (!name) return '?';
+
+  // If it looks like an email, use the part before @
+  if (name.includes('@')) {
+    name = name.split('@')[0];
+  }
+
+  // Split by spaces and take first letter of each word, max 2
+  const parts = name.trim().split(/\s+/);
+  if (parts.length === 1) {
+    return parts[0].charAt(0).toUpperCase();
+  }
+
+  return (parts[0].charAt(0) + parts[1].charAt(0)).toUpperCase();
+};
+
+// Variant configurations using Tailwind classes
 const avatarVariants = {
-  base: 'inline-flex items-center justify-center font-normal text-foreground overflow-hidden shadow-sm border border-border bg-muted transition-all duration-200',
-  variants: {
-    variant: {
-      default: 'rounded-md',
-      circle: 'rounded-full',
-      square: 'rounded-none',
-    },
-    size: {
-      xs: 'h-6 w-6 text-xs',
-      sm: 'h-8 w-8 text-sm',
-      default: 'h-10 w-10 text-base',
-      lg: 'h-12 w-12 text-lg',
-      xl: 'h-16 w-16 text-xl',
-      '2xl': 'h-20 w-20 text-2xl',
-    },
+  base: 'inline-flex items-center justify-center font-medium transition-all duration-200 select-none border shadow-sm',
+  baseWithOverflow: 'overflow-hidden', // Only apply overflow when no status indicator
+
+  // Color schemes using theme.css variables
+  colorScheme: {
+    default:
+      'bg-muted/10 text-muted-foreground border-border hover:bg-muted/15',
+    secondary:
+      'bg-secondary/10 text-secondary border-secondary/20 hover:bg-secondary/15',
+    destructive:
+      'bg-destructive/10 text-destructive border-destructive/20 hover:bg-destructive/15',
+    accent: 'bg-accent/10 text-accent border-accent/20 hover:bg-accent/15',
+    muted: 'bg-muted text-muted-foreground border-border hover:bg-muted/80',
+    minimal:
+      'bg-transparent text-foreground border-transparent hover:bg-muted/10',
+    custom: '', // Empty for custom styling
   },
-  defaultVariants: {
-    variant: 'circle',
-    size: 'default',
+
+  // Size variants
+  size: {
+    xs: 'h-6 w-6 text-xs',
+    sm: 'h-8 w-8 text-sm',
+    default: 'h-10 w-10 text-base',
+    lg: 'h-12 w-12 text-lg',
+    xl: 'h-16 w-16 text-xl',
+    '2xl': 'h-20 w-20 text-2xl',
+  },
+
+  // Shape variants
+  variant: {
+    default: 'rounded-md',
+    circle: 'rounded-full',
+    square: 'rounded-none',
+  },
+
+  // Interactive states
+  interactive:
+    'cursor-pointer hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 active:shadow-sm',
+
+  // Status indicator styles
+  status: {
+    base: 'absolute border-2 border-background rounded-full',
+    size: {
+      xs: 'w-1.5 h-1.5',
+      sm: 'w-2 h-2',
+      default: 'w-2.5 h-2.5',
+      lg: 'w-3 h-3',
+      xl: 'w-4 h-4',
+      '2xl': 'w-5 h-5',
+    },
+    position: {
+      'top-right': 'top-0 right-0',
+      'top-left': 'top-0 left-0',
+      'bottom-right': 'bottom-0 right-0',
+      'bottom-left': 'bottom-0 left-0',
+    },
+    color: {
+      online: 'bg-green-500',
+      away: 'bg-yellow-500',
+      busy: 'bg-red-500',
+      offline: 'bg-gray-400',
+      none: '',
+    },
   },
 };
 
-const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>(
+const Avatar = React.forwardRef<HTMLDivElement, AvatarProps<any>>(
   (
     {
       className,
-      $variant,
-      $size,
-      $custom,
+      $store,
+      storeKey,
+      $variant = 'circle',
+      $size = 'default',
+      $colorScheme = 'default',
       src,
       alt,
       fallback,
       onClick,
+      $status = 'none',
+      $statusPosition = 'bottom-right',
+      $custom,
       ...props
     },
     ref
@@ -53,18 +149,17 @@ const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>(
     const [imgError, setImgError] = React.useState(false);
     const [imgLoaded, setImgLoaded] = React.useState(false);
 
-    const isClickable = Boolean(onClick);
+    // Store integration - get value from store if available
+    const storeValue =
+      $store && storeKey ? $store((state) => state[storeKey]) : undefined;
 
-    // Función para generar iniciales del fallback
-    const getInitials = (name?: string) => {
-      if (!name) return '?';
-      return name
-        .split(' ')
-        .map((word) => word.charAt(0))
-        .join('')
-        .toUpperCase()
-        .slice(0, 2);
-    };
+    // Use store value as src if available, otherwise use fallback for text
+    const finalSrc =
+      storeValue && storeValue.startsWith('http') ? storeValue : src;
+    const finalFallback = storeValue || fallback;
+
+    const isClickable = Boolean(onClick);
+    const hasStatus = $status !== 'none';
 
     const handleImageLoad = () => {
       setImgLoaded(true);
@@ -79,20 +174,38 @@ const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>(
     return (
       <div
         className={cn(
+          // Base styles
           avatarVariants.base,
-          avatarVariants.variants.variant[$variant || 'circle'],
-          avatarVariants.variants.size[$size || 'default'],
-          isClickable &&
-            'cursor-pointer hover:shadow-md hover:scale-105 active:scale-95',
+
+          // Apply overflow-hidden only when no status indicator
+          !hasStatus && avatarVariants.baseWithOverflow,
+
+          // Color scheme
+          avatarVariants.colorScheme[$colorScheme],
+
+          // Size
+          avatarVariants.size[$size],
+
+          // Shape
+          avatarVariants.variant[$variant],
+
+          // Interactive states
+          isClickable && avatarVariants.interactive,
+
+          // Position relative for status indicator
+          hasStatus && 'relative',
+
+          // Custom classes
           className,
           $custom
         )}
         onClick={onClick}
         ref={ref}
         {...props}>
-        {src && !imgError ? (
+        {/* Image rendering */}
+        {finalSrc && !imgError ? (
           <img
-            src={src}
+            src={finalSrc}
             alt={alt || 'Avatar'}
             className="h-full w-full object-cover"
             onLoad={handleImageLoad}
@@ -101,8 +214,23 @@ const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>(
           />
         ) : null}
 
-        {(!src || imgError || !imgLoaded) && (
-          <span className="select-none">{getInitials(fallback)}</span>
+        {/* Fallback text */}
+        {(!finalSrc || imgError || !imgLoaded) && (
+          <span className="pointer-events-none">
+            {generateFallback(finalFallback)}
+          </span>
+        )}
+
+        {/* Status indicator */}
+        {hasStatus && (
+          <div
+            className={cn(
+              avatarVariants.status.base,
+              avatarVariants.status.size[$size],
+              avatarVariants.status.position[$statusPosition],
+              avatarVariants.status.color[$status]
+            )}
+          />
         )}
       </div>
     );

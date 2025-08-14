@@ -90,4 +90,5 @@ export { useTooltipExamples } from './tooltipExamples.store';
 export { useSliderExamples } from './sliderExamples.store';
 export { useBadgeExamples } from './badgeExamples.store';
 export { useCheckboxExamples } from './checkboxExamples.store';
+export { useAvatarExamples } from './avatarExamples.store';
 

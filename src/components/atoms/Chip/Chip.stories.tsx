@@ -33,6 +33,19 @@ const meta: Meta<typeof Chip> = {
       control: 'text',
       description: 'Texto principal del chip',
     },
+    $colorScheme: {
+      control: 'select',
+      options: [
+        'default',
+        'secondary',
+        'destructive',
+        'accent',
+        'muted',
+        'minimal',
+        'custom',
+      ],
+      description: 'Esquema de color usando theme.css',
+    },
     $variant: {
       control: 'select',
       options: [
@@ -46,7 +59,7 @@ const meta: Meta<typeof Chip> = {
         'outline',
         'ghost',
       ],
-      description: 'Variante visual del chip',
+      description: 'Variante visual del chip (legacy support)',
     },
     $size: {
       control: 'select',
@@ -696,5 +709,268 @@ export const AnimatedShowcase: Story = {
       </p>
     </div>
   ),
+};
+
+// 🎨 ===== THEME.CSS COLOR SCHEMES =====
+export const ColorSchemes: Story = {
+  render: () => (
+    <div className="space-y-6">
+      <h4 className="text-lg font-semibold">Esquemas de Color theme.css</h4>
+
+      <div className="space-y-4">
+        <div>
+          <h5 className="text-sm font-medium mb-2 text-gray-700">
+            Default (Primary)
+          </h5>
+          <div className="flex flex-wrap gap-2">
+            <Chip label="Primary" $colorScheme="default" />
+            <Chip label="Featured" $colorScheme="default" $selected />
+            <Chip label="Important" $colorScheme="default" $removable />
+            <Chip label="With Icon" $colorScheme="default" $icon={<FiStar />} />
+          </div>
+        </div>
+
+        <div>
+          <h5 className="text-sm font-medium mb-2 text-gray-700">Secondary</h5>
+          <div className="flex flex-wrap gap-2">
+            <Chip label="Info" $colorScheme="secondary" />
+            <Chip label="Note" $colorScheme="secondary" $selected />
+            <Chip label="Update" $colorScheme="secondary" $removable />
+            <Chip
+              label="With Icon"
+              $colorScheme="secondary"
+              $icon={<FiTag />}
+            />
+          </div>
+        </div>
+
+        <div>
+          <h5 className="text-sm font-medium mb-2 text-gray-700">
+            Destructive
+          </h5>
+          <div className="flex flex-wrap gap-2">
+            <Chip label="Error" $colorScheme="destructive" />
+            <Chip label="Warning" $colorScheme="destructive" $selected />
+            <Chip label="Critical" $colorScheme="destructive" $removable />
+            <Chip
+              label="With Icon"
+              $colorScheme="destructive"
+              $icon={<FiX />}
+            />
+          </div>
+        </div>
+
+        <div>
+          <h5 className="text-sm font-medium mb-2 text-gray-700">Accent</h5>
+          <div className="flex flex-wrap gap-2">
+            <Chip label="Highlight" $colorScheme="accent" />
+            <Chip label="Special" $colorScheme="accent" $selected />
+            <Chip label="Focus" $colorScheme="accent" $removable />
+            <Chip label="With Icon" $colorScheme="accent" $icon={<FiZap />} />
+          </div>
+        </div>
+
+        <div>
+          <h5 className="text-sm font-medium mb-2 text-gray-700">Muted</h5>
+          <div className="flex flex-wrap gap-2">
+            <Chip label="Basic" $colorScheme="muted" />
+            <Chip label="Standard" $colorScheme="muted" $selected />
+            <Chip label="Regular" $colorScheme="muted" $removable />
+            <Chip label="With Icon" $colorScheme="muted" $icon={<FiLayers />} />
+          </div>
+        </div>
+
+        <div>
+          <h5 className="text-sm font-medium mb-2 text-gray-700">Minimal</h5>
+          <div className="flex flex-wrap gap-2">
+            <Chip label="Clean" $colorScheme="minimal" />
+            <Chip label="Simple" $colorScheme="minimal" $selected />
+            <Chip label="Minimal" $colorScheme="minimal" $removable />
+            <Chip
+              label="With Icon"
+              $colorScheme="minimal"
+              $icon={<FiFilter />}
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className="p-4 bg-gray-50 rounded-lg">
+        <p className="text-sm text-gray-600">
+          <strong>Esquemas de color theme.css:</strong> Estos esquemas utilizan
+          las variables CSS definidas en theme.css, proporcionando consistencia
+          visual y soporte para modo oscuro automático.
+        </p>
+      </div>
+    </div>
+  ),
+};
+
+export const ColorSchemeWithStore: Story = {
+  render: () => {
+    const {
+      colorSchemeExample,
+      secondaryColorExample,
+      destructiveColorExample,
+      accentColorExample,
+      mutedColorExample,
+      minimalColorExample,
+      toggleChip,
+    } = useChipExamples();
+
+    return (
+      <div className="space-y-6">
+        <h4 className="text-lg font-semibold">Esquemas de Color con Store</h4>
+
+        <div className="space-y-4">
+          <div>
+            <h5 className="text-sm font-medium mb-2 text-gray-700">
+              Default (Primary)
+            </h5>
+            <div className="flex flex-wrap gap-2">
+              {['Primary', 'Featured', 'Important', 'Essential', 'Core'].map(
+                (item) => (
+                  <Chip
+                    key={item}
+                    label={item}
+                    $colorScheme="default"
+                    $selectable
+                    $selected={colorSchemeExample.includes(item)}
+                    chipValue={item}
+                    $store={useChipExamples}
+                    storeKey="colorSchemeExample"
+                    onClick={() => toggleChip(item, 'colorSchemeExample')}
+                  />
+                )
+              )}
+            </div>
+          </div>
+
+          <div>
+            <h5 className="text-sm font-medium mb-2 text-gray-700">
+              Secondary
+            </h5>
+            <div className="flex flex-wrap gap-2">
+              {['Info', 'Note', 'Update', 'Support', 'Help'].map((item) => (
+                <Chip
+                  key={item}
+                  label={item}
+                  $colorScheme="secondary"
+                  $selectable
+                  $selected={secondaryColorExample.includes(item)}
+                  chipValue={item}
+                  $store={useChipExamples}
+                  storeKey="secondaryColorExample"
+                  onClick={() => toggleChip(item, 'secondaryColorExample')}
+                />
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <h5 className="text-sm font-medium mb-2 text-gray-700">
+              Destructive
+            </h5>
+            <div className="flex flex-wrap gap-2">
+              {['Error', 'Warning', 'Critical', 'Danger', 'Alert'].map(
+                (item) => (
+                  <Chip
+                    key={item}
+                    label={item}
+                    $colorScheme="destructive"
+                    $selectable
+                    $selected={destructiveColorExample.includes(item)}
+                    chipValue={item}
+                    $store={useChipExamples}
+                    storeKey="destructiveColorExample"
+                    onClick={() => toggleChip(item, 'destructiveColorExample')}
+                  />
+                )
+              )}
+            </div>
+          </div>
+
+          <div>
+            <h5 className="text-sm font-medium mb-2 text-gray-700">Accent</h5>
+            <div className="flex flex-wrap gap-2">
+              {['Highlight', 'Special', 'Focus', 'Emphasis', 'Bright'].map(
+                (item) => (
+                  <Chip
+                    key={item}
+                    label={item}
+                    $colorScheme="accent"
+                    $selectable
+                    $selected={accentColorExample.includes(item)}
+                    chipValue={item}
+                    $store={useChipExamples}
+                    storeKey="accentColorExample"
+                    onClick={() => toggleChip(item, 'accentColorExample')}
+                  />
+                )
+              )}
+            </div>
+          </div>
+
+          <div>
+            <h5 className="text-sm font-medium mb-2 text-gray-700">Muted</h5>
+            <div className="flex flex-wrap gap-2">
+              {['Basic', 'Standard', 'Regular', 'Normal', 'Default'].map(
+                (item) => (
+                  <Chip
+                    key={item}
+                    label={item}
+                    $colorScheme="muted"
+                    $selectable
+                    $selected={mutedColorExample.includes(item)}
+                    chipValue={item}
+                    $store={useChipExamples}
+                    storeKey="mutedColorExample"
+                    onClick={() => toggleChip(item, 'mutedColorExample')}
+                  />
+                )
+              )}
+            </div>
+          </div>
+
+          <div>
+            <h5 className="text-sm font-medium mb-2 text-gray-700">Minimal</h5>
+            <div className="flex flex-wrap gap-2">
+              {['Clean', 'Simple', 'Minimal', 'Subtle', 'Light'].map((item) => (
+                <Chip
+                  key={item}
+                  label={item}
+                  $colorScheme="minimal"
+                  $selectable
+                  $selected={minimalColorExample.includes(item)}
+                  chipValue={item}
+                  $store={useChipExamples}
+                  storeKey="minimalColorExample"
+                  onClick={() => toggleChip(item, 'minimalColorExample')}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="p-4 bg-gray-50 rounded-lg">
+          <h6 className="font-medium mb-2">Estado Actual del Store:</h6>
+          <pre className="text-xs text-gray-600 bg-white p-3 rounded overflow-auto max-h-40">
+            {JSON.stringify(
+              {
+                default: colorSchemeExample,
+                secondary: secondaryColorExample,
+                destructive: destructiveColorExample,
+                accent: accentColorExample,
+                muted: mutedColorExample,
+                minimal: minimalColorExample,
+              },
+              null,
+              2
+            )}
+          </pre>
+        </div>
+      </div>
+    );
+  },
 };
 

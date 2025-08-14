@@ -8,6 +8,14 @@ interface ChipExamplesState {
   filterExample: string[];
   categoryExample: string[];
 
+  // Estados para ColorScheme stories
+  colorSchemeExample: string[];
+  secondaryColorExample: string[];
+  destructiveColorExample: string[];
+  accentColorExample: string[];
+  mutedColorExample: string[];
+  minimalColorExample: string[];
+
   // Estados específicos para diferentes usos
   selectedTags: string[];
   skills: string[];
@@ -25,6 +33,14 @@ interface ChipExamplesState {
   setVariantExample: (value: string[]) => void;
   setFilterExample: (value: string[]) => void;
   setCategoryExample: (value: string[]) => void;
+
+  // Setters para ColorScheme
+  setColorSchemeExample: (value: string[]) => void;
+  setSecondaryColorExample: (value: string[]) => void;
+  setDestructiveColorExample: (value: string[]) => void;
+  setAccentColorExample: (value: string[]) => void;
+  setMutedColorExample: (value: string[]) => void;
+  setMinimalColorExample: (value: string[]) => void;
 
   setSelectedTags: (value: string[]) => void;
   setSkills: (value: string[]) => void;
@@ -62,6 +78,14 @@ export const useChipExamples = create<ChipExamplesState>((set, get) => ({
   filterExample: ['Activo', 'Premium'],
   categoryExample: ['Desarrollo', 'Diseño', 'Marketing'],
 
+  // Estados para ColorScheme
+  colorSchemeExample: ['Primary', 'Featured', 'Important'],
+  secondaryColorExample: ['Info', 'Note', 'Update'],
+  destructiveColorExample: ['Error', 'Warning', 'Critical'],
+  accentColorExample: ['Highlight', 'Special', 'Focus'],
+  mutedColorExample: ['Basic', 'Standard', 'Regular'],
+  minimalColorExample: ['Clean', 'Simple', 'Minimal'],
+
   selectedTags: ['JavaScript', 'React', 'Node.js'],
   skills: ['React', 'TypeScript', 'Next.js', 'Tailwind CSS'],
   categories: ['Web Development', 'Mobile', 'DevOps'],
@@ -77,6 +101,19 @@ export const useChipExamples = create<ChipExamplesState>((set, get) => ({
   setVariantExample: (value: string[]) => set({ variantExample: value }),
   setFilterExample: (value: string[]) => set({ filterExample: value }),
   setCategoryExample: (value: string[]) => set({ categoryExample: value }),
+
+  // Setters para ColorScheme
+  setColorSchemeExample: (value: string[]) =>
+    set({ colorSchemeExample: value }),
+  setSecondaryColorExample: (value: string[]) =>
+    set({ secondaryColorExample: value }),
+  setDestructiveColorExample: (value: string[]) =>
+    set({ destructiveColorExample: value }),
+  setAccentColorExample: (value: string[]) =>
+    set({ accentColorExample: value }),
+  setMutedColorExample: (value: string[]) => set({ mutedColorExample: value }),
+  setMinimalColorExample: (value: string[]) =>
+    set({ minimalColorExample: value }),
 
   setSelectedTags: (value: string[]) => set({ selectedTags: value }),
   setSkills: (value: string[]) => set({ skills: value }),
@@ -167,6 +204,12 @@ export const useChipExamples = create<ChipExamplesState>((set, get) => ({
       variantExample: [],
       filterExample: [],
       categoryExample: [],
+      colorSchemeExample: [],
+      secondaryColorExample: [],
+      destructiveColorExample: [],
+      accentColorExample: [],
+      mutedColorExample: [],
+      minimalColorExample: [],
       selectedTags: [],
       skills: [],
       categories: [],
@@ -182,6 +225,12 @@ export const useChipExamples = create<ChipExamplesState>((set, get) => ({
       variantExample: ['Frontend', 'Backend', 'Fullstack'],
       filterExample: ['Activo', 'Premium'],
       categoryExample: ['Desarrollo', 'Diseño', 'Marketing'],
+      colorSchemeExample: ['Primary', 'Featured', 'Important'],
+      secondaryColorExample: ['Info', 'Note', 'Update'],
+      destructiveColorExample: ['Error', 'Warning', 'Critical'],
+      accentColorExample: ['Highlight', 'Special', 'Focus'],
+      mutedColorExample: ['Basic', 'Standard', 'Regular'],
+      minimalColorExample: ['Clean', 'Simple', 'Minimal'],
       selectedTags: ['JavaScript', 'React', 'Node.js'],
       skills: ['React', 'TypeScript', 'Next.js', 'Tailwind CSS'],
       categories: ['Web Development', 'Mobile', 'DevOps'],

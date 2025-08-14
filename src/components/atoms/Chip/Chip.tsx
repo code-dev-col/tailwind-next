@@ -20,6 +20,17 @@ interface ChipProps extends BaseProps {
     | 'warning'
     | 'outline'
     | 'ghost';
+
+  // Sistema de colores con theme.css (nuevo)
+  $colorScheme?:
+    | 'default'
+    | 'secondary'
+    | 'destructive'
+    | 'accent'
+    | 'muted'
+    | 'minimal'
+    | 'custom';
+
   $size?: 'sm' | 'default' | 'lg';
   $shape?: 'rounded' | 'pill' | 'square';
 
@@ -52,28 +63,75 @@ interface ChipProps extends BaseProps {
   $badge?: string | number; // Para badges adicionales
 }
 
+// 🎨 Sistema de esquemas de color con theme.css
+const colorSchemes = {
+  default: {
+    base: 'bg-primary/10 text-primary border-primary/20',
+    hover: 'hover:bg-primary/15',
+    selected: 'bg-primary/25 text-primary ring-primary/50',
+    disabled: 'opacity-50',
+  },
+  secondary: {
+    base: 'bg-secondary/10 text-secondary border-secondary/20',
+    hover: 'hover:bg-secondary/15',
+    selected: 'bg-secondary/25 text-secondary ring-secondary/50',
+    disabled: 'opacity-50',
+  },
+  destructive: {
+    base: 'bg-destructive/10 text-destructive border-destructive/20',
+    hover: 'hover:bg-destructive/15',
+    selected: 'bg-destructive/25 text-destructive ring-destructive/50',
+    disabled: 'opacity-50',
+  },
+  accent: {
+    base: 'bg-accent/10 text-accent border-accent/20',
+    hover: 'hover:bg-accent/15',
+    selected: 'bg-accent/25 text-accent ring-accent/50',
+    disabled: 'opacity-50',
+  },
+  muted: {
+    base: 'bg-muted text-muted-foreground border-border',
+    hover: 'hover:bg-muted/80',
+    selected: 'bg-muted-foreground/20 text-foreground ring-muted-foreground/30',
+    disabled: 'opacity-50',
+  },
+  minimal: {
+    base: 'bg-transparent text-foreground/70 border-foreground/20',
+    hover: 'hover:bg-foreground/5',
+    selected: 'bg-foreground/10 text-foreground ring-foreground/20',
+    disabled: 'opacity-50',
+  },
+  custom: {
+    base: '',
+    hover: '',
+    selected: '',
+    disabled: '',
+  },
+};
+
 const chipVariants = {
-  base: 'inline-flex items-center justify-center gap-1.5 whitespace-nowrap font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 select-none',
+  base: 'inline-flex items-center justify-center gap-1.5 whitespace-nowrap font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 select-none shadow-sm',
 
   variants: {
+    // Variantes legacy (para backward compatibility)
     variant: {
       default:
-        'bg-gray-100 text-gray-900 hover:bg-gray-200 border border-gray-200',
+        'bg-muted text-muted-foreground hover:bg-muted/80 border border-border',
       primary:
-        'bg-blue-100 text-blue-900 hover:bg-blue-200 border border-blue-200',
+        'bg-primary/10 text-primary hover:bg-primary/15 border border-primary/20',
       secondary:
-        'bg-purple-100 text-purple-900 hover:bg-purple-200 border border-purple-200',
+        'bg-secondary/10 text-secondary hover:bg-secondary/15 border border-secondary/20',
       destructive:
-        'bg-red-100 text-red-900 hover:bg-red-200 border border-red-200',
+        'bg-destructive/10 text-destructive hover:bg-destructive/15 border border-destructive/20',
       accent:
-        'bg-pink-100 text-pink-900 hover:bg-pink-200 border border-pink-200',
+        'bg-accent/10 text-accent hover:bg-accent/15 border border-accent/20',
       success:
         'bg-green-100 text-green-900 hover:bg-green-200 border border-green-200',
       warning:
         'bg-yellow-100 text-yellow-900 hover:bg-yellow-200 border border-yellow-200',
       outline:
-        'border-2 border-gray-300 bg-transparent hover:bg-gray-50 text-gray-700',
-      ghost: 'bg-transparent hover:bg-gray-100 text-gray-700',
+        'border-2 border-border bg-transparent hover:bg-muted/50 text-foreground',
+      ghost: 'bg-transparent hover:bg-muted/50 text-foreground',
     },
     size: {
       sm: 'text-xs px-2 py-1 min-h-[24px]',
@@ -89,7 +147,6 @@ const chipVariants = {
 
   states: {
     clickable: 'cursor-pointer hover:shadow-sm active:scale-95',
-    selected: 'ring-2 ring-blue-500 bg-blue-50 border-blue-300',
     disabled: 'opacity-50 cursor-not-allowed pointer-events-none',
     removable: 'pr-1',
     animated: 'hover:scale-105 active:scale-95',
@@ -97,6 +154,7 @@ const chipVariants = {
 
   defaultVariants: {
     variant: 'default' as const,
+    colorScheme: 'default' as const,
     size: 'default' as const,
     shape: 'rounded' as const,
   },
@@ -109,6 +167,7 @@ const Chip = React.forwardRef<HTMLDivElement, ChipProps>(
       label,
       children,
       $variant = 'default',
+      $colorScheme = 'default',
       $size = 'default',
       $shape = 'rounded',
       $clickable = false,
@@ -133,6 +192,28 @@ const Chip = React.forwardRef<HTMLDivElement, ChipProps>(
     },
     ref
   ) => {
+    // Determinar esquema de color final (con backward compatibility)
+    const finalColorScheme = React.useMemo(() => {
+      // Prioridad: $colorScheme > legacy $variant > default
+      if ($colorScheme !== 'default') return $colorScheme;
+
+      // Mapeo de legacy variants a colorSchemes
+      const legacyMap: Record<string, keyof typeof colorSchemes> = {
+        primary: 'default',
+        secondary: 'secondary',
+        destructive: 'destructive',
+        accent: 'accent',
+        default: 'muted',
+        outline: 'minimal',
+        ghost: 'minimal',
+      };
+
+      return legacyMap[$variant] || 'default';
+    }, [$colorScheme, $variant]);
+
+    // Obtener esquema de color activo
+    const currentColorScheme = colorSchemes[finalColorScheme];
+
     // Manejo de store
     const storeValue =
       $store && storeKey ? $store((state) => state[storeKey]) : undefined;
@@ -200,16 +281,25 @@ const Chip = React.forwardRef<HTMLDivElement, ChipProps>(
     // Clases CSS
     const chipClasses = cn(
       chipVariants.base,
-      chipVariants.variants.variant[$variant],
       chipVariants.variants.size[$size],
       chipVariants.variants.shape[$shape],
+
+      // Aplicar esquema de color base
+      currentColorScheme.base,
+      currentColorScheme.hover,
+
+      // Estados interactivos
       {
         [chipVariants.states.clickable]: $clickable || $selectable,
-        [chipVariants.states.selected]: actualSelected,
         [chipVariants.states.disabled]: $disabled,
         [chipVariants.states.removable]: $removable,
         [chipVariants.states.animated]: $animate,
+
+        // Aplicar estilos de selección cuando esté seleccionado
+        [currentColorScheme.selected]: actualSelected,
+        [currentColorScheme.disabled]: $disabled,
       },
+
       className,
       $custom
     );

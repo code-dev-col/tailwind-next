@@ -5,6 +5,10 @@ import { Container } from '../Container';
 import { Button } from '../Button';
 import { Text } from '../Text';
 import { Label } from '../Label';
+import {
+  useCheckboxExamples,
+  useCheckboxExamplesStore,
+} from '../../../stores/checkboxExamples.store';
 
 // Store de ejemplo para el patrón storeKey avanzado
 import { create } from 'zustand';
@@ -455,6 +459,374 @@ export const IndeterminateExample: Story = {
           El checkbox padre muestra estado indeterminado cuando algunos hijos
           están seleccionados
         </Text>
+      </Container>
+    );
+  },
+};
+
+// 🎨 ===== THEME.CSS COLOR SCHEMES =====
+export const ColorSchemes: Story = {
+  render: () => (
+    <Container className="space-y-6 w-96">
+      <Text as="h3" $weight="semibold" className="mb-4">
+        Esquemas de Color theme.css
+      </Text>
+
+      <div className="space-y-4">
+        <div>
+          <Text $size="sm" $weight="medium" className="mb-2 text-gray-700">
+            Default (Primary)
+          </Text>
+          <div className="space-y-2">
+            <CheckBox
+              $colorScheme="default"
+              label="Acepto términos y condiciones"
+              description="Checkbox con esquema default"
+            />
+            <CheckBox
+              $colorScheme="default"
+              $size="sm"
+              label="Newsletter semanal"
+              checked
+            />
+            <CheckBox
+              $colorScheme="default"
+              $size="lg"
+              label="Promociones especiales"
+            />
+          </div>
+        </div>
+
+        <div>
+          <Text $size="sm" $weight="medium" className="mb-2 text-gray-700">
+            Secondary
+          </Text>
+          <div className="space-y-2">
+            <CheckBox
+              $colorScheme="secondary"
+              label="Notificaciones secundarias"
+              description="Estilo turquesa pastel"
+            />
+            <CheckBox
+              $colorScheme="secondary"
+              label="Configuración opcional"
+              checked
+            />
+          </div>
+        </div>
+
+        <div>
+          <Text $size="sm" $weight="medium" className="mb-2 text-gray-700">
+            Destructive
+          </Text>
+          <div className="space-y-2">
+            <CheckBox
+              $colorScheme="destructive"
+              label="Eliminar datos permanentemente"
+              description="Acción irreversible"
+            />
+            <CheckBox
+              $colorScheme="destructive"
+              label="Confirmar eliminación"
+              checked
+            />
+          </div>
+        </div>
+
+        <div>
+          <Text $size="sm" $weight="medium" className="mb-2 text-gray-700">
+            Accent
+          </Text>
+          <div className="space-y-2">
+            <CheckBox
+              $colorScheme="accent"
+              label="Función premium"
+              description="Características especiales"
+            />
+            <CheckBox $colorScheme="accent" label="Destacar perfil" checked />
+          </div>
+        </div>
+
+        <div>
+          <Text $size="sm" $weight="medium" className="mb-2 text-gray-700">
+            Muted
+          </Text>
+          <div className="space-y-2">
+            <CheckBox
+              $colorScheme="muted"
+              label="Configuración avanzada"
+              description="Opciones adicionales"
+            />
+            <CheckBox
+              $colorScheme="muted"
+              label="Mostrar elementos ocultos"
+              checked
+            />
+          </div>
+        </div>
+
+        <div>
+          <Text $size="sm" $weight="medium" className="mb-2 text-gray-700">
+            Minimal
+          </Text>
+          <div className="space-y-2">
+            <CheckBox
+              $colorScheme="minimal"
+              label="Modo simplificado"
+              description="Interfaz minimalista"
+            />
+            <CheckBox
+              $colorScheme="minimal"
+              label="Ocultar decoraciones"
+              checked
+            />
+          </div>
+        </div>
+
+        <div>
+          <Text $size="sm" $weight="medium" className="mb-2 text-gray-700">
+            Legacy Variants (Backward Compatibility)
+          </Text>
+          <div className="space-y-2">
+            <CheckBox $variant="default" label="Legacy default" />
+            <CheckBox
+              $variant="destructive"
+              label="Legacy destructive"
+              checked
+            />
+            <CheckBox $variant="ghost" label="Legacy ghost (→minimal)" />
+          </div>
+        </div>
+      </div>
+
+      <div className="p-4 bg-gray-50 rounded-lg">
+        <Text $size="sm" className="text-gray-600">
+          <strong>Esquemas de color theme.css:</strong> Estos esquemas utilizan
+          las variables CSS definidas en theme.css, proporcionando consistencia
+          visual y soporte para modo oscuro automático.
+        </Text>
+      </div>
+    </Container>
+  ),
+};
+
+export const ColorSchemeWithStore: Story = {
+  render: () => {
+    const {
+      acceptTerms,
+      newsletter,
+      notifications,
+      marketing,
+      interests,
+      skills,
+      setAcceptTerms,
+      setNewsletter,
+      setNotifications,
+      setMarketing,
+      setInterests,
+      setSkills,
+      clearAllCheckboxes,
+      getCheckedCount,
+      selectAllInterests,
+      selectAllSkills,
+      deselectAllPreferences,
+    } = useCheckboxExamples();
+
+    return (
+      <Container className="space-y-6 w-96">
+        <Text as="h3" $weight="semibold" className="mb-4">
+          Esquemas de Color con Store
+        </Text>
+
+        <div className="space-y-4">
+          <div>
+            <Text $size="sm" $weight="medium" className="mb-2 text-gray-700">
+              Checkboxes Básicos
+            </Text>
+            <div className="space-y-2">
+              <CheckBox
+                $colorScheme="default"
+                $store={useCheckboxExamplesStore}
+                storeKey="acceptTerms"
+                label="Acepto términos"
+                description={`Estado: ${acceptTerms ? 'Aceptado' : 'No aceptado'}`}
+              />
+
+              <CheckBox
+                $colorScheme="secondary"
+                $store={useCheckboxExamplesStore}
+                storeKey="newsletter"
+                label="Newsletter"
+                description={`Estado: ${newsletter ? 'Suscrito' : 'No suscrito'}`}
+              />
+
+              <CheckBox
+                $colorScheme="accent"
+                $store={useCheckboxExamplesStore}
+                storeKey="notifications"
+                label="Notificaciones"
+                description={`Estado: ${notifications ? 'Activadas' : 'Desactivadas'}`}
+              />
+
+              <CheckBox
+                $colorScheme="destructive"
+                $store={useCheckboxExamplesStore}
+                storeKey="marketing"
+                label="Marketing emails"
+                description={`Estado: ${marketing ? 'Habilitado' : 'Deshabilitado'}`}
+              />
+            </div>
+          </div>
+
+          <div>
+            <Text $size="sm" $weight="medium" className="mb-2 text-gray-700">
+              Checkboxes Múltiples - Intereses
+            </Text>
+            <div className="space-y-2">
+              {[
+                { value: 'web-development', label: 'Desarrollo Web' },
+                { value: 'mobile-development', label: 'Desarrollo Móvil' },
+                { value: 'data-science', label: 'Ciencia de Datos' },
+                { value: 'ai-ml', label: 'IA y Machine Learning' },
+              ].map(({ value, label }) => (
+                <CheckBox
+                  key={value}
+                  $colorScheme="default"
+                  value={value}
+                  $store={useCheckboxExamplesStore}
+                  storeKey="interests"
+                  label={label}
+                />
+              ))}
+            </div>
+            <Text $size="xs" className="text-gray-500 mt-2">
+              Seleccionados: {interests.join(', ') || 'Ninguno'}
+            </Text>
+          </div>
+
+          <div>
+            <Text $size="sm" $weight="medium" className="mb-2 text-gray-700">
+              Checkboxes Múltiples - Habilidades
+            </Text>
+            <div className="space-y-2">
+              {[
+                { value: 'javascript', label: 'JavaScript' },
+                { value: 'react', label: 'React' },
+                { value: 'vue', label: 'Vue.js' },
+                { value: 'angular', label: 'Angular' },
+              ].map(({ value, label }) => (
+                <CheckBox
+                  key={value}
+                  $colorScheme="secondary"
+                  value={value}
+                  $store={useCheckboxExamplesStore}
+                  storeKey="skills"
+                  label={label}
+                  $size="sm"
+                />
+              ))}
+            </div>
+            <Text $size="xs" className="text-gray-500 mt-2">
+              Seleccionadas: {skills.join(', ') || 'Ninguna'}
+            </Text>
+          </div>
+
+          <div>
+            <Text $size="sm" $weight="medium" className="mb-2 text-gray-700">
+              Diferentes Tamaños y Esquemas
+            </Text>
+            <div className="space-y-2">
+              <CheckBox
+                $colorScheme="accent"
+                $size="sm"
+                label="Pequeño accent"
+                checked
+              />
+              <CheckBox
+                $colorScheme="muted"
+                $size="default"
+                label="Default muted"
+              />
+              <CheckBox
+                $colorScheme="minimal"
+                $size="lg"
+                label="Grande minimal"
+                checked
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="p-4 bg-gray-50 rounded-lg space-y-3">
+          <Text $size="sm" $weight="medium">
+            Estado Actual del Store:
+          </Text>
+
+          <div className="grid grid-cols-1 gap-2 text-sm">
+            <p>
+              <strong>Total checkboxes marcados:</strong> {getCheckedCount()}
+            </p>
+            <p>
+              <strong>Términos aceptados:</strong> {acceptTerms ? 'Sí' : 'No'}
+            </p>
+            <p>
+              <strong>Newsletter:</strong> {newsletter ? 'Sí' : 'No'}
+            </p>
+            <p>
+              <strong>Notificaciones:</strong> {notifications ? 'Sí' : 'No'}
+            </p>
+            <p>
+              <strong>Marketing:</strong> {marketing ? 'Sí' : 'No'}
+            </p>
+            <p>
+              <strong>Intereses:</strong> {interests.length}
+            </p>
+            <p>
+              <strong>Habilidades:</strong> {skills.length}
+            </p>
+          </div>
+
+          <div className="flex flex-wrap gap-2">
+            <Button $size="sm" $variant="outline" onClick={selectAllInterests}>
+              Todos los Intereses
+            </Button>
+            <Button $size="sm" $variant="outline" onClick={selectAllSkills}>
+              Todas las Habilidades
+            </Button>
+            <Button
+              $size="sm"
+              $variant="secondary"
+              onClick={deselectAllPreferences}>
+              Limpiar Preferencias
+            </Button>
+            <Button
+              $size="sm"
+              $variant="destructive"
+              onClick={clearAllCheckboxes}>
+              Limpiar Todo
+            </Button>
+          </div>
+
+          <details className="text-xs">
+            <summary className="cursor-pointer font-medium">
+              Ver esquemas disponibles
+            </summary>
+            <div className="text-gray-600 bg-white p-3 rounded overflow-auto max-h-32 mt-2">
+              <p>
+                <strong>Esquemas theme.css:</strong>
+              </p>
+              <ul className="list-disc list-inside space-y-1">
+                <li>default: Colores principales del sistema</li>
+                <li>secondary: Azul turquesa pastel</li>
+                <li>destructive: Coral suave para errores</li>
+                <li>accent: Violeta rosado para destacados</li>
+                <li>muted: Grises neutros</li>
+                <li>minimal: Transparente con bordes sutiles</li>
+                <li>custom: Vacío para personalización externa</li>
+              </ul>
+            </div>
+          </details>
+        </div>
       </Container>
     );
   },

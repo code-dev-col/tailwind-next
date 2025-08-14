@@ -5,6 +5,17 @@ import { cn } from '../../../utils/cn';
 import type { BaseProps } from '../../../types';
 
 interface CheckBoxProps<T extends Record<string, any> = any> extends BaseProps {
+  // Sistema de esquemas de color con theme.css
+  $colorScheme?:
+    | 'default'
+    | 'secondary'
+    | 'destructive'
+    | 'accent'
+    | 'muted'
+    | 'minimal'
+    | 'custom';
+
+  // Legacy variant support (mapped to colorScheme automatically)
   $variant?: 'default' | 'destructive' | 'ghost';
   $size?: 'default' | 'sm' | 'lg';
   $custom?: string;
@@ -29,6 +40,66 @@ interface CheckBoxProps<T extends Record<string, any> = any> extends BaseProps {
   onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void;
   onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
 }
+
+// 🎨 Sistema de esquemas de color con theme.css
+const colorSchemes = {
+  default: {
+    border: 'border-primary',
+    checkedBg: 'data-[state=checked]:bg-primary',
+    checkedText: 'data-[state=checked]:text-primary-foreground',
+    hoverBorder: 'hover:border-primary/80',
+    focusRing: 'focus-visible:ring-primary/20',
+    iconText: 'text-primary-foreground',
+  },
+  secondary: {
+    border: 'border-secondary/50',
+    checkedBg: 'data-[state=checked]:bg-secondary',
+    checkedText: 'data-[state=checked]:text-secondary-foreground',
+    hoverBorder: 'hover:border-secondary/80',
+    focusRing: 'focus-visible:ring-secondary/20',
+    iconText: 'text-secondary-foreground',
+  },
+  destructive: {
+    border: 'border-destructive/50',
+    checkedBg: 'data-[state=checked]:bg-destructive',
+    checkedText: 'data-[state=checked]:text-destructive-foreground',
+    hoverBorder: 'hover:border-destructive/80',
+    focusRing: 'focus-visible:ring-destructive/20',
+    iconText: 'text-destructive-foreground',
+  },
+  accent: {
+    border: 'border-accent/50',
+    checkedBg: 'data-[state=checked]:bg-accent',
+    checkedText: 'data-[state=checked]:text-accent-foreground',
+    hoverBorder: 'hover:border-accent/80',
+    focusRing: 'focus-visible:ring-accent/20',
+    iconText: 'text-accent-foreground',
+  },
+  muted: {
+    border: 'border-muted',
+    checkedBg: 'data-[state=checked]:bg-muted',
+    checkedText: 'data-[state=checked]:text-muted-foreground',
+    hoverBorder: 'hover:border-muted-foreground/50',
+    focusRing: 'focus-visible:ring-muted/20',
+    iconText: 'text-muted-foreground',
+  },
+  minimal: {
+    border: 'border-foreground/20',
+    checkedBg: 'data-[state=checked]:bg-foreground/10',
+    checkedText: 'data-[state=checked]:text-foreground',
+    hoverBorder: 'hover:border-foreground/40',
+    focusRing: 'focus-visible:ring-foreground/10',
+    iconText: 'text-foreground',
+  },
+  custom: {
+    border: '', // Vacío para personalización externa
+    checkedBg: '',
+    checkedText: '',
+    hoverBorder: '',
+    focusRing: '',
+    iconText: '',
+  },
+};
 
 const checkBoxVariants = {
   base: 'peer h-4 w-4 shrink-0 rounded-sm border shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-all duration-200',
@@ -74,6 +145,7 @@ const getZustandStore = (storeName: string) => {
 const CheckBoxComponent = <T extends Record<string, any> = any>(
   {
     className,
+    $colorScheme = 'default',
     $variant,
     $size,
     $custom,
@@ -183,18 +255,51 @@ const CheckBoxComponent = <T extends Record<string, any> = any>(
       controlledOnChange(newChecked, value, e);
     }
   };
+
+  // Determinar esquema de color final (con backward compatibility)
+  const finalColorScheme = React.useMemo(() => {
+    // Prioridad: $colorScheme (si no es default) > legacy $variant > default
+    if ($colorScheme !== 'default') return $colorScheme;
+
+    // Mapeo de legacy variants a colorSchemes
+    const legacyMap: Record<string, keyof typeof colorSchemes> = {
+      default: 'default',
+      destructive: 'destructive',
+      ghost: 'minimal', // ghost se mapea a minimal
+    };
+
+    return legacyMap[$variant || 'default'] || 'default';
+  }, [$colorScheme, $variant]);
+
+  // Obtener esquema de color activo
+  const currentColorScheme = colorSchemes[finalColorScheme];
+
   return (
     <div className="flex items-start space-x-2">
       <div className="relative">
         <input
           type="checkbox"
-          className={cn(
-            checkBoxVariants.base,
-            checkBoxVariants.variants.variant[$variant || 'default'],
-            checkBoxVariants.variants.size[$size || 'default'],
-            className,
+          className={
             $custom
-          )}
+              ? cn(
+                  checkBoxVariants.base,
+                  checkBoxVariants.variants.size[$size || 'default'],
+                  className,
+                  $custom // $custom sobrescribe todo
+                )
+              : cn(
+                  checkBoxVariants.base,
+                  // Usar theme.css color scheme
+                  currentColorScheme.border,
+                  currentColorScheme.checkedBg,
+                  currentColorScheme.checkedText,
+                  currentColorScheme.hoverBorder,
+                  currentColorScheme.focusRing,
+                  checkBoxVariants.variants.size[$size || 'default'],
+                  'focus-visible:shadow-md', // Mantener shadow por defecto
+                  className
+                )
+          }
           id={checkboxId}
           value={value}
           checked={finalIsChecked}
@@ -214,12 +319,8 @@ const CheckBoxComponent = <T extends Record<string, any> = any>(
         {(finalIsChecked || indeterminate) && (
           <div
             className={cn(
-              'absolute inset-0 flex items-center justify-center pointer-events-none text-current',
-              finalIsChecked && 'text-primary-foreground',
-              $variant === 'destructive' &&
-                finalIsChecked &&
-                'text-destructive-foreground',
-              $variant === 'ghost' && finalIsChecked && 'text-accent-foreground'
+              'absolute inset-0 flex items-center justify-center pointer-events-none',
+              finalIsChecked && currentColorScheme.iconText
             )}>
             {indeterminate ? (
               // Icono de estado indeterminado (línea horizontal)

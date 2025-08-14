@@ -21,6 +21,12 @@ export {
   type ChipProps,
   type ChipGroupProps,
 } from './components/atoms/Chip';
+export {
+  Tooltip,
+  TooltipGroup,
+  type TooltipProps,
+  type TooltipGroupProps,
+} from './components/atoms/Tooltip';
 export { Icon, type IconProps } from './components/atoms/Icon';
 export { Badge, type BadgeProps } from './components/atoms/Badge';
 export { Avatar, type AvatarProps } from './components/atoms/Avatar';

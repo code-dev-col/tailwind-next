@@ -86,4 +86,5 @@ export { useSpinnerExamples } from './spinnerExamples.store';
 export { useSwitchExamples } from './switchExamples.store';
 export { useProgressExamples } from './progressExamples.store';
 export { useChipExamples } from './chipExamples.store';
+export { useTooltipExamples } from './tooltipExamples.store';
 

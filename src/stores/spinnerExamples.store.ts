@@ -14,7 +14,15 @@ interface SpinnerExamplesState {
   overlayExample: boolean;
   customExample: string;
   interactiveExample: boolean;
+
+  // Estados de carga para storeKey pattern
   loadingStates: Record<string, boolean>;
+
+  // Individual loading states for storeKey access
+  demo1: boolean;
+  demo2: boolean;
+  demo3: boolean;
+  overlay: boolean;
 
   // Configuración para demos
   demoTypes: SpinnerType[];
@@ -56,6 +64,13 @@ export const useSpinnerExamples = create<SpinnerExamplesState>((set, get) => ({
   overlayExample: false,
   customExample: '',
   interactiveExample: true,
+
+  // Individual loading states for storeKey access
+  demo1: true,
+  demo2: false,
+  demo3: true,
+  overlay: false,
+
   loadingStates: {
     demo1: true,
     demo2: false,
@@ -127,21 +142,40 @@ export const useSpinnerExamples = create<SpinnerExamplesState>((set, get) => ({
         ...state.loadingStates,
         [key]: isLoading,
       },
+      // Also update individual properties for storeKey access
+      ...(key === 'demo1' && { demo1: isLoading }),
+      ...(key === 'demo2' && { demo2: isLoading }),
+      ...(key === 'demo3' && { demo3: isLoading }),
+      ...(key === 'overlay' && { overlay: isLoading }),
     })),
 
   toggleLoadingState: (key: string) =>
-    set((state) => ({
-      loadingStates: {
-        ...state.loadingStates,
-        [key]: !state.loadingStates[key],
-      },
-    })),
+    set((state) => {
+      const currentValue = state.loadingStates[key];
+      const newValue = !currentValue;
+
+      return {
+        loadingStates: {
+          ...state.loadingStates,
+          [key]: newValue,
+        },
+        // Also update individual properties for storeKey access
+        ...(key === 'demo1' && { demo1: newValue }),
+        ...(key === 'demo2' && { demo2: newValue }),
+        ...(key === 'demo3' && { demo3: newValue }),
+        ...(key === 'overlay' && { overlay: newValue }),
+      };
+    }),
 
   // Utilidades de limpieza
   clearAllSpinner: () =>
     set({
       defaultExample: false,
       interactiveExample: false,
+      demo1: false,
+      demo2: false,
+      demo3: false,
+      overlay: false,
       loadingStates: {},
       textExample: '',
       customExample: '',
@@ -160,6 +194,10 @@ export const useSpinnerExamples = create<SpinnerExamplesState>((set, get) => ({
       overlayExample: false,
       customExample: '',
       interactiveExample: true,
+      demo1: true,
+      demo2: false,
+      demo3: true,
+      overlay: false,
       loadingStates: {
         demo1: true,
         demo2: false,

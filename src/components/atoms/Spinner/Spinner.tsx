@@ -1,6 +1,7 @@
 import React from 'react';
 import { cn } from '../../../utils/cn';
 import type { BaseProps } from '../../../types';
+import type { UseBoundStore, StoreApi } from 'zustand';
 
 // Importar spinners de react-spinners
 import {
@@ -48,14 +49,28 @@ export type SpinnerType =
   | 'bar'
   | 'square';
 
-interface SpinnerProps extends BaseProps {
+interface SpinnerProps<T extends Record<string, any> = any> extends BaseProps {
+  // Store integration (NEW)
+  $store?: UseBoundStore<StoreApi<T>>;
+  storeKey?: keyof T;
+
   /**
    * Tipo de spinner a mostrar
    */
   $type?: SpinnerType;
 
+  // Theme.css color scheme (NEW)
+  $colorScheme?:
+    | 'default'
+    | 'secondary'
+    | 'destructive'
+    | 'accent'
+    | 'muted'
+    | 'minimal'
+    | 'custom';
+
   /**
-   * Color del spinner (puede ser cualquier color CSS válido)
+   * Color del spinner (legacy - se mapea a $colorScheme o se usa directamente)
    */
   $color?: string;
 
@@ -119,6 +134,35 @@ const spinnerSizes = {
   '2xl': { size: 96, barHeight: 12 },
 };
 
+// Map theme.css color schemes to CSS variables
+const getSpinnerColor = (
+  $colorScheme?: SpinnerProps['$colorScheme'],
+  $color?: string
+): string => {
+  // If custom color is provided, use it
+  if ($color && $colorScheme !== 'custom') return $color;
+
+  // Map $colorScheme to theme.css variables
+  switch ($colorScheme) {
+    case 'default':
+      return 'hsl(var(--primary))';
+    case 'secondary':
+      return 'hsl(var(--secondary))';
+    case 'destructive':
+      return 'hsl(var(--destructive))';
+    case 'accent':
+      return 'hsl(var(--accent))';
+    case 'muted':
+      return 'hsl(var(--muted-foreground))';
+    case 'minimal':
+      return 'hsl(var(--border))';
+    case 'custom':
+      return $color || 'hsl(var(--primary))';
+    default:
+      return $color || 'hsl(var(--primary))';
+  }
+};
+
 // Mapeo de componentes de spinner
 const SpinnerComponents = {
   bounce: BounceLoader,
@@ -147,12 +191,15 @@ const Spinner = React.forwardRef<HTMLDivElement, SpinnerProps>(
   (
     {
       className,
+      $store,
+      storeKey,
       $type = 'clip',
-      $color = 'hsl(var(--primary))',
+      $colorScheme = 'default',
+      $color,
       $size = 'md',
       $width,
       $height,
-      $loading = true,
+      $loading: controlledLoading = true,
       $speedMultiplier = 1,
       $loadingText,
       $textPosition = 'bottom',
@@ -163,6 +210,14 @@ const Spinner = React.forwardRef<HTMLDivElement, SpinnerProps>(
     },
     ref
   ) => {
+    // Store integration
+    const storeLoading =
+      $store && storeKey ? $store((state) => state[storeKey]) : undefined;
+
+    // Final loading state (store takes precedence)
+    const $loading =
+      storeLoading !== undefined ? storeLoading : controlledLoading;
+
     // Si no está cargando, no renderizar nada
     if (!$loading) {
       return null;
@@ -176,10 +231,13 @@ const Spinner = React.forwardRef<HTMLDivElement, SpinnerProps>(
     const finalWidth = $width || sizeConfig.size;
     const finalHeight = $height || sizeConfig.size;
 
+    // Get final color from theme.css or custom
+    const finalColor = getSpinnerColor($colorScheme, $color);
+
     // Props para el spinner
     const spinnerProps = {
       loading: $loading,
-      color: $color,
+      color: finalColor,
       size: $type === 'bar' ? undefined : finalWidth,
       width: $type === 'bar' ? finalWidth : undefined,
       height: $type === 'bar' ? sizeConfig.barHeight : finalHeight,
@@ -204,7 +262,7 @@ const Spinner = React.forwardRef<HTMLDivElement, SpinnerProps>(
       $custom
     );
 
-    // Clases del texto
+    // Clases del texto usando theme.css
     const textClasses = cn('text-sm text-muted-foreground', {
       'order-first': $textPosition === 'top' || $textPosition === 'left',
       'order-last': $textPosition === 'bottom' || $textPosition === 'right',

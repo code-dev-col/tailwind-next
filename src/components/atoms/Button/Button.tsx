@@ -13,9 +13,66 @@ export type ButtonVariant =
 
 export type ButtonSize = 'default' | 'sm' | 'lg' | 'icon';
 
+// 🎨 Sistema de esquemas de color con theme.css
+const colorSchemes = {
+  default: {
+    base: 'bg-primary text-primary-foreground border-primary',
+    hover: 'hover:bg-primary/90',
+    focus: 'focus-visible:ring-primary/20',
+    disabled: 'disabled:opacity-50',
+  },
+  secondary: {
+    base: 'bg-secondary text-secondary-foreground border-secondary',
+    hover: 'hover:bg-secondary/80',
+    focus: 'focus-visible:ring-secondary/20',
+    disabled: 'disabled:opacity-50',
+  },
+  destructive: {
+    base: 'bg-destructive text-destructive-foreground border-destructive',
+    hover: 'hover:bg-destructive/90',
+    focus: 'focus-visible:ring-destructive/20',
+    disabled: 'disabled:opacity-50',
+  },
+  accent: {
+    base: 'bg-accent text-accent-foreground border-accent',
+    hover: 'hover:bg-accent/90',
+    focus: 'focus-visible:ring-accent/20',
+    disabled: 'disabled:opacity-50',
+  },
+  muted: {
+    base: 'bg-muted text-muted-foreground border-muted',
+    hover: 'hover:bg-muted/80',
+    focus: 'focus-visible:ring-muted/20',
+    disabled: 'disabled:opacity-50',
+  },
+  minimal: {
+    base: 'bg-transparent text-foreground border-transparent',
+    hover: 'hover:bg-foreground/10',
+    focus: 'focus-visible:ring-foreground/20',
+    disabled: 'disabled:opacity-50',
+  },
+  custom: {
+    base: '', // Vacío para personalización externa
+    hover: '',
+    focus: '',
+    disabled: 'disabled:opacity-50',
+  },
+};
+
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     BaseProps {
+  // Sistema de esquemas de color con theme.css
+  $colorScheme?:
+    | 'default'
+    | 'secondary'
+    | 'destructive'
+    | 'accent'
+    | 'muted'
+    | 'minimal'
+    | 'custom';
+
+  // Legacy variant support (mapped to colorScheme automatically)
   $variant?: ButtonVariant;
   $size?: ButtonSize;
   $asChild?: boolean;
@@ -24,6 +81,7 @@ export interface ButtonProps
 }
 
 const buttonVariants = {
+  // Legacy variant support (mantener para backward compatibility)
   variant: {
     default: 'bg-primary text-primary-foreground hover:bg-primary/90',
     destructive:
@@ -40,10 +98,18 @@ const buttonVariants = {
     lg: 'h-11 rounded-md px-8',
     icon: 'h-10 w-10',
   },
+  // Variantes especiales que no tienen equivalente en colorSchemes
+  special: {
+    outline:
+      'border border-input bg-background hover:bg-accent hover:text-accent-foreground',
+    ghost: 'hover:bg-accent hover:text-accent-foreground bg-transparent',
+    link: 'text-primary underline-offset-4 hover:underline bg-transparent border-transparent',
+  },
 };
 
 export function Button({
   className = '',
+  $colorScheme = 'default',
   $variant = 'default',
   $size = 'default',
   children,
@@ -55,7 +121,29 @@ export function Button({
   const baseClasses =
     'inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 shadow-sm';
 
-  const variantClasses = buttonVariants.variant[$variant];
+  // Determinar esquema de color final (con backward compatibility)
+  const finalColorScheme = React.useMemo(() => {
+    // Prioridad: $colorScheme (si no es default) > legacy $variant > default
+    if ($colorScheme !== 'default') return $colorScheme;
+
+    // Mapeo de legacy variants a colorSchemes
+    const legacyMap: Record<string, keyof typeof colorSchemes> = {
+      default: 'default',
+      primary: 'default',
+      secondary: 'secondary',
+      destructive: 'destructive',
+      accent: 'accent',
+    };
+
+    return legacyMap[$variant] || 'default';
+  }, [$colorScheme, $variant]);
+
+  // Obtener esquema de color activo
+  const currentColorScheme = colorSchemes[finalColorScheme];
+
+  // Determinar si usar variantes especiales (outline, ghost, link)
+  const isSpecialVariant = ['outline', 'ghost', 'link'].includes($variant);
+
   const sizeClasses = buttonVariants.size[$size];
 
   // Obtener el tamaño del icono basado en el tamaño del botón
@@ -74,7 +162,7 @@ export function Button({
 
   const iconClasses = getIconSize();
 
-  // Si hay $custom, le damos prioridad sobre las variantes
+  // Si hay $custom, le damos prioridad sobre todo
   const combinedClasses = $custom
     ? cn(
         baseClasses,
@@ -82,7 +170,24 @@ export function Button({
         className,
         $custom // $custom sobrescribe las variantes
       )
-    : cn(baseClasses, variantClasses, sizeClasses, className);
+    : isSpecialVariant
+      ? cn(
+          baseClasses,
+          buttonVariants.special[
+            $variant as keyof typeof buttonVariants.special
+          ],
+          sizeClasses,
+          className
+        )
+      : cn(
+          baseClasses,
+          currentColorScheme.base,
+          currentColorScheme.hover,
+          currentColorScheme.focus,
+          currentColorScheme.disabled,
+          sizeClasses,
+          className
+        );
 
   return (
     <button className={combinedClasses} {...props}>

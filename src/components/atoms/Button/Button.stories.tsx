@@ -12,7 +12,9 @@ import {
   FaHome,
   FaUser,
 } from 'react-icons/fa';
+import { FiZap, FiTag, FiX, FiFilter, FiLayers } from 'react-icons/fi';
 import { Button, ButtonProps } from './Button';
+import { useButtonExamples } from '../../../stores/buttonExamples.store';
 
 const meta: Meta<typeof Button> = {
   title: 'Atoms/Button',
@@ -22,6 +24,19 @@ const meta: Meta<typeof Button> = {
   },
   tags: ['autodocs'],
   argTypes: {
+    $colorScheme: {
+      control: 'select',
+      options: [
+        'default',
+        'secondary',
+        'destructive',
+        'accent',
+        'muted',
+        'minimal',
+        'custom',
+      ],
+      description: 'Esquema de color usando theme.css',
+    },
     $variant: {
       control: 'select',
       options: [
@@ -32,7 +47,7 @@ const meta: Meta<typeof Button> = {
         'ghost',
         'link',
       ],
-      description: 'Visual style variant of the button',
+      description: 'Visual style variant of the button (legacy support)',
     },
     $size: {
       control: 'select',
@@ -893,6 +908,312 @@ export const NeumorphicEffects: Story = {
           'Demuestra el uso de efectos neumórficos con las nuevas sombras CSS variables para crear una UI moderna y táctil.',
       },
     },
+  },
+};
+
+// 🎨 ===== THEME.CSS COLOR SCHEMES =====
+export const ColorSchemes: Story = {
+  render: () => (
+    <div className="space-y-6">
+      <h4 className="text-lg font-semibold">Esquemas de Color theme.css</h4>
+
+      <div className="space-y-4">
+        <div>
+          <h5 className="text-sm font-medium mb-2 text-gray-700">
+            Default (Primary)
+          </h5>
+          <div className="flex flex-wrap gap-2">
+            <Button $colorScheme="default">Primary Button</Button>
+            <Button $colorScheme="default" $iconLeft={FaStar}>
+              With Icon
+            </Button>
+            <Button $colorScheme="default" $size="sm">
+              Small
+            </Button>
+            <Button $colorScheme="default" $size="lg">
+              Large
+            </Button>
+          </div>
+        </div>
+
+        <div>
+          <h5 className="text-sm font-medium mb-2 text-gray-700">Secondary</h5>
+          <div className="flex flex-wrap gap-2">
+            <Button $colorScheme="secondary">Secondary Button</Button>
+            <Button $colorScheme="secondary" $iconLeft={FiTag}>
+              With Icon
+            </Button>
+            <Button $colorScheme="secondary" $size="sm">
+              Small
+            </Button>
+            <Button $colorScheme="secondary" $size="lg">
+              Large
+            </Button>
+          </div>
+        </div>
+
+        <div>
+          <h5 className="text-sm font-medium mb-2 text-gray-700">
+            Destructive
+          </h5>
+          <div className="flex flex-wrap gap-2">
+            <Button $colorScheme="destructive">Delete Button</Button>
+            <Button $colorScheme="destructive" $iconLeft={FiX}>
+              Delete
+            </Button>
+            <Button $colorScheme="destructive" $size="sm">
+              Remove
+            </Button>
+            <Button $colorScheme="destructive" $size="lg">
+              Destroy
+            </Button>
+          </div>
+        </div>
+
+        <div>
+          <h5 className="text-sm font-medium mb-2 text-gray-700">Accent</h5>
+          <div className="flex flex-wrap gap-2">
+            <Button $colorScheme="accent">Accent Button</Button>
+            <Button $colorScheme="accent" $iconLeft={FiZap}>
+              Special
+            </Button>
+            <Button $colorScheme="accent" $size="sm">
+              Highlight
+            </Button>
+            <Button $colorScheme="accent" $size="lg">
+              Featured
+            </Button>
+          </div>
+        </div>
+
+        <div>
+          <h5 className="text-sm font-medium mb-2 text-gray-700">Muted</h5>
+          <div className="flex flex-wrap gap-2">
+            <Button $colorScheme="muted">Muted Button</Button>
+            <Button $colorScheme="muted" $iconLeft={FiLayers}>
+              Subdued
+            </Button>
+            <Button $colorScheme="muted" $size="sm">
+              Basic
+            </Button>
+            <Button $colorScheme="muted" $size="lg">
+              Standard
+            </Button>
+          </div>
+        </div>
+
+        <div>
+          <h5 className="text-sm font-medium mb-2 text-gray-700">Minimal</h5>
+          <div className="flex flex-wrap gap-2">
+            <Button $colorScheme="minimal">Minimal Button</Button>
+            <Button $colorScheme="minimal" $iconLeft={FiFilter}>
+              Clean
+            </Button>
+            <Button $colorScheme="minimal" $size="sm">
+              Simple
+            </Button>
+            <Button $colorScheme="minimal" $size="lg">
+              Subtle
+            </Button>
+          </div>
+        </div>
+
+        <div>
+          <h5 className="text-sm font-medium mb-2 text-gray-700">
+            Special Variants (Legacy Support)
+          </h5>
+          <div className="flex flex-wrap gap-2">
+            <Button $variant="outline">Outline</Button>
+            <Button $variant="ghost">Ghost</Button>
+            <Button $variant="link">Link</Button>
+          </div>
+        </div>
+      </div>
+
+      <div className="p-4 bg-gray-50 rounded-lg">
+        <p className="text-sm text-gray-600">
+          <strong>Esquemas de color theme.css:</strong> Estos esquemas utilizan
+          las variables CSS definidas en theme.css, proporcionando consistencia
+          visual y soporte para modo oscuro automático.
+        </p>
+      </div>
+    </div>
+  ),
+};
+
+export const ColorSchemeWithStore: Story = {
+  render: () => {
+    const {
+      colorSchemeExample,
+      secondaryColorExample,
+      destructiveColorExample,
+      accentColorExample,
+      mutedColorExample,
+      minimalColorExample,
+      clickCount,
+      lastClickedButton,
+      handleButtonClick,
+      resetToDefaults,
+    } = useButtonExamples();
+
+    return (
+      <div className="space-y-6">
+        <h4 className="text-lg font-semibold">Esquemas de Color con Store</h4>
+
+        <div className="space-y-4">
+          <div>
+            <h5 className="text-sm font-medium mb-2 text-gray-700">
+              Default (Primary)
+            </h5>
+            <div className="flex flex-wrap gap-2">
+              <Button
+                $colorScheme="default"
+                onClick={() => handleButtonClick('default-1')}>
+                {colorSchemeExample}
+              </Button>
+              <Button
+                $colorScheme="default"
+                $iconLeft={FaStar}
+                onClick={() => handleButtonClick('default-2')}>
+                With Icon
+              </Button>
+            </div>
+          </div>
+
+          <div>
+            <h5 className="text-sm font-medium mb-2 text-gray-700">
+              Secondary
+            </h5>
+            <div className="flex flex-wrap gap-2">
+              <Button
+                $colorScheme="secondary"
+                onClick={() => handleButtonClick('secondary-1')}>
+                {secondaryColorExample}
+              </Button>
+              <Button
+                $colorScheme="secondary"
+                $iconLeft={FiTag}
+                onClick={() => handleButtonClick('secondary-2')}>
+                With Icon
+              </Button>
+            </div>
+          </div>
+
+          <div>
+            <h5 className="text-sm font-medium mb-2 text-gray-700">
+              Destructive
+            </h5>
+            <div className="flex flex-wrap gap-2">
+              <Button
+                $colorScheme="destructive"
+                onClick={() => handleButtonClick('destructive-1')}>
+                {destructiveColorExample}
+              </Button>
+              <Button
+                $colorScheme="destructive"
+                $iconLeft={FiX}
+                onClick={() => handleButtonClick('destructive-2')}>
+                Delete
+              </Button>
+            </div>
+          </div>
+
+          <div>
+            <h5 className="text-sm font-medium mb-2 text-gray-700">Accent</h5>
+            <div className="flex flex-wrap gap-2">
+              <Button
+                $colorScheme="accent"
+                onClick={() => handleButtonClick('accent-1')}>
+                {accentColorExample}
+              </Button>
+              <Button
+                $colorScheme="accent"
+                $iconLeft={FiZap}
+                onClick={() => handleButtonClick('accent-2')}>
+                Special
+              </Button>
+            </div>
+          </div>
+
+          <div>
+            <h5 className="text-sm font-medium mb-2 text-gray-700">Muted</h5>
+            <div className="flex flex-wrap gap-2">
+              <Button
+                $colorScheme="muted"
+                onClick={() => handleButtonClick('muted-1')}>
+                {mutedColorExample}
+              </Button>
+              <Button
+                $colorScheme="muted"
+                $iconLeft={FiLayers}
+                onClick={() => handleButtonClick('muted-2')}>
+                Subdued
+              </Button>
+            </div>
+          </div>
+
+          <div>
+            <h5 className="text-sm font-medium mb-2 text-gray-700">Minimal</h5>
+            <div className="flex flex-wrap gap-2">
+              <Button
+                $colorScheme="minimal"
+                onClick={() => handleButtonClick('minimal-1')}>
+                {minimalColorExample}
+              </Button>
+              <Button
+                $colorScheme="minimal"
+                $iconLeft={FiFilter}
+                onClick={() => handleButtonClick('minimal-2')}>
+                Clean
+              </Button>
+            </div>
+          </div>
+        </div>
+
+        <div className="p-4 bg-gray-50 rounded-lg space-y-3">
+          <h6 className="font-medium">Estado Actual del Store:</h6>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+            <div>
+              <p>
+                <strong>Total de clicks:</strong> {clickCount}
+              </p>
+              <p>
+                <strong>Último botón clickeado:</strong>{' '}
+                {lastClickedButton || 'Ninguno'}
+              </p>
+            </div>
+            <div>
+              <Button $variant="outline" $size="sm" onClick={resetToDefaults}>
+                Reset Store
+              </Button>
+            </div>
+          </div>
+
+          <details className="text-xs">
+            <summary className="cursor-pointer font-medium">
+              Ver valores del store
+            </summary>
+            <pre className="text-gray-600 bg-white p-3 rounded overflow-auto max-h-40 mt-2">
+              {JSON.stringify(
+                {
+                  colorSchemeExample,
+                  secondaryColorExample,
+                  destructiveColorExample,
+                  accentColorExample,
+                  mutedColorExample,
+                  minimalColorExample,
+                  clickCount,
+                  lastClickedButton,
+                },
+                null,
+                2
+              )}
+            </pre>
+          </details>
+        </div>
+      </div>
+    );
   },
 };
 

@@ -685,3 +685,243 @@ export const NeumorphicEffects: Story = {
   },
 };
 
+// 🎨 ===== THEME.CSS COLOR SCHEMES =====
+export const ColorSchemes: Story = {
+  render: () => (
+    <div className="space-y-6 w-96">
+      <h4 className="text-lg font-semibold">Esquemas de Color theme.css</h4>
+
+      <div className="space-y-4">
+        <div>
+          <h5 className="text-sm font-medium mb-2 text-gray-700">
+            Default (Primary)
+          </h5>
+          <Input
+            $colorScheme="default"
+            placeholder="Texto con esquema default..."
+          />
+        </div>
+
+        <div>
+          <h5 className="text-sm font-medium mb-2 text-gray-700">Secondary</h5>
+          <Input
+            $colorScheme="secondary"
+            placeholder="Texto con esquema secondary..."
+          />
+        </div>
+
+        <div>
+          <h5 className="text-sm font-medium mb-2 text-gray-700">
+            Destructive
+          </h5>
+          <Input
+            $colorScheme="destructive"
+            placeholder="Texto con esquema destructive..."
+          />
+        </div>
+
+        <div>
+          <h5 className="text-sm font-medium mb-2 text-gray-700">Accent</h5>
+          <Input
+            $colorScheme="accent"
+            placeholder="Texto con esquema accent..."
+          />
+        </div>
+
+        <div>
+          <h5 className="text-sm font-medium mb-2 text-gray-700">Muted</h5>
+          <Input
+            $colorScheme="muted"
+            placeholder="Texto con esquema muted..."
+          />
+        </div>
+
+        <div>
+          <h5 className="text-sm font-medium mb-2 text-gray-700">Minimal</h5>
+          <Input
+            $colorScheme="minimal"
+            placeholder="Texto con esquema minimal..."
+          />
+        </div>
+
+        <div>
+          <h5 className="text-sm font-medium mb-2 text-gray-700">
+            Legacy Variants (Backward Compatibility)
+          </h5>
+          <div className="space-y-2">
+            <Input $variant="default" placeholder="Legacy variant default" />
+            <Input
+              $variant="destructive"
+              placeholder="Legacy variant destructive"
+            />
+            <Input
+              $variant="ghost"
+              placeholder="Legacy variant ghost (→minimal)"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className="p-4 bg-gray-50 rounded-lg">
+        <p className="text-sm text-gray-600">
+          <strong>Esquemas de color theme.css:</strong> Estos esquemas utilizan
+          las variables CSS definidas en theme.css, proporcionando consistencia
+          visual y soporte para modo oscuro automático.
+        </p>
+      </div>
+    </div>
+  ),
+};
+
+export const ColorSchemeWithStore: Story = {
+  render: () => {
+    const {
+      nameInput,
+      usernameInput,
+      setNameInput,
+      setUsernameInput,
+      basicInput,
+      emailInput,
+      setBasicInput,
+      setEmailInput,
+      clearAllInputs,
+      getInputCount,
+    } = useInputExamplesStore();
+
+    return (
+      <div className="space-y-6 w-96">
+        <h4 className="text-lg font-semibold">Esquemas de Color con Store</h4>
+
+        <div className="space-y-4">
+          <div>
+            <h5 className="text-sm font-medium mb-2 text-gray-700">
+              Default + Store
+            </h5>
+            <Input
+              $colorScheme="default"
+              $store={useInputExamplesStore}
+              storeKey="nameInput"
+              placeholder="Nombre (con store)..."
+            />
+            <p className="text-xs text-gray-500 mt-1">Valor: "{nameInput}"</p>
+          </div>
+
+          <div>
+            <h5 className="text-sm font-medium mb-2 text-gray-700">
+              Secondary + Store
+            </h5>
+            <Input
+              $colorScheme="secondary"
+              $store={useInputExamplesStore}
+              storeKey="usernameInput"
+              placeholder="Usuario (con store)..."
+            />
+            <p className="text-xs text-gray-500 mt-1">
+              Valor: "{usernameInput}"
+            </p>
+          </div>
+
+          <div>
+            <h5 className="text-sm font-medium mb-2 text-gray-700">
+              Accent + Store
+            </h5>
+            <Input
+              $colorScheme="accent"
+              $store={useInputExamplesStore}
+              storeKey="basicInput"
+              placeholder="Input básico..."
+            />
+            <p className="text-xs text-gray-500 mt-1">Valor: "{basicInput}"</p>
+          </div>
+
+          <div>
+            <h5 className="text-sm font-medium mb-2 text-gray-700">
+              Minimal + Email
+            </h5>
+            <Input
+              $colorScheme="minimal"
+              type="email"
+              $store={useInputExamplesStore}
+              storeKey="emailInput"
+              placeholder="tu@email.com..."
+            />
+            <p className="text-xs text-gray-500 mt-1">Valor: "{emailInput}"</p>
+          </div>
+        </div>
+
+        <div className="space-y-4">
+          <h5 className="text-sm font-medium text-gray-700">
+            Diferentes Tamaños con Esquemas
+          </h5>
+
+          <div className="space-y-2">
+            <Input
+              $colorScheme="secondary"
+              $size="sm"
+              placeholder="Small secondary..."
+            />
+            <Input
+              $colorScheme="accent"
+              $size="default"
+              placeholder="Default accent..."
+            />
+            <Input
+              $colorScheme="muted"
+              $size="lg"
+              placeholder="Large muted..."
+            />
+          </div>
+        </div>
+
+        <div className="p-4 bg-gray-50 rounded-lg space-y-3">
+          <h6 className="font-medium">Estado Actual del Store:</h6>
+
+          <div className="grid grid-cols-1 gap-2 text-sm">
+            <p>
+              <strong>Inputs con contenido:</strong> {getInputCount()}
+            </p>
+            <p>
+              <strong>Nombre:</strong> "{nameInput}"
+            </p>
+            <p>
+              <strong>Usuario:</strong> "{usernameInput}"
+            </p>
+            <p>
+              <strong>Básico:</strong> "{basicInput}"
+            </p>
+            <p>
+              <strong>Email:</strong> "{emailInput}"
+            </p>
+          </div>
+
+          <button
+            onClick={clearAllInputs}
+            className="px-3 py-1 bg-white border border-gray-300 rounded text-sm hover:bg-gray-50">
+            Clear All Inputs
+          </button>
+
+          <details className="text-xs">
+            <summary className="cursor-pointer font-medium">
+              Ver esquemas disponibles
+            </summary>
+            <div className="text-gray-600 bg-white p-3 rounded overflow-auto max-h-32 mt-2">
+              <p>
+                <strong>Esquemas theme.css:</strong>
+              </p>
+              <ul className="list-disc list-inside space-y-1">
+                <li>default: Colores principales del sistema</li>
+                <li>secondary: Azul turquesa pastel</li>
+                <li>destructive: Coral suave para errores</li>
+                <li>accent: Violeta rosado para destacados</li>
+                <li>muted: Grises neutros</li>
+                <li>minimal: Transparente con texto foreground</li>
+                <li>custom: Vacío para personalización externa</li>
+              </ul>
+            </div>
+          </details>
+        </div>
+      </div>
+    );
+  },
+};
+

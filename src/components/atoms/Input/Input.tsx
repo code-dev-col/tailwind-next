@@ -11,6 +11,17 @@ import {
 import { useSecureField } from '../../../utils/useSecureField';
 
 interface InputProps<T extends Record<string, any> = any> extends BaseProps {
+  // Sistema de esquemas de color con theme.css
+  $colorScheme?:
+    | 'default'
+    | 'secondary'
+    | 'destructive'
+    | 'accent'
+    | 'muted'
+    | 'minimal'
+    | 'custom';
+
+  // Legacy variant support (mapped to colorScheme automatically)
   $variant?: 'default' | 'destructive' | 'ghost';
   $size?: 'default' | 'sm' | 'lg';
   $custom?: string;
@@ -49,6 +60,59 @@ interface InputProps<T extends Record<string, any> = any> extends BaseProps {
   ) => void; // Callback cuando se limpia el input por seguridad
 }
 
+// 🎨 Sistema de esquemas de color con theme.css
+const colorSchemes = {
+  default: {
+    base: 'border-input bg-background',
+    hover: 'hover:border-primary/50',
+    focus: 'focus-visible:ring-ring focus-visible:ring-primary/20',
+    text: 'text-foreground',
+    placeholder: 'placeholder:text-muted-foreground',
+  },
+  secondary: {
+    base: 'border-secondary/30 bg-secondary/5',
+    hover: 'hover:border-secondary/50',
+    focus: 'focus-visible:ring-secondary/20',
+    text: 'text-secondary-foreground',
+    placeholder: 'placeholder:text-secondary/60',
+  },
+  destructive: {
+    base: 'border-destructive/50 bg-destructive/5',
+    hover: 'hover:border-destructive/70',
+    focus: 'focus-visible:ring-destructive/20',
+    text: 'text-destructive-foreground',
+    placeholder: 'placeholder:text-destructive/60',
+  },
+  accent: {
+    base: 'border-accent/30 bg-accent/5',
+    hover: 'hover:border-accent/50',
+    focus: 'focus-visible:ring-accent/20',
+    text: 'text-accent-foreground',
+    placeholder: 'placeholder:text-accent/60',
+  },
+  muted: {
+    base: 'border-muted bg-muted/10',
+    hover: 'hover:border-muted-foreground/30',
+    focus: 'focus-visible:ring-muted/20',
+    text: 'text-muted-foreground',
+    placeholder: 'placeholder:text-muted-foreground/60',
+  },
+  minimal: {
+    base: 'border-transparent bg-transparent',
+    hover: 'hover:border-foreground/20',
+    focus: 'focus-visible:ring-foreground/10',
+    text: 'text-foreground',
+    placeholder: 'placeholder:text-foreground/40',
+  },
+  custom: {
+    base: '', // Vacío para personalización externa
+    hover: '',
+    focus: '',
+    text: '',
+    placeholder: '',
+  },
+};
+
 const inputVariants = {
   base: 'flex h-10 w-full rounded-md border px-3 py-2 text-sm shadow-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-all duration-200',
   variants: {
@@ -85,6 +149,7 @@ const getZustandStore = (storeName: string) => {
 const InputComponent = <T extends Record<string, any> = any>(
   {
     className,
+    $colorScheme = 'default',
     $variant,
     $size,
     $custom,
@@ -165,6 +230,34 @@ const InputComponent = <T extends Record<string, any> = any>(
     secureField.handleChange(e.target.value);
   };
 
+  // Determinar esquema de color final (con backward compatibility)
+  const finalColorScheme = React.useMemo(() => {
+    // Si hay problemas de seguridad o límites, forzar destructive
+    if (secureField.shouldShowSecurityVariant || secureField.isOverLimit) {
+      return 'destructive';
+    }
+
+    // Prioridad: $colorScheme (si no es default) > legacy $variant > default
+    if ($colorScheme !== 'default') return $colorScheme;
+
+    // Mapeo de legacy variants a colorSchemes
+    const legacyMap: Record<string, keyof typeof colorSchemes> = {
+      default: 'default',
+      destructive: 'destructive',
+      ghost: 'minimal', // ghost se mapea a minimal
+    };
+
+    return legacyMap[$variant || 'default'] || 'default';
+  }, [
+    $colorScheme,
+    $variant,
+    secureField.shouldShowSecurityVariant,
+    secureField.isOverLimit,
+  ]);
+
+  // Obtener esquema de color activo
+  const currentColorScheme = colorSchemes[finalColorScheme];
+
   const getInputVariant = () => {
     if (secureField.shouldShowSecurityVariant) return 'destructive';
     if (secureField.isOverLimit) return 'destructive';
@@ -174,13 +267,27 @@ const InputComponent = <T extends Record<string, any> = any>(
   const inputElement = (
     <input
       type={type}
-      className={cn(
-        inputVariants.base,
-        inputVariants.variants.variant[getInputVariant()],
-        inputVariants.variants.size[$size || 'default'],
-        className,
+      className={
         $custom
-      )}
+          ? cn(
+              inputVariants.base,
+              inputVariants.variants.size[$size || 'default'],
+              className,
+              $custom // $custom sobrescribe todo
+            )
+          : cn(
+              inputVariants.base,
+              // Usar theme.css color scheme
+              currentColorScheme.base,
+              currentColorScheme.hover,
+              currentColorScheme.focus,
+              currentColorScheme.text,
+              currentColorScheme.placeholder,
+              inputVariants.variants.size[$size || 'default'],
+              'focus-visible:shadow-md', // Mantener shadow por defecto
+              className
+            )
+      }
       value={secureField.value}
       onChange={handleChange}
       maxLength={secureField.effectiveMaxLength}

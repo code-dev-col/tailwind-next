@@ -34,9 +34,23 @@ const meta: Meta<typeof Divider> = {
       control: 'select',
       options: ['thin', 'default', 'thick', 'thicker'],
     },
+    $colorScheme: {
+      control: 'select',
+      options: [
+        'default',
+        'secondary',
+        'destructive',
+        'accent',
+        'muted',
+        'minimal',
+        'custom',
+      ],
+      description: 'Sistema de colores con theme.css (recomendado)',
+    },
     $color: {
       control: 'select',
       options: ['default', 'primary', 'secondary', 'accent', 'muted', 'custom'],
+      description: 'Sistema legacy de colores (backward compatibility)',
     },
   },
 };
@@ -52,6 +66,242 @@ export const Default: Story = {
         <h3 className="text-lg font-semibold mb-2">Content Above</h3>
         <Divider />
         <p className="text-gray-600 mt-2">Content Below</p>
+      </div>
+    </div>
+  ),
+};
+
+// ✅ Nuevos esquemas de color con theme.css
+export const ColorSchemes: Story = {
+  render: () => (
+    <div className="w-full max-w-4xl space-y-8">
+      {/* Encabezado explicativo */}
+      <div className="bg-blue-50 p-6 rounded-lg">
+        <h2 className="text-xl font-bold text-blue-900 mb-3">
+          🎨 Esquemas de Color - theme.css Integration
+        </h2>
+        <p className="text-blue-700 text-sm mb-4">
+          Todos los esquemas utilizan las variables CSS del theme.css para
+          máxima consistencia.
+        </p>
+        <div className="grid md:grid-cols-2 gap-4 text-sm">
+          <div>
+            <h3 className="font-semibold text-blue-800 mb-2">
+              ✅ Recomendados:
+            </h3>
+            <ul className="space-y-1 text-blue-700">
+              <li>
+                • <strong>default:</strong> Color principal del sistema
+                (primary)
+              </li>
+              <li>
+                • <strong>secondary:</strong> Color secundario pastel
+              </li>
+              <li>
+                • <strong>accent:</strong> Color de acentos y destacados
+              </li>
+              <li>
+                • <strong>muted:</strong> Grises neutros y sutiles
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3 className="font-semibold text-blue-800 mb-2">🎯 Especiales:</h3>
+            <ul className="space-y-1 text-blue-700">
+              <li>
+                • <strong>destructive:</strong> Errores y acciones destructivas
+              </li>
+              <li>
+                • <strong>minimal:</strong> Transparente y minimalista
+              </li>
+              <li>
+                • <strong>custom:</strong> Para personalización externa
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      {/* Comparación lado a lado */}
+      <div className="grid md:grid-cols-2 gap-8">
+        {/* Esquemas principales */}
+        <div className="space-y-6">
+          <h3 className="text-lg font-semibold text-blue-900 border-b border-blue-200 pb-2">
+            🎨 Esquemas Principales
+          </h3>
+
+          <div className="bg-white p-6 border rounded-lg shadow-sm space-y-6">
+            <div>
+              <h4 className="text-sm font-medium text-gray-600 mb-2">
+                Default (Primary)
+              </h4>
+              <p className="text-sm text-gray-500 mb-3">
+                Color principal del sistema
+              </p>
+              <Divider
+                $colorScheme="default"
+                text="Primary System Color"
+                $textVariant="colored"
+              />
+            </div>
+
+            <div>
+              <h4 className="text-sm font-medium text-gray-600 mb-2">
+                Secondary
+              </h4>
+              <p className="text-sm text-gray-500 mb-3">
+                Turquesa pastel complementario
+              </p>
+              <Divider
+                $colorScheme="secondary"
+                text="Secondary Color"
+                $textVariant="colored"
+              />
+            </div>
+
+            <div>
+              <h4 className="text-sm font-medium text-gray-600 mb-2">Accent</h4>
+              <p className="text-sm text-gray-500 mb-3">
+                Violeta rosado para destacados
+              </p>
+              <Divider
+                $colorScheme="accent"
+                text="Accent Color"
+                $textVariant="colored"
+              />
+            </div>
+
+            <div>
+              <h4 className="text-sm font-medium text-gray-600 mb-2">Muted</h4>
+              <p className="text-sm text-gray-500 mb-3">
+                Grises neutros para elementos sutiles
+              </p>
+              <Divider
+                $colorScheme="muted"
+                text="Muted Color"
+                $textVariant="colored"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Esquemas especiales */}
+        <div className="space-y-6">
+          <h3 className="text-lg font-semibold text-red-900 border-b border-red-200 pb-2">
+            🎯 Esquemas Especiales
+          </h3>
+
+          <div className="bg-white p-6 border rounded-lg shadow-sm space-y-6">
+            <div>
+              <h4 className="text-sm font-medium text-gray-600 mb-2">
+                Destructive
+              </h4>
+              <p className="text-sm text-gray-500 mb-3">
+                Para errores y acciones destructivas
+              </p>
+              <Divider
+                $colorScheme="destructive"
+                text="Error State"
+                $textVariant="colored"
+              />
+            </div>
+
+            <div>
+              <h4 className="text-sm font-medium text-gray-600 mb-2">
+                Minimal
+              </h4>
+              <p className="text-sm text-gray-500 mb-3">
+                Transparente y minimalista
+              </p>
+              <Divider
+                $colorScheme="minimal"
+                text="Minimal Style"
+                $textVariant="colored"
+              />
+            </div>
+
+            <div>
+              <h4 className="text-sm font-medium text-gray-600 mb-2">Custom</h4>
+              <p className="text-sm text-gray-500 mb-3">
+                Sin estilos para personalización
+              </p>
+              <Divider
+                $colorScheme="custom"
+                text="Custom Style"
+                $custom="text-purple-600 border-purple-600"
+                $textClassName="text-purple-600"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Comparación de variantes con esquemas */}
+      <div className="bg-white p-6 border rounded-lg shadow-sm">
+        <h3 className="text-lg font-semibold mb-6">
+          Variantes con Esquemas de Color
+        </h3>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-4">
+            <h4 className="font-medium text-gray-700">
+              Solid + Gradient Variants
+            </h4>
+            <div className="space-y-3">
+              <Divider
+                $variant="solid"
+                $colorScheme="default"
+                $thickness="thick"
+              />
+              <Divider
+                $variant="gradient"
+                $colorScheme="secondary"
+                $thickness="thick"
+              />
+              <Divider
+                $variant="solid"
+                $colorScheme="accent"
+                $thickness="thick"
+              />
+            </div>
+          </div>
+
+          <div className="space-y-4">
+            <h4 className="font-medium text-gray-700">
+              Dashed + Dotted Variants
+            </h4>
+            <div className="space-y-3">
+              <Divider
+                $variant="dashed"
+                $colorScheme="default"
+                $thickness="thick"
+              />
+              <Divider
+                $variant="dotted"
+                $colorScheme="secondary"
+                $thickness="thick"
+              />
+              <Divider
+                $variant="double"
+                $colorScheme="accent"
+                $thickness="thick"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Backward compatibility notice */}
+      <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
+        <h4 className="font-semibold text-yellow-800 mb-2">
+          🔄 Backward Compatibility
+        </h4>
+        <p className="text-yellow-700 text-sm">
+          El prop <code>$color</code> legacy aún funciona pero se recomienda
+          migrar a <code>$colorScheme</code>
+          para mejor integración con theme.css. Los colores legacy se mapean
+          automáticamente.
+        </p>
       </div>
     </div>
   ),
@@ -817,6 +1067,7 @@ export const InteractiveConfiguration: Story = {
       currentVariant,
       currentOrientation,
       currentThickness,
+      currentColorScheme,
       currentColor,
       withText,
       dividerText,
@@ -829,6 +1080,7 @@ export const InteractiveConfiguration: Story = {
       setCurrentVariant,
       setCurrentOrientation,
       setCurrentThickness,
+      setCurrentColorScheme,
       setCurrentColor,
       setWithText,
       setDividerText,
@@ -893,7 +1145,25 @@ export const InteractiveConfiguration: Story = {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Color
+              Color Scheme (theme.css)
+            </label>
+            <select
+              value={currentColorScheme}
+              onChange={(e) => setCurrentColorScheme(e.target.value as any)}
+              className="w-full px-2 py-1 text-sm border border-gray-300 rounded">
+              <option value="default">Default</option>
+              <option value="secondary">Secondary</option>
+              <option value="destructive">Destructive</option>
+              <option value="accent">Accent</option>
+              <option value="muted">Muted</option>
+              <option value="minimal">Minimal</option>
+              <option value="custom">Custom</option>
+            </select>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Color (Legacy)
             </label>
             <select
               value={currentColor}
@@ -1042,7 +1312,7 @@ export const InteractiveConfiguration: Story = {
                 $variant={currentVariant}
                 $orientation={currentOrientation}
                 $thickness={currentThickness}
-                $color={currentColor}
+                $colorScheme={currentColorScheme}
                 text={withText ? dividerText : undefined}
                 $textPosition={textPosition}
                 $textVariant={textVariant}
@@ -1066,7 +1336,7 @@ export const InteractiveConfiguration: Story = {
                 $variant={currentVariant}
                 $orientation={currentOrientation}
                 $thickness={currentThickness}
-                $color={currentColor}
+                $colorScheme={currentColorScheme}
                 text={withText ? dividerText : undefined}
                 $textPosition={textPosition}
                 $textVariant={textVariant}
@@ -1089,7 +1359,8 @@ export const InteractiveConfiguration: Story = {
         {/* Configuration Info */}
         <div className="text-xs text-gray-500 bg-gray-50 p-3 rounded">
           <strong>Current Configuration:</strong> variant={currentVariant},
-          orientation={currentOrientation}, thickness={currentThickness}, color=
+          orientation={currentOrientation}, thickness={currentThickness},
+          colorScheme={currentColorScheme} (theme.css), legacyColor=
           {currentColor}, withText={withText.toString()}, animated=
           {animated.toString()}, margin={marginSize}
         </div>

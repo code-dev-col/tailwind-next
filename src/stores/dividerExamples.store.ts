@@ -12,6 +12,18 @@ interface DividerExamplesState {
   currentOrientation: 'horizontal' | 'vertical';
   currentThickness: 'thin' | 'default' | 'thick' | 'thicker';
   currentLength: 'auto' | 'short' | 'medium' | 'long' | 'full';
+
+  // Sistema de colores con theme.css (nuevo)
+  currentColorScheme:
+    | 'default'
+    | 'secondary'
+    | 'destructive'
+    | 'accent'
+    | 'muted'
+    | 'minimal'
+    | 'custom';
+
+  // Backward compatibility (legacy)
   currentColor:
     | 'default'
     | 'primary'
@@ -58,6 +70,13 @@ interface DividerExamplesState {
     thickness: DividerExamplesState['currentThickness']
   ) => void;
   setCurrentLength: (length: DividerExamplesState['currentLength']) => void;
+
+  // Sistema de colores con theme.css (nuevo)
+  setCurrentColorScheme: (
+    colorScheme: DividerExamplesState['currentColorScheme']
+  ) => void;
+
+  // Backward compatibility (legacy)
   setCurrentColor: (color: DividerExamplesState['currentColor']) => void;
 
   // Setters para texto
@@ -110,6 +129,11 @@ export const useDividerExamples = create<DividerExamplesState>((set, get) => ({
   currentOrientation: 'horizontal',
   currentThickness: 'default',
   currentLength: 'auto',
+
+  // Sistema de colores con theme.css (nuevo)
+  currentColorScheme: 'default',
+
+  // Backward compatibility (legacy)
   currentColor: 'default',
 
   // Estados de texto
@@ -147,6 +171,12 @@ export const useDividerExamples = create<DividerExamplesState>((set, get) => ({
     set({ currentOrientation: orientation }),
   setCurrentThickness: (thickness) => set({ currentThickness: thickness }),
   setCurrentLength: (length) => set({ currentLength: length }),
+
+  // Sistema de colores con theme.css (nuevo)
+  setCurrentColorScheme: (colorScheme) =>
+    set({ currentColorScheme: colorScheme }),
+
+  // Backward compatibility (legacy)
   setCurrentColor: (color) => set({ currentColor: color }),
 
   // Setters para texto
@@ -193,6 +223,7 @@ export const useDividerExamples = create<DividerExamplesState>((set, get) => ({
       currentOrientation: 'horizontal',
       currentThickness: 'default',
       currentLength: 'auto',
+      currentColorScheme: 'default',
       currentColor: 'default',
       withText: false,
       dividerText: 'OR',
@@ -218,6 +249,7 @@ export const useDividerExamples = create<DividerExamplesState>((set, get) => ({
       currentOrientation: 'horizontal',
       currentThickness: 'thin',
       currentLength: 'auto',
+      currentColorScheme: 'muted',
       currentColor: 'muted',
       withText: false,
       dividerText: '',
@@ -255,6 +287,7 @@ export const useDividerExamples = create<DividerExamplesState>((set, get) => ({
       currentOrientation: 'horizontal',
       currentThickness: 'thin',
       currentLength: 'full',
+      currentColorScheme: 'muted',
       currentColor: 'muted',
       withText: false,
       withIcon: false,
@@ -273,6 +306,7 @@ export const useDividerExamples = create<DividerExamplesState>((set, get) => ({
       currentOrientation: 'horizontal',
       currentThickness: 'default',
       currentLength: 'full',
+      currentColorScheme: 'default',
       currentColor: 'primary',
       withText: true,
       dividerText: 'Personal Information',
@@ -294,6 +328,7 @@ export const useDividerExamples = create<DividerExamplesState>((set, get) => ({
       currentOrientation: 'vertical',
       currentThickness: 'default',
       currentLength: 'medium',
+      currentColorScheme: 'muted',
       currentColor: 'default',
       withText: false,
       withIcon: false,
@@ -312,6 +347,7 @@ export const useDividerExamples = create<DividerExamplesState>((set, get) => ({
       currentOrientation: 'horizontal',
       currentThickness: 'thick',
       currentLength: 'full',
+      currentColorScheme: 'secondary',
       currentColor: 'secondary',
       withText: false,
       withIcon: false,
@@ -331,6 +367,7 @@ export const useDividerExamples = create<DividerExamplesState>((set, get) => ({
       currentOrientation: 'horizontal',
       currentThickness: 'thicker',
       currentLength: 'long',
+      currentColorScheme: 'accent',
       currentColor: 'accent',
       withText: true,
       dividerText: 'SECTION',

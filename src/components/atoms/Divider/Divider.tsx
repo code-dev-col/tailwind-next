@@ -13,6 +13,18 @@ interface DividerProps extends BaseProps {
   $orientation?: 'horizontal' | 'vertical';
   $thickness?: 'thin' | 'default' | 'thick' | 'thicker';
   $length?: 'auto' | 'short' | 'medium' | 'long' | 'full';
+
+  // Sistema de colores con theme.css (nuevo)
+  $colorScheme?:
+    | 'default'
+    | 'secondary'
+    | 'destructive'
+    | 'accent'
+    | 'muted'
+    | 'minimal'
+    | 'custom';
+
+  // Backward compatibility (legacy)
   $color?: 'default' | 'primary' | 'secondary' | 'accent' | 'muted' | 'custom';
 
   // Contenido en el divider
@@ -142,7 +154,7 @@ const dividerVariants = {
       shadow: 'border-solid shadow-sm',
     },
 
-    // Colores
+    // Colores legacy (para backward compatibility)
     colors: {
       default: 'text-gray-300 border-gray-300',
       primary: 'text-blue-400 border-blue-400',
@@ -188,6 +200,7 @@ const dividerVariants = {
     thickness: 'default' as const,
     length: 'auto' as const,
     color: 'default' as const,
+    colorScheme: 'default' as const,
     textPosition: 'center' as const,
     textVariant: 'default' as const,
     iconPosition: 'center' as const,
@@ -195,6 +208,66 @@ const dividerVariants = {
     animationType: 'fade' as const,
     margin: 'default' as const,
     padding: 'default' as const,
+  },
+};
+
+// 🎨 Sistema de esquemas de color con theme.css
+const colorSchemes = {
+  default: {
+    line: 'text-primary border-primary',
+    background: 'bg-card',
+    text: 'text-card-foreground',
+    textSecondary: 'text-muted-foreground',
+    textMuted: 'text-muted-foreground/70',
+    content: 'bg-card text-card-foreground',
+  },
+  secondary: {
+    line: 'text-secondary border-secondary',
+    background: 'bg-secondary/10',
+    text: 'text-secondary',
+    textSecondary: 'text-secondary/90',
+    textMuted: 'text-secondary/70',
+    content: 'bg-secondary/5 text-secondary',
+  },
+  destructive: {
+    line: 'text-destructive border-destructive',
+    background: 'bg-destructive/10',
+    text: 'text-destructive',
+    textSecondary: 'text-destructive/90',
+    textMuted: 'text-destructive/70',
+    content: 'bg-destructive/5 text-destructive',
+  },
+  accent: {
+    line: 'text-accent border-accent',
+    background: 'bg-accent/10',
+    text: 'text-accent',
+    textSecondary: 'text-accent/90',
+    textMuted: 'text-accent/70',
+    content: 'bg-accent/5 text-accent',
+  },
+  muted: {
+    line: 'text-muted-foreground border-border',
+    background: 'bg-muted/50',
+    text: 'text-muted-foreground',
+    textSecondary: 'text-muted-foreground/80',
+    textMuted: 'text-muted-foreground/60',
+    content: 'bg-muted/30 text-muted-foreground',
+  },
+  minimal: {
+    line: 'text-foreground/20 border-foreground/20',
+    background: 'bg-transparent',
+    text: 'text-foreground/80',
+    textSecondary: 'text-foreground/60',
+    textMuted: 'text-foreground/40',
+    content: 'bg-transparent text-foreground/70',
+  },
+  custom: {
+    line: '',
+    background: '',
+    text: '',
+    textSecondary: '',
+    textMuted: '',
+    content: '',
   },
 };
 
@@ -207,7 +280,8 @@ const Divider = React.forwardRef<HTMLDivElement, DividerProps>(
       $orientation = 'horizontal',
       $thickness = 'default',
       $length = 'auto',
-      $color = 'default',
+      $colorScheme = 'default',
+      $color, // Legacy support
       text,
       $textPosition = 'center',
       $textVariant = 'default',
@@ -238,6 +312,27 @@ const Divider = React.forwardRef<HTMLDivElement, DividerProps>(
     // Integración con store
     const storeValue =
       $store && storeKey ? $store((state) => state[storeKey]) : undefined;
+
+    // Determinar esquema de color final (con backward compatibility)
+    const finalColorScheme = React.useMemo(() => {
+      // Prioridad: $colorScheme > legacy $color > default
+      if ($colorScheme !== 'default') return $colorScheme;
+      if ($color && $color !== 'default') {
+        // Mapeo de legacy colors a colorSchemes
+        const legacyMap: Record<string, keyof typeof colorSchemes> = {
+          primary: 'default',
+          secondary: 'secondary',
+          accent: 'accent',
+          muted: 'muted',
+          custom: 'custom',
+        };
+        return legacyMap[$color] || 'default';
+      }
+      return 'default';
+    }, [$colorScheme, $color]);
+
+    // Obtener esquema de color activo
+    const currentColorScheme = colorSchemes[finalColorScheme];
 
     // Determinar contenido final
     const finalText = storeValue?.text || text;
@@ -302,13 +397,25 @@ const Divider = React.forwardRef<HTMLDivElement, DividerProps>(
         baseClasses.push(dividerVariants.line.thicknessVertical[$thickness]);
       }
 
-      // Color (solo si no es personalizado)
-      if ($color !== 'custom') {
+      // Sistema de colores con theme.css
+      if (finalColorScheme !== 'custom') {
+        baseClasses.push(currentColorScheme.line);
+      } else if ($color && $color !== 'custom') {
+        // Fallback a legacy colors para backward compatibility
         baseClasses.push(dividerVariants.line.colors[$color]);
       }
 
       return cn(...baseClasses, $lineClassName);
-    }, [$variant, $orientation, $length, $thickness, $color, $lineClassName]);
+    }, [
+      $variant,
+      $orientation,
+      $length,
+      $thickness,
+      finalColorScheme,
+      currentColorScheme.line,
+      $color,
+      $lineClassName,
+    ]);
 
     // Renderizar contenido (texto/icono)
     const renderContent = React.useCallback(() => {
@@ -322,7 +429,9 @@ const Divider = React.forwardRef<HTMLDivElement, DividerProps>(
             : $textPosition === 'right'
               ? 'right'
               : 'center'
-        ]
+        ],
+        // Usar colores del esquema de color
+        finalColorScheme !== 'custom' ? currentColorScheme.content : ''
       );
 
       return (
@@ -334,6 +443,8 @@ const Divider = React.forwardRef<HTMLDivElement, DividerProps>(
                 dividerVariants.content.iconSizes[$iconSize],
                 'flex items-center justify-center',
                 finalText ? 'mr-2' : '',
+                // Color del icono basado en esquema
+                finalColorScheme !== 'custom' ? currentColorScheme.text : '',
                 $iconClassName
               )}>
               {renderIcon ? renderIcon(finalIcon) : finalIcon}
@@ -345,6 +456,15 @@ const Divider = React.forwardRef<HTMLDivElement, DividerProps>(
             <span
               className={cn(
                 dividerVariants.content.textVariants[$textVariant],
+                // Aplicar colores del esquema según variante de texto
+                finalColorScheme !== 'custom' && $textVariant === 'colored'
+                  ? currentColorScheme.text
+                  : finalColorScheme !== 'custom' && $textVariant === 'muted'
+                    ? currentColorScheme.textMuted
+                    : finalColorScheme !== 'custom' &&
+                        $textVariant !== 'default'
+                      ? currentColorScheme.textSecondary
+                      : '',
                 $textClassName
               )}>
               {renderText ? renderText(finalText) : finalText}
@@ -367,6 +487,8 @@ const Divider = React.forwardRef<HTMLDivElement, DividerProps>(
       $textClassName,
       renderIcon,
       renderText,
+      finalColorScheme,
+      currentColorScheme,
     ]);
 
     // Si no hay contenido, renderizar línea simple

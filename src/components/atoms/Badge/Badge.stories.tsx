@@ -1,5 +1,18 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Badge } from './Badge';
+import { useBadgeExamples } from '../../../stores/badgeExamples.store';
+import {
+  FiStar,
+  FiZap,
+  FiX,
+  FiTag,
+  FiFilter,
+  FiLayers,
+  FiPlus,
+  FiMinus,
+  FiEye,
+  FiEyeOff,
+} from 'react-icons/fi';
 
 const meta: Meta<typeof Badge> = {
   title: 'Atoms/Badge',
@@ -8,6 +21,42 @@ const meta: Meta<typeof Badge> = {
     layout: 'centered',
   },
   tags: ['autodocs'],
+  argTypes: {
+    $colorScheme: {
+      control: 'select',
+      options: [
+        'default',
+        'secondary',
+        'destructive',
+        'accent',
+        'muted',
+        'minimal',
+        'custom',
+      ],
+      description: 'Esquema de color usando theme.css',
+    },
+    $variant: {
+      control: 'select',
+      options: [
+        'default',
+        'secondary',
+        'destructive',
+        'success',
+        'warning',
+        'outline',
+      ],
+      description: 'Visual style variant of the badge (legacy support)',
+    },
+    $size: {
+      control: 'select',
+      options: ['sm', 'default', 'lg'],
+      description: 'Size of the badge',
+    },
+    $custom: {
+      control: 'text',
+      description: 'Custom Tailwind CSS classes',
+    },
+  },
 };
 
 export default meta;
@@ -148,5 +197,350 @@ export const Interactive: Story = {
       </Badge>
     </div>
   ),
+};
+
+// 🎨 ===== THEME.CSS COLOR SCHEMES =====
+export const ColorSchemes: Story = {
+  render: () => (
+    <div className="space-y-6">
+      <h4 className="text-lg font-semibold">Esquemas de Color theme.css</h4>
+
+      <div className="space-y-4">
+        <div>
+          <h5 className="text-sm font-medium mb-2 text-gray-700">
+            Default (Primary)
+          </h5>
+          <div className="flex flex-wrap gap-2">
+            <Badge $colorScheme="default">Featured</Badge>
+            <Badge $colorScheme="default" $size="sm">
+              New
+            </Badge>
+            <Badge $colorScheme="default" $size="lg">
+              Premium
+            </Badge>
+          </div>
+        </div>
+
+        <div>
+          <h5 className="text-sm font-medium mb-2 text-gray-700">Secondary</h5>
+          <div className="flex flex-wrap gap-2">
+            <Badge $colorScheme="secondary">Info</Badge>
+            <Badge $colorScheme="secondary" $size="sm">
+              Beta
+            </Badge>
+            <Badge $colorScheme="secondary" $size="lg">
+              Draft
+            </Badge>
+          </div>
+        </div>
+
+        <div>
+          <h5 className="text-sm font-medium mb-2 text-gray-700">
+            Destructive
+          </h5>
+          <div className="flex flex-wrap gap-2">
+            <Badge $colorScheme="destructive">Error</Badge>
+            <Badge $colorScheme="destructive" $size="sm">
+              Failed
+            </Badge>
+            <Badge $colorScheme="destructive" $size="lg">
+              Critical
+            </Badge>
+          </div>
+        </div>
+
+        <div>
+          <h5 className="text-sm font-medium mb-2 text-gray-700">Accent</h5>
+          <div className="flex flex-wrap gap-2">
+            <Badge $colorScheme="accent">Special</Badge>
+            <Badge $colorScheme="accent" $size="sm">
+              Pro
+            </Badge>
+            <Badge $colorScheme="accent" $size="lg">
+              Highlighted
+            </Badge>
+          </div>
+        </div>
+
+        <div>
+          <h5 className="text-sm font-medium mb-2 text-gray-700">Muted</h5>
+          <div className="flex flex-wrap gap-2">
+            <Badge $colorScheme="muted">Standard</Badge>
+            <Badge $colorScheme="muted" $size="sm">
+              Basic
+            </Badge>
+            <Badge $colorScheme="muted" $size="lg">
+              Regular
+            </Badge>
+          </div>
+        </div>
+
+        <div>
+          <h5 className="text-sm font-medium mb-2 text-gray-700">Minimal</h5>
+          <div className="flex flex-wrap gap-2">
+            <Badge $colorScheme="minimal">Subtle</Badge>
+            <Badge $colorScheme="minimal" $size="sm">
+              Light
+            </Badge>
+            <Badge $colorScheme="minimal" $size="lg">
+              Clean
+            </Badge>
+          </div>
+        </div>
+
+        <div>
+          <h5 className="text-sm font-medium mb-2 text-gray-700">
+            Special Variants (Legacy Support)
+          </h5>
+          <div className="flex flex-wrap gap-2">
+            <Badge $variant="success">Success</Badge>
+            <Badge $variant="warning">Warning</Badge>
+            <Badge $variant="outline">Outline</Badge>
+          </div>
+        </div>
+      </div>
+
+      <div className="p-4 bg-gray-50 rounded-lg">
+        <p className="text-sm text-gray-600">
+          <strong>Esquemas de color theme.css:</strong> Estos esquemas utilizan
+          las variables CSS definidas en theme.css, proporcionando consistencia
+          visual y soporte para modo oscuro automático.
+        </p>
+      </div>
+    </div>
+  ),
+};
+
+export const ColorSchemeWithStore: Story = {
+  render: () => {
+    const {
+      colorSchemeExample,
+      secondaryColorExample,
+      destructiveColorExample,
+      accentColorExample,
+      mutedColorExample,
+      minimalColorExample,
+      notificationBadges,
+      statusBadges,
+      incrementNotification,
+      decrementNotification,
+      resetNotification,
+      toggleBadgeVisibility,
+      badgeVisibility,
+      resetToDefaults,
+    } = useBadgeExamples();
+
+    return (
+      <div className="space-y-6">
+        <h4 className="text-lg font-semibold">Esquemas de Color con Store</h4>
+
+        <div className="space-y-4">
+          <div>
+            <h5 className="text-sm font-medium mb-2 text-gray-700">
+              Default (Primary)
+            </h5>
+            <div className="flex flex-wrap gap-2">
+              <Badge $colorScheme="default">{colorSchemeExample}</Badge>
+              <Badge $colorScheme="default" $size="sm">
+                New
+              </Badge>
+              <Badge $colorScheme="default" $size="lg">
+                Premium
+              </Badge>
+            </div>
+          </div>
+
+          <div>
+            <h5 className="text-sm font-medium mb-2 text-gray-700">
+              Secondary
+            </h5>
+            <div className="flex flex-wrap gap-2">
+              <Badge $colorScheme="secondary">{secondaryColorExample}</Badge>
+              <Badge $colorScheme="secondary" $size="sm">
+                Beta
+              </Badge>
+              <Badge $colorScheme="secondary" $size="lg">
+                Draft
+              </Badge>
+            </div>
+          </div>
+
+          <div>
+            <h5 className="text-sm font-medium mb-2 text-gray-700">
+              Destructive
+            </h5>
+            <div className="flex flex-wrap gap-2">
+              <Badge $colorScheme="destructive">
+                {destructiveColorExample}
+              </Badge>
+              <Badge $colorScheme="destructive" $size="sm">
+                Failed
+              </Badge>
+              <Badge $colorScheme="destructive" $size="lg">
+                Critical
+              </Badge>
+            </div>
+          </div>
+
+          <div>
+            <h5 className="text-sm font-medium mb-2 text-gray-700">Accent</h5>
+            <div className="flex flex-wrap gap-2">
+              <Badge $colorScheme="accent">{accentColorExample}</Badge>
+              <Badge $colorScheme="accent" $size="sm">
+                Pro
+              </Badge>
+              <Badge $colorScheme="accent" $size="lg">
+                Highlighted
+              </Badge>
+            </div>
+          </div>
+
+          <div>
+            <h5 className="text-sm font-medium mb-2 text-gray-700">Muted</h5>
+            <div className="flex flex-wrap gap-2">
+              <Badge $colorScheme="muted">{mutedColorExample}</Badge>
+              <Badge $colorScheme="muted" $size="sm">
+                Basic
+              </Badge>
+              <Badge $colorScheme="muted" $size="lg">
+                Regular
+              </Badge>
+            </div>
+          </div>
+
+          <div>
+            <h5 className="text-sm font-medium mb-2 text-gray-700">Minimal</h5>
+            <div className="flex flex-wrap gap-2">
+              <Badge $colorScheme="minimal">{minimalColorExample}</Badge>
+              <Badge $colorScheme="minimal" $size="sm">
+                Light
+              </Badge>
+              <Badge $colorScheme="minimal" $size="lg">
+                Clean
+              </Badge>
+            </div>
+          </div>
+        </div>
+
+        <div className="space-y-4">
+          <h5 className="text-sm font-medium text-gray-700">
+            Notification Badges Interactivas
+          </h5>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {Object.entries(notificationBadges).map(([key, count]) => (
+              <div
+                key={key}
+                className="flex items-center gap-3 p-3 bg-white rounded-lg border">
+                <span className="capitalize font-medium min-w-[80px]">
+                  {key}:
+                </span>
+
+                {badgeVisibility[key] && count > 0 && (
+                  <Badge $colorScheme="destructive" $size="sm">
+                    {count}
+                  </Badge>
+                )}
+
+                <div className="flex gap-1 ml-auto">
+                  <button
+                    onClick={() => incrementNotification(key)}
+                    className="p-1 text-green-600 hover:bg-green-50 rounded"
+                    title="Incrementar">
+                    <FiPlus size={14} />
+                  </button>
+                  <button
+                    onClick={() => decrementNotification(key)}
+                    className="p-1 text-blue-600 hover:bg-blue-50 rounded"
+                    title="Decrementar">
+                    <FiMinus size={14} />
+                  </button>
+                  <button
+                    onClick={() => resetNotification(key)}
+                    className="p-1 text-red-600 hover:bg-red-50 rounded"
+                    title="Reset">
+                    <FiX size={14} />
+                  </button>
+                  <button
+                    onClick={() => toggleBadgeVisibility(key)}
+                    className="p-1 text-gray-600 hover:bg-gray-50 rounded"
+                    title="Toggle visibility">
+                    {badgeVisibility[key] ? (
+                      <FiEye size={14} />
+                    ) : (
+                      <FiEyeOff size={14} />
+                    )}
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="space-y-4">
+          <h5 className="text-sm font-medium text-gray-700">Status Badges</h5>
+
+          <div className="flex flex-wrap gap-2">
+            {statusBadges.map((status, index) => (
+              <Badge
+                key={status}
+                $colorScheme={
+                  index === 0 ? 'accent' : index === 1 ? 'secondary' : 'default'
+                }
+                $size="sm">
+                {status}
+              </Badge>
+            ))}
+          </div>
+        </div>
+
+        <div className="p-4 bg-gray-50 rounded-lg space-y-3">
+          <h6 className="font-medium">Estado Actual del Store:</h6>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+            <div>
+              <p>
+                <strong>Total notificaciones:</strong>{' '}
+                {Object.values(notificationBadges).reduce((a, b) => a + b, 0)}
+              </p>
+              <p>
+                <strong>Status badges:</strong> {statusBadges.length}
+              </p>
+            </div>
+            <div>
+              <button
+                onClick={resetToDefaults}
+                className="px-3 py-1 bg-white border border-gray-300 rounded text-sm hover:bg-gray-50">
+                Reset Store
+              </button>
+            </div>
+          </div>
+
+          <details className="text-xs">
+            <summary className="cursor-pointer font-medium">
+              Ver valores del store
+            </summary>
+            <pre className="text-gray-600 bg-white p-3 rounded overflow-auto max-h-40 mt-2">
+              {JSON.stringify(
+                {
+                  colorSchemeExample,
+                  secondaryColorExample,
+                  destructiveColorExample,
+                  accentColorExample,
+                  mutedColorExample,
+                  minimalColorExample,
+                  notificationBadges,
+                  statusBadges,
+                  badgeVisibility,
+                },
+                null,
+                2
+              )}
+            </pre>
+          </details>
+        </div>
+      </div>
+    );
+  },
 };
 

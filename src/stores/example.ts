@@ -88,4 +88,5 @@ export { useProgressExamples } from './progressExamples.store';
 export { useChipExamples } from './chipExamples.store';
 export { useTooltipExamples } from './tooltipExamples.store';
 export { useSliderExamples } from './sliderExamples.store';
+export { useBadgeExamples } from './badgeExamples.store';
 

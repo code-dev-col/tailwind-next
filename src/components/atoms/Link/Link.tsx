@@ -92,7 +92,7 @@ interface LinkProps
 const linkVariants = {
   base: [
     'inline-flex',
-    'px-3',
+    'px-2',
     'items-center',
     'gap-1.5',
     'font-medium',
@@ -102,47 +102,24 @@ const linkVariants = {
     'focus-visible:ring-2',
     'focus-visible:ring-ring',
     'focus-visible:ring-offset-2',
-    'rounded-sm',
-    'shadow-sm',
   ].join(' '),
 
   variants: {
     variant: {
-      default: [
-        'text-foreground',
-        'hover:text-primary',
-        'hover:shadow-md',
-      ].join(' '),
+      default: ['text-foreground', 'hover:text-primary'].join(' '),
 
-      primary: [
-        'text-primary',
-        'hover:text-primary/80',
-        'hover:shadow-md',
-      ].join(' '),
+      primary: ['text-primary', 'hover:text-primary/80'].join(' '),
 
-      secondary: [
-        'text-secondary',
-        'hover:text-secondary/80',
-        'hover:shadow-md',
-      ].join(' '),
+      secondary: ['text-secondary', 'hover:text-secondary/80'].join(' '),
 
-      muted: [
-        'text-muted-foreground',
-        'hover:text-foreground',
-        'hover:shadow-md',
-      ].join(' '),
+      muted: ['text-muted-foreground', 'hover:text-foreground'].join(' '),
 
-      destructive: [
-        'text-destructive',
-        'hover:text-destructive/80',
-        'hover:shadow-md',
-      ].join(' '),
+      destructive: ['text-destructive', 'hover:text-destructive/80'].join(' '),
 
       ghost: [
         'text-muted-foreground',
         'hover:text-foreground',
         'hover:bg-accent',
-        'hover:shadow-md',
         'px-2',
         'py-1',
         'rounded-md',

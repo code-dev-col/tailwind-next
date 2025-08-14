@@ -16,6 +16,14 @@ interface BreadcrumbExamplesState {
   documentationBreadcrumbs: BreadcrumbItem[];
 
   // Estados para configuraciones
+  currentColorScheme:
+    | 'default'
+    | 'secondary'
+    | 'destructive'
+    | 'accent'
+    | 'muted'
+    | 'minimal'
+    | 'custom';
   currentVariant: 'default' | 'pills' | 'arrows' | 'slash' | 'dots' | 'minimal';
   currentSize: 'sm' | 'default' | 'lg';
   showIcons: boolean;
@@ -25,6 +33,14 @@ interface BreadcrumbExamplesState {
 
   // Estados para el breadcrumb interactivo
   interactiveBreadcrumbs: BreadcrumbItem[];
+  interactiveColorScheme:
+    | 'default'
+    | 'secondary'
+    | 'destructive'
+    | 'accent'
+    | 'muted'
+    | 'minimal'
+    | 'custom';
   interactiveVariant:
     | 'default'
     | 'pills'
@@ -49,6 +65,9 @@ interface BreadcrumbExamplesState {
   setDocumentationBreadcrumbs: (items: BreadcrumbItem[]) => void;
 
   // Setters para configuraciones
+  setCurrentColorScheme: (
+    colorScheme: BreadcrumbExamplesState['currentColorScheme']
+  ) => void;
   setCurrentVariant: (
     variant: BreadcrumbExamplesState['currentVariant']
   ) => void;
@@ -60,6 +79,9 @@ interface BreadcrumbExamplesState {
 
   // Setters para breadcrumb interactivo
   setInteractiveBreadcrumbs: (items: BreadcrumbItem[]) => void;
+  setInteractiveColorScheme: (
+    colorScheme: BreadcrumbExamplesState['interactiveColorScheme']
+  ) => void;
   setInteractiveVariant: (
     variant: BreadcrumbExamplesState['interactiveVariant']
   ) => void;
@@ -142,6 +164,7 @@ export const useBreadcrumbExamples = create<BreadcrumbExamplesState>(
     ],
 
     // Configuraciones
+    currentColorScheme: 'default',
     currentVariant: 'default',
     currentSize: 'default',
     showIcons: true,
@@ -152,10 +175,12 @@ export const useBreadcrumbExamples = create<BreadcrumbExamplesState>(
     // Interactivo
     interactiveBreadcrumbs: [
       { label: 'Home', href: '/' },
-      { label: 'Section', href: '/section' },
-      { label: 'Subsection', href: '/section/subsection' },
-      { label: 'Current Page', isCurrentPage: true },
+      { label: 'Category', href: '/category' },
+      { label: 'Subcategory', href: '/category/subcategory' },
+      { label: 'Product', href: '/category/subcategory/product' },
+      { label: 'Details', isCurrentPage: true },
     ],
+    interactiveColorScheme: 'default',
     interactiveVariant: 'default',
     interactiveSize: 'default',
     interactiveShowIcons: false,
@@ -175,6 +200,8 @@ export const useBreadcrumbExamples = create<BreadcrumbExamplesState>(
       set({ documentationBreadcrumbs: items }),
 
     // Setters para configuraciones
+    setCurrentColorScheme: (colorScheme) =>
+      set({ currentColorScheme: colorScheme }),
     setCurrentVariant: (variant) => set({ currentVariant: variant }),
     setCurrentSize: (size) => set({ currentSize: size }),
     setShowIcons: (show) => set({ showIcons: show }),
@@ -185,6 +212,8 @@ export const useBreadcrumbExamples = create<BreadcrumbExamplesState>(
     // Setters para interactivo
     setInteractiveBreadcrumbs: (items) =>
       set({ interactiveBreadcrumbs: items }),
+    setInteractiveColorScheme: (colorScheme) =>
+      set({ interactiveColorScheme: colorScheme }),
     setInteractiveVariant: (variant) => set({ interactiveVariant: variant }),
     setInteractiveSize: (size) => set({ interactiveSize: size }),
     setInteractiveShowIcons: (show) => set({ interactiveShowIcons: show }),

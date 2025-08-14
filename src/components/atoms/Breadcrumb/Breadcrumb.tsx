@@ -24,7 +24,15 @@ interface BreadcrumbProps extends BaseProps {
   // Items del breadcrumb
   items: BreadcrumbItem[];
 
-  // Variantes visuales
+  // Esquemas de color basados en theme.css
+  $colorScheme?:
+    | 'default'
+    | 'secondary'
+    | 'destructive'
+    | 'accent'
+    | 'muted'
+    | 'minimal'
+    | 'custom';
   $variant?: 'default' | 'pills' | 'arrows' | 'slash' | 'dots' | 'minimal';
   $size?: 'sm' | 'default' | 'lg';
 
@@ -71,17 +79,88 @@ interface BreadcrumbProps extends BaseProps {
   renderSeparator?: (index: number) => React.ReactNode;
 }
 
+// Esquemas de color basados en theme.css
+const colorSchemes = {
+  default: {
+    container: 'text-muted-foreground',
+    item: 'text-muted-foreground hover:text-primary',
+    currentPage: 'text-foreground font-medium',
+    separator: 'text-muted-foreground/50',
+    pillsHover: 'hover:bg-primary/10 hover:text-primary',
+    dropdown: 'hover:bg-primary/10 hover:text-primary',
+    dropdownBg: 'bg-card border-border',
+    dropdownItem:
+      'text-card-foreground hover:bg-muted/50 hover:text-card-foreground',
+  },
+  secondary: {
+    container: 'text-secondary/80',
+    item: 'text-secondary/80 hover:text-secondary',
+    currentPage: 'text-secondary font-medium',
+    separator: 'text-secondary/40',
+    pillsHover: 'hover:bg-secondary/10 hover:text-secondary',
+    dropdown: 'hover:bg-secondary/10 hover:text-secondary',
+    dropdownBg: 'bg-card border-secondary/20',
+    dropdownItem:
+      'text-secondary/90 hover:bg-secondary/10 hover:text-secondary',
+  },
+  destructive: {
+    container: 'text-destructive/80',
+    item: 'text-destructive/80 hover:text-destructive',
+    currentPage: 'text-destructive font-medium',
+    separator: 'text-destructive/40',
+    pillsHover: 'hover:bg-destructive/10 hover:text-destructive',
+    dropdown: 'hover:bg-destructive/10 hover:text-destructive',
+    dropdownBg: 'bg-card border-destructive/20',
+    dropdownItem:
+      'text-destructive/90 hover:bg-destructive/10 hover:text-destructive',
+  },
+  accent: {
+    container: 'text-accent/80',
+    item: 'text-accent/80 hover:text-accent',
+    currentPage: 'text-accent font-medium',
+    separator: 'text-accent/40',
+    pillsHover: 'hover:bg-accent/10 hover:text-accent',
+    dropdown: 'hover:bg-accent/10 hover:text-accent',
+    dropdownBg: 'bg-card border-accent/20',
+    dropdownItem: 'text-accent/90 hover:bg-accent/10 hover:text-accent',
+  },
+  muted: {
+    container: 'text-muted-foreground/80',
+    item: 'text-muted-foreground/80 hover:text-muted-foreground',
+    currentPage: 'text-muted-foreground font-medium',
+    separator: 'text-muted-foreground/30',
+    pillsHover: 'hover:bg-muted/30 hover:text-muted-foreground',
+    dropdown: 'hover:bg-muted/30 hover:text-muted-foreground',
+    dropdownBg: 'bg-muted/50 border-muted',
+    dropdownItem:
+      'text-muted-foreground hover:bg-muted/30 hover:text-muted-foreground',
+  },
+  minimal: {
+    container: 'text-foreground/60',
+    item: 'text-foreground/60 hover:text-foreground',
+    currentPage: 'text-foreground font-medium',
+    separator: 'text-border',
+    pillsHover: 'hover:bg-border hover:text-foreground',
+    dropdown: 'hover:bg-border hover:text-foreground',
+    dropdownBg: 'bg-background border-border',
+    dropdownItem: 'text-foreground/80 hover:bg-border hover:text-foreground',
+  },
+  custom: {
+    container: 'text-muted-foreground',
+    item: 'text-muted-foreground hover:text-primary',
+    currentPage: 'text-foreground font-medium',
+    separator: 'text-muted-foreground/50',
+    pillsHover: 'hover:bg-primary/10 hover:text-primary',
+    dropdown: 'hover:bg-primary/10 hover:text-primary',
+    dropdownBg: 'bg-card border-border',
+    dropdownItem:
+      'text-card-foreground hover:bg-muted/50 hover:text-card-foreground',
+  },
+} as const;
+
 const breadcrumbVariants = {
   container: {
     base: 'flex items-center space-x-1 text-sm',
-    variants: {
-      default: 'text-gray-600',
-      pills: 'text-gray-700',
-      arrows: 'text-gray-600',
-      slash: 'text-gray-600',
-      dots: 'text-gray-600',
-      minimal: 'text-gray-500',
-    },
     sizes: {
       sm: 'text-xs space-x-0.5',
       default: 'text-sm space-x-1',
@@ -91,17 +170,16 @@ const breadcrumbVariants = {
 
   item: {
     base: 'inline-flex items-center gap-1 transition-all duration-200 focus:outline-none',
-    interactive: 'hover:text-blue-600 focus:text-blue-600 cursor-pointer',
+    interactive: 'cursor-pointer',
     nonInteractive: 'cursor-default',
-    currentPage: 'font-medium text-gray-900 cursor-default',
 
     variants: {
-      default: 'hover:text-blue-600',
-      pills: 'px-2 py-1 rounded-md hover:bg-blue-50 hover:text-blue-700',
-      arrows: 'hover:text-blue-600',
-      slash: 'hover:text-blue-600',
-      dots: 'hover:text-blue-600',
-      minimal: 'hover:text-gray-700',
+      default: '',
+      pills: 'px-2 py-1 rounded-md',
+      arrows: '',
+      slash: '',
+      dots: '',
+      minimal: '',
     },
 
     sizes: {
@@ -112,7 +190,7 @@ const breadcrumbVariants = {
   },
 
   separator: {
-    base: 'flex items-center text-gray-400 select-none',
+    base: 'flex items-center select-none',
     variants: {
       default: 'mx-1',
       pills: 'mx-0.5',
@@ -129,11 +207,10 @@ const breadcrumbVariants = {
   },
 
   collapsedIndicator: {
-    base: 'inline-flex items-center gap-1 px-2 py-1 text-gray-500 hover:text-gray-700 hover:bg-gray-50 rounded cursor-pointer transition-colors',
+    base: 'inline-flex items-center gap-1 px-2 py-1 rounded cursor-pointer transition-colors',
     dropdown:
-      'absolute top-full left-0 mt-1 bg-white border border-gray-200 rounded-md shadow-lg z-10 min-w-[150px] py-1',
-    dropdownItem:
-      'block w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-gray-900 transition-colors',
+      'absolute top-full left-0 mt-1 rounded-md shadow-lg z-10 min-w-[150px] py-1',
+    dropdownItem: 'block w-full text-left px-3 py-2 text-sm transition-colors',
   },
 
   homeIcon: {
@@ -141,6 +218,7 @@ const breadcrumbVariants = {
   },
 
   defaultVariants: {
+    colorScheme: 'default' as const,
     variant: 'default' as const,
     size: 'default' as const,
     separator: 'chevron' as const,
@@ -161,6 +239,7 @@ const Breadcrumb = React.forwardRef<HTMLElement, BreadcrumbProps>(
     {
       className,
       items,
+      $colorScheme = 'default',
       $variant = 'default',
       $size = 'default',
       $separator = 'chevron',
@@ -318,6 +397,9 @@ const Breadcrumb = React.forwardRef<HTMLElement, BreadcrumbProps>(
           !item.isCurrentPage;
         const isCurrentPage = item.isCurrentPage;
 
+        // Usar colorSchemes para los estilos
+        const colors = colorSchemes[$colorScheme];
+
         const itemClasses = cn(
           breadcrumbVariants.item.base,
           breadcrumbVariants.item.variants[$variant],
@@ -326,9 +408,15 @@ const Breadcrumb = React.forwardRef<HTMLElement, BreadcrumbProps>(
             [breadcrumbVariants.item.interactive]: isClickable,
             [breadcrumbVariants.item.nonInteractive]:
               !isClickable && !isCurrentPage,
-            [breadcrumbVariants.item.currentPage]: isCurrentPage,
           },
-          isCurrentPage ? $currentPageClassName : $itemClassName
+          // Aplicar colores según el estado
+          isCurrentPage
+            ? cn(colors.currentPage, $currentPageClassName)
+            : cn(
+                colors.item,
+                $variant === 'pills' ? colors.pillsHover : '',
+                $itemClassName
+              )
         );
 
         const content = (
@@ -365,6 +453,7 @@ const Breadcrumb = React.forwardRef<HTMLElement, BreadcrumbProps>(
       },
       [
         renderItem,
+        $colorScheme,
         $variant,
         $size,
         $showIcons,
@@ -375,10 +464,12 @@ const Breadcrumb = React.forwardRef<HTMLElement, BreadcrumbProps>(
     );
 
     // Clases CSS
+    const colors = colorSchemes[$colorScheme];
+
     const containerClasses = cn(
       breadcrumbVariants.container.base,
-      breadcrumbVariants.container.variants[$variant],
       breadcrumbVariants.container.sizes[$size],
+      colors.container,
       className,
       $custom
     );
@@ -387,6 +478,7 @@ const Breadcrumb = React.forwardRef<HTMLElement, BreadcrumbProps>(
       breadcrumbVariants.separator.base,
       breadcrumbVariants.separator.variants[$variant],
       breadcrumbVariants.separator.sizes[$size],
+      colors.separator,
       $separatorClassName
     );
 
@@ -408,7 +500,10 @@ const Breadcrumb = React.forwardRef<HTMLElement, BreadcrumbProps>(
                     <li className="relative" ref={dropdownRef}>
                       <button
                         onClick={() => setShowDropdown(!showDropdown)}
-                        className={breadcrumbVariants.collapsedIndicator.base}
+                        className={cn(
+                          breadcrumbVariants.collapsedIndicator.base,
+                          colors.dropdown
+                        )}
                         aria-label="Show collapsed items"
                         aria-expanded={showDropdown}
                         aria-haspopup="true">
@@ -424,9 +519,10 @@ const Breadcrumb = React.forwardRef<HTMLElement, BreadcrumbProps>(
                       {/* Dropdown con items colapsados */}
                       {showDropdown && (
                         <div
-                          className={
-                            breadcrumbVariants.collapsedIndicator.dropdown
-                          }>
+                          className={cn(
+                            breadcrumbVariants.collapsedIndicator.dropdown,
+                            colors.dropdownBg
+                          )}>
                           {collapsedItems.map(
                             (collapsedItem, collapsedIndex) => (
                               <button
@@ -438,10 +534,11 @@ const Breadcrumb = React.forwardRef<HTMLElement, BreadcrumbProps>(
                                   );
                                   setShowDropdown(false);
                                 }}
-                                className={
+                                className={cn(
                                   breadcrumbVariants.collapsedIndicator
-                                    .dropdownItem
-                                }>
+                                    .dropdownItem,
+                                  colors.dropdownItem
+                                )}>
                                 <div className="flex items-center gap-2">
                                   {$showIcons && collapsedItem.icon && (
                                     <span className="w-4 h-4">

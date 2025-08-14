@@ -20,9 +20,23 @@ const meta: Meta<typeof Breadcrumb> = {
   },
   tags: ['autodocs'],
   argTypes: {
+    $colorScheme: {
+      control: 'select',
+      options: [
+        'default',
+        'secondary',
+        'destructive',
+        'accent',
+        'muted',
+        'minimal',
+        'custom',
+      ],
+      description: 'Esquema de color basado en theme.css',
+    },
     $variant: {
       control: 'select',
       options: ['default', 'pills', 'arrows', 'slash', 'dots', 'minimal'],
+      description: 'Variante visual del breadcrumb',
     },
     $size: {
       control: 'select',
@@ -47,11 +61,61 @@ export const Default: Story = {
       <div className="w-full max-w-2xl">
         <Breadcrumb
           items={basicBreadcrumbs}
+          $colorScheme="default"
           $variant="default"
           $size="default"
         />
       </div>
     );
+  },
+};
+
+// ✅ Esquemas de color basados en theme.css
+export const ColorSchemes: Story = {
+  render: () => {
+    const { basicBreadcrumbs } = useBreadcrumbExamples();
+
+    return (
+      <div className="space-y-6 w-full max-w-2xl">
+        <div>
+          <h3 className="text-sm font-medium mb-2">Default</h3>
+          <Breadcrumb items={basicBreadcrumbs} $colorScheme="default" />
+        </div>
+
+        <div>
+          <h3 className="text-sm font-medium mb-2">Secondary</h3>
+          <Breadcrumb items={basicBreadcrumbs} $colorScheme="secondary" />
+        </div>
+
+        <div>
+          <h3 className="text-sm font-medium mb-2">Destructive</h3>
+          <Breadcrumb items={basicBreadcrumbs} $colorScheme="destructive" />
+        </div>
+
+        <div>
+          <h3 className="text-sm font-medium mb-2">Accent</h3>
+          <Breadcrumb items={basicBreadcrumbs} $colorScheme="accent" />
+        </div>
+
+        <div>
+          <h3 className="text-sm font-medium mb-2">Muted</h3>
+          <Breadcrumb items={basicBreadcrumbs} $colorScheme="muted" />
+        </div>
+
+        <div>
+          <h3 className="text-sm font-medium mb-2">Minimal</h3>
+          <Breadcrumb items={basicBreadcrumbs} $colorScheme="minimal" />
+        </div>
+      </div>
+    );
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Diferentes esquemas de color alineados con theme.css variables.',
+      },
+    },
   },
 };
 
@@ -64,22 +128,38 @@ export const Variants: Story = {
       <div className="space-y-6 w-full max-w-2xl">
         <div>
           <h3 className="text-sm font-medium text-gray-700 mb-2">Default</h3>
-          <Breadcrumb items={basicBreadcrumbs} $variant="default" />
+          <Breadcrumb
+            items={basicBreadcrumbs}
+            $colorScheme="default"
+            $variant="default"
+          />
         </div>
 
         <div>
           <h3 className="text-sm font-medium text-gray-700 mb-2">Pills</h3>
-          <Breadcrumb items={basicBreadcrumbs} $variant="pills" />
+          <Breadcrumb
+            items={basicBreadcrumbs}
+            $colorScheme="secondary"
+            $variant="pills"
+          />
         </div>
 
         <div>
           <h3 className="text-sm font-medium text-gray-700 mb-2">Arrows</h3>
-          <Breadcrumb items={basicBreadcrumbs} $variant="arrows" />
+          <Breadcrumb
+            items={basicBreadcrumbs}
+            $colorScheme="accent"
+            $variant="arrows"
+          />
         </div>
 
         <div>
           <h3 className="text-sm font-medium text-gray-700 mb-2">Slash</h3>
-          <Breadcrumb items={basicBreadcrumbs} $variant="slash" />
+          <Breadcrumb
+            items={basicBreadcrumbs}
+            $colorScheme="destructive"
+            $variant="slash"
+          />
         </div>
 
         <div>
@@ -455,12 +535,14 @@ export const AutoBuilder: Story = {
 export const InteractiveConfiguration: Story = {
   render: () => {
     const {
+      currentColorScheme,
       currentVariant,
       currentSize,
       separatorType,
       showIcons,
       maxItems,
       collapsible,
+      setCurrentColorScheme,
       setCurrentVariant,
       setCurrentSize,
       setSeparatorType,
@@ -475,6 +557,24 @@ export const InteractiveConfiguration: Story = {
       <div className="space-y-8 w-full max-w-4xl">
         {/* Controles interactivos */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-4 bg-gray-50 rounded-lg">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Color Scheme
+            </label>
+            <select
+              value={currentColorScheme}
+              onChange={(e) => setCurrentColorScheme(e.target.value as any)}
+              className="w-full px-2 py-1 text-sm border border-gray-300 rounded">
+              <option value="default">Default</option>
+              <option value="secondary">Secondary</option>
+              <option value="destructive">Destructive</option>
+              <option value="accent">Accent</option>
+              <option value="muted">Muted</option>
+              <option value="minimal">Minimal</option>
+              <option value="custom">Custom</option>
+            </select>
+          </div>
+
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Variant
@@ -574,6 +674,7 @@ export const InteractiveConfiguration: Story = {
           </h3>
           <Breadcrumb
             items={basicBreadcrumbs}
+            $colorScheme={currentColorScheme}
             $variant={currentVariant}
             $size={currentSize}
             $separator={separatorType}

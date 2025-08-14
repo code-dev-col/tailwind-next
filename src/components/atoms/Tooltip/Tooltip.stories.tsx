@@ -67,19 +67,18 @@ const meta: Meta<typeof Tooltip> = {
       ],
       description: 'Posición del tooltip relativa al elemento trigger',
     },
-    $variant: {
+    $colorScheme: {
       control: 'select',
       options: [
         'default',
-        'dark',
-        'light',
-        'primary',
         'secondary',
         'destructive',
-        'success',
-        'warning',
+        'accent',
+        'muted',
+        'minimal',
+        'custom',
       ],
-      description: 'Variante visual del tooltip',
+      description: 'Esquema de color del tooltip usando theme.css variables',
     },
     $trigger: {
       control: 'select',
@@ -115,48 +114,65 @@ export const Default: Story = {
   },
 };
 
-// Variantes de estilo
-export const Variants: Story = {
+// Esquemas de color usando theme.css
+export const ColorSchemes: Story = {
   render: () => (
     <div className="flex flex-wrap gap-6 items-center justify-center">
-      <Tooltip content="Tooltip por defecto" $variant="default" $showArrow>
-        <button className="px-3 py-2 bg-gray-500 text-white rounded">
+      <Tooltip
+        content="Tooltip por defecto con theme.css"
+        $colorScheme="default"
+        $showArrow>
+        <button className="px-3 py-2 bg-card text-card-foreground border border-border rounded">
           Default
         </button>
       </Tooltip>
-      <Tooltip content="Tooltip oscuro" $variant="dark" $showArrow>
-        <button className="px-3 py-2 bg-gray-700 text-white rounded">
-          Dark
-        </button>
-      </Tooltip>
-      <Tooltip content="Tooltip claro" $variant="light" $showArrow>
-        <button className="px-3 py-2 bg-gray-200 text-gray-800 rounded">
-          Light
-        </button>
-      </Tooltip>
-      <Tooltip content="Tooltip primario" $variant="primary" $showArrow>
-        <button className="px-3 py-2 bg-blue-500 text-white rounded">
-          Primary
-        </button>
-      </Tooltip>
-      <Tooltip content="Tooltip secundario" $variant="secondary" $showArrow>
-        <button className="px-3 py-2 bg-purple-500 text-white rounded">
+      <Tooltip
+        content="Tooltip secundario turquesa pastel"
+        $colorScheme="secondary"
+        $showArrow>
+        <button className="px-3 py-2 bg-secondary/10 text-secondary border border-secondary/20 rounded">
           Secondary
         </button>
       </Tooltip>
-      <Tooltip content="Tooltip destructivo" $variant="destructive" $showArrow>
-        <button className="px-3 py-2 bg-red-500 text-white rounded">
+      <Tooltip
+        content="Tooltip destructivo coral suave"
+        $colorScheme="destructive"
+        $showArrow>
+        <button className="px-3 py-2 bg-destructive/10 text-destructive border border-destructive/20 rounded">
           Destructive
         </button>
       </Tooltip>
-      <Tooltip content="Tooltip de éxito" $variant="success" $showArrow>
-        <button className="px-3 py-2 bg-green-500 text-white rounded">
-          Success
+      <Tooltip
+        content="Tooltip de acento violeta rosado"
+        $colorScheme="accent"
+        $showArrow>
+        <button className="px-3 py-2 bg-accent/10 text-accent border border-accent/20 rounded">
+          Accent
         </button>
       </Tooltip>
-      <Tooltip content="Tooltip de advertencia" $variant="warning" $showArrow>
-        <button className="px-3 py-2 bg-yellow-500 text-white rounded">
-          Warning
+      <Tooltip
+        content="Tooltip silenciado con grises neutros"
+        $colorScheme="muted"
+        $showArrow>
+        <button className="px-3 py-2 bg-muted text-muted-foreground border border-border rounded">
+          Muted
+        </button>
+      </Tooltip>
+      <Tooltip
+        content="Tooltip minimal transparente"
+        $colorScheme="minimal"
+        $showArrow>
+        <button className="px-3 py-2 border border-border text-foreground rounded">
+          Minimal
+        </button>
+      </Tooltip>
+      <Tooltip
+        content="Tooltip custom - personalizable"
+        $colorScheme="custom"
+        $custom="bg-gradient-to-r from-purple-500 to-pink-500 text-white border-0"
+        $showArrow>
+        <button className="px-3 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded">
+          Custom
         </button>
       </Tooltip>
     </div>
@@ -164,7 +180,8 @@ export const Variants: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Diferentes variantes visuales disponibles para el tooltip.',
+        story:
+          'Diferentes esquemas de color usando las variables CSS de theme.css con paleta pastel.',
       },
     },
   },
@@ -307,7 +324,7 @@ export const WithIcons: Story = {
     <div className="flex gap-6 items-center">
       <Tooltip
         content="Información adicional sobre este elemento"
-        $variant="primary"
+        $colorScheme="default"
         $showArrow>
         <button className="p-2 text-blue-500 hover:bg-blue-50 rounded-full transition-colors">
           <FiInfo size={20} />
@@ -316,7 +333,7 @@ export const WithIcons: Story = {
 
       <Tooltip
         content="¿Necesitas ayuda? Haz click para obtener soporte"
-        $variant="success"
+        $colorScheme="accent"
         $trigger="click"
         $showArrow>
         <button className="p-2 text-green-500 hover:bg-green-50 rounded-full transition-colors">
@@ -326,7 +343,7 @@ export const WithIcons: Story = {
 
       <Tooltip
         content="Configuración de usuario"
-        $variant="secondary"
+        $colorScheme="secondary"
         $position="left"
         $showArrow>
         <button className="p-2 text-purple-500 hover:bg-purple-50 rounded-full transition-colors">
@@ -336,7 +353,7 @@ export const WithIcons: Story = {
 
       <Tooltip
         content="Perfil de usuario"
-        $variant="dark"
+        $colorScheme="muted"
         $position="bottom"
         $showArrow>
         <button className="p-2 text-gray-700 hover:bg-gray-100 rounded-full transition-colors">
@@ -384,7 +401,7 @@ export const Multiline: Story = {
             </div>
           </div>
         }
-        $variant="dark"
+        $colorScheme="muted"
         $size="lg"
         $maxWidth="max-w-md"
         $showArrow>
@@ -433,7 +450,7 @@ export const WithStore: Story = {
             $store={useTooltipExamples}
             storeKey="clickedTooltip"
             $trigger="click"
-            $variant="secondary"
+            $colorScheme="secondary"
             $showArrow={showArrow}>
             <button className="px-3 py-2 bg-purple-500 text-white rounded">
               Click Store
@@ -445,7 +462,7 @@ export const WithStore: Story = {
             $store={useTooltipExamples}
             storeKey="focusedTooltip"
             $trigger="focus"
-            $variant="success"
+            $colorScheme="accent"
             $showArrow={showArrow}>
             <button className="px-3 py-2 bg-green-500 text-white rounded">
               Focus Store
@@ -509,7 +526,7 @@ export const TooltipGroupExample: Story = {
           Grupo Horizontal - Iconos de Redes Sociales
         </h4>
         <TooltipGroup
-          $variant="dark"
+          $colorScheme="muted"
           $trigger="hover"
           $gap="default"
           $direction="horizontal"
@@ -563,7 +580,7 @@ export const TooltipGroupExample: Story = {
           Grupo Vertical - Acciones de Usuario
         </h4>
         <TooltipGroup
-          $variant="primary"
+          $colorScheme="default"
           $trigger="hover"
           $gap="sm"
           $direction="vertical"
@@ -607,7 +624,7 @@ export const TooltipGroupExample: Story = {
                 </button>
               ),
               $position: 'right',
-              $variant: 'destructive',
+              $colorScheme: 'destructive',
             },
           ]}
         />
@@ -758,7 +775,7 @@ export const RealWorldExamples: Story = {
                   </div>
                 </div>
               }
-              $variant="dark"
+              $colorScheme="muted"
               $maxWidth="max-w-xs"
               $position="right">
               <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-semibold cursor-pointer">
@@ -793,7 +810,7 @@ export const RealWorldExamples: Story = {
         <div className="grid grid-cols-4 gap-4">
           <Tooltip
             content="Total de usuarios registrados en la plataforma"
-            $variant="primary"
+            $colorScheme="default"
             $position="top">
             <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg cursor-help">
               <div className="flex items-center justify-between">
@@ -806,7 +823,7 @@ export const RealWorldExamples: Story = {
 
           <Tooltip
             content="Ingresos totales del mes actual"
-            $variant="success"
+            $colorScheme="accent"
             $position="top">
             <div className="p-4 bg-green-50 border border-green-200 rounded-lg cursor-help">
               <div className="flex items-center justify-between">
@@ -821,7 +838,7 @@ export const RealWorldExamples: Story = {
 
           <Tooltip
             content="Número de pedidos procesados hoy"
-            $variant="warning"
+            $colorScheme="destructive"
             $position="top">
             <div className="p-4 bg-yellow-50 border border-yellow-200 rounded-lg cursor-help">
               <div className="flex items-center justify-between">
@@ -834,7 +851,7 @@ export const RealWorldExamples: Story = {
 
           <Tooltip
             content="Tiempo promedio de respuesta del sistema"
-            $variant="secondary"
+            $colorScheme="secondary"
             $position="top">
             <div className="p-4 bg-purple-50 border border-purple-200 rounded-lg cursor-help">
               <div className="flex items-center justify-between">
@@ -865,7 +882,7 @@ export const Interactive: Story = {
   render: () => {
     const {
       interactivePosition,
-      interactiveVariant,
+      interactiveColorScheme,
       interactiveTrigger,
       interactiveSize,
       showArrow,
@@ -873,7 +890,7 @@ export const Interactive: Story = {
       customDelay,
       isDisabled,
       setInteractivePosition,
-      setInteractiveVariant,
+      setInteractiveColorScheme,
       setInteractiveTrigger,
       setInteractiveSize,
       setShowArrow,
@@ -893,15 +910,14 @@ export const Interactive: Story = {
       'bottom-start',
       'bottom-end',
     ] as const;
-    const variants = [
+    const colorSchemes = [
       'default',
-      'dark',
-      'light',
-      'primary',
       'secondary',
       'destructive',
-      'success',
-      'warning',
+      'accent',
+      'muted',
+      'minimal',
+      'custom',
     ] as const;
     const triggers = ['hover', 'click', 'focus'] as const;
     const sizes = ['sm', 'default', 'lg'] as const;
@@ -924,14 +940,16 @@ export const Interactive: Story = {
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-2">Variante</label>
+            <label className="block text-sm font-medium mb-2">
+              Esquema de Color
+            </label>
             <select
-              value={interactiveVariant}
-              onChange={(e) => setInteractiveVariant(e.target.value as any)}
+              value={interactiveColorScheme}
+              onChange={(e) => setInteractiveColorScheme(e.target.value as any)}
               className="w-full p-2 border border-gray-300 rounded">
-              {variants.map((variant) => (
-                <option key={variant} value={variant}>
-                  {variant}
+              {colorSchemes.map((colorScheme) => (
+                <option key={colorScheme} value={colorScheme}>
+                  {colorScheme}
                 </option>
               ))}
             </select>
@@ -1025,7 +1043,7 @@ export const Interactive: Story = {
                 : 'Tooltip interactivo personalizable'
             }
             $position={interactivePosition}
-            $variant={interactiveVariant}
+            $colorScheme={interactiveColorScheme}
             $trigger={interactiveTrigger}
             $size={interactiveSize}
             $showArrow={showArrow}
@@ -1064,9 +1082,9 @@ export const Interactive: Story = {
               </code>
             </div>
             <div>
-              Variante:{' '}
+              Esquema de Color:{' '}
               <code className="bg-white px-1 rounded">
-                {interactiveVariant}
+                {interactiveColorScheme}
               </code>
             </div>
             <div>

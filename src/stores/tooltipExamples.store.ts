@@ -32,15 +32,14 @@ interface TooltipExamplesState {
     | 'top-end'
     | 'bottom-start'
     | 'bottom-end';
-  interactiveVariant:
+  interactiveColorScheme:
     | 'default'
-    | 'dark'
-    | 'light'
-    | 'primary'
     | 'secondary'
     | 'destructive'
-    | 'success'
-    | 'warning';
+    | 'accent'
+    | 'muted'
+    | 'minimal'
+    | 'custom';
   interactiveTrigger: 'hover' | 'click' | 'focus';
   interactiveSize: 'sm' | 'default' | 'lg';
   multilineContent: boolean;
@@ -68,8 +67,8 @@ interface TooltipExamplesState {
   setInteractivePosition: (
     value: TooltipExamplesState['interactivePosition']
   ) => void;
-  setInteractiveVariant: (
-    value: TooltipExamplesState['interactiveVariant']
+  setInteractiveColorScheme: (
+    value: TooltipExamplesState['interactiveColorScheme']
   ) => void;
   setInteractiveTrigger: (
     value: TooltipExamplesState['interactiveTrigger']
@@ -104,7 +103,7 @@ export const useTooltipExamples = create<TooltipExamplesState>((set) => ({
 
   // Estados interactivos
   interactivePosition: 'top',
-  interactiveVariant: 'default',
+  interactiveColorScheme: 'default',
   interactiveTrigger: 'hover',
   interactiveSize: 'default',
   multilineContent: false,
@@ -130,7 +129,7 @@ export const useTooltipExamples = create<TooltipExamplesState>((set) => ({
 
   // Setters interactivos
   setInteractivePosition: (value) => set({ interactivePosition: value }),
-  setInteractiveVariant: (value) => set({ interactiveVariant: value }),
+  setInteractiveColorScheme: (value) => set({ interactiveColorScheme: value }),
   setInteractiveTrigger: (value) => set({ interactiveTrigger: value }),
   setInteractiveSize: (value) => set({ interactiveSize: value }),
   setMultilineContent: (value: boolean) => set({ multilineContent: value }),
@@ -161,7 +160,7 @@ export const useTooltipExamples = create<TooltipExamplesState>((set) => ({
       isDisabled: false,
       multiline: false,
       interactivePosition: 'top',
-      interactiveVariant: 'default',
+      interactiveColorScheme: 'default',
       interactiveTrigger: 'hover',
       interactiveSize: 'default',
       multilineContent: false,

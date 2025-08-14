@@ -19,16 +19,15 @@ interface TooltipProps extends BaseProps {
     | 'bottom-start'
     | 'bottom-end';
 
-  // Variantes de estilo
-  $variant?:
+  // Esquemas de color basados en theme.css
+  $colorScheme?:
     | 'default'
-    | 'dark'
-    | 'light'
-    | 'primary'
     | 'secondary'
     | 'destructive'
-    | 'success'
-    | 'warning';
+    | 'accent'
+    | 'muted'
+    | 'minimal'
+    | 'custom';
   $size?: 'sm' | 'default' | 'lg';
 
   // Comportamiento
@@ -61,39 +60,59 @@ interface TooltipProps extends BaseProps {
   $maxWidth?: string;
 }
 
-const tooltipVariants = {
-  base: 'absolute z-50 px-3 py-2 text-sm font-medium rounded-md shadow-lg pointer-events-none transition-all duration-200 ease-in-out transform',
-
-  variants: {
-    variant: {
-      default: 'bg-gray-900 text-white border border-gray-700',
-      dark: 'bg-black text-white border border-gray-800',
-      light: 'bg-white text-gray-900 border border-gray-200 shadow-md',
-      primary: 'bg-blue-600 text-white border border-blue-700',
-      secondary: 'bg-purple-600 text-white border border-purple-700',
-      destructive: 'bg-red-600 text-white border border-red-700',
-      success: 'bg-green-600 text-white border border-green-700',
-      warning: 'bg-yellow-600 text-white border border-yellow-700',
-    },
-    size: {
-      sm: 'px-2 py-1 text-xs',
-      default: 'px-3 py-2 text-sm',
-      lg: 'px-4 py-3 text-base',
-    },
+// Esquemas de color usando variables del tema (igual que Accordion)
+const colorSchemes = {
+  default: {
+    background: 'bg-card',
+    text: 'text-card-foreground',
+    border: 'border-border',
+    shadow: 'shadow-md',
   },
+  secondary: {
+    background: 'bg-secondary',
+    text: 'text-secondary-foreground',
+    border: 'border-secondary/30',
+    shadow: 'shadow-lg',
+  },
+  destructive: {
+    background: 'bg-destructive',
+    text: 'text-destructive-foreground',
+    border: 'border-destructive/30',
+    shadow: 'shadow-lg',
+  },
+  accent: {
+    background: 'bg-accent',
+    text: 'text-accent-foreground',
+    border: 'border-accent/30',
+    shadow: 'shadow-lg',
+  },
+  muted: {
+    background: 'bg-muted',
+    text: 'text-muted-foreground',
+    border: 'border-muted-foreground/20',
+    shadow: 'shadow-sm',
+  },
+  minimal: {
+    background: 'bg-foreground',
+    text: 'text-background',
+    border: 'border-foreground/20',
+    shadow: 'shadow-lg',
+  },
+  custom: {
+    background: '',
+    text: '',
+    border: '',
+    shadow: '',
+  },
+};
 
-  arrow: {
-    base: 'absolute w-2 h-2 transform rotate-45',
-    variants: {
-      default: 'bg-gray-900 border-gray-700',
-      dark: 'bg-black border-gray-800',
-      light: 'bg-white border-gray-200',
-      primary: 'bg-blue-600 border-blue-700',
-      secondary: 'bg-purple-600 border-purple-700',
-      destructive: 'bg-red-600 border-red-700',
-      success: 'bg-green-600 border-green-700',
-      warning: 'bg-yellow-600 border-yellow-700',
-    },
+const tooltipVariants = {
+  base: 'absolute z-50 px-3 py-2 text-sm font-medium rounded-md pointer-events-none transition-all duration-200 ease-in-out transform',
+
+  size: {
+    sm: 'px-2 py-1 text-xs',
+    default: 'px-3 py-2 text-sm',
+    lg: 'px-4 py-3 text-base',
   },
 
   positions: {
@@ -132,6 +151,10 @@ const tooltipVariants = {
     },
   },
 
+  arrow: {
+    base: 'absolute w-2 h-2 transform rotate-45',
+  },
+
   states: {
     visible: 'opacity-100 scale-100',
     hidden: 'opacity-0 scale-95 pointer-events-none',
@@ -140,7 +163,7 @@ const tooltipVariants = {
   },
 
   defaultVariants: {
-    variant: 'default' as const,
+    colorScheme: 'default' as const,
     size: 'default' as const,
     position: 'top' as const,
   },
@@ -153,7 +176,7 @@ const Tooltip = React.forwardRef<HTMLDivElement, TooltipProps>(
       content,
       children,
       $position = 'top',
-      $variant = 'default',
+      $colorScheme = 'default',
       $size = 'default',
       $trigger = 'hover',
       $disabled = false,
@@ -203,6 +226,9 @@ const Tooltip = React.forwardRef<HTMLDivElement, TooltipProps>(
         if (hideTimeoutRef.current) clearTimeout(hideTimeoutRef.current);
       };
     }, []);
+
+    // Obtener esquema de color
+    const colors = colorSchemes[$colorScheme];
 
     // Funciones de show/hide con delays
     const showTooltip = React.useCallback(() => {
@@ -323,9 +349,12 @@ const Tooltip = React.forwardRef<HTMLDivElement, TooltipProps>(
     // Clases CSS para el tooltip
     const tooltipClasses = cn(
       tooltipVariants.base,
-      tooltipVariants.variants.variant[$variant],
-      tooltipVariants.variants.size[$size],
+      tooltipVariants.size[$size],
       tooltipVariants.positions[$position].tooltip,
+      colors.background,
+      colors.text,
+      colors.border,
+      colors.shadow,
       {
         [tooltipVariants.states.visible]: actualVisible && !$disabled,
         [tooltipVariants.states.hidden]: !actualVisible || $disabled,
@@ -340,8 +369,9 @@ const Tooltip = React.forwardRef<HTMLDivElement, TooltipProps>(
     // Clases CSS para la flecha
     const arrowClasses = cn(
       tooltipVariants.arrow.base,
-      tooltipVariants.arrow.variants[$variant],
       tooltipVariants.positions[$position].arrow,
+      colors.background,
+      colors.border,
       {
         [tooltipVariants.states.visible]:
           actualVisible && !$disabled && $showArrow,
@@ -394,12 +424,12 @@ interface TooltipGroupProps extends BaseProps {
     content: React.ReactNode;
     children: React.ReactNode;
     $position?: TooltipProps['$position'];
-    $variant?: TooltipProps['$variant'];
+    $colorScheme?: TooltipProps['$colorScheme'];
     $trigger?: TooltipProps['$trigger'];
   }>;
 
   // Props globales para todos los tooltips
-  $variant?: TooltipProps['$variant'];
+  $colorScheme?: TooltipProps['$colorScheme'];
   $size?: TooltipProps['$size'];
   $trigger?: TooltipProps['$trigger'];
   $delay?: number;
@@ -419,7 +449,7 @@ const TooltipGroup = React.forwardRef<HTMLDivElement, TooltipGroupProps>(
     {
       className,
       tooltips,
-      $variant = 'default',
+      $colorScheme = 'default',
       $size = 'default',
       $trigger = 'hover',
       $delay = 300,
@@ -457,7 +487,7 @@ const TooltipGroup = React.forwardRef<HTMLDivElement, TooltipGroupProps>(
             key={tooltip.id}
             content={tooltip.content}
             $position={tooltip.$position}
-            $variant={tooltip.$variant || $variant}
+            $colorScheme={tooltip.$colorScheme || $colorScheme}
             $size={$size}
             $trigger={tooltip.$trigger || $trigger}
             $delay={$delay}

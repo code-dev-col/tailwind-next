@@ -121,6 +121,76 @@ src/
 - `minimal`: Grises/neutros
 - `vibrant`: Colores intensos
 
+## 🎨 Sistema de Esquemas de Color Obligatorio
+
+### Colores Disponibles en theme.css
+
+**Todos los componentes DEBEN usar únicamente estos colores del tema:**
+
+- `primary`: Indigo-lavanda (hsl(245 65% 65%)) - Color principal del sistema
+- `secondary`: Turquesa pastel (hsl(195 60% 55%)) - Color secundario obligatorio
+- `destructive`: Coral suave (hsl(358 65% 58%)) - Errores y acciones destructivas
+- `accent`: Violeta rosado (hsl(270 50% 75%)) - Acentos y destacados
+- `muted`: Grises neutros - Elementos secundarios y backgrounds
+- `card`: Fondos de tarjetas y contenedores
+- `border`: Bordes y divisores
+- `foreground`: Texto principal
+
+### Esquemas de Color Permitidos
+
+**TODOS los componentes con prop `$colorScheme` deben incluir:**
+
+1. **`default`**: Usa `primary` + `muted` (esquema base)
+2. **`secondary`**: Usa `secondary` + sus variaciones
+3. **`destructive`**: Usa `destructive` + sus variaciones
+4. **`accent`**: Usa `accent` + sus variaciones
+5. **`muted`**: Solo grises neutros para fondos sutiles
+6. **`minimal`**: Transparente + `foreground`
+7. **`custom`**: Vacío para personalización externa
+
+### Escalas de Claridad Obligatorias
+
+**Para cada color base, usar las siguientes escalas de transparencia:**
+
+- `/5`: Fondo muy sutil (5% opacidad)
+- `/10`: Fondo sutil (10% opacidad)
+- `/15`: Fondo ligero (15% opacidad)
+- `/20`: Bordes sutiles (20% opacidad)
+- `/25`: Estados activos (25% opacidad)
+- `/30`: Hover ligero (30% opacidad)
+- `/50`: Hover medio (50% opacidad)
+- `/70`: Texto secundario (70% opacidad)
+- `/80`: Texto semi-prominente (80% opacidad)
+- `/90`: Texto prominente (90% opacidad)
+
+### Patrón de Implementación
+
+```typescript
+const colorSchemes = {
+  default: {
+    background: 'bg-card',
+    text: 'text-card-foreground',
+    textSecondary: 'text-muted-foreground',
+    textMuted: 'text-muted-foreground/70',
+    border: 'border-border',
+    hover: 'hover:bg-muted/50',
+    active: 'bg-primary/10 text-primary',
+    chevron: 'text-muted-foreground',
+  },
+  secondary: {
+    background: 'bg-secondary/10',
+    text: 'text-secondary',
+    textSecondary: 'text-secondary/90',
+    textMuted: 'text-secondary/70',
+    border: 'border-secondary/20',
+    hover: 'hover:bg-secondary/15',
+    active: 'bg-secondary/25 text-secondary',
+    chevron: 'text-secondary/80',
+  },
+  // ... otros esquemas siguiendo el mismo patrón
+};
+```
+
 ## 🏗️ Patrones de Desarrollo Obligatorios
 
 ### Stores de ejemplo para Storybook

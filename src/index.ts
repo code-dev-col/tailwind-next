@@ -93,6 +93,11 @@ export {
   type SeparatorProps,
 } from './components/atoms/Divider';
 export {
+  Accordion,
+  type AccordionProps,
+  type AccordionItemType,
+} from './components/atoms/Accordion';
+export {
   UnorderedList,
   type UnorderedListProps,
 } from './components/molecules/UnorderedList';

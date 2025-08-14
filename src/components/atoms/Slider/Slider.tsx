@@ -18,14 +18,15 @@ interface SliderProps extends BaseProps {
   disabled?: boolean;
   orientation?: 'horizontal' | 'vertical';
 
-  // Variantes visuales
-  $variant?:
-    | 'primary'
+  // Esquemas de color usando theme.css
+  $colorScheme?:
+    | 'default'
     | 'secondary'
-    | 'success'
-    | 'warning'
     | 'destructive'
-    | 'accent';
+    | 'accent'
+    | 'muted'
+    | 'minimal'
+    | 'custom';
   $size?: 'sm' | 'default' | 'lg';
 
   // UI Features
@@ -73,6 +74,53 @@ interface RangeSliderProps
   $maxDistance?: number;
 }
 
+// Esquemas de color usando variables CSS de theme.css
+const colorSchemes = {
+  default: {
+    track: 'bg-muted',
+    filled: 'bg-primary',
+    thumb: 'bg-primary border-primary-foreground focus:ring-primary/20',
+    value: 'bg-card border-border text-card-foreground',
+  },
+  secondary: {
+    track: 'bg-secondary/20',
+    filled: 'bg-secondary',
+    thumb: 'bg-secondary border-secondary-foreground focus:ring-secondary/20',
+    value: 'bg-secondary/10 border-secondary/20 text-secondary',
+  },
+  destructive: {
+    track: 'bg-destructive/20',
+    filled: 'bg-destructive',
+    thumb:
+      'bg-destructive border-destructive-foreground focus:ring-destructive/20',
+    value: 'bg-destructive/10 border-destructive/20 text-destructive',
+  },
+  accent: {
+    track: 'bg-accent/20',
+    filled: 'bg-accent',
+    thumb: 'bg-accent border-accent-foreground focus:ring-accent/20',
+    value: 'bg-accent/10 border-accent/20 text-accent-foreground',
+  },
+  muted: {
+    track: 'bg-muted/30',
+    filled: 'bg-muted-foreground',
+    thumb: 'bg-muted-foreground border-background focus:ring-muted/20',
+    value: 'bg-muted border-border text-muted-foreground',
+  },
+  minimal: {
+    track: 'bg-border',
+    filled: 'bg-foreground',
+    thumb: 'bg-foreground border-background focus:ring-foreground/20',
+    value: 'bg-transparent border-border text-foreground',
+  },
+  custom: {
+    track: '',
+    filled: '',
+    thumb: '',
+    value: '',
+  },
+};
+
 const sliderVariants = {
   track: {
     base: 'relative flex items-center select-none touch-none w-full cursor-pointer',
@@ -85,67 +133,35 @@ const sliderVariants = {
     base: 'relative grow rounded-full',
     horizontal: 'h-2',
     vertical: 'w-2',
-    variants: {
-      primary: 'bg-blue-200',
-      secondary: 'bg-purple-200',
-      success: 'bg-green-200',
-      warning: 'bg-yellow-200',
-      destructive: 'bg-red-200',
-      accent: 'bg-pink-200',
-    },
   },
 
   filled: {
-    base: 'absolute rounded-full',
+    base: 'absolute rounded-full transition-all duration-200',
     horizontal: 'h-full',
     vertical: 'w-full',
-    variants: {
-      primary: 'bg-blue-500',
-      secondary: 'bg-purple-500',
-      success: 'bg-green-500',
-      warning: 'bg-yellow-500',
-      destructive: 'bg-red-500',
-      accent: 'bg-pink-500',
-    },
   },
 
   thumb: {
-    base: 'block border-2 border-white bg-white rounded-full shadow-md hover:shadow-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-110',
+    base: 'block border-2 rounded-full shadow-md hover:shadow-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-110',
     sizes: {
       sm: 'h-4 w-4',
       default: 'h-5 w-5',
       lg: 'h-6 w-6',
-    },
-    variants: {
-      primary: 'focus:ring-blue-500',
-      secondary: 'focus:ring-purple-500',
-      success: 'focus:ring-green-500',
-      warning: 'focus:ring-yellow-500',
-      destructive: 'focus:ring-red-500',
-      accent: 'focus:ring-pink-500',
     },
     disabled: 'cursor-not-allowed hover:shadow-md active:scale-100',
   },
 
   label: {
     base: 'text-sm font-medium mb-2 block',
-    disabled: 'text-gray-400',
+    disabled: 'text-muted-foreground/50',
   },
 
   description: {
-    base: 'text-xs text-gray-500 mt-1',
+    base: 'text-xs text-muted-foreground mt-1',
   },
 
   value: {
-    base: 'text-sm font-mono bg-gray-100 px-2 py-1 rounded border text-center min-w-[3rem]',
-    variants: {
-      primary: 'border-blue-200 text-blue-700',
-      secondary: 'border-purple-200 text-purple-700',
-      success: 'border-green-200 text-green-700',
-      warning: 'border-yellow-200 text-yellow-700',
-      destructive: 'border-red-200 text-red-700',
-      accent: 'border-pink-200 text-pink-700',
-    },
+    base: 'text-sm font-mono px-2 py-1 rounded border text-center min-w-[3rem]',
   },
 
   ticks: {
@@ -163,7 +179,7 @@ const sliderVariants = {
   },
 
   defaultVariants: {
-    variant: 'primary' as const,
+    colorScheme: 'default' as const,
     size: 'default' as const,
     orientation: 'horizontal' as const,
   },
@@ -251,7 +267,7 @@ const Slider = React.forwardRef<HTMLDivElement, SliderProps>(
       step = 1,
       disabled = false,
       orientation = 'horizontal',
-      $variant = 'primary',
+      $colorScheme = 'default',
       $size = 'default',
       $showValue = false,
       $showTicks = false,
@@ -332,6 +348,9 @@ const Slider = React.forwardRef<HTMLDivElement, SliderProps>(
       });
     }, [$showTicks, min, max, step]);
 
+    // Obtener esquema de color
+    const colors = colorSchemes[$colorScheme];
+
     // Clases CSS
     const trackClasses = cn(
       sliderVariants.track.base,
@@ -346,19 +365,19 @@ const Slider = React.forwardRef<HTMLDivElement, SliderProps>(
     const rangeClasses = cn(
       sliderVariants.range.base,
       sliderVariants.range[orientation],
-      sliderVariants.range.variants[$variant]
+      colors.track
     );
 
     const filledClasses = cn(
       sliderVariants.filled.base,
       sliderVariants.filled[orientation],
-      sliderVariants.filled.variants[$variant]
+      colors.filled
     );
 
     const thumbClasses = cn(
       sliderVariants.thumb.base,
       sliderVariants.thumb.sizes[$size],
-      sliderVariants.thumb.variants[$variant],
+      colors.thumb,
       {
         [sliderVariants.thumb.disabled]: disabled,
       },
@@ -373,10 +392,7 @@ const Slider = React.forwardRef<HTMLDivElement, SliderProps>(
       $labelClassName
     );
 
-    const valueClasses = cn(
-      sliderVariants.value.base,
-      sliderVariants.value.variants[$variant]
-    );
+    const valueClasses = cn(sliderVariants.value.base, colors.value);
 
     return (
       <div className={cn('w-full', className)} {...props}>
@@ -511,7 +527,7 @@ const RangeSlider = React.forwardRef<HTMLDivElement, RangeSliderProps>(
       step = 1,
       disabled = false,
       orientation = 'horizontal',
-      $variant = 'primary',
+      $colorScheme = 'default',
       $size = 'default',
       $showValue = false,
       $showTicks = false,
@@ -591,6 +607,9 @@ const RangeSlider = React.forwardRef<HTMLDivElement, RangeSliderProps>(
     const endPercentage = ((endValue - min) / (max - min)) * 100;
     const rangePercentage = endPercentage - startPercentage;
 
+    // Obtener esquema de color
+    const colors = colorSchemes[$colorScheme];
+
     // Clases CSS (reutilizar las del Slider)
     const trackClasses = cn(
       sliderVariants.track.base,
@@ -605,19 +624,19 @@ const RangeSlider = React.forwardRef<HTMLDivElement, RangeSliderProps>(
     const rangeClasses = cn(
       sliderVariants.range.base,
       sliderVariants.range[orientation],
-      sliderVariants.range.variants[$variant]
+      colors.track
     );
 
     const filledClasses = cn(
       sliderVariants.filled.base,
       sliderVariants.filled[orientation],
-      sliderVariants.filled.variants[$variant]
+      colors.filled
     );
 
     const thumbClasses = cn(
       sliderVariants.thumb.base,
       sliderVariants.thumb.sizes[$size],
-      sliderVariants.thumb.variants[$variant],
+      colors.thumb,
       {
         [sliderVariants.thumb.disabled]: disabled,
       },
@@ -632,10 +651,7 @@ const RangeSlider = React.forwardRef<HTMLDivElement, RangeSliderProps>(
       $labelClassName
     );
 
-    const valueClasses = cn(
-      sliderVariants.value.base,
-      sliderVariants.value.variants[$variant]
-    );
+    const valueClasses = cn(sliderVariants.value.base, colors.value);
 
     return (
       <div className={cn('w-full', className)} {...props}>

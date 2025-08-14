@@ -30,17 +30,18 @@ const meta: Meta<typeof Slider> = {
   },
   tags: ['autodocs'],
   argTypes: {
-    $variant: {
+    $colorScheme: {
       control: 'select',
       options: [
-        'primary',
+        'default',
         'secondary',
-        'success',
-        'warning',
         'destructive',
         'accent',
+        'muted',
+        'minimal',
+        'custom',
       ],
-      description: 'Variante visual del slider',
+      description: 'Esquema de color del slider basado en theme.css',
     },
     $size: {
       control: 'select',
@@ -98,44 +99,44 @@ export const Variants: Story = {
   render: () => (
     <div className="space-y-6 w-80">
       <Slider
-        label="Primary"
-        $variant="primary"
+        label="Default"
+        $colorScheme="default"
         defaultValue={60}
         $showValue
         $formatValue={(val) => `${val}%`}
       />
       <Slider
         label="Secondary"
-        $variant="secondary"
+        $colorScheme="secondary"
         defaultValue={40}
         $showValue
         $formatValue={(val) => `${val}%`}
       />
       <Slider
-        label="Success"
-        $variant="success"
-        defaultValue={80}
-        $showValue
-        $formatValue={(val) => `${val}%`}
-      />
-      <Slider
-        label="Warning"
-        $variant="warning"
-        defaultValue={30}
-        $showValue
-        $formatValue={(val) => `${val}%`}
-      />
-      <Slider
         label="Destructive"
-        $variant="destructive"
+        $colorScheme="destructive"
         defaultValue={90}
         $showValue
         $formatValue={(val) => `${val}%`}
       />
       <Slider
         label="Accent"
-        $variant="accent"
+        $colorScheme="accent"
         defaultValue={70}
+        $showValue
+        $formatValue={(val) => `${val}%`}
+      />
+      <Slider
+        label="Muted"
+        $colorScheme="muted"
+        defaultValue={50}
+        $showValue
+        $formatValue={(val) => `${val}%`}
+      />
+      <Slider
+        label="Minimal"
+        $colorScheme="minimal"
+        defaultValue={30}
         $showValue
         $formatValue={(val) => `${val}%`}
       />
@@ -144,7 +145,8 @@ export const Variants: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Diferentes variantes visuales con formateo de porcentaje.',
+        story:
+          'Diferentes esquemas de color basados en theme.css con formateo de porcentaje.',
       },
     },
   },
@@ -157,21 +159,21 @@ export const Sizes: Story = {
       <Slider
         label="Small"
         $size="sm"
-        $variant="primary"
+        $colorScheme="default"
         defaultValue={25}
         $showValue
       />
       <Slider
         label="Default"
         $size="default"
-        $variant="primary"
+        $colorScheme="default"
         defaultValue={50}
         $showValue
       />
       <Slider
         label="Large"
         $size="lg"
-        $variant="primary"
+        $colorScheme="default"
         defaultValue={75}
         $showValue
       />
@@ -242,7 +244,7 @@ export const AdvancedFeatures: Story = {
           max={40}
           step={5}
           defaultValue={22}
-          $variant="warning"
+          $colorScheme="accent"
           $showTicks
           $showValue
           $showLabels
@@ -261,7 +263,7 @@ export const AdvancedFeatures: Story = {
           max={100}
           step={10}
           defaultValue={70}
-          $variant="success"
+          $colorScheme="secondary"
           $showValue
           $showTicks
           $formatValue={(val) => `${val}%`}
@@ -301,7 +303,7 @@ export const RangeSliderExample: Story = {
         max={1000}
         defaultValue={[200, 800]}
         step={50}
-        $variant="primary"
+        $colorScheme="default"
         $showValue
         $showLabels
         $minLabel="$0"
@@ -316,7 +318,7 @@ export const RangeSliderExample: Story = {
         max={50}
         defaultValue={[15, 30]}
         step={1}
-        $variant="warning"
+        $colorScheme="accent"
         $showValue
         $showTicks
         $formatValue={(val) => `${val}°C`}
@@ -329,7 +331,7 @@ export const RangeSliderExample: Story = {
         max={24}
         defaultValue={[9, 17]}
         step={1}
-        $variant="accent"
+        $colorScheme="secondary"
         $showValue
         $showLabels
         $minLabel="00:00"
@@ -362,7 +364,7 @@ export const WithIcons: Story = {
           min={0}
           max={100}
           defaultValue={75}
-          $variant="primary"
+          $colorScheme="default"
           $showValue
           $formatValue={(val) => `${val}%`}
         />
@@ -377,7 +379,7 @@ export const WithIcons: Story = {
           min={0}
           max={100}
           defaultValue={60}
-          $variant="warning"
+          $colorScheme="accent"
           $showValue
           $formatValue={(val) => `${val}%`}
         />
@@ -393,7 +395,7 @@ export const WithIcons: Story = {
           max={200}
           step={25}
           defaultValue={100}
-          $variant="success"
+          $colorScheme="secondary"
           $showValue
           $showTicks
           $formatValue={(val) => `${val}%`}
@@ -410,7 +412,7 @@ export const WithIcons: Story = {
           max={3}
           step={0.25}
           defaultValue={1}
-          $variant="destructive"
+          $colorScheme="destructive"
           $showValue
           $formatValue={(val) => `${val}x`}
         />
@@ -435,7 +437,7 @@ export const WithStore: Story = {
       rangeSlider,
       volumeSlider,
       priceRangeSlider,
-      resetAllSliders,
+      resetSliderValues,
       clearAllSliders,
     } = useSliderExamples();
 
@@ -450,7 +452,7 @@ export const WithStore: Story = {
               $store={useSliderExamples}
               storeKey="basicSlider"
               $showValue
-              $variant="primary"
+              $colorScheme="default"
             />
 
             <Slider
@@ -458,7 +460,7 @@ export const WithStore: Story = {
               $store={useSliderExamples}
               storeKey="volumeSlider"
               $showValue
-              $variant="success"
+              $colorScheme="secondary"
               $formatValue={(val) => `${val}%`}
             />
 
@@ -470,7 +472,7 @@ export const WithStore: Story = {
               max={1000}
               step={25}
               $showValue
-              $variant="accent"
+              $colorScheme="accent"
               $formatValue={(val) => `$${val}`}
             />
           </div>
@@ -495,7 +497,7 @@ export const WithStore: Story = {
 
           <div className="flex gap-2 mt-3">
             <button
-              onClick={resetAllSliders}
+              onClick={resetSliderValues}
               className="px-3 py-1 bg-blue-500 text-white rounded text-sm hover:bg-blue-600">
               Reset
             </button>
@@ -537,7 +539,7 @@ export const RealWorldExamples: Story = {
               min={0}
               max={100}
               defaultValue={75}
-              $variant="primary"
+              $colorScheme="default"
               $showValue
               $formatValue={(val) => `${val}%`}
               description="Overall system volume"
@@ -549,7 +551,7 @@ export const RealWorldExamples: Story = {
               max={12}
               defaultValue={0}
               step={1}
-              $variant="success"
+              $colorScheme="secondary"
               $showValue
               $showTicks
               $formatValue={(val) => `${val > 0 ? '+' : ''}${val} dB`}
@@ -562,7 +564,7 @@ export const RealWorldExamples: Story = {
               max={12}
               defaultValue={0}
               step={1}
-              $variant="warning"
+              $colorScheme="accent"
               $showValue
               $showTicks
               $formatValue={(val) => `${val > 0 ? '+' : ''}${val} dB`}
@@ -577,7 +579,7 @@ export const RealWorldExamples: Story = {
               max={20000}
               defaultValue={[200, 8000]}
               step={100}
-              $variant="accent"
+              $colorScheme="muted"
               $showValue
               $formatValue={(val) => `${val} Hz`}
               description="Active frequency range"
@@ -589,7 +591,7 @@ export const RealWorldExamples: Story = {
               max={100}
               defaultValue={0}
               step={10}
-              $variant="secondary"
+              $colorScheme="minimal"
               $showValue
               $showTicks
               $formatValue={(val) => {
@@ -616,7 +618,7 @@ export const RealWorldExamples: Story = {
             max={2000}
             defaultValue={[100, 1500]}
             step={50}
-            $variant="primary"
+            $colorScheme="default"
             $showValue
             $showLabels
             $minLabel="$0"
@@ -631,7 +633,7 @@ export const RealWorldExamples: Story = {
             max={5}
             defaultValue={3}
             step={0.5}
-            $variant="warning"
+            $colorScheme="accent"
             $showValue
             $showTicks
             $formatValue={(val) => `${val} ⭐`}
@@ -644,7 +646,7 @@ export const RealWorldExamples: Story = {
             max={30}
             defaultValue={[1, 7]}
             step={1}
-            $variant="success"
+            $colorScheme="secondary"
             $showValue
             $formatValue={(val) => `${val}d`}
             description="Expected delivery range"
@@ -667,7 +669,7 @@ export const RealWorldExamples: Story = {
               max={300}
               defaultValue={30}
               step={5}
-              $variant="primary"
+              $colorScheme="default"
               $showValue
               $formatValue={(val) => `${val}s`}
               description="How often charts update"
@@ -679,7 +681,7 @@ export const RealWorldExamples: Story = {
               max={365}
               defaultValue={[7, 30]}
               step={1}
-              $variant="accent"
+              $colorScheme="accent"
               $showValue
               $formatValue={(val) => `${val}d`}
               description="Date range for analytics"
@@ -693,7 +695,7 @@ export const RealWorldExamples: Story = {
               max={100}
               defaultValue={85}
               step={5}
-              $variant="destructive"
+              $colorScheme="destructive"
               $showValue
               $showTicks
               $formatValue={(val) => `${val}%`}
@@ -706,7 +708,7 @@ export const RealWorldExamples: Story = {
               max={24}
               defaultValue={6}
               step={1}
-              $variant="secondary"
+              $colorScheme="secondary"
               $showValue
               $formatValue={(val) => `${val}h`}
               description="Data cache lifetime"
@@ -734,7 +736,7 @@ export const Interactive: Story = {
       interactiveMin,
       interactiveMax,
       interactiveStep,
-      interactiveVariant,
+      interactiveColorScheme,
       interactiveSize,
       interactiveShowValue,
       interactiveShowTicks,
@@ -745,22 +747,23 @@ export const Interactive: Story = {
       setInteractiveMin,
       setInteractiveMax,
       setInteractiveStep,
-      setInteractiveVariant,
+      setInteractiveColorScheme,
       setInteractiveSize,
       setInteractiveShowValue,
       setInteractiveShowTicks,
       setInteractiveDisabled,
       setInteractiveOrientation,
-      resetAllSliders,
+      resetSliderValues,
     } = useSliderExamples();
 
-    const variants = [
-      'primary',
+    const colorSchemes = [
+      'default',
       'secondary',
-      'success',
-      'warning',
       'destructive',
       'accent',
+      'muted',
+      'minimal',
+      'custom',
     ] as const;
     const sizes = ['sm', 'default', 'lg'] as const;
     const orientations = ['horizontal', 'vertical'] as const;
@@ -801,14 +804,16 @@ export const Interactive: Story = {
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-2">Variant</label>
+            <label className="block text-sm font-medium mb-2">
+              ColorScheme
+            </label>
             <select
-              value={interactiveVariant}
-              onChange={(e) => setInteractiveVariant(e.target.value as any)}
+              value={interactiveColorScheme}
+              onChange={(e) => setInteractiveColorScheme(e.target.value as any)}
               className="w-full p-2 border border-gray-300 rounded">
-              {variants.map((variant) => (
-                <option key={variant} value={variant}>
-                  {variant}
+              {colorSchemes.map((colorScheme) => (
+                <option key={colorScheme} value={colorScheme}>
+                  {colorScheme}
                 </option>
               ))}
             </select>
@@ -891,7 +896,7 @@ export const Interactive: Story = {
               min={interactiveMin}
               max={interactiveMax}
               step={interactiveStep}
-              $variant={interactiveVariant}
+              $colorScheme={interactiveColorScheme}
               $size={interactiveSize}
               $showValue={interactiveShowValue}
               $showTicks={interactiveShowTicks}
@@ -905,7 +910,7 @@ export const Interactive: Story = {
 
         <div className="flex justify-center">
           <button
-            onClick={resetAllSliders}
+            onClick={resetSliderValues}
             className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors">
             Reset Configuration
           </button>
@@ -930,9 +935,9 @@ export const Interactive: Story = {
               <code className="bg-white px-1 rounded">{interactiveStep}</code>
             </div>
             <div>
-              Variant:{' '}
+              ColorScheme:{' '}
               <code className="bg-white px-1 rounded">
-                {interactiveVariant}
+                {interactiveColorScheme}
               </code>
             </div>
             <div>

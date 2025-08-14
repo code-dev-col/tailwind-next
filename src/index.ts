@@ -37,7 +37,6 @@ export { Icon, type IconProps } from './components/atoms/Icon';
 export { Badge, type BadgeProps } from './components/atoms/Badge';
 export { Avatar, type AvatarProps } from './components/atoms/Avatar';
 export { Label, type LabelProps } from './components/atoms/Label';
-export { Separator, type SeparatorProps } from './components/atoms/Separator';
 export { Skeleton, type SkeletonProps } from './components/atoms/Skeleton';
 export { ListItem, type ListItemProps } from './components/atoms/ListItem';
 export { Link, type LinkProps } from './components/atoms/Link';
@@ -87,6 +86,12 @@ export {
   type BreadcrumbBuilderProps,
   type BreadcrumbItem,
 } from './components/atoms/Breadcrumb';
+export {
+  Divider,
+  Separator,
+  type DividerProps,
+  type SeparatorProps,
+} from './components/atoms/Divider';
 export {
   UnorderedList,
   type UnorderedListProps,

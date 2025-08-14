@@ -27,6 +27,12 @@ export {
   type TooltipProps,
   type TooltipGroupProps,
 } from './components/atoms/Tooltip';
+export {
+  Slider,
+  RangeSlider,
+  type SliderProps,
+  type RangeSliderProps,
+} from './components/atoms/Slider';
 export { Icon, type IconProps } from './components/atoms/Icon';
 export { Badge, type BadgeProps } from './components/atoms/Badge';
 export { Avatar, type AvatarProps } from './components/atoms/Avatar';

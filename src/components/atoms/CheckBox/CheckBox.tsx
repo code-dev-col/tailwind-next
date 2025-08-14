@@ -345,20 +345,6 @@ const CheckBox = <T extends Record<string, any> = any>({
   const currentColorScheme =
     colorSchemes[finalColorScheme as keyof typeof colorSchemes];
 
-  // Debug info (temporal)
-  React.useEffect(() => {
-    if ($store && storeKey) {
-      console.log('🔍 CheckBox Debug:', {
-        storeKey,
-        storeValue,
-        storeSetValue: !!storeSetValue,
-        value,
-        finalIsChecked,
-        isArray: Array.isArray(storeValue),
-      });
-    }
-  }, [storeKey, storeValue, storeSetValue, value, finalIsChecked]);
-
   // CSS-in-JS hook para estilos dinámicos
   const inputRef = useCheckboxStyles(
     finalColorScheme,

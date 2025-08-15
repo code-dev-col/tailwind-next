@@ -7,7 +7,7 @@ import { Badge } from '../../feedback/Badge';
 import { Avatar } from '../../Avatar';
 
 const meta: Meta<typeof Grid> = {
-  title: 'Atoms/Grid',
+  title: 'Atoms/Layout/Grid',
   component: Grid,
   parameters: {
     layout: 'fullscreen',
@@ -84,7 +84,7 @@ export const Default: Story = {
               Contenido de ejemplo para mostrar cómo se adapta el grid
               automáticamente.
             </Text>
-            <Button $variant="outline" $size="sm">
+            <Button $colorScheme="outline" $size="sm">
               Ver más
             </Button>
           </Container>
@@ -154,7 +154,7 @@ export const ProductGrid: Story = {
                   📱
                 </Text>
               </Container>
-              <Badge $variant="secondary" className="absolute top-2 right-2">
+              <Badge $colorScheme="secondary" className="absolute top-2 right-2">
                 {product.badge}
               </Badge>
             </Container>
@@ -172,10 +172,10 @@ export const ProductGrid: Story = {
             </Text>
 
             <Container $display="flex" $gap="gap-2">
-              <Button $variant="default" className="flex-1">
+              <Button $colorScheme="default" className="flex-1">
                 Comprar
               </Button>
-              <Button $variant="outline" className="flex-1">
+              <Button $colorScheme="outline" className="flex-1">
                 Ver detalles
               </Button>
             </Container>
@@ -264,10 +264,10 @@ export const TeamGrid: Story = {
             </Text>
 
             <Container $display="flex" $justifyContent="center" $gap="gap-2">
-              <Button $variant="ghost" $size="sm">
+              <Button $colorScheme="ghost" $size="sm">
                 💼 LinkedIn
               </Button>
-              <Button $variant="ghost" $size="sm">
+              <Button $colorScheme="ghost" $size="sm">
                 📧 Email
               </Button>
             </Container>
@@ -613,4 +613,5 @@ export const ShadowToggle: Story = {
     </Container>
   ),
 };
+
 

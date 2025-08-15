@@ -15,7 +15,7 @@ import {
 } from 'react-icons/fi';
 
 const meta: Meta<typeof Divider> = {
-  title: 'Atoms/Divider',
+  title: 'Atoms/Layout/Divider',
   component: Divider,
   parameters: {
     layout: 'centered',
@@ -1368,4 +1368,5 @@ export const InteractiveConfiguration: Story = {
     );
   },
 };
+
 

@@ -7,7 +7,7 @@ import { Badge } from '../../feedback/Badge';
 import { Avatar } from '../../Avatar';
 
 const meta: Meta<typeof Center> = {
-  title: 'Atoms/Center',
+  title: 'Atoms/Layout/Center',
   component: Center,
   parameters: {
     layout: 'fullscreen',

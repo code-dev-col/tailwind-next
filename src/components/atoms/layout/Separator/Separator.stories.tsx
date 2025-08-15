@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Separator } from './Separator';
 
 const meta: Meta<typeof Separator> = {
-  title: 'Atoms/Separator',
+  title: 'Atoms/Layout/Separator',
   component: Separator,
   parameters: {
     layout: 'centered',
@@ -198,4 +198,5 @@ export const Interactive: Story = {
     </div>
   ),
 };
+
 

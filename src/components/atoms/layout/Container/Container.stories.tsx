@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Container } from './Container';
 
 const meta: Meta<typeof Container> = {
-  title: 'Atoms/Container',
+  title: 'Atoms/Layout/Container',
   component: Container,
   parameters: {
     layout: 'centered',
@@ -1172,4 +1172,5 @@ export const ComplexExample: Story = {
     </Container>
   ),
 };
+
 

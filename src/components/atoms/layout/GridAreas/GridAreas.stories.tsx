@@ -9,7 +9,7 @@ import { Label } from '../../forms/Label';
 import { Input } from '../../forms/Input';
 
 const meta: Meta<typeof GridAreas> = {
-  title: 'Atoms/GridAreas',
+  title: 'Atoms/Layout/GridAreas',
   component: GridAreas,
   parameters: {
     layout: 'fullscreen',
@@ -1159,4 +1159,5 @@ export const FormLayoutExample: Story = {
     </Container>
   ),
 };
+
 

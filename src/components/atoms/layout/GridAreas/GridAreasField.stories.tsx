@@ -8,7 +8,7 @@ import { Avatar } from '../../Avatar';
 import { Label } from '../../forms/Label';
 
 const meta: Meta<typeof GridAreasField> = {
-  title: 'Atoms/GridAreasField',
+  title: 'Atoms/Layout/GridAreasField',
   component: GridAreasField,
   parameters: {
     layout: 'centered',
@@ -487,4 +487,5 @@ export const RealWorldExample: Story = {
     </Container>
   ),
 };
+
 

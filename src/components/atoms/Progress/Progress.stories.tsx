@@ -68,6 +68,18 @@ export const ThemeColorSchemes: Story = {
         label="Minimal (Sutil)"
         $showPercentage
       />
+      <Progress
+        $colorScheme="outline"
+        value={70}
+        label="Outline (Borde)"
+        $showPercentage
+      />
+      <Progress
+        $colorScheme="ghost"
+        value={50}
+        label="Ghost (Transparente)"
+        $showPercentage
+      />
     </div>
   ),
 };
@@ -170,7 +182,7 @@ export const CircularProgress: Story = {
         Circular Progress con Theme.css
       </h4>
 
-      <div className="grid grid-cols-3 gap-8 justify-items-center">
+      <div className="grid grid-cols-4 gap-8 justify-items-center">
         <div className="text-center">
           <Progress
             value={25}
@@ -189,8 +201,8 @@ export const CircularProgress: Story = {
             $shape="circular"
             $colorScheme="default"
             $showPercentage
-            $circularSize={120}
-            $strokeWidth={10}
+            $circularSize={100}
+            $strokeWidth={8}
           />
           <p className="text-sm text-muted-foreground mt-2">Default</p>
         </div>
@@ -202,24 +214,60 @@ export const CircularProgress: Story = {
             $colorScheme="secondary"
             $showPercentage
             $circularSize={100}
-            $strokeWidth={10}
+            $strokeWidth={8}
           />
           <p className="text-sm text-muted-foreground mt-2">Secondary</p>
         </div>
+
+        <div className="text-center">
+          <Progress
+            value={65}
+            $shape="circular"
+            $colorScheme="accent"
+            $showPercentage
+            $circularSize={100}
+            $strokeWidth={8}
+          />
+          <p className="text-sm text-muted-foreground mt-2">Accent</p>
+        </div>
       </div>
 
-      <div className="flex justify-center">
+      <div className="grid grid-cols-3 gap-8 justify-items-center">
+        <div className="text-center">
+          <Progress
+            value={80}
+            $shape="circular"
+            $colorScheme="outline"
+            $showPercentage
+            $circularSize={100}
+            $strokeWidth={8}
+          />
+          <p className="text-sm text-muted-foreground mt-2">Outline</p>
+        </div>
+
         <div className="text-center">
           <Progress
             $store={useProgressExamples}
             storeKey="circularExample"
             $shape="circular"
-            $colorScheme="accent"
+            $colorScheme="ghost"
             $showPercentage
-            $circularSize={140}
-            $strokeWidth={12}
+            $circularSize={120}
+            $strokeWidth={10}
           />
-          <p className="text-sm text-muted-foreground mt-2">Con Store</p>
+          <p className="text-sm text-muted-foreground mt-2">Ghost con Store</p>
+        </div>
+
+        <div className="text-center">
+          <Progress
+            value={40}
+            $shape="circular"
+            $colorScheme="minimal"
+            $showPercentage
+            $circularSize={100}
+            $strokeWidth={8}
+          />
+          <p className="text-sm text-muted-foreground mt-2">Minimal</p>
         </div>
       </div>
     </div>
@@ -301,6 +349,29 @@ export const SizesAndShapes: Story = {
           $colorScheme="accent"
           $striped
           $animated
+          $showPercentage
+        />
+      </div>
+
+      <div className="space-y-4">
+        <h4 className="text-lg font-semibold">Esquemas Especiales</h4>
+        <Progress
+          value={70}
+          label="Outline"
+          $colorScheme="outline"
+          $showPercentage
+        />
+        <Progress
+          value={50}
+          label="Ghost"
+          $colorScheme="ghost"
+          $showPercentage
+        />
+        <Progress
+          value={80}
+          label="Ghost + Striped"
+          $colorScheme="ghost"
+          $striped
           $showPercentage
         />
       </div>

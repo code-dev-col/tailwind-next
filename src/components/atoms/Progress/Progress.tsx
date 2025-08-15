@@ -11,7 +11,7 @@ interface ProgressProps<T extends Record<string, any> = any> extends BaseProps {
   $store?: UseBoundStore<StoreApi<T>>;
   storeKey?: keyof T;
 
-  // Theme.css color scheme (NEW)
+  // Theme.css color scheme system
   $colorScheme?:
     | 'default'
     | 'secondary'
@@ -19,17 +19,10 @@ interface ProgressProps<T extends Record<string, any> = any> extends BaseProps {
     | 'accent'
     | 'muted'
     | 'minimal'
+    | 'outline'
+    | 'ghost'
     | 'custom';
 
-  // Legacy variant support (maps to $colorScheme)
-  $variant?:
-    | 'default'
-    | 'primary'
-    | 'secondary'
-    | 'destructive'
-    | 'accent'
-    | 'success'
-    | 'warning';
   $size?: 'sm' | 'default' | 'lg';
   $custom?: string;
 
@@ -119,6 +112,15 @@ const useProgressStyles = () => {
         background-color: hsl(var(--border));
       }
 
+      .progress-fill-outline {
+        background-color: transparent;
+        border: 2px solid hsl(var(--border));
+      }
+
+      .progress-fill-ghost {
+        background-color: hsl(var(--muted) / 0.5);
+      }
+
       .progress-circular-track {
         fill: none;
         stroke: hsl(var(--muted));
@@ -153,6 +155,16 @@ const useProgressStyles = () => {
 
       .progress-circular-fill-minimal {
         stroke: hsl(var(--border));
+      }
+
+      .progress-circular-fill-outline {
+        stroke: hsl(var(--border));
+        stroke-width: 2px;
+        stroke-dasharray: 4, 4;
+      }
+
+      .progress-circular-fill-ghost {
+        stroke: hsl(var(--muted-foreground) / 0.5);
       }
 
       .progress-label {
@@ -203,28 +215,9 @@ const useProgressStyles = () => {
 
 // Map legacy $variant to new $colorScheme
 const getColorScheme = (
-  $variant?: ProgressProps['$variant'],
   $colorScheme?: ProgressProps['$colorScheme']
 ): NonNullable<ProgressProps['$colorScheme']> => {
-  if ($colorScheme) return $colorScheme;
-
-  switch ($variant) {
-    case 'primary':
-    case 'default':
-      return 'default';
-    case 'secondary':
-      return 'secondary';
-    case 'destructive':
-      return 'destructive';
-    case 'accent':
-      return 'accent';
-    case 'success':
-      return 'accent'; // Map to accent (closest theme color)
-    case 'warning':
-      return 'muted'; // Map to muted (closest theme color)
-    default:
-      return 'default';
-  }
+  return $colorScheme || 'default';
 };
 
 const Progress = React.forwardRef<HTMLDivElement, ProgressProps>(
@@ -235,8 +228,7 @@ const Progress = React.forwardRef<HTMLDivElement, ProgressProps>(
       max = 100,
       $store,
       storeKey,
-      $colorScheme,
-      $variant = 'default',
+      $colorScheme = 'default',
       $size = 'default',
       $custom,
       $shape = 'rounded',
@@ -267,7 +259,7 @@ const Progress = React.forwardRef<HTMLDivElement, ProgressProps>(
     const percentage = Math.max(0, Math.min(100, (value / max) * 100));
 
     // Get the final color scheme
-    const colorScheme = getColorScheme($variant, $colorScheme);
+    const colorScheme = getColorScheme($colorScheme);
 
     // Circular progress calculations
     const radius = ($circularSize - $strokeWidth) / 2;

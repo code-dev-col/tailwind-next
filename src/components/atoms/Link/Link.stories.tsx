@@ -113,38 +113,6 @@ export const ColorSchemes: Story = {
   ),
 };
 
-export const Variants: Story = {
-  render: () => (
-    <div className="space-y-4">
-      <div>
-        <h4 className="font-medium text-foreground mb-2">
-          Legacy Variants (Backward Compatibility)
-        </h4>
-        <div className="flex flex-col gap-3">
-          <Link href="#" $colorScheme="default">
-            Enlace default (legacy)
-          </Link>
-          <Link href="#" $colorScheme="default">
-            Enlace primary (legacy)
-          </Link>
-          <Link href="#" $colorScheme="secondary">
-            Enlace secondary (legacy)
-          </Link>
-          <Link href="#" $colorScheme="muted">
-            Enlace muted (legacy)
-          </Link>
-          <Link href="#" $colorScheme="destructive">
-            Enlace destructive (legacy)
-          </Link>
-          <Link href="#" $colorScheme="muted">
-            Enlace ghost (legacy)
-          </Link>
-        </div>
-      </div>
-    </div>
-  ),
-};
-
 export const WithStore: Story = {
   render: () => {
     const { clearAllLink } = useLinkExamples();
@@ -477,7 +445,7 @@ export const Interactive: Story = {
       </Link>
       <Link
         href="/dashboard"
-        $colorScheme="muted"
+        $colorScheme="default"
         $startIcon={<FiHome />}
         onClick={(e) => {
           e.preventDefault();

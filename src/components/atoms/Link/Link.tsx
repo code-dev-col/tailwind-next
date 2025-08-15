@@ -112,7 +112,7 @@ const linkVariants = {
 
   // Color schemes using theme.css variables
   colorScheme: {
-    default: 'text-foreground hover:text-muted-foreground',
+    default: 'text-primary hover:text-primary/80',
     secondary: 'text-secondary hover:text-secondary/80',
     destructive: 'text-destructive hover:text-destructive/80',
     accent: 'text-accent hover:text-accent/80',

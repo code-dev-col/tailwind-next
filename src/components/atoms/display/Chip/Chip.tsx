@@ -1,7 +1,7 @@
 import React from 'react';
 import { UseBoundStore, StoreApi } from 'zustand';
-import { cn } from '../../../utils/cn';
-import type { BaseProps } from '../../../types';
+import { cn } from '../../../../utils/cn';
+import type { BaseProps } from '../../../../types';
 import { FiX, FiCheck, FiPlus, FiStar, FiUser, FiTag } from 'react-icons/fi';
 
 interface ChipProps extends BaseProps {

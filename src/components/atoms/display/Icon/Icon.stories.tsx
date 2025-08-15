@@ -19,7 +19,7 @@ import {
 import { Icon } from './Icon';
 
 const meta: Meta<typeof Icon> = {
-  title: 'Atoms/Icon',
+  title: 'Atoms/Display/Icon',
   component: Icon,
   parameters: {
     layout: 'centered',
@@ -40,23 +40,23 @@ export const Variants: Story = {
   render: () => (
     <div className="flex gap-4 items-center">
       <div className="text-center">
-        <Icon icon={FaHeart} $variant="default" />
+        <Icon icon={FaHeart} $colorScheme="default" />
         <p className="text-xs mt-1">Default</p>
       </div>
       <div className="text-center">
-        <Icon icon={FaUser} $variant="primary" />
+        <Icon icon={FaUser} $colorScheme="default" />
         <p className="text-xs mt-1">Primary</p>
       </div>
       <div className="text-center">
-        <Icon icon={FaCog} $variant="secondary" />
+        <Icon icon={FaCog} $colorScheme="secondary" />
         <p className="text-xs mt-1">Secondary</p>
       </div>
       <div className="text-center">
-        <Icon icon={FaTimes} $variant="destructive" />
+        <Icon icon={FaTimes} $colorScheme="destructive" />
         <p className="text-xs mt-1">Destructive</p>
       </div>
       <div className="text-center">
-        <Icon icon={FaHome} $variant="ghost" />
+        <Icon icon={FaHome} $colorScheme="muted" />
         <p className="text-xs mt-1">Ghost</p>
       </div>
     </div>
@@ -96,7 +96,7 @@ export const Interactive: Story = {
       <div className="text-center">
         <Icon
           icon={FaCheck}
-          $variant="primary"
+          $colorScheme="default"
           $size="lg"
           onClick={() => alert('Success!')}
         />
@@ -105,7 +105,7 @@ export const Interactive: Story = {
       <div className="text-center">
         <Icon
           icon={FaPlus}
-          $variant="primary"
+          $colorScheme="default"
           $size="lg"
           onClick={() => alert('Add item!')}
         />
@@ -114,7 +114,7 @@ export const Interactive: Story = {
       <div className="text-center">
         <Icon
           icon={FaDownload}
-          $variant="primary"
+          $colorScheme="default"
           $size="lg"
           onClick={() => alert('Download!')}
         />
@@ -123,7 +123,7 @@ export const Interactive: Story = {
       <div className="text-center">
         <Icon
           icon={FaArrowRight}
-          $variant="primary"
+          $colorScheme="default"
           $size="lg"
           onClick={() => alert('Next!')}
         />
@@ -139,28 +139,37 @@ export const IconLibraries: Story = {
       <div>
         <h3 className="font-medium mb-2">Font Awesome</h3>
         <div className="flex gap-2">
-          <Icon icon={FaHeart} $variant="destructive" />
-          <Icon icon={FaUser} $variant="primary" />
-          <Icon icon={FaCog} $variant="secondary" />
+          <Icon icon={FaHeart} $colorScheme="destructive" />
+          <Icon icon={FaUser} $colorScheme="default" />
+          <Icon icon={FaCog} $colorScheme="secondary" />
         </div>
       </div>
       <div>
         <h3 className="font-medium mb-2">Heroicons</h3>
         <div className="flex gap-2">
-          <Icon icon={HiOutlineSparkles} $variant="primary" />
-          <Icon icon={HiOutlineFire} $variant="destructive" />
-          <Icon icon={HiOutlineHeart} $variant="destructive" />
+          <Icon icon={HiOutlineSparkles} $colorScheme="default" />
+          <Icon icon={HiOutlineFire} $colorScheme="destructive" />
+          <Icon icon={HiOutlineHeart} $colorScheme="destructive" />
         </div>
       </div>
       <div>
         <h3 className="font-medium mb-2">Mixed Usage</h3>
         <div className="flex gap-2">
-          <Icon icon={FaStar} $variant="primary" />
-          <Icon icon={HiOutlineSparkles} $variant="primary" />
-          <Icon icon={FaCheck} $variant="primary" />
+          <Icon icon={FaStar} $colorScheme="default" />
+          <Icon icon={HiOutlineSparkles} $colorScheme="default" />
+          <Icon icon={FaCheck} $colorScheme="default" />
         </div>
       </div>
     </div>
   ),
 };
+
+
+
+
+
+
+
+
+
 

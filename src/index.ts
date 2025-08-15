@@ -29,7 +29,7 @@ export {
   ChipGroup,
   type ChipProps,
   type ChipGroupProps,
-} from './components/atoms/Chip';
+} from './components/atoms/display/Chip';
 export {
   Tooltip,
   TooltipGroup,
@@ -42,9 +42,9 @@ export {
   type SliderProps,
   type RangeSliderProps,
 } from './components/atoms/forms/Slider';
-export { Icon, type IconProps } from './components/atoms/Icon';
+export { Icon, type IconProps } from './components/atoms/display/Icon';
 export { Badge, type BadgeProps } from './components/atoms/feedback/Badge';
-export { Avatar, type AvatarProps } from './components/atoms/Avatar';
+export { Avatar, type AvatarProps } from './components/atoms/display/Avatar';
 export { Label, type LabelProps } from './components/atoms/forms/Label';
 export {
   Skeleton,
@@ -69,7 +69,7 @@ export {
   type TextAlign,
   type TextWeight,
   type TextTransform,
-} from './components/atoms/Text';
+} from './components/atoms/display/Text';
 export {
   Container,
   type ContainerProps,

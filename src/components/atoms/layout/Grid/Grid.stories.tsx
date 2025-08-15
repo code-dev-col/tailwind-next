@@ -2,9 +2,9 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Grid } from '.';
 import { Container } from '../Container';
 import { Button } from '../../forms/Button';
-import { Text } from '../../Text';
+import { Text } from '../../display/Text';
 import { Badge } from '../../feedback/Badge';
-import { Avatar } from '../../Avatar';
+import { Avatar } from '../../display/Avatar';
 
 const meta: Meta<typeof Grid> = {
   title: 'Atoms/Layout/Grid',
@@ -154,7 +154,9 @@ export const ProductGrid: Story = {
                   📱
                 </Text>
               </Container>
-              <Badge $colorScheme="secondary" className="absolute top-2 right-2">
+              <Badge
+                $colorScheme="secondary"
+                className="absolute top-2 right-2">
                 {product.badge}
               </Badge>
             </Container>
@@ -613,5 +615,4 @@ export const ShadowToggle: Story = {
     </Container>
   ),
 };
-
 

@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Text } from './Text';
-import { useTextExamples } from '../../../stores/textExamples.store';
+import { useTextExamples } from '../../../../stores/textExamples.store';
 
 const meta: Meta<typeof Text> = {
-  title: 'Atoms/Text',
+  title: 'Atoms/Display/Text',
   component: Text,
   parameters: {
     layout: 'centered',

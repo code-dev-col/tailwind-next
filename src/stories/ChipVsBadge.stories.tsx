@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Badge } from '../components/atoms/feedback/Badge/Badge';
-import { Chip, ChipGroup } from '../components/atoms/Chip/Chip';
+import { Chip, ChipGroup } from '../components/atoms/display/Chip/Chip';
 import {
   FiStar,
   FiTag,

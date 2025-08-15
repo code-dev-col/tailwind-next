@@ -1,7 +1,7 @@
 import React from 'react';
 import { IconType } from 'react-icons';
-import { cn } from '../../../utils/cn';
-import type { BaseProps } from '../../../types';
+import { cn } from '../../../../utils/cn';
+import type { BaseProps } from '../../../../types';
 
 interface IconProps extends BaseProps {
   $colorScheme?:

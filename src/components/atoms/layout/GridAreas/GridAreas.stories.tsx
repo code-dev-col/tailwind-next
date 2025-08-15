@@ -2,9 +2,9 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { GridAreas, GridAreasField } from '.';
 import { Container } from '../Container';
 import { Button } from '../../forms/Button';
-import { Text } from '../../Text';
+import { Text } from '../../display/Text';
 import { Badge } from '../../feedback/Badge';
-import { Avatar } from '../../Avatar';
+import { Avatar } from '../../display/Avatar';
 import { Label } from '../../forms/Label';
 import { Input } from '../../forms/Input';
 
@@ -1159,5 +1159,4 @@ export const FormLayoutExample: Story = {
     </Container>
   ),
 };
-
 

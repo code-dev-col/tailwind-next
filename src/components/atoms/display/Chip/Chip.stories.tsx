@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Chip, ChipGroup } from './Chip';
-import { useChipExamples } from '../../../stores/chipExamples.store';
+import { useChipExamples } from '../../../../stores/chipExamples.store';
 import {
   FiCode,
   FiStar,
@@ -22,7 +22,7 @@ import {
 } from 'react-icons/fi';
 
 const meta: Meta<typeof Chip> = {
-  title: 'Atoms/Chip',
+  title: 'Atoms/Display/Chip',
   component: Chip,
   parameters: {
     layout: 'centered',

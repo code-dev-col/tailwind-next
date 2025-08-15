@@ -1,9 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
-import { RadioButton } from './RadioButton';
+
 import { Container } from '../../layout/Container';
+import { RadioButton } from './RadioButton';
 import { Button } from '../Button';
-import { Text } from '../../Text';
+import { Text } from '../../display/Text';
 import { Label } from '../Label';
 import { useRadioButtonExamplesStore } from '../../../../stores/radioButtonExamples.store';
 

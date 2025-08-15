@@ -3,7 +3,7 @@ import { useStore } from 'zustand';
 import { StoreApi, UseBoundStore } from 'zustand';
 import { cn } from '../../../../utils/cn';
 import type { BaseProps } from '../../../../types';
-import { Text } from '../../Text';
+import { Text } from '../../display/Text';
 import {
   getSecurityPreset,
   type SecurityOptions,

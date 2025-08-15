@@ -3,7 +3,7 @@ import React from 'react';
 import { Dropdown } from '.';
 import { Container } from '../../layout/Container';
 import { Button } from '../Button';
-import { Text } from '../../Text';
+import { Text } from '../../display/Text';
 import { Label } from '../Label';
 import { useDropdownExamplesStore } from '../../../../stores/dropdownExamples.store';
 

@@ -17,7 +17,7 @@ import { Button, ButtonProps } from './Button';
 import { useButtonExamples } from '../../../../stores/buttonExamples.store';
 
 const meta: Meta<typeof Button> = {
-  title: 'Atoms/Button',
+  title: 'Atoms/Forms/Button',
   component: Button,
   parameters: {
     layout: 'centered',

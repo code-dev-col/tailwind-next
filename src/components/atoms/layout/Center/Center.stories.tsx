@@ -2,9 +2,9 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Center } from '.';
 import { Container } from '../Container';
 import { Button } from '../../forms/Button';
-import { Text } from '../../Text';
+import { Text } from '../../display/Text';
 import { Badge } from '../../feedback/Badge';
-import { Avatar } from '../../Avatar';
+import { Avatar } from '../../display/Avatar';
 
 const meta: Meta<typeof Center> = {
   title: 'Atoms/Layout/Center',

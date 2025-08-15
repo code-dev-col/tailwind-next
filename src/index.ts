@@ -20,7 +20,10 @@ export {
   type CheckBoxProps,
 } from './components/atoms/forms/CheckBox';
 export { Switch, type SwitchProps } from './components/atoms/forms/Switch';
-export { Progress, type ProgressProps } from './components/atoms/Progress';
+export {
+  Progress,
+  type ProgressProps,
+} from './components/atoms/feedback/Progress';
 export {
   Chip,
   ChipGroup,
@@ -32,7 +35,7 @@ export {
   TooltipGroup,
   type TooltipProps,
   type TooltipGroupProps,
-} from './components/atoms/Tooltip';
+} from './components/atoms/feedback/Tooltip';
 export {
   Slider,
   RangeSlider,
@@ -40,10 +43,13 @@ export {
   type RangeSliderProps,
 } from './components/atoms/forms/Slider';
 export { Icon, type IconProps } from './components/atoms/Icon';
-export { Badge, type BadgeProps } from './components/atoms/Badge';
+export { Badge, type BadgeProps } from './components/atoms/feedback/Badge';
 export { Avatar, type AvatarProps } from './components/atoms/Avatar';
 export { Label, type LabelProps } from './components/atoms/forms/Label';
-export { Skeleton, type SkeletonProps } from './components/atoms/Skeleton';
+export {
+  Skeleton,
+  type SkeletonProps,
+} from './components/atoms/feedback/Skeleton';
 export { ListItem, type ListItemProps } from './components/atoms/ListItem';
 export { Link, type LinkProps } from './components/atoms/Link';
 export {
@@ -55,7 +61,7 @@ export {
   Spinner,
   type SpinnerProps,
   type SpinnerType,
-} from './components/atoms/Spinner';
+} from './components/atoms/feedback/Spinner';
 export {
   Text,
   type TextProps,
@@ -76,15 +82,15 @@ export {
   type OverflowType,
   type ContainerTextAlign,
   type CursorType,
-} from './components/atoms/Container';
+} from './components/atoms/layout/Container';
 export {
   GridAreas,
   GridAreasField,
   type GridAreasProps,
   type GridAreasFieldProps,
-} from './components/atoms/GridAreas';
-export { Grid, type GridProps } from './components/atoms/Grid';
-export { Center, type CenterProps } from './components/atoms/Center';
+} from './components/atoms/layout/GridAreas';
+export { Grid, type GridProps } from './components/atoms/layout/Grid';
+export { Center, type CenterProps } from './components/atoms/layout/Center';
 export {
   Breadcrumb,
   BreadcrumbBuilder,
@@ -97,7 +103,7 @@ export {
   Separator,
   type DividerProps,
   type SeparatorProps,
-} from './components/atoms/Divider';
+} from './components/atoms/layout/Divider';
 export {
   Accordion,
   type AccordionProps,

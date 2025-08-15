@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
 import { create } from 'zustand';
-import { Container } from '../components/atoms/Container';
+import { Container } from '../components/atoms/layout/Container';
 import { Text } from '../components/atoms/Text';
 import { Button } from '../components/atoms/forms/Button';
 import { Input } from '../components/atoms/forms/Input';
@@ -11,12 +11,12 @@ import { RadioButton } from '../components/atoms/forms/RadioButton';
 import { CheckBox } from '../components/atoms/forms/CheckBox';
 import { Label } from '../components/atoms/forms/Label';
 import { Switch } from '../components/atoms/forms/Switch';
-import { Progress } from '../components/atoms/Progress';
+import { Progress } from '../components/atoms/feedback/Progress';
 import { ChipGroup } from '../components/atoms/Chip';
-import { Badge } from '../components/atoms/Badge';
+import { Badge } from '../components/atoms/feedback/Badge';
 import { Avatar } from '../components/atoms/Avatar';
-import { Separator } from '../components/atoms/Separator';
-import { Spinner } from '../components/atoms/Spinner';
+import { Separator } from '../components/atoms/layout/Separator';
+import { Spinner } from '../components/atoms/feedback/Spinner';
 import { Link } from '../components/atoms/Link';
 
 import {

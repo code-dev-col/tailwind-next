@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Badge } from '../components/atoms/Badge/Badge';
+import { Badge } from '../components/atoms/feedback/Badge/Badge';
 import { Chip, ChipGroup } from '../components/atoms/Chip/Chip';
 import {
   FiStar,

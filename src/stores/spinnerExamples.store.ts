@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import type { SpinnerType } from '../components/atoms/Spinner/Spinner';
+import type { SpinnerType } from '../components/atoms/feedback/Spinner/Spinner';
 
 interface SpinnerExamplesState {
   // Estados para cada story

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
 import { Dropdown } from '.';
-import { Container } from '../../Container';
+import { Container } from '../../layout/Container';
 import { Button } from '../Button';
 import { Text } from '../../Text';
 import { Label } from '../Label';

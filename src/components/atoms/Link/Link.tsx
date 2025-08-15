@@ -1,6 +1,7 @@
 import React from 'react';
 import { cn } from '../../../utils/cn';
 import type { BaseProps } from '../../../types';
+import type { UseBoundStore, StoreApi } from 'zustand';
 
 // Tipos para Next.js Link props
 interface NextLinkProps {
@@ -14,13 +15,17 @@ interface NextLinkProps {
   locale?: string | false;
 }
 
-interface LinkProps
+interface LinkProps<T extends Record<string, any> = any>
   extends BaseProps,
     Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'href'> {
+  // Store integration
+  $store?: UseBoundStore<StoreApi<T>>;
+  storeKey?: keyof T;
+
   /**
-   * URL de destino
+   * URL de destino (opcional cuando se usa con store)
    */
-  href: string;
+  href?: string;
 
   /**
    * Contenido del enlace
@@ -28,7 +33,20 @@ interface LinkProps
   children?: React.ReactNode;
 
   /**
-   * Variante visual del enlace
+   * Esquema de color de theme.css
+   */
+  $colorScheme?:
+    | 'default'
+    | 'secondary'
+    | 'destructive'
+    | 'accent'
+    | 'muted'
+    | 'minimal'
+    | 'custom';
+
+  /**
+   * Variante visual del enlace (legacy support)
+   * @deprecated Use $colorScheme instead
    */
   $variant?:
     | 'default'
@@ -104,55 +122,51 @@ const linkVariants = {
     'focus-visible:ring-offset-2',
   ].join(' '),
 
-  variants: {
-    variant: {
-      default: ['text-foreground', 'hover:text-primary'].join(' '),
-
-      primary: ['text-primary', 'hover:text-primary/80'].join(' '),
-
-      secondary: ['text-secondary', 'hover:text-secondary/80'].join(' '),
-
-      muted: ['text-muted-foreground', 'hover:text-foreground'].join(' '),
-
-      destructive: ['text-destructive', 'hover:text-destructive/80'].join(' '),
-
-      ghost: [
-        'text-muted-foreground',
-        'hover:text-foreground',
-        'hover:bg-accent',
-        'px-2',
-        'py-1',
-        'rounded-md',
-        '-mx-2',
-        '-my-1',
-      ].join(' '),
-    },
-
-    size: {
-      sm: 'text-sm',
-      md: 'text-base',
-      lg: 'text-lg',
-    },
-
-    underline: {
-      none: 'no-underline',
-      hover: 'no-underline hover:underline',
-      always: 'underline',
-    },
-
-    disabled: {
-      true: ['pointer-events-none', 'opacity-50', 'cursor-not-allowed'].join(
-        ' '
-      ),
-      false: 'cursor-pointer',
-    },
+  // Color schemes using theme.css variables
+  colorScheme: {
+    default: 'text-foreground hover:text-muted-foreground',
+    secondary: 'text-secondary hover:text-secondary/80',
+    destructive: 'text-destructive hover:text-destructive/80',
+    accent: 'text-accent hover:text-accent/80',
+    muted: 'text-muted-foreground hover:text-foreground',
+    minimal: 'text-muted-foreground hover:text-accent',
+    custom: '', // Empty for custom styling
   },
 
-  defaultVariants: {
-    variant: 'default' as const,
-    size: 'md' as const,
-    underline: 'hover' as const,
-    disabled: false as const,
+  // Legacy variants for backward compatibility
+  legacyVariant: {
+    default: 'text-foreground hover:text-primary',
+    primary: 'text-primary hover:text-primary/80',
+    secondary: 'text-secondary hover:text-secondary/80',
+    muted: 'text-muted-foreground hover:text-foreground',
+    destructive: 'text-destructive hover:text-destructive/80',
+    ghost: [
+      'text-muted-foreground',
+      'hover:text-foreground',
+      'hover:bg-accent',
+      'px-2',
+      'py-1',
+      'rounded-md',
+      '-mx-2',
+      '-my-1',
+    ].join(' '),
+  },
+
+  size: {
+    sm: 'text-sm',
+    md: 'text-base',
+    lg: 'text-lg',
+  },
+
+  underline: {
+    none: 'no-underline',
+    hover: 'no-underline hover:underline',
+    always: 'underline',
+  },
+
+  disabled: {
+    true: ['pointer-events-none', 'opacity-50', 'cursor-not-allowed'].join(' '),
+    false: 'cursor-pointer',
   },
 };
 
@@ -167,12 +181,15 @@ const detectNextLink = (): React.ComponentType<any> | null => {
   }
 };
 
-const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(
+const Link = React.forwardRef<HTMLAnchorElement, LinkProps<any>>(
   (
     {
       className,
       children,
       href,
+      $store,
+      storeKey,
+      $colorScheme,
       $variant = 'default',
       $size = 'md',
       $underline = 'hover',
@@ -191,12 +208,24 @@ const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(
     },
     ref
   ) => {
+    // Store integration - get value from store if available
+    const storeValue =
+      $store && storeKey ? $store((state) => state[storeKey]) : undefined;
+
+    // Use store value as href if available, otherwise use href prop
+    const finalHref = storeValue || href || '#';
+
+    // Validate that we have a valid href
+    if (!finalHref || finalHref === '#') {
+      console.warn('Link component requires either href prop or store value');
+    }
+
     // Detectar automáticamente enlaces externos
     const isAutoExternal =
-      href.startsWith('http') ||
-      href.startsWith('//') ||
-      href.startsWith('mailto:') ||
-      href.startsWith('tel:');
+      finalHref.startsWith('http') ||
+      finalHref.startsWith('//') ||
+      finalHref.startsWith('mailto:') ||
+      finalHref.startsWith('tel:');
     const isExternal = $external || isAutoExternal;
 
     // Detectar Next.js Link disponible
@@ -207,13 +236,43 @@ const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(
     // Usar componente personalizado si se proporciona
     const shouldUseCustomLink = $linkComponent && !isExternal && !$disabled;
 
+    // Determine which color scheme to use
+    // Priority: $colorScheme > $variant (legacy) > default
+    let colorSchemeClass = '';
+    if ($colorScheme) {
+      colorSchemeClass = linkVariants.colorScheme[$colorScheme];
+    } else if ($variant) {
+      // Map legacy variant to colorScheme
+      const variantToColorScheme: Record<string, string> = {
+        default: 'default',
+        primary: 'default', // primary maps to default
+        secondary: 'secondary',
+        muted: 'muted',
+        destructive: 'destructive',
+        ghost: '', // ghost has special handling
+      };
+
+      if ($variant === 'ghost') {
+        colorSchemeClass = linkVariants.legacyVariant.ghost;
+      } else {
+        const mappedScheme = variantToColorScheme[$variant];
+        colorSchemeClass = mappedScheme
+          ? linkVariants.colorScheme[
+              mappedScheme as keyof typeof linkVariants.colorScheme
+            ]
+          : linkVariants.colorScheme.default;
+      }
+    } else {
+      colorSchemeClass = linkVariants.colorScheme.default;
+    }
+
     // Props base del enlace
     const linkClasses = cn(
       linkVariants.base,
-      linkVariants.variants.variant[$variant],
-      linkVariants.variants.size[$size],
-      linkVariants.variants.underline[$underline],
-      linkVariants.variants.disabled[$disabled ? 'true' : 'false'],
+      colorSchemeClass,
+      linkVariants.size[$size],
+      linkVariants.underline[$underline],
+      linkVariants.disabled[$disabled ? 'true' : 'false'],
       className,
       $custom
     );
@@ -276,8 +335,8 @@ const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(
       const CustomLink = $linkComponent!;
       return (
         <CustomLink
-          to={href}
-          href={href}
+          to={finalHref}
+          href={finalHref}
           className={linkClasses}
           onClick={onClick}
           ref={ref}
@@ -290,7 +349,7 @@ const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(
     // Usar Next.js Link
     if (shouldUseNextLink) {
       return (
-        <NextLink href={href} {...$nextProps} passHref>
+        <NextLink href={finalHref} {...$nextProps} passHref>
           <a className={linkClasses} onClick={onClick} ref={ref} {...props}>
             {linkContent}
           </a>
@@ -301,7 +360,7 @@ const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(
     // Enlace HTML estándar
     return (
       <a
-        href={href}
+        href={finalHref}
         className={linkClasses}
         onClick={onClick}
         ref={ref}

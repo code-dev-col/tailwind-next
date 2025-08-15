@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Link } from './Link';
+import { useLinkExamples } from '../../../stores/linkExamples.store';
 import {
   FiHome,
   FiArrowRight,
@@ -20,6 +21,18 @@ const meta: Meta<typeof Link> = {
       control: 'text',
       description: 'URL de destino del enlace',
     },
+    $colorScheme: {
+      control: 'select',
+      options: [
+        'default',
+        'secondary',
+        'destructive',
+        'accent',
+        'muted',
+        'minimal',
+        'custom',
+      ],
+    },
     $variant: {
       control: 'select',
       options: [
@@ -30,6 +43,7 @@ const meta: Meta<typeof Link> = {
         'destructive',
         'ghost',
       ],
+      description: 'Legacy support - use $colorScheme instead',
     },
     $size: {
       control: 'select',
@@ -52,35 +66,152 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  args: {
-    href: '#',
-    children: 'Enlace básico',
-  },
+  render: () => (
+    <Link $store={useLinkExamples} storeKey="defaultExample" href="#fallback">
+      Enlace básico con store
+    </Link>
+  ),
+};
+
+export const ColorSchemes: Story = {
+  render: () => (
+    <div className="space-y-4">
+      <h4 className="font-medium text-foreground">Theme.css Color Schemes</h4>
+      <div className="flex flex-col gap-3">
+        <Link
+          $store={useLinkExamples}
+          storeKey="defaultExample"
+          $colorScheme="default"
+          href="#fallback">
+          Default scheme
+        </Link>
+        <Link
+          $store={useLinkExamples}
+          storeKey="secondaryExample"
+          $colorScheme="secondary"
+          href="#fallback">
+          Secondary scheme
+        </Link>
+        <Link
+          $store={useLinkExamples}
+          storeKey="destructiveExample"
+          $colorScheme="destructive"
+          href="#fallback">
+          Destructive scheme
+        </Link>
+        <Link
+          $store={useLinkExamples}
+          storeKey="accentExample"
+          $colorScheme="accent"
+          href="#fallback">
+          Accent scheme
+        </Link>
+        <Link
+          $store={useLinkExamples}
+          storeKey="mutedExample"
+          $colorScheme="muted"
+          href="#fallback">
+          Muted scheme
+        </Link>
+        <Link
+          $store={useLinkExamples}
+          storeKey="minimalExample"
+          $colorScheme="minimal"
+          href="#fallback">
+          Minimal scheme
+        </Link>
+      </div>
+    </div>
+  ),
 };
 
 export const Variants: Story = {
   render: () => (
-    <div className="flex flex-col gap-4">
-      <Link href="#" $variant="default">
-        Enlace default
-      </Link>
-      <Link href="#" $variant="primary">
-        Enlace primary
-      </Link>
-      <Link href="#" $variant="secondary">
-        Enlace secondary
-      </Link>
-      <Link href="#" $variant="muted">
-        Enlace muted
-      </Link>
-      <Link href="#" $variant="destructive">
-        Enlace destructive
-      </Link>
-      <Link href="#" $variant="ghost">
-        Enlace ghost
-      </Link>
+    <div className="space-y-4">
+      <div>
+        <h4 className="font-medium text-foreground mb-2">
+          Legacy Variants (Backward Compatibility)
+        </h4>
+        <div className="flex flex-col gap-3">
+          <Link href="#" $variant="default">
+            Enlace default (legacy)
+          </Link>
+          <Link href="#" $variant="primary">
+            Enlace primary (legacy)
+          </Link>
+          <Link href="#" $variant="secondary">
+            Enlace secondary (legacy)
+          </Link>
+          <Link href="#" $variant="muted">
+            Enlace muted (legacy)
+          </Link>
+          <Link href="#" $variant="destructive">
+            Enlace destructive (legacy)
+          </Link>
+          <Link href="#" $variant="ghost">
+            Enlace ghost (legacy)
+          </Link>
+        </div>
+      </div>
     </div>
   ),
+};
+
+export const WithStore: Story = {
+  render: () => {
+    const { clearAllLink } = useLinkExamples();
+
+    return (
+      <div className="space-y-4">
+        <h4 className="font-medium text-foreground">
+          Store Integration Examples
+        </h4>
+
+        <div className="flex flex-col gap-3">
+          <Link
+            $store={useLinkExamples}
+            storeKey="externalExample"
+            $colorScheme="secondary"
+            $startIcon={<FiGithub />}
+            href="#fallback">
+            External Link from Store
+          </Link>
+
+          <Link
+            $store={useLinkExamples}
+            storeKey="emailExample"
+            $colorScheme="accent"
+            $startIcon={<FiMail />}
+            href="#fallback">
+            Email from Store
+          </Link>
+
+          <Link
+            $store={useLinkExamples}
+            storeKey="dashboardExample"
+            $colorScheme="default"
+            $startIcon={<FiHome />}
+            href="#fallback">
+            Dashboard Link from Store
+          </Link>
+        </div>
+
+        <div className="pt-4 border-t">
+          <button
+            onClick={clearAllLink}
+            className="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded text-sm transition-colors">
+            Clear All Links
+          </button>
+        </div>
+
+        <div className="text-sm text-gray-600 space-y-1">
+          <p>External: {useLinkExamples((state) => state.externalExample)}</p>
+          <p>Email: {useLinkExamples((state) => state.emailExample)}</p>
+          <p>Dashboard: {useLinkExamples((state) => state.dashboardExample)}</p>
+        </div>
+      </div>
+    );
+  },
 };
 
 export const Sizes: Story = {

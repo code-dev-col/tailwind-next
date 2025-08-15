@@ -14,13 +14,6 @@ export interface AccordionItemType {
 }
 
 export interface AccordionProps extends BaseProps {
-  $variant?:
-    | 'default'
-    | 'bordered'
-    | 'separated'
-    | 'flat'
-    | 'shadow'
-    | 'minimal';
   $size?: 'sm' | 'default' | 'lg';
   $iconPosition?: 'left' | 'right';
   $colorScheme?:
@@ -30,6 +23,8 @@ export interface AccordionProps extends BaseProps {
     | 'accent'
     | 'muted'
     | 'minimal'
+    | 'outline'
+    | 'ghost'
     | 'custom';
   $custom?: string;
 
@@ -112,6 +107,24 @@ const colorSchemes = {
     active: 'bg-muted/50 text-foreground',
     chevron: 'text-muted-foreground/80',
   },
+  outline: {
+    background: 'bg-transparent',
+    text: 'text-foreground',
+    textSecondary: 'text-muted-foreground',
+    border: 'border-border',
+    hover: 'hover:bg-muted/20',
+    active: 'bg-border/10 text-foreground border-border',
+    chevron: 'text-muted-foreground',
+  },
+  ghost: {
+    background: 'bg-transparent',
+    text: 'text-foreground',
+    textSecondary: 'text-muted-foreground/70',
+    border: 'border-transparent',
+    hover: 'hover:bg-muted/20',
+    active: 'bg-muted/30 text-foreground',
+    chevron: 'text-muted-foreground/60',
+  },
   custom: {
     background: '',
     text: '',
@@ -156,7 +169,6 @@ interface AccordionItemProps {
   item: AccordionItemType;
   isOpen: boolean;
   onToggle: () => void;
-  variant: AccordionProps['$variant'];
   size: AccordionProps['$size'];
   iconPosition: AccordionProps['$iconPosition'];
   animated: boolean;
@@ -171,7 +183,6 @@ const AccordionItem: React.FC<AccordionItemProps> = ({
   item,
   isOpen,
   onToggle,
-  variant = 'default',
   size = 'default',
   iconPosition = 'right',
   animated = true,
@@ -186,31 +197,10 @@ const AccordionItem: React.FC<AccordionItemProps> = ({
 
   // Clases base para cada parte
   const getItemClasses = () => {
-    const base = 'transition-all duration-200';
-
-    switch (variant) {
-      case 'bordered':
-        return cn(
-          base,
-          'border-2 border-border rounded-lg overflow-hidden mb-2'
-        );
-      case 'separated':
-        return cn(
-          base,
-          'border border-border rounded-lg bg-card shadow-sm mb-2'
-        );
-      case 'flat':
-        return cn(base, 'bg-muted/30 border-b border-border last:border-b-0');
-      case 'shadow':
-        return cn(
-          base,
-          'shadow-lg border border-border rounded-lg overflow-hidden mb-2'
-        );
-      case 'minimal':
-        return cn(base, 'border-b border-border/50 last:border-b-0');
-      default:
-        return cn(base, 'border-b border-border last:border-b-0');
-    }
+    return cn(
+      'transition-all duration-200 border-b border-border/50 last:border-b-0',
+      colors.border
+    );
   };
 
   const getTriggerClasses = () => {
@@ -346,7 +336,6 @@ const Accordion = React.forwardRef<HTMLDivElement, AccordionProps>(
   (
     {
       className,
-      $variant = 'default',
       $size = 'default',
       $iconPosition = 'right',
       $colorScheme = 'default',
@@ -423,25 +412,10 @@ const Accordion = React.forwardRef<HTMLDivElement, AccordionProps>(
 
     // Clases del contenedor principal
     const getContainerClasses = () => {
-      const base = 'w-full';
-
-      switch ($variant) {
-        case 'bordered':
-          return cn(base, 'border-2 border-border rounded-lg overflow-hidden');
-        case 'separated':
-          return cn(base, 'space-y-2');
-        case 'flat':
-          return cn(base, 'bg-muted/30');
-        case 'shadow':
-          return cn(
-            base,
-            'shadow-lg border border-border rounded-lg overflow-hidden'
-          );
-        case 'minimal':
-          return cn(base, 'border-none');
-        default:
-          return cn(base, 'border border-border');
-      }
+      return cn(
+        'w-full border border-border rounded-lg overflow-hidden shadow-sm',
+        colorSchemes[$colorScheme].background
+      );
     };
 
     return (
@@ -458,7 +432,6 @@ const Accordion = React.forwardRef<HTMLDivElement, AccordionProps>(
             item={item}
             isOpen={openItems.includes(item.id)}
             onToggle={() => handleItemToggle(item.id)}
-            variant={$variant}
             size={$size}
             iconPosition={$iconPosition}
             animated={animated}

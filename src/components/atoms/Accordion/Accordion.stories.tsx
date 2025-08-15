@@ -36,23 +36,6 @@ const meta: Meta<typeof Accordion> = {
   },
   tags: ['autodocs'],
   argTypes: {
-    $variant: {
-      control: 'select',
-      options: [
-        'default',
-        'bordered',
-        'separated',
-        'flat',
-        'shadow',
-        'minimal',
-      ],
-      description: 'Variante visual del accordion',
-    },
-    $size: {
-      control: 'select',
-      options: ['sm', 'default', 'lg'],
-      description: 'Tamaño del accordion',
-    },
     $colorScheme: {
       control: 'select',
       options: [
@@ -62,9 +45,16 @@ const meta: Meta<typeof Accordion> = {
         'accent',
         'muted',
         'minimal',
+        'outline',
+        'ghost',
         'custom',
       ],
       description: 'Esquema de color basado en theme.css',
+    },
+    $size: {
+      control: 'select',
+      options: ['sm', 'default', 'lg'],
+      description: 'Tamaño del accordion',
     },
     $iconPosition: {
       control: 'select',
@@ -405,7 +395,7 @@ const productItems = [
             <h4 className="font-medium">Funcionalidades Core</h4>
             <ul className="space-y-2">
               <li className="flex items-center gap-2">
-                <IoRocket className="w-4 h-4 text-blue-600" />
+                <IoRocket className="w-4 h-4 text-blue-50" />
                 <span className="text-sm">Rendimiento ultra-rápido</span>
               </li>
               <li className="flex items-center gap-2">
@@ -488,7 +478,6 @@ const productItems = [
 export const Default: Story = {
   args: {
     items: faqItems,
-    $variant: 'default',
     $size: 'default',
     $colorScheme: 'default',
     allowMultiple: false,
@@ -496,59 +485,6 @@ export const Default: Story = {
     showIcons: true,
     showBadges: true,
   },
-};
-
-export const Variants: Story = {
-  render: () => (
-    <div className="space-y-8 w-full max-w-3xl">
-      <div>
-        <h3 className="text-lg font-semibold mb-4">Default - FAQ</h3>
-        <Accordion
-          items={faqItems.slice(0, 2)}
-          $variant="default"
-          $colorScheme="default"
-        />
-      </div>
-
-      <div>
-        <h3 className="text-lg font-semibold mb-4">
-          Bordered - Configuraciones
-        </h3>
-        <Accordion
-          items={settingsItems.slice(0, 2)}
-          $variant="bordered"
-          $colorScheme="secondary"
-        />
-      </div>
-
-      <div>
-        <h3 className="text-lg font-semibold mb-4">Separated - Desarrollo</h3>
-        <Accordion
-          items={developmentItems.slice(0, 2)}
-          $variant="separated"
-          $colorScheme="accent"
-        />
-      </div>
-
-      <div>
-        <h3 className="text-lg font-semibold mb-4">Shadow - Producto</h3>
-        <Accordion
-          items={productItems}
-          $variant="shadow"
-          $colorScheme="destructive"
-        />
-      </div>
-
-      <div>
-        <h3 className="text-lg font-semibold mb-4">Minimal - Simple</h3>
-        <Accordion
-          items={faqItems.slice(0, 2)}
-          $variant="minimal"
-          $colorScheme="minimal"
-        />
-      </div>
-    </div>
-  ),
 };
 
 export const Sizes: Story = {
@@ -561,7 +497,6 @@ export const Sizes: Story = {
         <Accordion
           items={faqItems.slice(0, 2)}
           $size="sm"
-          $variant="bordered"
           $colorScheme="default"
         />
       </div>
@@ -573,7 +508,6 @@ export const Sizes: Story = {
         <Accordion
           items={settingsItems.slice(0, 2)}
           $size="default"
-          $variant="bordered"
           $colorScheme="secondary"
         />
       </div>
@@ -585,7 +519,6 @@ export const Sizes: Story = {
         <Accordion
           items={developmentItems.slice(0, 2)}
           $size="lg"
-          $variant="bordered"
           $colorScheme="accent"
         />
       </div>
@@ -602,7 +535,6 @@ export const ColorSchemes: Story = {
         </h3>
         <Accordion
           items={faqItems.slice(0, 2)}
-          $variant="separated"
           $colorScheme="default"
         />
       </div>
@@ -613,7 +545,6 @@ export const ColorSchemes: Story = {
         </h3>
         <Accordion
           items={settingsItems.slice(0, 2)}
-          $variant="separated"
           $colorScheme="secondary"
         />
       </div>
@@ -624,7 +555,6 @@ export const ColorSchemes: Story = {
         </h3>
         <Accordion
           items={developmentItems.slice(0, 2)}
-          $variant="separated"
           $colorScheme="accent"
         />
       </div>
@@ -654,7 +584,6 @@ export const ColorSchemes: Story = {
               badge: 'Urgente',
             },
           ]}
-          $variant="separated"
           $colorScheme="destructive"
         />
       </div>
@@ -673,7 +602,6 @@ export const ColorSchemes: Story = {
               icon: <IoInformation className="w-5 h-5" />,
             },
           ]}
-          $variant="separated"
           $colorScheme="muted"
         />
       </div>
@@ -684,8 +612,7 @@ export const ColorSchemes: Story = {
         </h3>
         <Accordion
           items={faqItems.slice(0, 1)}
-          $variant="minimal"
-          $colorScheme="minimal"
+          $colorScheme="default"
         />
       </div>
     </div>
@@ -762,7 +689,6 @@ export const WithStore: Story = {
               badge: 3,
             },
           ]}
-          $variant="bordered"
           $colorScheme="accent"
           allowMultiple={true}
         />
@@ -787,7 +713,6 @@ export const Interactive: Story = {
         </h3>
         <Accordion
           items={faqItems}
-          $variant="separated"
           $colorScheme="secondary"
           allowMultiple={true}
           animated={true}
@@ -800,7 +725,6 @@ export const Interactive: Story = {
         </h3>
         <Accordion
           items={developmentItems}
-          $variant="bordered"
           $colorScheme="accent"
           $iconPosition="left"
           allowMultiple={false}
@@ -828,7 +752,6 @@ export const Interactive: Story = {
               icon: <IoCheckmarkCircle className="w-5 h-5" />,
             },
           ]}
-          $variant="flat"
           $colorScheme="muted"
           animated={false}
         />
@@ -869,7 +792,6 @@ export const WithCustomization: Story = {
                 'Contenido sin elementos visuales adicionales, perfecto para lecturas largas o información densa.',
             },
           ]}
-          $variant="separated"
           $colorScheme="default"
           showIcons={false}
           showBadges={false}
@@ -882,9 +804,8 @@ export const WithCustomization: Story = {
         </h3>
         <Accordion
           items={productItems}
-          $variant="bordered"
           $colorScheme="secondary"
-          $custom="shadow-lg border-2 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950/20 dark:to-indigo-950/20"
+          $custom="shadow-lg border-2 bg-gradient-to-r from-blue-450 to-indigo-450 dark:from-blue-950 dark:to-indigo-950"
         />
       </div>
 
@@ -901,8 +822,7 @@ export const WithCustomization: Story = {
           </div>
           <Accordion
             items={settingsItems.slice(0, 2)}
-            $variant="minimal"
-            $colorScheme="minimal"
+            $colorScheme="default"
           />
         </div>
       </div>
@@ -913,9 +833,8 @@ export const WithCustomization: Story = {
 export const Playground: Story = {
   args: {
     items: faqItems,
-    $variant: 'default',
-    $size: 'default',
     $colorScheme: 'default',
+    $size: 'default',
     $iconPosition: 'right',
     allowMultiple: false,
     allowToggle: true,
@@ -929,7 +848,4 @@ export const Playground: Story = {
     layout: 'centered',
   },
 };
-
-
-
 

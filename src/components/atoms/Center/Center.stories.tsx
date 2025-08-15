@@ -40,7 +40,7 @@ export const Default: Story = {
           <Text as="h1" $size="3xl" $weight="bold" className="mb-4 text-center">
             Componente Center
           </Text>
-          <Text $variant="muted" className="text-center">
+          <Text $colorScheme="muted" className="text-center">
             Este contenido se centra automáticamente con padding responsivo
             usando container queries (cqw).
           </Text>
@@ -113,16 +113,16 @@ export const WithContent: Story = {
             <Text as="h2" $size="2xl" $weight="bold" className="mb-2">
               John Doe
             </Text>
-            <Badge $variant="secondary" className="mb-4">
+            <Badge $colorScheme="secondary" className="mb-4">
               Desarrollador Frontend
             </Badge>
-            <Text $variant="muted" className="mb-6 max-w-md mx-auto">
+            <Text $colorScheme="muted" className="mb-6 max-w-md mx-auto">
               Especialista en React y TypeScript con más de 5 años de
               experiencia creando interfaces de usuario modernas y accesibles.
             </Text>
             <div className="flex gap-4 justify-center">
-              <Button $variant="default">Contactar</Button>
-              <Button $variant="outline">Ver Portfolio</Button>
+              <Button $colorScheme="default">Contactar</Button>
+              <Button $colorScheme="muted">Ver Portfolio</Button>
             </div>
           </div>
         </Container>
@@ -145,7 +145,7 @@ export const MultipleBlocks: Story = {
             <Text as="h1" $size="3xl" $weight="bold" className="text-center">
               Mi Blog Personal
             </Text>
-            <Text $variant="muted" className="text-center mt-2">
+            <Text $colorScheme="muted" className="text-center mt-2">
               Reflexiones sobre desarrollo web y tecnología
             </Text>
           </Container>
@@ -157,19 +157,19 @@ export const MultipleBlocks: Story = {
             $borderRadius="rounded-lg"
             className="shadow-sm">
             <div className="flex items-center gap-3 mb-4">
-              <Badge $variant="default">React</Badge>
-              <Text $size="sm" $variant="muted">
+              <Badge $colorScheme="default">React</Badge>
+              <Text $size="sm" $colorScheme="muted">
                 15 de enero, 2024
               </Text>
             </div>
             <Text as="h2" $size="xl" $weight="bold" className="mb-3">
               Los Hooks más útiles de React 18
             </Text>
-            <Text $variant="muted" className="mb-4">
+            <Text $colorScheme="muted" className="mb-4">
               Una guía completa sobre los hooks que más uso en mis proyectos
               diarios, desde useState hasta los nuevos concurrent features.
             </Text>
-            <Button $variant="link" className="p-0">
+            <Button $colorScheme="default">
               Leer más →
             </Button>
           </Container>
@@ -181,19 +181,19 @@ export const MultipleBlocks: Story = {
             $borderRadius="rounded-lg"
             className="shadow-sm">
             <div className="flex items-center gap-3 mb-4">
-              <Badge $variant="secondary">TypeScript</Badge>
-              <Text $size="sm" $variant="muted">
+              <Badge $colorScheme="secondary">TypeScript</Badge>
+              <Text $size="sm" $colorScheme="muted">
                 8 de enero, 2024
               </Text>
             </div>
             <Text as="h2" $size="xl" $weight="bold" className="mb-3">
               Tipos avanzados en TypeScript
             </Text>
-            <Text $variant="muted" className="mb-4">
+            <Text $colorScheme="muted" className="mb-4">
               Explorando utility types, conditional types y mapped types para
               crear APIs más robustas y expresivas.
             </Text>
-            <Button $variant="link" className="p-0">
+            <Button $colorScheme="default">
               Leer más →
             </Button>
           </Container>
@@ -215,7 +215,7 @@ export const WithCustomPadding: Story = {
           <Text as="h2" $size="2xl" $weight="bold" className="mb-4 text-center">
             Center con Padding Vertical Personalizado
           </Text>
-          <Text $variant="muted" className="text-center mb-6">
+          <Text $colorScheme="muted" className="text-center mb-6">
             Usando la prop $custom="py-12" para agregar padding vertical
             adicional.
           </Text>
@@ -277,7 +277,7 @@ export const DemoLayout: Story = {
               Demuestra cómo el componente Center mantiene el contenido centrado
               con padding optimal en todos los dispositivos.
             </Text>
-            <Button $variant="secondary" $size="lg">
+            <Button $colorScheme="secondary" $size="lg">
               Comenzar
             </Button>
           </Container>
@@ -344,7 +344,7 @@ export const DemoLayout: Story = {
                   <Text $weight="semibold" $size="lg" className="mb-2">
                     {feature.title}
                   </Text>
-                  <Text $size="sm" $variant="muted">
+                  <Text $size="sm" $colorScheme="muted">
                     {feature.description}
                   </Text>
                 </Container>

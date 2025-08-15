@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Text } from './Text';
+import { useTextExamples } from '../../../stores/textExamples.store';
 
 const meta: Meta<typeof Text> = {
   title: 'Atoms/Text',
@@ -13,18 +14,18 @@ const meta: Meta<typeof Text> = {
       control: 'text',
       description: 'El contenido del texto',
     },
-    $variant: {
+    $colorScheme: {
       control: 'select',
       options: [
         'default',
-        'muted',
-        'primary',
         'secondary',
         'destructive',
-        'success',
-        'warning',
+        'accent',
+        'muted',
+        'minimal',
+        'custom',
       ],
-      description: 'Variante de color del texto',
+      description: 'Esquema de color del tema CSS',
     },
     $size: {
       control: 'select',
@@ -130,24 +131,118 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  args: {
-    children:
-      'Este es un texto de ejemplo para mostrar el componente Text por defecto.',
-  },
+  render: () => (
+    <Text $store={useTextExamples} storeKey="defaultExample">
+      {/* Fallback content from store */}
+    </Text>
+  ),
 };
 
-export const Variants: Story = {
+export const ColorSchemes: Story = {
   render: () => (
     <div className="space-y-4">
-      <Text $variant="default">Texto por defecto</Text>
-      <Text $variant="muted">Texto silenciado</Text>
-      <Text $variant="primary">Texto primario</Text>
-      <Text $variant="secondary">Texto secundario</Text>
-      <Text $variant="destructive">Texto destructivo</Text>
-      <Text $variant="success">Texto de éxito</Text>
-      <Text $variant="warning">Texto de advertencia</Text>
+      <h4 className="font-medium text-foreground">Theme.css Color Schemes</h4>
+      <div className="space-y-3">
+        <Text
+          $store={useTextExamples}
+          storeKey="defaultExample"
+          $colorScheme="default">
+          {/* Fallback: Default scheme text */}
+        </Text>
+        <Text
+          $store={useTextExamples}
+          storeKey="secondaryExample"
+          $colorScheme="secondary">
+          {/* Fallback: Secondary scheme text */}
+        </Text>
+        <Text
+          $store={useTextExamples}
+          storeKey="destructiveExample"
+          $colorScheme="destructive">
+          {/* Fallback: Destructive scheme text */}
+        </Text>
+        <Text
+          $store={useTextExamples}
+          storeKey="accentExample"
+          $colorScheme="accent">
+          {/* Fallback: Accent scheme text */}
+        </Text>
+        <Text
+          $store={useTextExamples}
+          storeKey="mutedExample"
+          $colorScheme="muted">
+          {/* Fallback: Muted scheme text */}
+        </Text>
+        <Text
+          $store={useTextExamples}
+          storeKey="minimalExample"
+          $colorScheme="minimal">
+          {/* Fallback: Minimal scheme text */}
+        </Text>
+      </div>
     </div>
   ),
+};
+
+export const WithStore: Story = {
+  render: () => {
+    const { clearAllText } = useTextExamples();
+
+    return (
+      <div className="space-y-4">
+        <h4 className="font-medium text-foreground">
+          Store Integration Examples
+        </h4>
+
+        <div className="space-y-3">
+          <Text
+            $store={useTextExamples}
+            storeKey="titleExample"
+            $colorScheme="default"
+            $size="xl"
+            $weight="bold"
+            as="h3">
+            {/* Fallback: Title from store */}
+          </Text>
+
+          <Text
+            $store={useTextExamples}
+            storeKey="paragraphExample"
+            $colorScheme="default"
+            as="p">
+            {/* Fallback: Paragraph from store */}
+          </Text>
+
+          <Text
+            $store={useTextExamples}
+            storeKey="descriptionExample"
+            $colorScheme="muted"
+            $size="sm">
+            {/* Fallback: Description from store */}
+          </Text>
+        </div>
+
+        <div className="pt-4 border-t">
+          <button
+            onClick={clearAllText}
+            className="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded text-sm transition-colors">
+            Clear All Text
+          </button>
+        </div>
+
+        <div className="text-sm text-gray-600 space-y-1">
+          <p>Title: {useTextExamples((state) => state.titleExample)}</p>
+          <p>
+            Paragraph:{' '}
+            {useTextExamples((state) => state.paragraphExample.slice(0, 50))}...
+          </p>
+          <p>
+            Description: {useTextExamples((state) => state.descriptionExample)}
+          </p>
+        </div>
+      </div>
+    );
+  },
 };
 
 export const Sizes: Story = {
@@ -393,10 +488,10 @@ export const SemanticElements: Story = {
       <Text as="p" $size="base">
         Párrafo normal con elemento p
       </Text>
-      <Text as="span" $size="sm" $variant="muted">
+      <Text as="span" $size="sm" $colorScheme="muted">
         Texto inline con span
       </Text>
-      <Text as="small" $size="xs" $variant="muted">
+      <Text as="small" $size="xs" $colorScheme="muted">
         Texto pequeño con elemento small
       </Text>
       <Text as="strong" $weight="bold">
@@ -444,10 +539,10 @@ export const ComplexExample: Story = {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="p-4 bg-white rounded-lg shadow-sm">
-          <Text $weight="semibold" $variant="primary" className="mb-2">
+          <Text $weight="semibold" $colorScheme="default" className="mb-2">
             Tamaños Responsivos
           </Text>
-          <Text $size="sm" $variant="muted" $clampLines={3}>
+          <Text $size="sm" $colorScheme="muted" $clampLines={3}>
             Utiliza funciones clamp() CSS para crear tipografía que se adapta
             automáticamente al tamaño de la pantalla, proporcionando una
             experiencia de usuario óptima en todos los dispositivos.
@@ -455,10 +550,10 @@ export const ComplexExample: Story = {
         </div>
 
         <div className="p-4 bg-white rounded-lg shadow-sm">
-          <Text $weight="semibold" $variant="success" className="mb-2">
+          <Text $weight="semibold" $colorScheme="accent" className="mb-2">
             Personalización Total
           </Text>
-          <Text $size="sm" $variant="muted" $clampLines={3}>
+          <Text $size="sm" $colorScheme="muted" $clampLines={3}>
             Controla cada aspecto de la tipografía: colores personalizados,
             sombras, espaciado, transformaciones de texto y elementos semánticos
             HTML.
@@ -468,7 +563,7 @@ export const ComplexExample: Story = {
 
       <Text
         $size="sm"
-        $variant="muted"
+        $colorScheme="muted"
         $align="center"
         $letterSpacing="wide"
         $transform="uppercase">

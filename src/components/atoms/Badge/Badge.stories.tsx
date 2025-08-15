@@ -31,21 +31,12 @@ const meta: Meta<typeof Badge> = {
         'accent',
         'muted',
         'minimal',
-        'custom',
-      ],
-      description: 'Esquema de color usando theme.css',
-    },
-    $variant: {
-      control: 'select',
-      options: [
-        'default',
-        'secondary',
-        'destructive',
         'success',
         'warning',
         'outline',
+        'custom',
       ],
-      description: 'Visual style variant of the badge (legacy support)',
+      description: 'Esquema de color usando theme.css',
     },
     $size: {
       control: 'select',
@@ -71,12 +62,12 @@ export const Default: Story = {
 export const Variants: Story = {
   render: () => (
     <div className="flex flex-wrap gap-2">
-      <Badge $variant="default">Default</Badge>
-      <Badge $variant="secondary">Secondary</Badge>
-      <Badge $variant="destructive">Destructive</Badge>
-      <Badge $variant="success">Success</Badge>
-      <Badge $variant="warning">Warning</Badge>
-      <Badge $variant="outline">Outline</Badge>
+      <Badge $colorScheme="default">Default</Badge>
+      <Badge $colorScheme="secondary">Secondary</Badge>
+      <Badge $colorScheme="destructive">Destructive</Badge>
+      <Badge $colorScheme="success">Success</Badge>
+      <Badge $colorScheme="warning">Warning</Badge>
+      <Badge $colorScheme="outline">Outline</Badge>
     </div>
   ),
 };
@@ -116,30 +107,30 @@ export const StatusBadges: Story = {
       <div>
         <h3 className="font-medium mb-2">Application Status</h3>
         <div className="flex gap-2">
-          <Badge $variant="success">Active</Badge>
-          <Badge $variant="warning">Pending</Badge>
-          <Badge $variant="destructive">Error</Badge>
-          <Badge $variant="secondary">Inactive</Badge>
+          <Badge $colorScheme="success">Active</Badge>
+          <Badge $colorScheme="warning">Pending</Badge>
+          <Badge $colorScheme="destructive">Error</Badge>
+          <Badge $colorScheme="secondary">Inactive</Badge>
         </div>
       </div>
       <div>
         <h3 className="font-medium mb-2">User Roles</h3>
         <div className="flex gap-2">
-          <Badge $variant="default">Admin</Badge>
-          <Badge $variant="secondary">User</Badge>
-          <Badge $variant="outline">Guest</Badge>
+          <Badge $colorScheme="default">Admin</Badge>
+          <Badge $colorScheme="secondary">User</Badge>
+          <Badge $colorScheme="outline">Guest</Badge>
         </div>
       </div>
       <div>
         <h3 className="font-medium mb-2">Priority Levels</h3>
         <div className="flex gap-2">
-          <Badge $variant="destructive" $size="sm">
+          <Badge $colorScheme="destructive" $size="sm">
             High
           </Badge>
-          <Badge $variant="warning" $size="sm">
+          <Badge $colorScheme="warning" $size="sm">
             Medium
           </Badge>
-          <Badge $variant="success" $size="sm">
+          <Badge $colorScheme="success" $size="sm">
             Low
           </Badge>
         </div>
@@ -153,25 +144,25 @@ export const WithNumbers: Story = {
     <div className="flex gap-4 items-center">
       <div className="flex items-center gap-2">
         <span>Notifications</span>
-        <Badge $variant="destructive" $size="sm">
+        <Badge $colorScheme="destructive" $size="sm">
           5
         </Badge>
       </div>
       <div className="flex items-center gap-2">
         <span>Messages</span>
-        <Badge $variant="default" $size="sm">
+        <Badge $colorScheme="default" $size="sm">
           12
         </Badge>
       </div>
       <div className="flex items-center gap-2">
         <span>Tasks</span>
-        <Badge $variant="success" $size="sm">
+        <Badge $colorScheme="success" $size="sm">
           3
         </Badge>
       </div>
       <div className="flex items-center gap-2">
         <span>Warnings</span>
-        <Badge $variant="warning" $size="sm">
+        <Badge $colorScheme="warning" $size="sm">
           1
         </Badge>
       </div>
@@ -186,12 +177,12 @@ export const Interactive: Story = {
         Clickable
       </Badge>
       <Badge
-        $variant="destructive"
+        $colorScheme="destructive"
         $custom="cursor-pointer hover:scale-105 active:scale-95 transition-transform">
         Remove
       </Badge>
       <Badge
-        $variant="success"
+        $colorScheme="success"
         $custom="cursor-pointer hover:scale-105 active:scale-95 transition-transform">
         Approve
       </Badge>
@@ -290,12 +281,12 @@ export const ColorSchemes: Story = {
 
         <div>
           <h5 className="text-sm font-medium mb-2 text-gray-700">
-            Special Variants (Legacy Support)
+            Special Color Schemes
           </h5>
           <div className="flex flex-wrap gap-2">
-            <Badge $variant="success">Success</Badge>
-            <Badge $variant="warning">Warning</Badge>
-            <Badge $variant="outline">Outline</Badge>
+            <Badge $colorScheme="success">Success</Badge>
+            <Badge $colorScheme="warning">Warning</Badge>
+            <Badge $colorScheme="outline">Outline</Badge>
           </div>
         </div>
       </div>

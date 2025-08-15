@@ -32,7 +32,7 @@ const meta: Meta<typeof Switch> = {
       control: 'boolean',
       description: 'Si el switch está deshabilitado',
     },
-    $variant: {
+    $colorScheme: {
       control: 'select',
       options: ['default', 'primary', 'secondary', 'destructive', 'accent'],
       description: 'Variante visual del switch',
@@ -75,11 +75,10 @@ export const Variants: Story = {
   render: () => (
     <div className="flex flex-col gap-6">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        <Switch $variant="default" defaultChecked label="Default" />
-        <Switch $variant="primary" defaultChecked label="Primary" />
-        <Switch $variant="secondary" defaultChecked label="Secondary" />
-        <Switch $variant="destructive" defaultChecked label="Destructive" />
-        <Switch $variant="accent" defaultChecked label="Accent" />
+        <Switch $colorScheme="default" defaultChecked label="Primary" />
+        <Switch $colorScheme="secondary" defaultChecked label="Secondary" />
+        <Switch $colorScheme="destructive" defaultChecked label="Destructive" />
+        <Switch $colorScheme="accent" defaultChecked label="Accent" />
       </div>
     </div>
   ),
@@ -102,14 +101,14 @@ export const WithIcons: Story = {
     <div className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Switch
-          $variant="primary"
+          $colorScheme="default"
           defaultChecked
           label="Con icono único"
           icon={<FiCheck className="text-white" />}
         />
 
         <Switch
-          $variant="accent"
+          $colorScheme="accent"
           defaultChecked
           label="Iconos diferentes"
           checkedIcon={<FiCheck className="text-white text-xs" />}
@@ -142,7 +141,7 @@ export const LightDarkMode: Story = {
 
           <div className="flex items-center justify-center">
             <Switch
-              $variant="primary"
+              $colorScheme="default"
               $size="lg"
               checked={lightDarkMode}
               onChange={setLightDarkMode}
@@ -197,7 +196,7 @@ export const SettingsPanel: Story = {
         <Switch
           $store={useSwitchExamples}
           storeKey="notificationsEnabled"
-          $variant="primary"
+          $colorScheme="default"
           label="Notificaciones"
           description="Recibir notificaciones push"
           icon={<FiBell className="text-white text-xs" />}
@@ -206,7 +205,7 @@ export const SettingsPanel: Story = {
         <Switch
           $store={useSwitchExamples}
           storeKey="locationEnabled"
-          $variant="secondary"
+          $colorScheme="secondary"
           label="Ubicación"
           description="Permitir acceso a la ubicación"
           icon={<FiMapPin className="text-white text-xs" />}
@@ -215,7 +214,7 @@ export const SettingsPanel: Story = {
         <Switch
           $store={useSwitchExamples}
           storeKey="autoSave"
-          $variant="accent"
+          $colorScheme="accent"
           label="Guardado automático"
           description="Guardar cambios automáticamente"
           icon={<FiSave className="text-white text-xs" />}
@@ -224,7 +223,7 @@ export const SettingsPanel: Story = {
         <Switch
           $store={useSwitchExamples}
           storeKey="syncEnabled"
-          $variant="default"
+          $colorScheme="default"
           label="Sincronización"
           description="Sincronizar datos en la nube"
           icon={<FiRefreshCw className="text-white text-xs" />}
@@ -301,7 +300,7 @@ export const Interactive: Story = {
           <Switch
             $store={useSwitchExamples}
             storeKey="sizeExample"
-            $variant="primary"
+            $colorScheme="default"
             label="Otro ejemplo"
             description="También conectado al store"
           />
@@ -359,7 +358,7 @@ export const GradientEffects: Story = {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="p-8 rounded-2xl bg-gradient-to-br from-blue-50 to-purple-50 border border-blue-100">
               <Switch
-                $variant="primary"
+                $colorScheme="default"
                 defaultChecked
                 label="Switch Principal"
                 description="En fondo de gradiente azul-púrpura"
@@ -369,7 +368,7 @@ export const GradientEffects: Story = {
 
             <div className="p-8 rounded-2xl bg-gradient-to-br from-green-50 to-emerald-50 border border-green-100">
               <Switch
-                $variant="secondary"
+                $colorScheme="secondary"
                 $size="lg"
                 defaultChecked
                 checkedIcon={<FiCheck className="text-white" />}
@@ -393,7 +392,7 @@ export const GradientEffects: Story = {
                 <Switch
                   $store={useSwitchExamples}
                   storeKey="lightDarkMode"
-                  $variant="primary"
+                  $colorScheme="default"
                   $size="lg"
                   checkedIcon={<FiMoon className="text-white" />}
                   uncheckedIcon={<FiSun className="text-yellow-500" />}
@@ -457,7 +456,7 @@ export const GradientEffects: Story = {
                   <Switch
                     $store={useSwitchExamples}
                     storeKey="notificationsEnabled"
-                    $variant="primary"
+                    $colorScheme="default"
                     label="Notificaciones"
                     description="Alertas y recordatorios"
                     checkedIcon={<FiBell className="text-white text-xs" />}
@@ -470,7 +469,7 @@ export const GradientEffects: Story = {
                   <Switch
                     $store={useSwitchExamples}
                     storeKey="locationEnabled"
-                    $variant="secondary"
+                    $colorScheme="secondary"
                     label="Ubicación"
                     description="Servicios de geolocalización"
                     checkedIcon={<FiMapPin className="text-white text-xs" />}
@@ -485,7 +484,7 @@ export const GradientEffects: Story = {
                   <Switch
                     $store={useSwitchExamples}
                     storeKey="autoSave"
-                    $variant="accent"
+                    $colorScheme="accent"
                     label="Auto-guardado"
                     description="Guardar cambios automáticamente"
                     checkedIcon={<FiSave className="text-white text-xs" />}
@@ -498,7 +497,7 @@ export const GradientEffects: Story = {
                   <Switch
                     $store={useSwitchExamples}
                     storeKey="syncEnabled"
-                    $variant="default"
+                    $colorScheme="default"
                     label="Sincronización"
                     description="Sync con la nube"
                     checkedIcon={<FiRefreshCw className="text-white text-xs" />}
@@ -535,7 +534,7 @@ export const GradientEffects: Story = {
                 <div className="p-4 rounded-lg bg-gradient-to-r from-yellow-50 to-orange-50 border border-yellow-200">
                   <Switch
                     $size="sm"
-                    $variant="primary"
+                    $colorScheme="default"
                     defaultChecked
                     label="Switch Pequeño"
                     description="Con fondo de gradiente cálido"
@@ -545,7 +544,7 @@ export const GradientEffects: Story = {
                 <div className="p-4 rounded-lg bg-gradient-to-r from-blue-50 to-cyan-50 border border-blue-200">
                   <Switch
                     $size="default"
-                    $variant="secondary"
+                    $colorScheme="secondary"
                     defaultChecked
                     label="Switch Estándar"
                     description="Con fondo de gradiente frío"
@@ -555,7 +554,7 @@ export const GradientEffects: Story = {
                 <div className="p-4 rounded-lg bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-200">
                   <Switch
                     $size="lg"
-                    $variant="accent"
+                    $colorScheme="accent"
                     defaultChecked
                     label="Switch Grande"
                     description="Con fondo de gradiente vibrante"
@@ -572,7 +571,7 @@ export const GradientEffects: Story = {
               <div className="space-y-6">
                 <div className="p-4 rounded-lg bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200">
                   <Switch
-                    $variant="primary"
+                    $colorScheme="default"
                     defaultChecked
                     label="Estado Activo"
                     description="Switch completamente funcional"
@@ -581,7 +580,7 @@ export const GradientEffects: Story = {
                 </div>
                 <div className="p-4 rounded-lg bg-gradient-to-r from-red-50 to-pink-50 border border-red-200">
                   <Switch
-                    $variant="destructive"
+                    $colorScheme="destructive"
                     disabled
                     label="Estado Deshabilitado"
                     description="Switch no interactivo"
@@ -590,7 +589,7 @@ export const GradientEffects: Story = {
                 </div>
                 <div className="p-4 rounded-lg bg-gradient-to-r from-indigo-50 to-purple-50 border border-indigo-200">
                   <Switch
-                    $variant="accent"
+                    $colorScheme="accent"
                     defaultChecked
                     label="Con Animación Especial"
                     description="Efectos de hover mejorados"

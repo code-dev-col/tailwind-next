@@ -15,9 +15,9 @@ const meta: Meta<typeof Dropdown> = {
   },
   tags: ['autodocs'],
   argTypes: {
-    $variant: {
+    $colorScheme: {
       control: 'select',
-      options: ['default', 'destructive', 'ghost'],
+      options: ['default', 'destructive', 'muted'],
       description: 'Variante visual del dropdown',
     },
     $size: {
@@ -84,7 +84,7 @@ export const Variants: Story = {
       <div>
         <Label>Destructive</Label>
         <Dropdown
-          $variant="destructive"
+          $colorScheme="destructive"
           $store={useDropdownExamplesStore}
           storeKey="variantDestructive"
           options={basicOptions}
@@ -94,7 +94,7 @@ export const Variants: Story = {
       <div>
         <Label>Ghost</Label>
         <Dropdown
-          $variant="ghost"
+          $colorScheme="muted"
           $store={useDropdownExamplesStore}
           storeKey="variantGhost"
           options={basicOptions}
@@ -160,7 +160,7 @@ export const WithStoreKey: Story = {
       </div>
       <div className="flex gap-2 pt-2">
         <Button
-          $variant="outline"
+          $colorScheme="default"
           onClick={() => useDropdownExamplesStore.getState().setCountry('es')}>
           Set España
         </Button>
@@ -169,7 +169,7 @@ export const WithStoreKey: Story = {
           Clear
         </Button>
       </div>
-      <Text $size="sm" $variant="muted">
+      <Text $size="sm" $colorScheme="muted">
         Estado aislado mediante clave en un único store.
       </Text>
     </Container>
@@ -218,7 +218,7 @@ export const FormExample: Story = {
           <Label htmlFor="timezone">Zona horaria</Label>
           <Dropdown
             id="timezone"
-            $variant="ghost"
+            $colorScheme="muted"
             $store={useDropdownExamplesStore}
             storeKey="formTimezone"
             options={[
@@ -233,7 +233,7 @@ export const FormExample: Story = {
 
         <div className="flex gap-2 pt-2">
           <Button
-            $variant="default"
+            $colorScheme="default"
             onClick={() => {
               const s = useDropdownExamplesStore.getState();
               // Simulación submit
@@ -246,7 +246,7 @@ export const FormExample: Story = {
             Guardar
           </Button>
           <Button
-            $variant="outline"
+            $colorScheme="default"
             onClick={() =>
               useDropdownExamplesStore.getState().clearAllDropdowns()
             }>

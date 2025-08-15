@@ -14,7 +14,14 @@ interface SwitchProps<T extends Record<string, any> = any> extends BaseProps {
   storeKey?: keyof T;
 
   // Design variants
-  $variant?: 'default' | 'primary' | 'secondary' | 'destructive' | 'accent';
+  $colorScheme?:
+    | 'default'
+    | 'secondary'
+    | 'destructive'
+    | 'accent'
+    | 'muted'
+    | 'minimal'
+    | 'custom';
   $size?: 'sm' | 'default' | 'lg';
   $custom?: string;
 
@@ -34,18 +41,43 @@ interface SwitchProps<T extends Record<string, any> = any> extends BaseProps {
   id?: string;
 }
 
+// Color schemes using theme.css variables
+const colorSchemes = {
+  default: {
+    unchecked: 'bg-gray-300',
+    checked: 'data-[checked]:bg-foreground',
+  },
+  secondary: {
+    unchecked: 'bg-gray-300',
+    checked: 'data-[checked]:bg-secondary',
+  },
+  destructive: {
+    unchecked: 'bg-gray-300',
+    checked: 'data-[checked]:bg-destructive',
+  },
+  accent: {
+    unchecked: 'bg-gray-300',
+    checked: 'data-[checked]:bg-accent',
+  },
+  muted: {
+    unchecked: 'bg-muted',
+    checked: 'data-[checked]:bg-muted-foreground',
+  },
+  minimal: {
+    unchecked: 'bg-gray-200',
+    checked: 'data-[checked]:bg-gray-500',
+  },
+  custom: {
+    unchecked: '',
+    checked: '',
+  },
+};
+
 const switchVariants = {
   base: 'relative inline-flex items-center rounded-full cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-all duration-200',
   track: {
     base: 'relative inline-flex shrink-0 border-2 border-transparent rounded-full transition-colors duration-200 ease-in-out',
     variants: {
-      variant: {
-        default: 'bg-gray-300 data-[checked]:bg-gray-600',
-        primary: 'bg-gray-300 data-[checked]:bg-primary',
-        secondary: 'bg-gray-300 data-[checked]:bg-secondary',
-        destructive: 'bg-gray-300 data-[checked]:bg-destructive',
-        accent: 'bg-gray-300 data-[checked]:bg-accent',
-      },
       size: {
         sm: 'h-5 w-9',
         default: 'h-6 w-11',
@@ -98,7 +130,7 @@ const Switch = React.forwardRef<HTMLButtonElement, SwitchProps>(
       disabled = false,
       $store,
       storeKey,
-      $variant = 'default',
+      $colorScheme = 'default',
       $size = 'default',
       $custom,
       label,
@@ -158,6 +190,9 @@ const Switch = React.forwardRef<HTMLButtonElement, SwitchProps>(
       [handleToggle]
     );
 
+    // Get color scheme classes
+    const colorSchemeClasses = colorSchemes[$colorScheme];
+
     const switchElement = (
       <button
         ref={ref}
@@ -175,7 +210,9 @@ const Switch = React.forwardRef<HTMLButtonElement, SwitchProps>(
         <span
           className={cn(
             switchVariants.track.base,
-            switchVariants.track.variants.variant[$variant],
+            // Apply color scheme classes
+            colorSchemeClasses.unchecked,
+            colorSchemeClasses.checked,
             switchVariants.track.variants.size[$size]
           )}
           data-checked={checked || undefined}>
@@ -267,5 +304,4 @@ const Switch = React.forwardRef<HTMLButtonElement, SwitchProps>(
 Switch.displayName = 'Switch';
 
 export { Switch, type SwitchProps };
-
 

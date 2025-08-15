@@ -531,7 +531,7 @@ export const IndeterminateExample: Story = {
           </div>
         </div>
 
-        <Text $size="sm" $variant="muted" className="mt-4">
+        <Text $size="sm" $colorScheme="muted" className="mt-4">
           El checkbox padre muestra estado indeterminado cuando algunos hijos
           están seleccionados
         </Text>

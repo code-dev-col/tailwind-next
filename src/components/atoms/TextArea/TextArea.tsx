@@ -11,7 +11,16 @@ import {
 import { useSecureField } from '../../../utils/useSecureField';
 
 interface TextAreaProps<T extends Record<string, any> = any> extends BaseProps {
-  $variant?: 'default' | 'destructive' | 'ghost';
+  // Color scheme system (theme.css integration)
+  $colorScheme?:
+    | 'default'
+    | 'secondary'
+    | 'destructive'
+    | 'accent'
+    | 'muted'
+    | 'minimal'
+    | 'custom';
+
   $size?: 'default' | 'sm' | 'lg';
   $custom?: string;
 
@@ -55,17 +64,57 @@ interface TextAreaProps<T extends Record<string, any> = any> extends BaseProps {
   ) => void; // Callback cuando se limpia por seguridad
 }
 
+// Color schemes using theme.css variables
+const colorSchemes = {
+  default: {
+    border: 'border-input',
+    background: 'bg-background',
+    hover: 'hover:border-primary/50',
+    focus: 'focus-visible:shadow-md',
+  },
+  secondary: {
+    border: 'border-secondary/20',
+    background: 'bg-background',
+    hover: 'hover:border-secondary/40',
+    focus: 'focus-visible:ring-secondary focus-visible:shadow-md',
+  },
+  destructive: {
+    border: 'border-destructive',
+    background: 'bg-background',
+    hover: 'hover:border-destructive/70',
+    focus: 'focus-visible:ring-destructive focus-visible:shadow-md',
+  },
+  accent: {
+    border: 'border-accent/20',
+    background: 'bg-background',
+    hover: 'hover:border-accent/40',
+    focus: 'focus-visible:ring-accent focus-visible:shadow-md',
+  },
+  muted: {
+    border: 'border-muted',
+    background: 'bg-muted/10',
+    hover: 'hover:border-muted-foreground/30',
+    focus:
+      'focus-visible:bg-background focus-visible:border-input focus-visible:shadow-md',
+  },
+  minimal: {
+    border: 'border-transparent',
+    background: 'bg-transparent',
+    hover: 'hover:bg-muted/5',
+    focus:
+      'focus-visible:bg-background focus-visible:border-input focus-visible:shadow-md',
+  },
+  custom: {
+    border: '',
+    background: '',
+    hover: '',
+    focus: '',
+  },
+};
+
 const textAreaVariants = {
-  base: 'flex min-h-[80px] w-full rounded-md border px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-all duration-200',
+  base: 'flex min-h-[80px] w-full rounded-md px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-all duration-200',
   variants: {
-    variant: {
-      default:
-        'border-input bg-background hover:border-primary/50 focus-visible:shadow-md',
-      destructive:
-        'border-destructive bg-background hover:border-destructive/70 focus-visible:ring-destructive focus-visible:shadow-md',
-      ghost:
-        'border-transparent bg-accent hover:bg-accent/80 focus-visible:bg-background focus-visible:border-input focus-visible:shadow-md',
-    },
     size: {
       default: 'min-h-[80px] px-3 py-2 text-sm',
       sm: 'min-h-[60px] px-3 py-2 text-xs',
@@ -111,7 +160,7 @@ const isValidTailwindClass = (value: string): boolean => {
 const TextAreaComponent = <T extends Record<string, any> = any>(
   {
     className,
-    $variant,
+    $colorScheme = 'default',
     $size,
     $custom,
     $store,
@@ -207,12 +256,16 @@ const TextAreaComponent = <T extends Record<string, any> = any>(
     dynamicStyles['fieldSizing'] = 'content';
   }
 
-  // Determinar variante visual
-  const getVariant = () => {
+  // Determinar esquema de color
+  const getColorScheme = () => {
     if (secureField.shouldShowSecurityVariant) return 'destructive';
     if (secureField.isOverLimit) return 'destructive';
-    return $variant || 'default';
+    return $colorScheme;
   };
+
+  // Get color scheme classes
+  const currentColorScheme = getColorScheme();
+  const colorSchemeClasses = colorSchemes[currentColorScheme];
 
   // Añadir advertencias de seguridad (similar a Input) y limpiar valor si se requiere
   // Advertencias gestionadas por secureField
@@ -223,7 +276,11 @@ const TextAreaComponent = <T extends Record<string, any> = any>(
     <textarea
       className={cn(
         textAreaVariants.base,
-        textAreaVariants.variants.variant[getVariant()],
+        // Apply color scheme classes
+        colorSchemeClasses.border,
+        colorSchemeClasses.background,
+        colorSchemeClasses.hover,
+        colorSchemeClasses.focus,
         textAreaVariants.variants.size[$size || 'default'],
         textAreaVariants.variants.resize[$isResize ? 'true' : 'false'],
         textAreaVariants.variants.autoSizing[$isAutoSizing ? 'true' : 'false'],

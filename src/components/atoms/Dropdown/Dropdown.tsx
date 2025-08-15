@@ -11,7 +11,14 @@ interface DropdownOption {
 }
 
 interface DropdownProps<T extends Record<string, any> = any> extends BaseProps {
-  $variant?: 'default' | 'destructive' | 'ghost';
+  $colorScheme?:
+    | 'default'
+    | 'secondary'
+    | 'destructive'
+    | 'accent'
+    | 'muted'
+    | 'minimal'
+    | 'custom';
   $size?: 'default' | 'sm' | 'lg';
   $custom?: string;
 
@@ -33,16 +40,55 @@ interface DropdownProps<T extends Record<string, any> = any> extends BaseProps {
   onBlur?: (e: React.FocusEvent<HTMLSelectElement>) => void;
 }
 
+// Color schemes using theme.css variables
+const colorSchemes = {
+  default: {
+    border: 'border-input',
+    background: 'bg-background',
+    hover: 'hover:border-primary/50',
+    focus: 'focus:shadow-md',
+  },
+  secondary: {
+    border: 'border-secondary/20',
+    background: 'bg-background',
+    hover: 'hover:border-secondary/40',
+    focus: 'focus:ring-secondary focus:shadow-md',
+  },
+  destructive: {
+    border: 'border-destructive',
+    background: 'bg-background',
+    hover: 'hover:border-destructive/70',
+    focus: 'focus:ring-destructive focus:shadow-md',
+  },
+  accent: {
+    border: 'border-accent/20',
+    background: 'bg-background',
+    hover: 'hover:border-accent/40',
+    focus: 'focus:ring-accent focus:shadow-md',
+  },
+  muted: {
+    border: 'border-transparent',
+    background: 'bg-muted/20',
+    hover: 'hover:bg-muted/30',
+    focus: 'focus:bg-background focus:border-input focus:shadow-md',
+  },
+  minimal: {
+    border: 'border-transparent',
+    background: 'bg-transparent',
+    hover: 'hover:bg-muted/10',
+    focus: 'focus:bg-background focus:border-input focus:shadow-md',
+  },
+  custom: {
+    border: '',
+    background: '',
+    hover: '',
+    focus: '',
+  },
+};
+
 const dropdownVariants = {
-  base: 'flex h-10 w-full items-center justify-between rounded-md border px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-all duration-200 appearance-none bg-background cursor-pointer',
+  base: 'flex h-10 w-full items-center justify-between rounded-md px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-all duration-200 appearance-none cursor-pointer',
   variants: {
-    variant: {
-      default: 'border-input hover:border-primary/50 focus:shadow-md',
-      destructive:
-        'border-destructive hover:border-destructive/70 focus:ring-destructive focus:shadow-md',
-      ghost:
-        'border-transparent bg-accent hover:bg-accent/80 focus:bg-background focus:border-input focus:shadow-md',
-    },
     size: {
       default: 'h-10 px-3 py-2 text-sm',
       sm: 'h-9 px-3 py-1 text-xs',
@@ -67,7 +113,7 @@ const getZustandStore = (storeName: string) => {
 const DropdownComponent = <T extends Record<string, any> = any>(
   {
     className,
-    $variant,
+    $colorScheme = 'default',
     $size,
     $custom,
     $store,
@@ -121,12 +167,19 @@ const DropdownComponent = <T extends Record<string, any> = any>(
     }
   };
 
+  // Get color scheme classes
+  const colorSchemeClasses = colorSchemes[$colorScheme];
+
   return (
     <div className="relative">
       <select
         className={cn(
           dropdownVariants.base,
-          dropdownVariants.variants.variant[$variant || 'default'],
+          // Apply color scheme classes
+          colorSchemeClasses.border,
+          colorSchemeClasses.background,
+          colorSchemeClasses.hover,
+          colorSchemeClasses.focus,
           dropdownVariants.variants.size[$size || 'default'],
           className,
           $custom

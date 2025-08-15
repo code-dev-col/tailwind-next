@@ -4,23 +4,55 @@ import { cn } from '../../../utils/cn';
 import type { BaseProps } from '../../../types';
 
 interface IconProps extends BaseProps {
-  $variant?: 'default' | 'primary' | 'secondary' | 'destructive' | 'ghost';
+  $colorScheme?:
+    | 'default'
+    | 'secondary'
+    | 'destructive'
+    | 'accent'
+    | 'muted'
+    | 'minimal'
+    | 'custom';
   $size?: 'xs' | 'sm' | 'default' | 'lg' | 'xl';
   $custom?: string;
   icon: IconType;
   onClick?: () => void;
 }
 
+// Color schemes using theme.css variables
+const colorSchemes = {
+  default: {
+    text: 'text-foreground',
+    hover: 'hover:text-foreground/80',
+  },
+  secondary: {
+    text: 'text-secondary',
+    hover: 'hover:text-secondary/80',
+  },
+  destructive: {
+    text: 'text-destructive',
+    hover: 'hover:text-destructive/80',
+  },
+  accent: {
+    text: 'text-accent-foreground',
+    hover: 'hover:text-accent-foreground/80',
+  },
+  muted: {
+    text: 'text-muted-foreground',
+    hover: 'hover:text-foreground',
+  },
+  minimal: {
+    text: 'text-muted-foreground/70',
+    hover: 'hover:text-muted-foreground',
+  },
+  custom: {
+    text: '',
+    hover: '',
+  },
+};
+
 const iconVariants = {
   base: 'inline-flex items-center justify-center transition-colors duration-200 shrink-0',
   variants: {
-    variant: {
-      default: 'text-foreground hover:text-foreground/80',
-      primary: 'text-primary hover:text-primary/80',
-      secondary: 'text-secondary-foreground hover:text-secondary-foreground/80',
-      destructive: 'text-destructive hover:text-destructive/80',
-      ghost: 'text-muted-foreground hover:text-foreground',
-    },
     size: {
       xs: 'w-3 h-3',
       sm: 'w-4 h-4',
@@ -30,7 +62,7 @@ const iconVariants = {
     },
   },
   defaultVariants: {
-    variant: 'default',
+    colorScheme: 'default',
     size: 'default',
   },
 };
@@ -39,7 +71,7 @@ const Icon = React.forwardRef<HTMLDivElement, IconProps>(
   (
     {
       className,
-      $variant,
+      $colorScheme = 'default',
       $size,
       $custom,
       icon: IconComponent,
@@ -51,11 +83,16 @@ const Icon = React.forwardRef<HTMLDivElement, IconProps>(
     const isClickable = Boolean(onClick);
     const currentSize = $size || 'default';
 
+    // Get color scheme classes
+    const colorSchemeClasses = colorSchemes[$colorScheme];
+
     return (
       <div
         className={cn(
           iconVariants.base,
-          iconVariants.variants.variant[$variant || 'default'],
+          // Apply color scheme classes
+          colorSchemeClasses.text,
+          colorSchemeClasses.hover,
           isClickable && 'cursor-pointer hover:scale-110 active:scale-95',
           className,
           $custom

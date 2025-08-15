@@ -27,11 +27,11 @@ export const Variants: Story = {
       </div>
       <div>
         <label className="text-sm font-medium mb-2 block">Destructive</label>
-        <TextArea $variant="destructive" placeholder="Destructive" />
+        <TextArea $colorScheme="destructive" placeholder="Destructive" />
       </div>
       <div>
         <label className="text-sm font-medium mb-2 block">Ghost</label>
-        <TextArea $variant="ghost" placeholder="Ghost" />
+        <TextArea $colorScheme="muted" placeholder="Ghost" />
       </div>
     </div>
   ),

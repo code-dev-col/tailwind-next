@@ -80,7 +80,7 @@ export const Default: Story = {
             <Text as="h3" $weight="semibold" className="mb-2">
               Elemento {i + 1}
             </Text>
-            <Text $size="sm" $variant="muted" className="mb-4">
+            <Text $size="sm" $colorScheme="muted" className="mb-4">
               Contenido de ejemplo para mostrar cómo se adapta el grid
               automáticamente.
             </Text>
@@ -192,7 +192,7 @@ export const TeamGrid: Story = {
       <Text as="h2" $size="2xl" $weight="bold" className="mb-2 text-center">
         Nuestro Equipo
       </Text>
-      <Text $variant="muted" className="mb-8 text-center">
+      <Text $colorScheme="muted" className="mb-8 text-center">
         Conoce a las personas que hacen posible nuestro trabajo
       </Text>
 
@@ -259,7 +259,7 @@ export const TeamGrid: Story = {
               {member.name}
             </Text>
 
-            <Text $variant="muted" className="mb-4">
+            <Text $colorScheme="muted" className="mb-4">
               {member.role}
             </Text>
 
@@ -304,7 +304,7 @@ export const ResponsiveBehavior: Story = {
             📏 <Text as="strong">Máximo:</Text> 0.9fr para mantener proporciones
           </li>
         </Container>
-        <Text $size="xs" $variant="muted" className="mt-2">
+        <Text $size="xs" $colorScheme="muted" className="mt-2">
           Redimensiona la ventana para ver el comportamiento adaptativo
         </Text>
       </Container>
@@ -322,7 +322,7 @@ export const ResponsiveBehavior: Story = {
             <Text $weight="bold" $color="text-blue-600">
               Item {i + 1}
             </Text>
-            <Text $size="xs" $variant="muted">
+            <Text $size="xs" $colorScheme="muted">
               {i < 4
                 ? 'Contenido corto'
                 : i < 8
@@ -527,7 +527,7 @@ export const ShadowToggle: Story = {
         Control de Sombra
       </Text>
 
-      <Text $variant="muted" className="text-center mb-8">
+      <Text $colorScheme="muted" className="text-center mb-8">
         Comparación entre Grid con y sin sombra
       </Text>
 
@@ -553,7 +553,7 @@ export const ShadowToggle: Story = {
                 <Text $weight="bold" $color="text-blue-700">
                   Item {i + 1}
                 </Text>
-                <Text $size="sm" $variant="muted">
+                <Text $size="sm" $colorScheme="muted">
                   Grid sin sombra
                 </Text>
               </Container>
@@ -584,7 +584,7 @@ export const ShadowToggle: Story = {
                 <Text $weight="bold" $color="text-green-700">
                   Item {i + 1}
                 </Text>
-                <Text $size="sm" $variant="muted">
+                <Text $size="sm" $colorScheme="muted">
                   Grid con sombra
                 </Text>
               </Container>

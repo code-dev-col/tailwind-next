@@ -1,6 +1,6 @@
 import React from 'react';
-import { cn } from '../../../utils/cn';
-import type { BaseProps } from '../../../types';
+import { cn } from '../../../../utils/cn';
+import type { BaseProps } from '../../../../types';
 
 interface ListItemProps extends BaseProps {
   /**

@@ -3,7 +3,7 @@ import { Image } from './Image';
 import { useImageExamples } from '@/stores/imageExamples.store';
 
 const meta: Meta<typeof Image> = {
-  title: 'Atoms/Image',
+  title: 'Atoms/Media/Image',
   component: Image,
   parameters: {
     layout: 'centered',

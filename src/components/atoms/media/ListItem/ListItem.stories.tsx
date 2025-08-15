@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { ListItem } from './ListItem';
 
 const meta: Meta<typeof ListItem> = {
-  title: 'Atoms/ListItem',
+  title: 'Atoms/Media/ListItem',
   component: ListItem,
   parameters: {
     layout: 'centered',
@@ -68,4 +68,5 @@ export const WithGradients: Story = {
     </div>
   ),
 };
+
 

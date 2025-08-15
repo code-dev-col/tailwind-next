@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { cn } from '../../../utils/cn';
-import type { BaseProps } from '../../../types';
+import { cn } from '../../../../utils/cn';
+import type { BaseProps } from '../../../../types';
 
 // Tipos para Next.js Image props
 interface NextImageProps {

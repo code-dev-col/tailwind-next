@@ -50,13 +50,16 @@ export {
   Skeleton,
   type SkeletonProps,
 } from './components/atoms/feedback/Skeleton';
-export { ListItem, type ListItemProps } from './components/atoms/ListItem';
+export {
+  ListItem,
+  type ListItemProps,
+} from './components/atoms/media/ListItem';
 export { Link, type LinkProps } from './components/atoms/navigation/Link';
 export {
   Image,
   type ImageProps,
   type NextImageProps,
-} from './components/atoms/Image';
+} from './components/atoms/media/Image';
 export {
   Spinner,
   type SpinnerProps,

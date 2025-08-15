@@ -13,10 +13,9 @@ interface CheckBoxProps<T extends Record<string, any> = any> extends BaseProps {
     | 'accent'
     | 'muted'
     | 'minimal'
+    | 'ghost'
     | 'custom';
 
-  // Legacy variant support (mapped to colorScheme automatically)
-  $variant?: 'default' | 'destructive' | 'ghost';
   $size?: 'default' | 'sm' | 'lg';
   $custom?: string;
   // Nuevo patrón storeKey (preferido)
@@ -73,6 +72,11 @@ const getColorSchemeValues = (scheme: string) => {
       primary: 'hsl(222 84% 5%)',
       border: 'hsl(222 84% 5% / 0.3)',
       focus: 'hsl(222 84% 5% / 0.1)',
+    },
+    ghost: {
+      primary: 'hsl(245 65% 65%)',
+      border: 'hsl(245 65% 65% / 0.2)',
+      focus: 'hsl(245 65% 65% / 0.1)',
     },
     custom: {
       primary: 'currentColor',
@@ -214,6 +218,11 @@ const colorSchemes = {
     hoverBorder: 'hover:border-foreground/50',
     focusRing: 'focus-visible:ring-foreground/10',
   },
+  ghost: {
+    border: 'border-primary/30',
+    hoverBorder: 'hover:border-primary/50',
+    focusRing: 'focus-visible:ring-primary/10',
+  },
   custom: {
     border: '', // Vacío para personalización externa
     hoverBorder: '',
@@ -256,7 +265,6 @@ const getZustandStore = (storeName: string) => {
 const CheckBox = <T extends Record<string, any> = any>({
   className,
   $colorScheme = 'default',
-  $variant,
   $size = 'default',
   $custom,
   $store,
@@ -325,21 +333,8 @@ const CheckBox = <T extends Record<string, any> = any>({
     return false;
   }, [checked, storeValue, value, legacyValue]);
 
-  // Map legacy $variant to $colorScheme for backwards compatibility
-  const finalColorScheme = React.useMemo(() => {
-    if ($colorScheme && $colorScheme !== 'default') {
-      return $colorScheme;
-    }
-
-    // Legacy mapping
-    const legacyMap = {
-      default: 'default',
-      destructive: 'destructive',
-      ghost: 'minimal',
-    } as const;
-
-    return legacyMap[$variant || 'default'] || 'default';
-  }, [$colorScheme, $variant]);
+  // Usar el esquema de color especificado directamente
+  const finalColorScheme = $colorScheme;
 
   // Obtener esquema de color activo
   const currentColorScheme =

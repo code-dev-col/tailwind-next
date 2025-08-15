@@ -9,18 +9,6 @@ interface ChipProps extends BaseProps {
   label?: string;
   children?: React.ReactNode;
 
-  // Variantes de estilo
-  $variant?:
-    | 'default'
-    | 'primary'
-    | 'secondary'
-    | 'destructive'
-    | 'accent'
-    | 'success'
-    | 'warning'
-    | 'outline'
-    | 'ghost';
-
   // Sistema de colores con theme.css (nuevo)
   $colorScheme?:
     | 'default'
@@ -113,26 +101,6 @@ const chipVariants = {
   base: 'inline-flex items-center justify-center gap-1.5 whitespace-nowrap font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 select-none shadow-sm',
 
   variants: {
-    // Variantes legacy (para backward compatibility)
-    variant: {
-      default:
-        'bg-muted text-muted-foreground hover:bg-muted/80 border border-border',
-      primary:
-        'bg-primary/10 text-primary hover:bg-primary/15 border border-primary/20',
-      secondary:
-        'bg-secondary/10 text-secondary hover:bg-secondary/15 border border-secondary/20',
-      destructive:
-        'bg-destructive/10 text-destructive hover:bg-destructive/15 border border-destructive/20',
-      accent:
-        'bg-accent/10 text-accent hover:bg-accent/15 border border-accent/20',
-      success:
-        'bg-green-100 text-green-900 hover:bg-green-200 border border-green-200',
-      warning:
-        'bg-yellow-100 text-yellow-900 hover:bg-yellow-200 border border-yellow-200',
-      outline:
-        'border-2 border-border bg-transparent hover:bg-muted/50 text-foreground',
-      ghost: 'bg-transparent hover:bg-muted/50 text-foreground',
-    },
     size: {
       sm: 'text-xs px-2 py-1 min-h-[24px]',
       default: 'text-sm px-3 py-1.5 min-h-[32px]',
@@ -153,7 +121,6 @@ const chipVariants = {
   },
 
   defaultVariants: {
-    variant: 'default' as const,
     colorScheme: 'default' as const,
     size: 'default' as const,
     shape: 'rounded' as const,
@@ -166,7 +133,6 @@ const Chip = React.forwardRef<HTMLDivElement, ChipProps>(
       className,
       label,
       children,
-      $variant = 'default',
       $colorScheme = 'default',
       $size = 'default',
       $shape = 'rounded',
@@ -192,27 +158,8 @@ const Chip = React.forwardRef<HTMLDivElement, ChipProps>(
     },
     ref
   ) => {
-    // Determinar esquema de color final (con backward compatibility)
-    const finalColorScheme = React.useMemo(() => {
-      // Prioridad: $colorScheme > legacy $variant > default
-      if ($colorScheme !== 'default') return $colorScheme;
-
-      // Mapeo de legacy variants a colorSchemes
-      const legacyMap: Record<string, keyof typeof colorSchemes> = {
-        primary: 'default',
-        secondary: 'secondary',
-        destructive: 'destructive',
-        accent: 'accent',
-        default: 'muted',
-        outline: 'minimal',
-        ghost: 'minimal',
-      };
-
-      return legacyMap[$variant] || 'default';
-    }, [$colorScheme, $variant]);
-
     // Obtener esquema de color activo
-    const currentColorScheme = colorSchemes[finalColorScheme];
+    const currentColorScheme = colorSchemes[$colorScheme];
 
     // Manejo de store
     const storeValue =
@@ -373,7 +320,7 @@ interface ChipGroupProps extends BaseProps {
   storeKey?: string;
 
   // Props para chips individuales
-  $variant?: ChipProps['$variant'];
+  $colorScheme?: ChipProps['$colorScheme'];
   $size?: ChipProps['$size'];
   $shape?: ChipProps['$shape'];
   $removable?: boolean;
@@ -402,7 +349,7 @@ const ChipGroup = React.forwardRef<HTMLDivElement, ChipGroupProps>(
       chips = [],
       $store,
       storeKey,
-      $variant = 'default',
+      $colorScheme = 'default',
       $size = 'default',
       $shape = 'rounded',
       $removable = false,
@@ -459,7 +406,7 @@ const ChipGroup = React.forwardRef<HTMLDivElement, ChipGroupProps>(
             key={`${chip}-${index}`}
             label={chip}
             chipValue={chip}
-            $variant={$variant}
+            $colorScheme={$colorScheme}
             $size={$size}
             $shape={$shape}
             $removable={$removable}
@@ -479,7 +426,8 @@ const ChipGroup = React.forwardRef<HTMLDivElement, ChipGroupProps>(
             onClick={() => setShowAll(!showAll)}
             className={cn(
               chipVariants.base,
-              chipVariants.variants.variant.ghost,
+              colorSchemes.minimal.base,
+              colorSchemes.minimal.hover,
               chipVariants.variants.size[$size],
               chipVariants.variants.shape[$shape],
               chipVariants.states.clickable,

@@ -46,63 +46,6 @@ const meta: Meta<typeof Chip> = {
       ],
       description: 'Esquema de color usando theme.css',
     },
-    $variant: {
-      control: 'select',
-      options: [
-        'default',
-        'primary',
-        'secondary',
-        'destructive',
-        'accent',
-        'success',
-        'warning',
-        'outline',
-        'ghost',
-      ],
-      description: 'Variante visual del chip (legacy support)',
-    },
-    $size: {
-      control: 'select',
-      options: ['sm', 'default', 'lg'],
-      description: 'Tamaño del chip',
-    },
-    $shape: {
-      control: 'select',
-      options: ['rounded', 'pill', 'square'],
-      description: 'Forma del chip',
-    },
-    $clickable: {
-      control: 'boolean',
-      description: 'Si el chip es clickeable',
-    },
-    $removable: {
-      control: 'boolean',
-      description: 'Si el chip se puede eliminar',
-    },
-    $selectable: {
-      control: 'boolean',
-      description: 'Si el chip se puede seleccionar',
-    },
-    $selected: {
-      control: 'boolean',
-      description: 'Si el chip está seleccionado',
-    },
-    $disabled: {
-      control: 'boolean',
-      description: 'Si el chip está deshabilitado',
-    },
-    $animate: {
-      control: 'boolean',
-      description: 'Animaciones de hover',
-    },
-    $count: {
-      control: { type: 'number', min: 0, max: 999, step: 1 },
-      description: 'Contador del chip',
-    },
-    $badge: {
-      control: 'text',
-      description: 'Badge adicional',
-    },
   },
 };
 
@@ -113,28 +56,12 @@ export const Default: Story = {
   render: () => <Chip label="Chip básico" />,
 };
 
-export const Variants: Story = {
-  render: () => (
-    <div className="flex flex-wrap gap-3">
-      <Chip label="Default" $variant="default" />
-      <Chip label="Primary" $variant="primary" />
-      <Chip label="Secondary" $variant="secondary" />
-      <Chip label="Success" $variant="success" />
-      <Chip label="Warning" $variant="warning" />
-      <Chip label="Destructive" $variant="destructive" />
-      <Chip label="Accent" $variant="accent" />
-      <Chip label="Outline" $variant="outline" />
-      <Chip label="Ghost" $variant="ghost" />
-    </div>
-  ),
-};
-
 export const Sizes: Story = {
   render: () => (
     <div className="flex flex-wrap items-center gap-4">
-      <Chip label="Small" $size="sm" $variant="primary" />
-      <Chip label="Default" $size="default" $variant="primary" />
-      <Chip label="Large" $size="lg" $variant="primary" />
+      <Chip label="Small" $size="sm" $colorScheme="default" />
+      <Chip label="Default" $size="default" $colorScheme="default" />
+      <Chip label="Large" $size="lg" $colorScheme="default" />
     </div>
   ),
 };
@@ -142,9 +69,9 @@ export const Sizes: Story = {
 export const Shapes: Story = {
   render: () => (
     <div className="flex flex-wrap gap-4">
-      <Chip label="Rounded" $shape="rounded" $variant="secondary" />
-      <Chip label="Pill" $shape="pill" $variant="secondary" />
-      <Chip label="Square" $shape="square" $variant="secondary" />
+      <Chip label="Rounded" $shape="rounded" $colorScheme="secondary" />
+      <Chip label="Pill" $shape="pill" $colorScheme="secondary" />
+      <Chip label="Square" $shape="square" $colorScheme="secondary" />
     </div>
   ),
 };
@@ -152,12 +79,12 @@ export const Shapes: Story = {
 export const WithIcons: Story = {
   render: () => (
     <div className="flex flex-wrap gap-3">
-      <Chip label="Code" $icon={<FiCode />} $variant="primary" />
-      <Chip label="Star" $icon={<FiStar />} $variant="warning" />
-      <Chip label="User" $icon={<FiUser />} $variant="secondary" />
-      <Chip label="Tag" $icon={<FiTag />} $variant="accent" />
-      <Chip label="Heart" $icon={<FiHeart />} $variant="destructive" />
-      <Chip label="Bookmark" $icon={<FiBookmark />} $variant="success" />
+      <Chip label="Code" $icon={<FiCode />} $colorScheme="default" />
+      <Chip label="Star" $icon={<FiStar />} $colorScheme="default" />
+      <Chip label="User" $icon={<FiUser />} $colorScheme="secondary" />
+      <Chip label="Tag" $icon={<FiTag />} $colorScheme="accent" />
+      <Chip label="Heart" $icon={<FiHeart />} $colorScheme="destructive" />
+      <Chip label="Bookmark" $icon={<FiBookmark />} $colorScheme="default" />
     </div>
   ),
 };
@@ -169,25 +96,25 @@ export const Interactive: Story = {
         <Chip
           label="Clickable"
           $clickable
-          $variant="primary"
+          $colorScheme="default"
           onClick={() => alert('¡Chip clickeado!')}
         />
         <Chip
           label="Removable"
           $removable
-          $variant="secondary"
+          $colorScheme="secondary"
           onRemove={() => alert('¡Chip removido!')}
         />
         <Chip
           label="Selectable"
           $selectable
-          $variant="accent"
+          $colorScheme="accent"
           onSelect={(selected) =>
             alert(`Chip ${selected ? 'seleccionado' : 'deseleccionado'}`)
           }
         />
-        <Chip label="Selected" $selectable $selected $variant="success" />
-        <Chip label="Disabled" $disabled $variant="default" />
+        <Chip label="Selected" $selectable $selected $colorScheme="default" />
+        <Chip label="Disabled" $disabled $colorScheme="default" />
       </div>
     </div>
   ),
@@ -196,12 +123,12 @@ export const Interactive: Story = {
 export const WithCounters: Story = {
   render: () => (
     <div className="flex flex-wrap gap-3">
-      <Chip label="Messages" $count={5} $variant="primary" />
-      <Chip label="Notifications" $count={23} $variant="warning" />
-      <Chip label="Updates" $count={150} $variant="success" />
-      <Chip label="Tasks" $count={999} $variant="accent" />
-      <Chip label="Errors" $badge="NEW" $variant="destructive" />
-      <Chip label="Features" $badge="8" $variant="secondary" />
+      <Chip label="Messages" $count={5} $colorScheme="default" />
+      <Chip label="Notifications" $count={23} $colorScheme="secondary" />
+      <Chip label="Updates" $count={150} $colorScheme="default" />
+      <Chip label="Tasks" $count={999} $colorScheme="accent" />
+      <Chip label="Errors" $badge="NEW" $colorScheme="destructive" />
+      <Chip label="Features" $badge="8" $colorScheme="secondary" />
     </div>
   ),
 };
@@ -238,7 +165,7 @@ export const SelectableGroup: Story = {
               label={tech}
               $selectable
               $selected={technologies.includes(tech)}
-              $variant={technologies.includes(tech) ? 'primary' : 'outline'}
+              $colorScheme={technologies.includes(tech) ? 'default' : 'muted'}
               $animate
               onSelect={() => toggleChip(tech, 'technologies')}
             />
@@ -255,7 +182,7 @@ export const SelectableGroup: Story = {
                 <Chip
                   key={tech}
                   label={tech}
-                  $variant="success"
+                  $colorScheme="default"
                   $removable
                   $icon={<FiCheck />}
                   onRemove={() => toggleChip(tech, 'technologies')}
@@ -284,7 +211,7 @@ export const ChipGroupShowcase: Story = {
           <ChipGroup
             $store={useChipExamples}
             storeKey="skills"
-            $variant="primary"
+            $colorScheme="default"
             $removable
             $gap="default"
             $wrap
@@ -306,7 +233,7 @@ export const ChipGroupShowcase: Story = {
               'Blockchain',
               'IoT',
             ]}
-            $variant="secondary"
+            $colorScheme="secondary"
             $selectable
             $gap="sm"
             $wrap
@@ -329,7 +256,7 @@ export const ChipGroupShowcase: Story = {
               'Nuevo',
               'Actualizado',
             ]}
-            $variant="accent"
+            $colorScheme="accent"
             $clickable
             $gap="default"
             $maxItems={4}
@@ -376,7 +303,7 @@ export const RealWorldExamples: Story = {
               <Chip
                 key={skill}
                 label={skill}
-                $variant="primary"
+                $colorScheme="default"
                 $removable
                 $icon={<FiCode />}
                 $animate
@@ -412,7 +339,7 @@ export const RealWorldExamples: Story = {
             ) : (
               <Chip
                 label="Agregar habilidad"
-                $variant="outline"
+                $colorScheme="muted"
                 $clickable
                 $icon={<FiPlus />}
                 onClick={() => setIsAddingTag(true)}
@@ -434,20 +361,20 @@ export const RealWorldExamples: Story = {
               <div className="flex gap-2">
                 <Chip
                   label="En desarrollo"
-                  $variant="warning"
+                  $colorScheme="default"
                   $icon={<FiSettings />}
                 />
-                <Chip label="Beta" $variant="accent" $badge="NEW" />
+                <Chip label="Beta" $colorScheme="accent" $badge="NEW" />
               </div>
             </div>
 
             <div>
               <p className="text-sm text-gray-600 mb-2">Tecnologías:</p>
               <div className="flex flex-wrap gap-1">
-                <Chip label="React" $variant="primary" $size="sm" />
-                <Chip label="TypeScript" $variant="primary" $size="sm" />
-                <Chip label="Tailwind" $variant="primary" $size="sm" />
-                <Chip label="Storybook" $variant="secondary" $size="sm" />
+                <Chip label="React" $colorScheme="default" $size="sm" />
+                <Chip label="TypeScript" $colorScheme="default" $size="sm" />
+                <Chip label="Tailwind" $colorScheme="default" $size="sm" />
+                <Chip label="Storybook" $colorScheme="secondary" $size="sm" />
               </div>
             </div>
           </div>
@@ -466,25 +393,25 @@ export const RealWorldExamples: Story = {
               <div className="flex flex-wrap gap-2">
                 <Chip
                   label="Electrónicos"
-                  $variant="primary"
+                  $colorScheme="default"
                   $count={245}
                   $selectable
                 />
                 <Chip
                   label="Ropa"
-                  $variant="secondary"
+                  $colorScheme="secondary"
                   $count={189}
                   $selectable
                 />
                 <Chip
                   label="Hogar"
-                  $variant="accent"
+                  $colorScheme="accent"
                   $count={156}
                   $selectable
                 />
                 <Chip
                   label="Deportes"
-                  $variant="success"
+                  $colorScheme="default"
                   $count={98}
                   $selectable
                 />
@@ -494,9 +421,9 @@ export const RealWorldExamples: Story = {
             <div>
               <p className="text-sm text-gray-600 mb-2">Precio:</p>
               <div className="flex gap-2">
-                <Chip label="$0 - $50" $variant="outline" $selectable />
-                <Chip label="$50 - $100" $variant="outline" $selectable />
-                <Chip label="$100+" $variant="outline" $selectable />
+                <Chip label="$0 - $50" $colorScheme="muted" $selectable />
+                <Chip label="$50 - $100" $colorScheme="muted" $selectable />
+                <Chip label="$100+" $colorScheme="muted" $selectable />
               </div>
             </div>
 
@@ -505,25 +432,25 @@ export const RealWorldExamples: Story = {
               <div className="flex flex-wrap gap-2">
                 <Chip
                   label="Envío gratis"
-                  $variant="success"
+                  $colorScheme="default"
                   $icon={<FiZap />}
                   $selectable
                 />
                 <Chip
                   label="Descuento"
-                  $variant="destructive"
+                  $colorScheme="destructive"
                   $badge="20%"
                   $selectable
                 />
                 <Chip
                   label="Nuevo"
-                  $variant="warning"
+                  $colorScheme="default"
                   $badge="NEW"
                   $selectable
                 />
                 <Chip
                   label="Popular"
-                  $variant="accent"
+                  $colorScheme="accent"
                   $icon={<FiTrendingUp />}
                   $selectable
                 />
@@ -542,41 +469,51 @@ export const RealWorldExamples: Story = {
           <div className="flex flex-wrap gap-2">
             <Chip
               label="Tecnología"
-              $variant="primary"
+              $colorScheme="default"
               $icon={<FiCode />}
               $count={1200}
               $selectable
             />
             <Chip
               label="Diseño"
-              $variant="accent"
+              $colorScheme="accent"
               $icon={<FiLayers />}
               $count={856}
               $selectable
             />
             <Chip
               label="Desarrollo"
-              $variant="secondary"
+              $colorScheme="secondary"
               $count={2340}
               $selectable
             />
             <Chip
               label="JavaScript"
-              $variant="warning"
+              $colorScheme="default"
               $count={1890}
               $selectable
             />
-            <Chip label="React" $variant="primary" $count={1456} $selectable />
-            <Chip label="UI/UX" $variant="accent" $count={734} $selectable />
+            <Chip
+              label="React"
+              $colorScheme="default"
+              $count={1456}
+              $selectable
+            />
+            <Chip
+              label="UI/UX"
+              $colorScheme="accent"
+              $count={734}
+              $selectable
+            />
             <Chip
               label="Frontend"
-              $variant="success"
+              $colorScheme="default"
               $count={2100}
               $selectable
             />
             <Chip
               label="Backend"
-              $variant="destructive"
+              $colorScheme="destructive"
               $count={987}
               $selectable
             />
@@ -611,7 +548,7 @@ export const WithStoreIntegration: Story = {
             <ChipGroup
               $store={useChipExamples}
               storeKey="defaultExample"
-              $variant="primary"
+              $colorScheme="default"
               $removable
               $gap="default"
             />
@@ -624,7 +561,7 @@ export const WithStoreIntegration: Story = {
             <ChipGroup
               $store={useChipExamples}
               storeKey="skills"
-              $variant="secondary"
+              $colorScheme="secondary"
               $removable
               $selectable
               $gap="sm"
@@ -638,7 +575,7 @@ export const WithStoreIntegration: Story = {
             <ChipGroup
               $store={useChipExamples}
               storeKey="categories"
-              $variant="accent"
+              $colorScheme="accent"
               $removable
               $gap="default"
             />
@@ -684,19 +621,29 @@ export const AnimatedShowcase: Story = {
       <h4 className="text-lg font-semibold">Chips con Animaciones</h4>
 
       <div className="flex flex-wrap gap-3">
-        <Chip label="Hover Animation" $variant="primary" $animate $clickable />
-        <Chip label="Scale Effect" $variant="secondary" $animate $selectable />
-        <Chip label="Interactive" $variant="accent" $animate $removable />
+        <Chip
+          label="Hover Animation"
+          $colorScheme="default"
+          $animate
+          $clickable
+        />
+        <Chip
+          label="Scale Effect"
+          $colorScheme="secondary"
+          $animate
+          $selectable
+        />
+        <Chip label="Interactive" $colorScheme="accent" $animate $removable />
         <Chip
           label="With Icon"
-          $variant="success"
+          $colorScheme="default"
           $animate
           $icon={<FiStar />}
           $clickable
         />
         <Chip
           label="With Count"
-          $variant="warning"
+          $colorScheme="default"
           $animate
           $count={42}
           $selectable

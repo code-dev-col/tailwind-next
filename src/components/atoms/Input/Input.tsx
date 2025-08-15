@@ -19,10 +19,9 @@ interface InputProps<T extends Record<string, any> = any> extends BaseProps {
     | 'accent'
     | 'muted'
     | 'minimal'
+    | 'ghost'
     | 'custom';
 
-  // Legacy variant support (mapped to colorScheme automatically)
-  $variant?: 'default' | 'destructive' | 'ghost';
   $size?: 'default' | 'sm' | 'lg';
   $custom?: string;
 
@@ -104,6 +103,14 @@ const colorSchemes = {
     text: 'text-foreground',
     placeholder: 'placeholder:text-foreground/40',
   },
+  ghost: {
+    base: 'border-transparent bg-accent/5',
+    hover: 'hover:bg-accent/10 hover:border-accent/20',
+    focus:
+      'focus-visible:ring-accent/10 focus-visible:bg-background focus-visible:border-input',
+    text: 'text-foreground',
+    placeholder: 'placeholder:text-muted-foreground',
+  },
   custom: {
     base: '', // Vacío para personalización externa
     hover: '',
@@ -150,7 +157,6 @@ const InputComponent = <T extends Record<string, any> = any>(
   {
     className,
     $colorScheme = 'default',
-    $variant,
     $size,
     $custom,
     $store,
@@ -230,39 +236,23 @@ const InputComponent = <T extends Record<string, any> = any>(
     secureField.handleChange(e.target.value);
   };
 
-  // Determinar esquema de color final (con backward compatibility)
+  // Determinar esquema de color final (con consideraciones de seguridad)
   const finalColorScheme = React.useMemo(() => {
     // Si hay problemas de seguridad o límites, forzar destructive
     if (secureField.shouldShowSecurityVariant || secureField.isOverLimit) {
       return 'destructive';
     }
 
-    // Prioridad: $colorScheme (si no es default) > legacy $variant > default
-    if ($colorScheme !== 'default') return $colorScheme;
-
-    // Mapeo de legacy variants a colorSchemes
-    const legacyMap: Record<string, keyof typeof colorSchemes> = {
-      default: 'default',
-      destructive: 'destructive',
-      ghost: 'minimal', // ghost se mapea a minimal
-    };
-
-    return legacyMap[$variant || 'default'] || 'default';
+    // Usar el esquema de color especificado
+    return $colorScheme;
   }, [
     $colorScheme,
-    $variant,
     secureField.shouldShowSecurityVariant,
     secureField.isOverLimit,
   ]);
 
   // Obtener esquema de color activo
   const currentColorScheme = colorSchemes[finalColorScheme];
-
-  const getInputVariant = () => {
-    if (secureField.shouldShowSecurityVariant) return 'destructive';
-    if (secureField.isOverLimit) return 'destructive';
-    return $variant || 'default';
-  };
 
   const inputElement = (
     <input

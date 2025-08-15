@@ -29,11 +29,11 @@ export const Variants: Story = {
       </div>
       <div>
         <label className="text-sm font-medium mb-2 block">Destructive</label>
-        <Input $variant="destructive" placeholder="Error input" />
+        <Input $colorScheme="destructive" placeholder="Error input" />
       </div>
       <div>
         <label className="text-sm font-medium mb-2 block">Ghost</label>
-        <Input $variant="ghost" placeholder="Ghost input" />
+        <Input $colorScheme="ghost" placeholder="Ghost input" />
       </div>
     </div>
   ),
@@ -336,7 +336,7 @@ export const CounterVariants: Story = {
             Default con contador
           </label>
           <Input
-            $variant="default"
+            $colorScheme="default"
             $maxCharacters={25}
             placeholder="Variante default"
             $store={useInputExamplesStore}
@@ -349,7 +349,7 @@ export const CounterVariants: Story = {
             Destructive con contador
           </label>
           <Input
-            $variant="destructive"
+            $colorScheme="destructive"
             $maxCharacters={25}
             placeholder="Variante destructive"
             $store={useInputExamplesStore}
@@ -362,7 +362,7 @@ export const CounterVariants: Story = {
             Ghost con contador
           </label>
           <Input
-            $variant="ghost"
+            $colorScheme="ghost"
             $maxCharacters={25}
             placeholder="Variante ghost"
             $store={useInputExamplesStore}
@@ -749,13 +749,13 @@ export const ColorSchemes: Story = {
             Legacy Variants (Backward Compatibility)
           </h5>
           <div className="space-y-2">
-            <Input $variant="default" placeholder="Legacy variant default" />
+            <Input $colorScheme="default" placeholder="Legacy variant default" />
             <Input
-              $variant="destructive"
+              $colorScheme="destructive"
               placeholder="Legacy variant destructive"
             />
             <Input
-              $variant="ghost"
+              $colorScheme="ghost"
               placeholder="Legacy variant ghost (→minimal)"
             />
           </div>

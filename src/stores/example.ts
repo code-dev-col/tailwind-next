@@ -92,4 +92,5 @@ export { useBadgeExamples } from './badgeExamples.store';
 export { useCheckboxExamples } from './checkboxExamples.store';
 export { useAvatarExamples } from './avatarExamples.store';
 export { useLinkExamples } from './linkExamples.store';
+export { useTextExamples } from './textExamples.store';
 

@@ -248,7 +248,7 @@ const TextAreaComponent = <T extends Record<string, any> = any>(
       <div key="char-counter" className="flex justify-end mt-1">
         <Text
           $size="xs"
-          $variant={secureField.isOverLimit ? 'destructive' : 'muted'}
+          $colorScheme={secureField.isOverLimit ? 'destructive' : 'muted'}
           className="tabular-nums">
           {secureField.currentLength}/{secureField.effectiveMaxLength}
         </Text>
@@ -262,7 +262,7 @@ const TextAreaComponent = <T extends Record<string, any> = any>(
           <Text
             key={i}
             $size="xs"
-            $variant="destructive"
+            $colorScheme="destructive"
             className="flex items-center gap-1">
             <span className="text-red-500">⚠️</span>
             {w}
@@ -276,7 +276,7 @@ const TextAreaComponent = <T extends Record<string, any> = any>(
       <Text
         key="security-cleared"
         $size="xs"
-        $variant="destructive"
+        $colorScheme="destructive"
         className="flex items-center gap-1">
         <span className="text-red-500">🧹</span>
         {secureField.wasClearedReason === 'blocked'

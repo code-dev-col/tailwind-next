@@ -1,6 +1,7 @@
 import React from 'react';
 import { cn } from '../../../utils/cn';
 import type { BaseProps } from '../../../types';
+import type { UseBoundStore, StoreApi } from 'zustand';
 
 type TextElement =
   | 'p'
@@ -27,15 +28,24 @@ type TextWeight =
   | 'black';
 type TextTransform = 'none' | 'uppercase' | 'lowercase' | 'capitalize';
 
-interface TextProps extends BaseProps {
-  $variant?:
-    | 'default'
-    | 'muted'
-    | 'primary'
-    | 'secondary'
-    | 'destructive'
-    | 'success'
-    | 'warning';
+type TextColorScheme =
+  | 'default'
+  | 'secondary'
+  | 'destructive'
+  | 'accent'
+  | 'muted'
+  | 'minimal'
+  | 'custom';
+
+interface TextProps<T extends Record<string, any> = any> extends BaseProps {
+  // $colorScheme system
+  $colorScheme?: TextColorScheme;
+
+  // Store integration
+  $store?: UseBoundStore<StoreApi<T>>;
+  storeKey?: keyof T;
+
+  // Size and typography
   $size?:
     | 'xs'
     | 'sm'
@@ -62,21 +72,51 @@ interface TextProps extends BaseProps {
   $custom?: string;
   as?: TextElement;
   style?: React.CSSProperties;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
+
+// Color schemes using theme.css variables
+const colorSchemes = {
+  default: {
+    text: 'text-foreground',
+    textSecondary: 'text-foreground/90',
+    textMuted: 'text-foreground/70',
+  },
+  secondary: {
+    text: 'text-secondary',
+    textSecondary: 'text-secondary/90',
+    textMuted: 'text-secondary/70',
+  },
+  destructive: {
+    text: 'text-destructive',
+    textSecondary: 'text-destructive/90',
+    textMuted: 'text-destructive/70',
+  },
+  accent: {
+    text: 'text-accent-foreground',
+    textSecondary: 'text-accent-foreground/90',
+    textMuted: 'text-accent-foreground/70',
+  },
+  muted: {
+    text: 'text-muted-foreground',
+    textSecondary: 'text-muted-foreground/90',
+    textMuted: 'text-muted-foreground/70',
+  },
+  minimal: {
+    text: 'text-foreground/80',
+    textSecondary: 'text-foreground/60',
+    textMuted: 'text-foreground/40',
+  },
+  custom: {
+    text: '',
+    textSecondary: '',
+    textMuted: '',
+  },
+};
 
 const textVariants = {
   base: 'transition-colors duration-200',
   variants: {
-    variant: {
-      default: 'text-foreground',
-      muted: 'text-muted-foreground',
-      primary: 'text-primary',
-      secondary: 'text-secondary-foreground',
-      destructive: 'text-destructive',
-      success: 'text-green-600',
-      warning: 'text-amber-600',
-    },
     size: {
       xs: 'text-xs',
       sm: 'text-sm',
@@ -136,7 +176,6 @@ const textVariants = {
     },
   },
   defaultVariants: {
-    variant: 'default',
     size: 'base',
     weight: 'normal',
     align: 'left',
@@ -168,7 +207,9 @@ const Text = React.forwardRef<HTMLElement, TextProps>(
   (
     {
       className,
-      $variant,
+      $colorScheme = 'default',
+      $store,
+      storeKey,
       $size,
       $customSize,
       $dynamicSize = false,
@@ -192,6 +233,16 @@ const Text = React.forwardRef<HTMLElement, TextProps>(
   ) => {
     const Component = as;
     const currentSize = $size || 'base';
+
+    // Store integration - get content from store if available
+    const storeValue =
+      $store && storeKey ? $store((state) => state[storeKey]) : undefined;
+
+    // Use store value as children if available, otherwise use children prop
+    const finalChildren = storeValue || children;
+
+    // Get color scheme classes
+    const colorSchemeClasses = colorSchemes[$colorScheme];
 
     // Generar estilos dinámicos
     const dynamicStyles: React.CSSProperties = {
@@ -230,7 +281,8 @@ const Text = React.forwardRef<HTMLElement, TextProps>(
       <Component
         className={cn(
           textVariants.base,
-          textVariants.variants.variant[$variant || 'default'],
+          // Use color scheme classes instead of legacy variant
+          !$color && colorSchemeClasses.text,
           // Solo aplicar tamaño de Tailwind si no hay customSize o dynamicSize
           !$customSize &&
             !$dynamicSize &&
@@ -249,7 +301,7 @@ const Text = React.forwardRef<HTMLElement, TextProps>(
         style={dynamicStyles}
         ref={ref as any}
         {...props}>
-        {children}
+        {finalChildren}
       </Component>
     );
   }

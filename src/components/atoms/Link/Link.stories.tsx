@@ -33,18 +33,6 @@ const meta: Meta<typeof Link> = {
         'custom',
       ],
     },
-    $variant: {
-      control: 'select',
-      options: [
-        'default',
-        'primary',
-        'secondary',
-        'muted',
-        'destructive',
-        'ghost',
-      ],
-      description: 'Legacy support - use $colorScheme instead',
-    },
     $size: {
       control: 'select',
       options: ['sm', 'md', 'lg'],
@@ -133,22 +121,22 @@ export const Variants: Story = {
           Legacy Variants (Backward Compatibility)
         </h4>
         <div className="flex flex-col gap-3">
-          <Link href="#" $variant="default">
+          <Link href="#" $colorScheme="default">
             Enlace default (legacy)
           </Link>
-          <Link href="#" $variant="primary">
+          <Link href="#" $colorScheme="default">
             Enlace primary (legacy)
           </Link>
-          <Link href="#" $variant="secondary">
+          <Link href="#" $colorScheme="secondary">
             Enlace secondary (legacy)
           </Link>
-          <Link href="#" $variant="muted">
+          <Link href="#" $colorScheme="muted">
             Enlace muted (legacy)
           </Link>
-          <Link href="#" $variant="destructive">
+          <Link href="#" $colorScheme="destructive">
             Enlace destructive (legacy)
           </Link>
-          <Link href="#" $variant="ghost">
+          <Link href="#" $colorScheme="muted">
             Enlace ghost (legacy)
           </Link>
         </div>
@@ -275,13 +263,13 @@ export const LinkWithIcons: Story = {
       <Link
         href="https://github.com"
         $startIcon={<FiGithub />}
-        $variant="primary">
+        $colorScheme="default">
         GitHub (externo con icono)
       </Link>
       <Link
         href="mailto:test@example.com"
         $startIcon={<FiMail />}
-        $variant="secondary">
+        $colorScheme="secondary">
         Enviar email
       </Link>
     </div>
@@ -291,10 +279,10 @@ export const LinkWithIcons: Story = {
 export const States: Story = {
   render: () => (
     <div className="flex flex-col gap-4">
-      <Link href="#" $variant="primary">
+      <Link href="#" $colorScheme="default">
         Enlace normal
       </Link>
-      <Link href="#" $variant="primary" $disabled>
+      <Link href="#" $colorScheme="default" $disabled>
         Enlace deshabilitado
       </Link>
       <Link
@@ -324,7 +312,7 @@ export const NextJSIntegration: Story = {
           <Link href="/dashboard">
             Navegación interna (usa Next.js Link automáticamente)
           </Link>
-          <Link href="/profile" $variant="primary">
+          <Link href="/profile" $colorScheme="default">
             Otra página interna
           </Link>
           <Link href="https://external.com">
@@ -354,7 +342,7 @@ export const NextJSIntegration: Story = {
         <p className="text-sm text-gray-600 mb-3">
           Puedes forzar el uso de &lt;a&gt; tag incluso con Next.js disponible:
         </p>
-        <Link href="/internal-page" $useNextLink={false} $variant="muted">
+        <Link href="/internal-page" $useNextLink={false} $colorScheme="muted">
           Enlace interno sin Next.js Link
         </Link>
       </div>
@@ -385,7 +373,7 @@ export const CustomLinkComponent: Story = {
             <Link
               href="/another-page"
               $linkComponent={ReactRouterLink}
-              $variant="primary">
+              $colorScheme="default">
               Otra página con React Router
             </Link>
           </div>
@@ -400,15 +388,15 @@ export const InContext: Story = {
     <div className="max-w-md space-y-4">
       <p className="text-muted-foreground">
         Este es un párrafo de ejemplo con un{' '}
-        <Link href="#" $variant="primary">
+        <Link href="#" $colorScheme="default">
           enlace inline
         </Link>{' '}
         que se integra naturalmente con el texto. También puedes{' '}
-        <Link href="https://example.com" $variant="secondary">
+        <Link href="https://example.com" $colorScheme="secondary">
           visitar sitios externos
         </Link>{' '}
         o usar{' '}
-        <Link href="#" $variant="muted" $underline="always">
+        <Link href="#" $colorScheme="muted" $underline="always">
           enlaces con subrayado permanente
         </Link>
         .
@@ -417,13 +405,13 @@ export const InContext: Story = {
       <div className="border-t pt-4">
         <h4 className="font-medium mb-2">Enlaces de navegación:</h4>
         <div className="flex gap-4">
-          <Link href="#" $variant="ghost">
+          <Link href="#" $colorScheme="muted">
             Inicio
           </Link>
-          <Link href="#" $variant="ghost">
+          <Link href="#" $colorScheme="muted">
             Productos
           </Link>
-          <Link href="#" $variant="ghost">
+          <Link href="#" $colorScheme="muted">
             Contacto
           </Link>
         </div>
@@ -478,7 +466,7 @@ export const Interactive: Story = {
       </Link>
       <Link
         href="#"
-        $variant="primary"
+        $colorScheme="default"
         $startIcon={<FiDownload />}
         onClick={(e) => {
           e.preventDefault();
@@ -489,7 +477,7 @@ export const Interactive: Story = {
       </Link>
       <Link
         href="/dashboard"
-        $variant="ghost"
+        $colorScheme="muted"
         $startIcon={<FiHome />}
         onClick={(e) => {
           e.preventDefault();

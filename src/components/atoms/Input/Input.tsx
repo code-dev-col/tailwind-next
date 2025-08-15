@@ -305,7 +305,7 @@ const InputComponent = <T extends Record<string, any> = any>(
       <div key="char-counter" className="flex justify-end">
         <Text
           $size="xs"
-          $variant={secureField.isOverLimit ? 'destructive' : 'muted'}
+          $colorScheme={secureField.isOverLimit ? 'destructive' : 'muted'}
           className="tabular-nums">
           {secureField.currentLength}/{secureField.effectiveMaxLength}
         </Text>
@@ -321,7 +321,7 @@ const InputComponent = <T extends Record<string, any> = any>(
           <Text
             key={index}
             $size="xs"
-            $variant="destructive"
+            $colorScheme="destructive"
             className="flex items-center gap-1">
             <span className="text-red-500">⚠️</span>
             {warning}
@@ -336,7 +336,7 @@ const InputComponent = <T extends Record<string, any> = any>(
       <Text
         key="security-cleared"
         $size="xs"
-        $variant="destructive"
+        $colorScheme="destructive"
         className="flex items-center gap-1">
         <span className="text-red-500">🧹</span>
         {secureField.wasClearedReason === 'blocked'

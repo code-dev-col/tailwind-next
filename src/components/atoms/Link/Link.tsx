@@ -45,18 +45,6 @@ interface LinkProps<T extends Record<string, any> = any>
     | 'custom';
 
   /**
-   * Variante visual del enlace (legacy support)
-   * @deprecated Use $colorScheme instead
-   */
-  $variant?:
-    | 'default'
-    | 'primary'
-    | 'secondary'
-    | 'muted'
-    | 'destructive'
-    | 'ghost';
-
-  /**
    * Tamaño del enlace
    */
   $size?: 'sm' | 'md' | 'lg';
@@ -133,25 +121,6 @@ const linkVariants = {
     custom: '', // Empty for custom styling
   },
 
-  // Legacy variants for backward compatibility
-  legacyVariant: {
-    default: 'text-foreground hover:text-primary',
-    primary: 'text-primary hover:text-primary/80',
-    secondary: 'text-secondary hover:text-secondary/80',
-    muted: 'text-muted-foreground hover:text-foreground',
-    destructive: 'text-destructive hover:text-destructive/80',
-    ghost: [
-      'text-muted-foreground',
-      'hover:text-foreground',
-      'hover:bg-accent',
-      'px-2',
-      'py-1',
-      'rounded-md',
-      '-mx-2',
-      '-my-1',
-    ].join(' '),
-  },
-
   size: {
     sm: 'text-sm',
     md: 'text-base',
@@ -189,8 +158,7 @@ const Link = React.forwardRef<HTMLAnchorElement, LinkProps<any>>(
       href,
       $store,
       storeKey,
-      $colorScheme,
-      $variant = 'default',
+      $colorScheme = 'default',
       $size = 'md',
       $underline = 'hover',
       $external = false,
@@ -236,35 +204,8 @@ const Link = React.forwardRef<HTMLAnchorElement, LinkProps<any>>(
     // Usar componente personalizado si se proporciona
     const shouldUseCustomLink = $linkComponent && !isExternal && !$disabled;
 
-    // Determine which color scheme to use
-    // Priority: $colorScheme > $variant (legacy) > default
-    let colorSchemeClass = '';
-    if ($colorScheme) {
-      colorSchemeClass = linkVariants.colorScheme[$colorScheme];
-    } else if ($variant) {
-      // Map legacy variant to colorScheme
-      const variantToColorScheme: Record<string, string> = {
-        default: 'default',
-        primary: 'default', // primary maps to default
-        secondary: 'secondary',
-        muted: 'muted',
-        destructive: 'destructive',
-        ghost: '', // ghost has special handling
-      };
-
-      if ($variant === 'ghost') {
-        colorSchemeClass = linkVariants.legacyVariant.ghost;
-      } else {
-        const mappedScheme = variantToColorScheme[$variant];
-        colorSchemeClass = mappedScheme
-          ? linkVariants.colorScheme[
-              mappedScheme as keyof typeof linkVariants.colorScheme
-            ]
-          : linkVariants.colorScheme.default;
-      }
-    } else {
-      colorSchemeClass = linkVariants.colorScheme.default;
-    }
+    // Determine color scheme class
+    const colorSchemeClass = linkVariants.colorScheme[$colorScheme];
 
     // Props base del enlace
     const linkClasses = cn(

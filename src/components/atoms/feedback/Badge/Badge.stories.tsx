@@ -15,7 +15,7 @@ import {
 } from 'react-icons/fi';
 
 const meta: Meta<typeof Badge> = {
-  title: 'Atoms/Badge',
+  title: 'Atoms/Feedback/Badge',
   component: Badge,
   parameters: {
     layout: 'centered',

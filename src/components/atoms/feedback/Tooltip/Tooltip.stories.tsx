@@ -24,23 +24,9 @@ import {
   FiCopy,
   FiExternalLink,
 } from 'react-icons/fi';
-import {
-  AiOutlineQuestionCircle,
-  AiOutlineWarning,
-  AiOutlineCheckCircle,
-  AiOutlineCloseCircle,
-  AiOutlineInfoCircle,
-} from 'react-icons/ai';
-import {
-  BiUser,
-  BiCog,
-  BiLockAlt,
-  BiShield,
-  BiCreditCard,
-} from 'react-icons/bi';
 
 const meta: Meta<typeof Tooltip> = {
-  title: 'Atoms/Tooltip',
+  title: 'Atoms/Feedback/Tooltip',
   component: Tooltip,
   parameters: {
     layout: 'centered',

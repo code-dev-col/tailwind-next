@@ -3,7 +3,7 @@ import { Progress } from './Progress';
 import { useProgressExamples } from '../../../../stores/progressExamples.store';
 
 const meta: Meta<typeof Progress> = {
-  title: 'Atoms/Progress',
+  title: 'Atoms/Feedback/Progress',
   component: Progress,
   parameters: {
     layout: 'centered',
@@ -473,4 +473,5 @@ export const RealWorldExample: Story = {
     );
   },
 };
+
 

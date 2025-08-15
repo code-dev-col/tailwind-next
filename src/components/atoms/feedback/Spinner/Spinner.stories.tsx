@@ -3,7 +3,7 @@ import { Spinner } from './Spinner';
 import { useSpinnerExamples } from '../../../../stores/spinnerExamples.store';
 
 const meta: Meta<typeof Spinner> = {
-  title: 'Atoms/Spinner',
+  title: 'Atoms/Feedback/Spinner',
   component: Spinner,
   parameters: {
     layout: 'centered',
@@ -376,4 +376,5 @@ export const OverlayMode: Story = {
     );
   },
 };
+
 

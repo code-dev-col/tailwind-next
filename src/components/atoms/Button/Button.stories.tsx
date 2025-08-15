@@ -33,21 +33,12 @@ const meta: Meta<typeof Button> = {
         'accent',
         'muted',
         'minimal',
+        'outline',
+        'ghost',
+        'link',
         'custom',
       ],
       description: 'Esquema de color usando theme.css',
-    },
-    $variant: {
-      control: 'select',
-      options: [
-        'default',
-        'destructive',
-        'outline',
-        'secondary',
-        'ghost',
-        'link',
-      ],
-      description: 'Visual style variant of the button (legacy support)',
     },
     $size: {
       control: 'select',
@@ -71,7 +62,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     children: 'Button',
-    $variant: 'default',
+    $colorScheme: 'default',
     $size: 'default',
   },
 };
@@ -79,35 +70,36 @@ export const Default: Story = {
 export const Secondary: Story = {
   args: {
     children: 'Secondary',
-    $variant: 'secondary',
+    $colorScheme: 'secondary',
+    $size: 'default',
   },
 };
 
 export const Destructive: Story = {
   args: {
     children: 'Destructive',
-    $variant: 'destructive',
+    $colorScheme: 'destructive',
   },
 };
 
 export const Outline: Story = {
   args: {
     children: 'Outline',
-    $variant: 'outline',
+    $colorScheme: 'outline',
   },
 };
 
 export const Ghost: Story = {
   args: {
     children: 'Ghost',
-    $variant: 'ghost',
+    $colorScheme: 'ghost',
   },
 };
 
 export const Link: Story = {
   args: {
     children: 'Link',
-    $variant: 'link',
+    $colorScheme: 'link',
   },
 };
 
@@ -159,9 +151,9 @@ export const WithShadows: Story = {
       <div className="space-y-4">
         <h3 className="font-semibold">Default Shadow (shadow-sm)</h3>
         <div className="flex gap-4">
-          <Button $variant="default">Default Button</Button>
-          <Button $variant="outline">Outline Button</Button>
-          <Button $variant="secondary">Secondary Button</Button>
+          <Button $colorScheme="default">Default Button</Button>
+          <Button $colorScheme="outline">Outline Button</Button>
+          <Button $colorScheme="secondary">Secondary Button</Button>
         </div>
       </div>
 
@@ -215,7 +207,7 @@ export const VisualDifferences: Story = {
               <h3 className="font-semibold text-lg text-gray-700">
                 Default (Primary)
               </h3>
-              <Button $variant="default" className="w-full">
+              <Button $colorScheme="default" className="w-full">
                 Botón Principal - Azul Vibrante
               </Button>
               <p className="text-sm text-gray-600">
@@ -229,7 +221,7 @@ export const VisualDifferences: Story = {
 
             <div className="space-y-3">
               <h3 className="font-semibold text-lg text-gray-700">Secondary</h3>
-              <Button $variant="secondary" className="w-full">
+              <Button $colorScheme="secondary" className="w-full">
                 Botón Secundario - Gris Claro
               </Button>
               <p className="text-sm text-gray-600">
@@ -245,7 +237,7 @@ export const VisualDifferences: Story = {
               <h3 className="font-semibold text-lg text-gray-700">
                 Destructive
               </h3>
-              <Button $variant="destructive" className="w-full">
+              <Button $colorScheme="destructive" className="w-full">
                 Botón Destructivo - Rojo
               </Button>
               <p className="text-sm text-gray-600">
@@ -259,7 +251,7 @@ export const VisualDifferences: Story = {
 
             <div className="space-y-3">
               <h3 className="font-semibold text-lg text-gray-700">Outline</h3>
-              <Button $variant="outline" className="w-full">
+              <Button $colorScheme="outline" className="w-full">
                 Botón con Borde
               </Button>
               <p className="text-sm text-gray-600">
@@ -271,7 +263,7 @@ export const VisualDifferences: Story = {
 
             <div className="space-y-3">
               <h3 className="font-semibold text-lg text-gray-700">Ghost</h3>
-              <Button $variant="ghost" className="w-full">
+              <Button $colorScheme="ghost" className="w-full">
                 Botón Fantasma
               </Button>
               <p className="text-sm text-gray-600">
@@ -281,7 +273,7 @@ export const VisualDifferences: Story = {
 
             <div className="space-y-3">
               <h3 className="font-semibold text-lg text-gray-700">Link</h3>
-              <Button $variant="link" className="w-full">
+              <Button $colorScheme="link" className="w-full">
                 Botón como Enlace
               </Button>
               <p className="text-sm text-gray-600">
@@ -374,16 +366,16 @@ export const TailwindV4Colors: Story = {
                 , etc. directamente desde las variables de Tailwind v4
               </p>
               <div className="space-y-2">
-                <Button $variant="default" className="w-full">
+                <Button $colorScheme="default" className="w-full">
                   bg-primary nativo
                 </Button>
-                <Button $variant="secondary" className="w-full">
+                <Button $colorScheme="secondary" className="w-full">
                   bg-secondary nativo
                 </Button>
-                <Button $variant="destructive" className="w-full">
+                <Button $colorScheme="destructive" className="w-full">
                   bg-destructive nativo
                 </Button>
-                <Button $variant="outline" className="w-full">
+                <Button $colorScheme="outline" className="w-full">
                   border nativo
                 </Button>
               </div>
@@ -455,12 +447,12 @@ export const AllVariantsShowcase: Story = {
       <div>
         <h2 className="text-2xl font-bold mb-4">Button Variants</h2>
         <div className="flex flex-wrap gap-4">
-          <Button $variant="default">Default</Button>
-          <Button $variant="secondary">Secondary</Button>
-          <Button $variant="destructive">Destructive</Button>
-          <Button $variant="outline">Outline</Button>
-          <Button $variant="ghost">Ghost</Button>
-          <Button $variant="link">Link</Button>
+          <Button $colorScheme="default">Default</Button>
+          <Button $colorScheme="secondary">Secondary</Button>
+          <Button $colorScheme="destructive">Destructive</Button>
+          <Button $colorScheme="outline">Outline</Button>
+          <Button $colorScheme="ghost">Ghost</Button>
+          <Button $colorScheme="link">Link</Button>
         </div>
       </div>
 
@@ -496,13 +488,13 @@ export const AllVariantsShowcase: Story = {
         <h2 className="text-2xl font-bold mb-4">Disabled States</h2>
         <div className="flex flex-wrap gap-4">
           <Button disabled>Default</Button>
-          <Button $variant="secondary" disabled>
+          <Button $colorScheme="secondary" disabled>
             Secondary
           </Button>
-          <Button $variant="destructive" disabled>
+          <Button $colorScheme="destructive" disabled>
             Destructive
           </Button>
-          <Button $variant="outline" disabled>
+          <Button $colorScheme="outline" disabled>
             Outline
           </Button>
         </div>
@@ -637,16 +629,16 @@ export const WithIcons: Story = {
         <h2 className="text-2xl font-bold mb-4">Buttons with Left Icons</h2>
         <div className="flex flex-wrap gap-4">
           <Button $iconLeft={FaPlus}>Add Item</Button>
-          <Button $iconLeft={FaDownload} $variant="secondary">
+          <Button $iconLeft={FaDownload} $colorScheme="secondary">
             Download
           </Button>
-          <Button $iconLeft={FaCheck} $variant="destructive">
+          <Button $iconLeft={FaCheck} $colorScheme="destructive">
             Confirm Delete
           </Button>
-          <Button $iconLeft={FaHeart} $variant="outline">
+          <Button $iconLeft={FaHeart} $colorScheme="outline">
             Like
           </Button>
-          <Button $iconLeft={FaHome} $variant="ghost">
+          <Button $iconLeft={FaHome} $colorScheme="ghost">
             Home
           </Button>
         </div>
@@ -656,13 +648,13 @@ export const WithIcons: Story = {
         <h2 className="text-2xl font-bold mb-4">Buttons with Right Icons</h2>
         <div className="flex flex-wrap gap-4">
           <Button $iconRight={FaArrowRight}>Continue</Button>
-          <Button $iconRight={FaArrowRight} $variant="secondary">
+          <Button $iconRight={FaArrowRight} $colorScheme="secondary">
             Next Step
           </Button>
-          <Button $iconRight={FaTimes} $variant="destructive">
+          <Button $iconRight={FaTimes} $colorScheme="destructive">
             Cancel
           </Button>
-          <Button $iconRight={FaUser} $variant="outline">
+          <Button $iconRight={FaUser} $colorScheme="outline">
             Profile
           </Button>
         </div>
@@ -675,25 +667,25 @@ export const WithIcons: Story = {
           <Button
             $iconLeft={FaDownload}
             $size="icon"
-            $variant="secondary"
+            $colorScheme="secondary"
             aria-label="Download"
           />
           <Button
             $iconLeft={FaCheck}
             $size="icon"
-            $variant="destructive"
+            $colorScheme="destructive"
             aria-label="Confirm"
           />
           <Button
             $iconLeft={FaHeart}
             $size="icon"
-            $variant="outline"
+            $colorScheme="outline"
             aria-label="Like"
           />
           <Button
             $iconLeft={FaHome}
             $size="icon"
-            $variant="ghost"
+            $colorScheme="ghost"
             aria-label="Home"
           />
         </div>
@@ -764,17 +756,17 @@ export const NeumorphicEffects: Story = {
           <h3 className="text-lg font-semibold">Sombras Neumórficas</h3>
           <div className="flex gap-4 flex-wrap">
             <Button
-              $variant="default"
+              $colorScheme="default"
               $custom="shadow-neumorphic transition-neumorphic hover:shadow-neumorphic-soft">
               Neumórfico Básico
             </Button>
             <Button
-              $variant="secondary"
+              $colorScheme="secondary"
               $custom="shadow-neumorphic-soft transition-neumorphic hover:shadow-neumorphic">
               Neumórfico Suave
             </Button>
             <Button
-              $variant="outline"
+              $colorScheme="outline"
               $custom="shadow-neumorphic-inner transition-neumorphic hover:shadow-neumorphic-inner-soft">
               Hundido
             </Button>
@@ -1023,9 +1015,9 @@ export const ColorSchemes: Story = {
             Special Variants (Legacy Support)
           </h5>
           <div className="flex flex-wrap gap-2">
-            <Button $variant="outline">Outline</Button>
-            <Button $variant="ghost">Ghost</Button>
-            <Button $variant="link">Link</Button>
+            <Button $colorScheme="outline">Outline</Button>
+            <Button $colorScheme="ghost">Ghost</Button>
+            <Button $colorScheme="link">Link</Button>
           </div>
         </div>
       </div>
@@ -1184,7 +1176,10 @@ export const ColorSchemeWithStore: Story = {
               </p>
             </div>
             <div>
-              <Button $variant="outline" $size="sm" onClick={resetToDefaults}>
+              <Button
+                $colorScheme="outline"
+                $size="sm"
+                onClick={resetToDefaults}>
                 Reset Store
               </Button>
             </div>

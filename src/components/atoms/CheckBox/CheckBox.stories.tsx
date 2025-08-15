@@ -262,7 +262,7 @@ export const WithStoreKey: Story = {
 
           <Button
             $size="sm"
-            $variant="destructive"
+            $colorScheme="destructive"
             onClick={clearAllCheckboxes}
             className="w-full">
             Limpiar Todo
@@ -447,7 +447,7 @@ export const ThemeColorSchemes: Story = {
 
           <Button
             $size="sm"
-            $variant="outline"
+            $colorScheme="outline"
             onClick={clearAll}
             className="w-full mt-3">
             Limpiar Colores

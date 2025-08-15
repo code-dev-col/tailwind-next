@@ -491,7 +491,290 @@ export function GradientExamples() {
 
 ---
 
-## 7. Mejores prácticas de personalización
+## 7. Sistema de Color Schemes ($colorScheme)
+
+### 7.1. ¿Qué es el sistema $colorScheme?
+
+La librería implementa un **patrón unificado de esquemas de color** que reemplaza el sistema legacy `$variant` para componentes que manejan colores. Este sistema proporciona **8 esquemas semánticos** predefinidos que se adaptan automáticamente a los tokens `@theme` configurados.
+
+### 7.2. Esquemas disponibles
+
+Todos los componentes con soporte `$colorScheme` incluyen estos esquemas:
+
+```typescript
+type ColorScheme =
+  | 'default' // Indigo-lavanda (primary)
+  | 'secondary' // Turquesa pastel
+  | 'destructive' // Coral suave
+  | 'accent' // Violeta rosado
+  | 'muted' // Grises neutros
+  | 'minimal' // Transparente + foreground
+  | 'outline' // Solo bordes
+  | 'ghost' // Sutiles backgrounds
+  | 'custom'; // Vacío para personalización
+```
+
+### 7.3. Implementación del patrón
+
+Cada componente con `$colorScheme` sigue esta estructura:
+
+```typescript
+const colorSchemes = {
+  default: {
+    background: 'bg-card',
+    text: 'text-card-foreground',
+    textSecondary: 'text-muted-foreground',
+    textMuted: 'text-muted-foreground/70',
+    border: 'border-border',
+    hover: 'hover:bg-muted/50',
+    active: 'bg-primary/10 text-primary',
+    chevron: 'text-muted-foreground',
+  },
+  secondary: {
+    background: 'bg-secondary/10',
+    text: 'text-secondary',
+    textSecondary: 'text-secondary/90',
+    textMuted: 'text-secondary/70',
+    border: 'border-secondary/20',
+    hover: 'hover:bg-secondary/15',
+    active: 'bg-secondary/25 text-secondary',
+    chevron: 'text-secondary/80',
+  },
+  // ... otros esquemas
+};
+```
+
+### 7.4. Escalas de transparencia obligatorias
+
+Para cada color base, se utilizan estas escalas de opacidad consistentes:
+
+- **`/5`**: Fondo muy sutil (5% opacidad)
+- **`/10`**: Fondo sutil (10% opacidad)
+- **`/15`**: Fondo ligero (15% opacidad)
+- **`/20`**: Bordes sutiles (20% opacidad)
+- **`/25`**: Estados activos (25% opacidad)
+- **`/30`**: Hover ligero (30% opacidad)
+- **`/50`**: Hover medio (50% opacidad)
+- **`/70`**: Texto secundario (70% opacidad)
+- **`/80`**: Texto semi-prominente (80% opacidad)
+- **`/90`**: Texto prominente (90% opacidad)
+
+### 7.5. Uso en componentes
+
+```tsx
+import { Button, Dropdown, Badge, CheckBox } from '@code-dev-col/tailwind-next';
+
+export function ColorSchemeExamples() {
+  return (
+    <div className="space-y-6 p-6">
+      {/* Buttons con diferentes esquemas */}
+      <div className="flex flex-wrap gap-2">
+        <Button $colorScheme="default">Default</Button>
+        <Button $colorScheme="secondary">Secondary</Button>
+        <Button $colorScheme="destructive">Destructive</Button>
+        <Button $colorScheme="accent">Accent</Button>
+        <Button $colorScheme="muted">Muted</Button>
+        <Button $colorScheme="minimal">Minimal</Button>
+        <Button $colorScheme="outline">Outline</Button>
+        <Button $colorScheme="ghost">Ghost</Button>
+      </div>
+
+      {/* Dropdown con esquema personalizado */}
+      <Dropdown
+        $colorScheme="secondary"
+        options={[
+          { label: 'Opción 1', value: 'opt1' },
+          { label: 'Opción 2', value: 'opt2' },
+        ]}
+        placeholder="Dropdown con esquema secondary"
+      />
+
+      {/* Badge con diferentes estados */}
+      <div className="flex gap-2">
+        <Badge $colorScheme="default">Default</Badge>
+        <Badge $colorScheme="destructive">Error</Badge>
+        <Badge $colorScheme="accent">Destacado</Badge>
+        <Badge $colorScheme="muted">Inactivo</Badge>
+      </div>
+
+      {/* CheckBox con validación */}
+      <CheckBox
+        $colorScheme="destructive"
+        label="Campo requerido"
+        description="Este campo tiene validación activa"
+      />
+    </div>
+  );
+}
+```
+
+### 7.6. Personalización con esquema 'custom'
+
+El esquema `custom` proporciona una base limpia para personalización completa:
+
+```tsx
+import { Button } from '@code-dev-col/tailwind-next';
+
+export function CustomSchemeExample() {
+  return (
+    <div className="space-y-4">
+      {/* Custom scheme con gradientes */}
+      <Button
+        $colorScheme="custom"
+        $custom="bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-lg hover:shadow-xl transition-all duration-300">
+        Gradiente Personalizado
+      </Button>
+
+      {/* Custom scheme con tema de marca */}
+      <Button
+        $colorScheme="custom"
+        $custom="bg-blue-50 text-blue-900 border border-blue-200 hover:bg-blue-100 focus:ring-2 focus:ring-blue-500">
+        Tema de Marca
+      </Button>
+
+      {/* Custom scheme con modo oscuro */}
+      <Button
+        $colorScheme="custom"
+        $custom="bg-gray-800 text-gray-100 border border-gray-600 hover:bg-gray-700 dark:bg-gray-200 dark:text-gray-800 dark:hover:bg-gray-300">
+        Light/Dark Responsive
+      </Button>
+    </div>
+  );
+}
+```
+
+### 7.7. Migración desde $variant
+
+Si tienes componentes usando el sistema legacy `$variant`, la migración es directa:
+
+```tsx
+// ❌ Sistema legacy ($variant)
+<Button $variant="default">Botón</Button>
+<Button $variant="secondary">Secundario</Button>
+<Button $variant="destructive">Peligro</Button>
+
+// ✅ Sistema actual ($colorScheme)
+<Button $colorScheme="default">Botón</Button>
+<Button $colorScheme="secondary">Secundario</Button>
+<Button $colorScheme="destructive">Peligro</Button>
+```
+
+**Mapeo de migración común:**
+
+- `$variant="default"` → `$colorScheme="default"`
+- `$variant="secondary"` → `$colorScheme="secondary"`
+- `$variant="destructive"` → `$colorScheme="destructive"`
+- `$variant="outline"` → `$colorScheme="outline"`
+- `$variant="ghost"` → `$colorScheme="ghost"`
+
+### 7.8. Componentes que usan $colorScheme
+
+**Componentes migrados al sistema $colorScheme:**
+
+- ✅ `Button` - Botones interactivos
+- ✅ `Badge` - Etiquetas y estados
+- ✅ `Chip` - Elementos seleccionables
+- ✅ `Dropdown` - Menús desplegables
+- ✅ `Accordion` - Contenido colapsable
+- ✅ `RadioButton` - Selección única
+- ✅ `CheckBox` - Selección múltiple
+- ✅ `Input` - Campos de texto
+- ✅ `Progress` - Barras de progreso
+- ✅ `Text` - Textos estilizados
+- ✅ `Link` - Enlaces navegables
+
+**Componentes que mantienen $variant (uso geométrico/semántico):**
+
+- ✅ `Skeleton` - Formas de placeholder (rectangular, circular, text)
+- ✅ `Container` - Tamaños de layout (sm, md, lg, xl, full)
+- ✅ `Grid` - Configuraciones de grilla (auto, fixed, responsive)
+
+### 7.9. Debugging de color schemes
+
+Componente helper para probar todos los esquemas:
+
+```tsx
+'use client';
+import { Button, Badge, CheckBox } from '@code-dev-col/tailwind-next';
+
+const colorSchemes = [
+  'default',
+  'secondary',
+  'destructive',
+  'accent',
+  'muted',
+  'minimal',
+  'outline',
+  'ghost',
+] as const;
+
+export function ColorSchemeDebugger() {
+  return (
+    <div className="p-6 space-y-6">
+      <h3 className="text-lg font-semibold">Debug: Color Schemes</h3>
+
+      {colorSchemes.map((scheme) => (
+        <div key={scheme} className="space-y-3">
+          <h4 className="font-medium text-sm uppercase tracking-wide text-muted-foreground">
+            {scheme}
+          </h4>
+
+          <div className="flex flex-wrap gap-2 items-center">
+            <Button $colorScheme={scheme} $size="sm">
+              Button
+            </Button>
+
+            <Badge $colorScheme={scheme}>Badge</Badge>
+
+            <CheckBox $colorScheme={scheme} label={`CheckBox ${scheme}`} />
+          </div>
+        </div>
+      ))}
+
+      {/* Esquema custom */}
+      <div className="space-y-3 border-t pt-4">
+        <h4 className="font-medium text-sm uppercase tracking-wide text-muted-foreground">
+          Custom Examples
+        </h4>
+
+        <div className="flex flex-wrap gap-2">
+          <Button
+            $colorScheme="custom"
+            $custom="bg-gradient-to-r from-orange-500 to-red-500 text-white">
+            Gradient
+          </Button>
+
+          <Badge
+            $colorScheme="custom"
+            $custom="bg-emerald-100 text-emerald-800 border border-emerald-200">
+            Success
+          </Badge>
+        </div>
+      </div>
+    </div>
+  );
+}
+```
+
+### 7.10. Mejores prácticas para $colorScheme
+
+**✅ Recomendado:**
+
+- Usar esquemas semánticos según el contexto (`destructive` para errores, `accent` para destacados)
+- Combinar con `$custom` solo cuando sea necesario
+- Mantener consistencia visual usando el mismo esquema en componentes relacionados
+- Probar todos los esquemas en light/dark mode
+
+**❌ Evitar:**
+
+- Mezclar `$variant` y `$colorScheme` en el mismo componente
+- Hardcodear colores en lugar de usar esquemas predefinidos
+- Crear esquemas custom cuando existe uno semánticamente apropiado
+- Ignorar las escalas de transparencia establecidas
+
+---
+
+## 8. Mejores prácticas de personalización
 
 ### 7.1. Estrategia recomendada para overrides
 
@@ -593,7 +876,9 @@ ThemeManager.setGradient(
 
 ## 8. Integración con componentes
 
-### 8.1. Usar componentes con tokens personalizados
+## 9. Integración con componentes
+
+### 9.1. Usar componentes con tokens personalizados
 
 ```tsx
 import { Button, Input, CheckBox, Card } from '@code-dev-col/tailwind-next';
@@ -601,11 +886,12 @@ import { Button, Input, CheckBox, Card } from '@code-dev-col/tailwind-next';
 export function CustomizedComponents() {
   return (
     <div className="space-y-6 p-6">
-      {/* Button usando colores de tema automáticamente */}
+      {/* Button usando esquemas de color automáticamente */}
       <div className="flex gap-2">
-        <Button $variant="default">Primary Theme</Button>
-        <Button $variant="secondary">Secondary Theme</Button>
-        <Button $variant="destructive">Destructive Theme</Button>
+        <Button $colorScheme="default">Primary Theme</Button>
+        <Button $colorScheme="secondary">Secondary Theme</Button>
+        <Button $colorScheme="destructive">Destructive Theme</Button>
+        <Button $colorScheme="accent">Accent Theme</Button>
       </div>
 
       {/* Button con gradiente personalizado */}
@@ -621,11 +907,11 @@ export function CustomizedComponents() {
         className="max-w-md"
       />
 
-      {/* CheckBox con tema personalizado */}
+      {/* CheckBox con esquema específico */}
       <CheckBox
         label="Acepto términos y condiciones"
-        description="Usando tokens de tema personalizados"
-        $variant="default"
+        description="Usando esquema de color destructive"
+        $colorScheme="destructive"
       />
 
       {/* Card con fondo gradiente sutil */}
@@ -644,6 +930,44 @@ export function CustomizedComponents() {
   );
 }
 ```
+
+### 9.2. Componente de demostración de tema
+
+````tsx
+'use client';
+import { Button, Input, CheckBox } from '@code-dev-col/tailwind-next';
+
+export function ThemeShowcase() {
+  return (
+    <div className="p-6 bg-background border border-border rounded-lg">
+      <h2 className="text-xl font-semibold text-foreground mb-4">
+        Vista previa del tema
+      </h2>
+
+      <div className="grid gap-4">
+        {/* Colores principales */}
+        <div className="flex gap-2">
+          <div className="w-12 h-12 bg-primary rounded-md"></div>
+          <div className="w-12 h-12 bg-secondary rounded-md"></div>
+          <div className="w-12 h-12 bg-accent rounded-md"></div>
+          <div className="w-12 h-12 bg-destructive rounded-md"></div>
+        </div>
+
+        {/* Componentes con esquemas */}
+        <div className="flex flex-wrap gap-2">
+          <Button $colorScheme="default">Default</Button>
+          <Button $colorScheme="secondary">Secondary</Button>
+          <Button $colorScheme="outline">Outline</Button>
+          <Button $colorScheme="ghost">Ghost</Button>
+        </div>
+
+        <Input placeholder="Input con tema..." />
+
+        <CheckBox label="Checkbox tematizado" />
+      </div>
+    </div>
+  );
+}
 
 ### 8.2. Componente de demostración de tema
 
@@ -682,7 +1006,7 @@ export function ThemeShowcase() {
     </div>
   );
 }
-```
+````
 
 ---
 
@@ -811,13 +1135,13 @@ export function ThemeTestMatrix() {
 
               <div className="space-y-3">
                 <div className="flex gap-2">
-                  <Button $variant="default" $size="sm">
+                  <Button $colorScheme="default" $size="sm">
                     Primary
                   </Button>
-                  <Button $variant="secondary" $size="sm">
+                  <Button $colorScheme="secondary" $size="sm">
                     Secondary
                   </Button>
-                  <Button $variant="destructive" $size="sm">
+                  <Button $colorScheme="destructive" $size="sm">
                     Danger
                   </Button>
                 </div>
@@ -948,10 +1272,12 @@ export function ContrastChecker() {
 ### 11.4. Testing y QA
 
 - [ ] **Matriz visual**: Probar todas las combinaciones tema/marca
-- [ ] **Componentes**: Verificar Button, Input, CheckBox con todos los temas
+- [ ] **Componentes**: Verificar Button, Input, CheckBox con todos los esquemas de color ($colorScheme)
 - [ ] **Dark mode**: Confirmar transiciones suaves y legibilidad
 - [ ] **Responsive**: Probar en diferentes tamaños de pantalla
 - [ ] **Accesibilidad**: Validar contrastes y navegación por teclado
+- [ ] **Color Schemes**: Probar los 8 esquemas (default, secondary, destructive, accent, muted, minimal, outline, ghost)
+- [ ] **Custom Schemes**: Verificar esquema 'custom' con personalizaciones
 
 ---
 
@@ -968,7 +1294,16 @@ R: Usa `safelist` en `tailwind.config.js` o construye las clases de gradiente en
 **P: ¿Cómo debug problemas de tokens no aplicados?**  
 R: Usa el `TokenInspector` component para ver valores computados, o inspecciona las variables CSS en DevTools.
 
-### 12.2. Personalización
+### 12.2. Personalización y Color Schemes
+
+**P: ¿Cuál es la diferencia entre $variant y $colorScheme?**  
+R: `$colorScheme` es el sistema moderno unificado para manejar colores semánticos, mientras que `$variant` se mantiene solo para variaciones geométricas/de forma. Use `$colorScheme` para todos los componentes que manejan colores.
+
+**P: ¿Puedo crear mis propios esquemas de color?**  
+R: Usa el esquema `custom` y combina con la prop `$custom` para personalización completa. Alternativamente, sobrescribe tokens `@theme` para modificar esquemas existentes globalmente.
+
+**P: ¿Todos los componentes soportan $colorScheme?**  
+R: No. Solo componentes que manejan colores semánticos (Button, Badge, Input, etc.). Componentes geométricos (Skeleton, Container) mantienen `$variant` para formas/tamaños.
 
 **P: ¿Puedo tree-shake gradientes no usados?**  
 R: Sí, al ser strings referenciadas es trivial para un bundler eliminar código muerto si no importas helpers extra.

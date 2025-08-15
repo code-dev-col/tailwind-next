@@ -1,14 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
-import { Dropdown } from './';
-import { Container } from '../Container';
+import { Dropdown } from '.';
+import { Container } from '../../Container';
 import { Button } from '../Button';
-import { Text } from '../Text';
+import { Text } from '../../Text';
 import { Label } from '../Label';
-import { useDropdownExamplesStore } from '../../../stores/dropdownExamples.store';
+import { useDropdownExamplesStore } from '../../../../stores/dropdownExamples.store';
 
 const meta: Meta<typeof Dropdown> = {
-  title: 'Atoms/Dropdown',
+  title: 'Atoms/Forms/Dropdown',
   component: Dropdown,
   parameters: {
     layout: 'centered',

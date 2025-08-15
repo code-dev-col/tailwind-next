@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
-import { RadioButton } from './';
-import { Container } from '../Container';
-import { Button } from '../forms/Button';
-import { Text } from '../Text';
-import { Label } from '../forms/Label';
-import { useRadioButtonExamplesStore } from '../../../stores/radioButtonExamples.store';
+import { RadioButton } from './RadioButton';
+import { Container } from '../../Container';
+import { Button } from '../Button';
+import { Text } from '../../Text';
+import { Label } from '../Label';
+import { useRadioButtonExamplesStore } from '../../../../stores/radioButtonExamples.store';
 
 // Store simple para demostrar theme.css colors
 import { create } from 'zustand';
@@ -73,7 +73,7 @@ const useThemeColorRadioDemoStore = create<ThemeColorRadioDemoStore>((set) => ({
 }));
 
 const meta: Meta<typeof RadioButton> = {
-  title: 'Atoms/RadioButton',
+  title: 'Atoms/Forms/RadioButton',
   component: RadioButton,
   parameters: {
     layout: 'centered',

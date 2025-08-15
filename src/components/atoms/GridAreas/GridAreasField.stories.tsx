@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { GridAreasField } from './';
 import { Container } from '../Container';
-import { Button } from '../Button';
+import { Button } from '../forms/Button';
 import { Text } from '../Text';
 import { Badge } from '../Badge';
 import { Avatar } from '../Avatar';
-import { Label } from '../Label';
+import { Label } from '../forms/Label';
 
 const meta: Meta<typeof GridAreasField> = {
   title: 'Atoms/GridAreasField',

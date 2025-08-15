@@ -3,7 +3,7 @@ import { Label } from './Label';
 import { Input } from '../Input/Input';
 
 const meta: Meta<typeof Label> = {
-  title: 'Atoms/Label',
+  title: 'Atoms/Forms/Label',
   component: Label,
   parameters: {
     layout: 'centered',
@@ -187,7 +187,7 @@ export const ErrorStates: Story = {
         </Label>
         <Input
           id="error-field"
-          $variant="destructive"
+          $colorScheme="destructive"
           placeholder="invalid-email"
           className="mt-1"
         />

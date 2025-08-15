@@ -1,19 +1,25 @@
 export * from './types';
 // Export components
-export { Button, type ButtonProps } from './components/atoms/Button';
-export { Input, type InputProps } from './components/atoms/Input';
-export { TextArea, type TextAreaProps } from './components/atoms/TextArea';
+export { Button, type ButtonProps } from './components/atoms/forms/Button';
+export { Input, type InputProps } from './components/atoms/forms/Input';
+export {
+  TextArea,
+  type TextAreaProps,
+} from './components/atoms/forms/TextArea';
 export {
   Dropdown,
   type DropdownProps,
   type DropdownOption,
-} from './components/atoms/Dropdown';
+} from './components/atoms/forms/Dropdown';
 export {
   RadioButton,
   type RadioButtonProps,
-} from './components/atoms/RadioButton';
-export { CheckBox, type CheckBoxProps } from './components/atoms/CheckBox';
-export { Switch, type SwitchProps } from './components/atoms/Switch';
+} from './components/atoms/forms/RadioButton';
+export {
+  CheckBox,
+  type CheckBoxProps,
+} from './components/atoms/forms/CheckBox';
+export { Switch, type SwitchProps } from './components/atoms/forms/Switch';
 export { Progress, type ProgressProps } from './components/atoms/Progress';
 export {
   Chip,
@@ -32,11 +38,11 @@ export {
   RangeSlider,
   type SliderProps,
   type RangeSliderProps,
-} from './components/atoms/Slider';
+} from './components/atoms/forms/Slider';
 export { Icon, type IconProps } from './components/atoms/Icon';
 export { Badge, type BadgeProps } from './components/atoms/Badge';
 export { Avatar, type AvatarProps } from './components/atoms/Avatar';
-export { Label, type LabelProps } from './components/atoms/Label';
+export { Label, type LabelProps } from './components/atoms/forms/Label';
 export { Skeleton, type SkeletonProps } from './components/atoms/Skeleton';
 export { ListItem, type ListItemProps } from './components/atoms/ListItem';
 export { Link, type LinkProps } from './components/atoms/Link';

@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
-import { CheckBox } from './';
-import { Container } from '../Container';
+import { CheckBox } from '.';
+import { Container } from '../../Container';
 import { Button } from '../Button';
-import { Text } from '../Text';
+import { Text } from '../../Text';
 import { Label } from '../Label';
-import { useCheckboxExamplesStore } from '../../../stores/checkboxExamples.store';
+import { useCheckboxExamplesStore } from '../../../../stores/checkboxExamples.store';
 
 // Store simple para demostrar theme.css colors
 import { create } from 'zustand';
@@ -73,7 +73,7 @@ const useThemeColorDemoStore = create<ThemeColorDemoStore>((set) => ({
 }));
 
 const meta: Meta<typeof CheckBox> = {
-  title: 'Atoms/CheckBox',
+  title: 'Atoms/Forms/CheckBox',
   component: CheckBox,
   parameters: {
     layout: 'centered',

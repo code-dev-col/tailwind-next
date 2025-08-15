@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Center } from './';
 import { Container } from '../Container';
-import { Button } from '../Button';
+import { Button } from '../forms/Button';
 import { Text } from '../Text';
 import { Badge } from '../Badge';
 import { Avatar } from '../Avatar';
@@ -169,9 +169,7 @@ export const MultipleBlocks: Story = {
               Una guía completa sobre los hooks que más uso en mis proyectos
               diarios, desde useState hasta los nuevos concurrent features.
             </Text>
-            <Button $colorScheme="default">
-              Leer más →
-            </Button>
+            <Button $colorScheme="default">Leer más →</Button>
           </Container>
 
           {/* Article 2 */}
@@ -193,9 +191,7 @@ export const MultipleBlocks: Story = {
               Explorando utility types, conditional types y mapped types para
               crear APIs más robustas y expresivas.
             </Text>
-            <Button $colorScheme="default">
-              Leer más →
-            </Button>
+            <Button $colorScheme="default">Leer más →</Button>
           </Container>
         </div>
       </Center>

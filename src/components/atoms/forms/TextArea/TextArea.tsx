@@ -1,14 +1,14 @@
 import React from 'react';
 import { useStore } from 'zustand';
 import { StoreApi, UseBoundStore } from 'zustand';
-import { cn } from '../../../utils/cn';
-import type { BaseProps } from '../../../types';
-import { Text } from '../Text';
+import { cn } from '../../../../utils/cn';
+import type { BaseProps } from '../../../../types';
+import { Text } from '../../Text';
 import {
   getSecurityPreset,
   type SecurityOptions,
-} from '../../../utils/security';
-import { useSecureField } from '../../../utils/useSecureField';
+} from '../../../../utils/security';
+import { useSecureField } from '../../../../utils/useSecureField';
 
 interface TextAreaProps<T extends Record<string, any> = any> extends BaseProps {
   // Color scheme system (theme.css integration)
@@ -40,7 +40,7 @@ interface TextAreaProps<T extends Record<string, any> = any> extends BaseProps {
   // Nuevas funcionalidades de seguridad
   $security?:
     | SecurityOptions
-    | keyof typeof import('../../../utils/security').SECURITY_PRESETS;
+    | keyof typeof import('../../../../utils/security').SECURITY_PRESETS;
   $sanitizeOnChange?: boolean; // Auto-sanitizar en onChange (por defecto false)
   $showSecurityWarnings?: boolean; // Mostrar advertencias de seguridad (por defecto false)
   $blockUnsafeInput?: boolean; // Bloquear input inseguro completamente (por defecto false)

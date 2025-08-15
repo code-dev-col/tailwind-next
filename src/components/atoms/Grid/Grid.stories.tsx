@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Grid } from './';
 import { Container } from '../Container';
-import { Button } from '../Button';
+import { Button } from '../forms/Button';
 import { Text } from '../Text';
 import { Badge } from '../Badge';
 import { Avatar } from '../Avatar';

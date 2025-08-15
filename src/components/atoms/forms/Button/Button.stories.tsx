@@ -14,7 +14,7 @@ import {
 } from 'react-icons/fa';
 import { FiZap, FiTag, FiX, FiFilter, FiLayers } from 'react-icons/fi';
 import { Button, ButtonProps } from './Button';
-import { useButtonExamples } from '../../../stores/buttonExamples.store';
+import { useButtonExamples } from '../../../../stores/buttonExamples.store';
 
 const meta: Meta<typeof Button> = {
   title: 'Atoms/Button',

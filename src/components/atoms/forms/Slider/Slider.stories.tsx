@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Slider, RangeSlider } from './Slider';
-import { useSliderExamples } from '../../../stores/sliderExamples.store';
-import { cn } from '../../../utils/cn';
+import { useSliderExamples } from '../../../../stores/sliderExamples.store';
+import { cn } from '../../../../utils/cn';
 import {
   FiVolume2,
   FiDollarSign,
@@ -17,7 +17,7 @@ import {
 import { BiMoney, BiTime, BiTachometer } from 'react-icons/bi';
 
 const meta: Meta<typeof Slider> = {
-  title: 'Atoms/Slider',
+  title: 'Atoms/Forms/Slider',
   component: Slider,
   parameters: {
     layout: 'centered',

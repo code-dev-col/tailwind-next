@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Input } from './Input';
-import { useInputExamplesStore } from '../../../stores/inputExamples.store';
+import { useInputExamplesStore } from '../../../../stores/inputExamples.store';
 
 const meta: Meta<typeof Input> = {
-  title: 'Atoms/Input',
+  title: 'Atoms/Forms/Input',
   component: Input,
   parameters: {
     layout: 'centered',
@@ -749,7 +749,10 @@ export const ColorSchemes: Story = {
             Legacy Variants (Backward Compatibility)
           </h5>
           <div className="space-y-2">
-            <Input $colorScheme="default" placeholder="Legacy variant default" />
+            <Input
+              $colorScheme="default"
+              placeholder="Legacy variant default"
+            />
             <Input
               $colorScheme="destructive"
               placeholder="Legacy variant destructive"

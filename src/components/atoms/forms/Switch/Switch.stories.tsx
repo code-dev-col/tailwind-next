@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Switch } from './Switch';
-import { useSwitchExamples } from '../../../stores/switchExamples.store';
+import { useSwitchExamples } from '../../../../stores/switchExamples.store';
 import {
   FiSun,
   FiMoon,
@@ -13,7 +13,7 @@ import {
 } from 'react-icons/fi';
 
 const meta: Meta<typeof Switch> = {
-  title: 'Atoms/Switch',
+  title: 'Atoms/Forms/Switch',
   component: Switch,
   parameters: {
     layout: 'centered',
@@ -660,3 +660,4 @@ export const GradientEffects: Story = {
     </div>
   ),
 };
+

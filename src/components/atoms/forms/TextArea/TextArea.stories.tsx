@@ -1,10 +1,10 @@
 // NUEVO ARCHIVO LIMPIO SOLO PATRÓN storeKey
 import type { Meta, StoryObj } from '@storybook/react';
 import { TextArea } from './TextArea';
-import { useTextAreaExamplesStore } from '../../../stores/textAreaExamples.store';
+import { useTextAreaExamplesStore } from '../../../../stores/textAreaExamples.store';
 
 const meta: Meta<typeof TextArea> = {
-  title: 'Atoms/TextArea',
+  title: 'Atoms/Forms/TextArea',
   component: TextArea,
   parameters: { layout: 'centered' },
   tags: ['autodocs'],

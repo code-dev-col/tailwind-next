@@ -1,8 +1,8 @@
 import React from 'react';
 import { useStore } from 'zustand';
 import { StoreApi, UseBoundStore } from 'zustand';
-import { cn } from '../../../utils/cn';
-import type { BaseProps } from '../../../types';
+import { cn } from '../../../../utils/cn';
+import type { BaseProps } from '../../../../types';
 
 interface RadioButtonProps<T extends Record<string, any> = any>
   extends BaseProps {

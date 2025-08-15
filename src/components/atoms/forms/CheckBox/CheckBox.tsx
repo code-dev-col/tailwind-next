@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import { useStore } from 'zustand';
 import type { UseBoundStore, StoreApi } from 'zustand';
-import { cn } from '../../../utils/cn';
-import type { BaseProps } from '../../../types';
+import { cn } from '../../../../utils/cn';
+import type { BaseProps } from '../../../../types';
 
 interface CheckBoxProps<T extends Record<string, any> = any> extends BaseProps {
   // Sistema de esquemas de color con theme.css

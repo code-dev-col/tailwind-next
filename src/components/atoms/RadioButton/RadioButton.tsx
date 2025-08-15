@@ -6,7 +6,7 @@ import type { BaseProps } from '../../../types';
 
 interface RadioButtonProps<T extends Record<string, any> = any>
   extends BaseProps {
-  // Esquemas de color theme.css (reemplaza $variant)
+  // Esquemas de color theme.css (sistema unificado)
   $colorScheme?:
     | 'default'
     | 'secondary'
@@ -14,10 +14,9 @@ interface RadioButtonProps<T extends Record<string, any> = any>
     | 'accent'
     | 'muted'
     | 'minimal'
+    | 'outline'
+    | 'ghost'
     | 'custom';
-
-  // Backward compatibility
-  $variant?: 'default' | 'destructive' | 'ghost';
 
   $size?: 'default' | 'sm' | 'lg';
   $custom?: string;
@@ -43,29 +42,13 @@ interface RadioButtonProps<T extends Record<string, any> = any>
 }
 
 // Hook para manejar estilos CSS-in-JS del RadioButton
-const useRadioButtonStyles = (
-  $colorScheme: string,
-  $variant?: string,
-  disabled?: boolean
-) => {
+const useRadioButtonStyles = ($colorScheme: string, disabled?: boolean) => {
   const styleId = React.useMemo(
     () => `radio-button-styles-${Math.random().toString(36).substr(2, 9)}`,
     []
   );
 
   React.useEffect(() => {
-    // Determinar esquema de color final (priorizar $colorScheme sobre $variant)
-    let finalScheme = $colorScheme;
-    if (!$colorScheme && $variant) {
-      // Mapeo de backward compatibility
-      const variantToScheme: Record<string, string> = {
-        default: 'default',
-        destructive: 'destructive',
-        ghost: 'minimal',
-      };
-      finalScheme = variantToScheme[$variant] || 'default';
-    }
-
     // Esquemas de color con variables theme.css
     const colorSchemes = {
       default: {
@@ -122,6 +105,24 @@ const useRadioButtonStyles = (
         borderHover: 'hsl(var(--foreground) / 0.8)',
         borderFocus: 'hsl(var(--foreground))',
       },
+      outline: {
+        border: 'hsl(var(--border))',
+        borderChecked: 'hsl(var(--border))',
+        background: 'transparent',
+        backgroundChecked: 'transparent',
+        dot: 'hsl(var(--foreground))',
+        borderHover: 'hsl(var(--border))',
+        borderFocus: 'hsl(var(--border))',
+      },
+      ghost: {
+        border: 'hsl(var(--border) / 0.5)',
+        borderChecked: 'hsl(var(--foreground) / 0.7)',
+        background: 'transparent',
+        backgroundChecked: 'hsl(var(--muted) / 0.3)',
+        dot: 'hsl(var(--foreground))',
+        borderHover: 'hsl(var(--foreground) / 0.5)',
+        borderFocus: 'hsl(var(--foreground) / 0.7)',
+      },
       custom: {
         border: 'hsl(var(--border))',
         borderChecked: 'hsl(var(--border))',
@@ -134,7 +135,7 @@ const useRadioButtonStyles = (
     };
 
     const scheme =
-      colorSchemes[finalScheme as keyof typeof colorSchemes] ||
+      colorSchemes[$colorScheme as keyof typeof colorSchemes] ||
       colorSchemes.default;
 
     const css = `
@@ -212,7 +213,7 @@ const useRadioButtonStyles = (
         existingStyle.remove();
       }
     };
-  }, [$colorScheme, $variant, disabled, styleId]);
+  }, [$colorScheme, disabled, styleId]);
 
   return styleId;
 };
@@ -248,7 +249,6 @@ const RadioButtonComponent = <T extends Record<string, any> = any>(
   {
     className,
     $colorScheme = 'default',
-    $variant,
     $size = 'default',
     $custom,
     $store,
@@ -266,7 +266,7 @@ const RadioButtonComponent = <T extends Record<string, any> = any>(
   ref: React.Ref<HTMLInputElement>
 ) => {
   // CSS-in-JS styles
-  const styleClassName = useRadioButtonStyles($colorScheme, $variant, disabled);
+  const styleClassName = useRadioButtonStyles($colorScheme, disabled);
 
   // Generar ID único si no se proporciona
   const radioId = id || React.useId();

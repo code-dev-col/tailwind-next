@@ -279,7 +279,7 @@ export const WithStoreKey: Story = {
 
           <Button
             $size="sm"
-            $variant="destructive"
+            $colorScheme="destructive"
             onClick={clearAllRadio}
             className="w-full">
             Limpiar Todo
@@ -542,7 +542,7 @@ export const ThemeColorSchemes: Story = {
 
           <Button
             $size="sm"
-            $variant="outline"
+            $colorScheme="outline"
             onClick={clearAll}
             className="w-full mt-3">
             Limpiar Colores
@@ -746,8 +746,8 @@ export const FormExample: Story = {
           </div>
 
           <div className="flex gap-2 pt-2">
-            <Button $variant="default">Guardar configuración</Button>
-            <Button $variant="outline" onClick={clearAllRadio}>
+            <Button $colorScheme="default">Guardar configuración</Button>
+            <Button $colorScheme="outline" onClick={clearAllRadio}>
               Restablecer
             </Button>
           </div>

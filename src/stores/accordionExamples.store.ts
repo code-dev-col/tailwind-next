@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import type { AccordionItemType } from '../components/atoms/Accordion';
+import type { AccordionItemType } from '../components/atoms/navigation/Accordion';
 
 interface AccordionExamplesState {
   // Estados para configuraciones del accordion

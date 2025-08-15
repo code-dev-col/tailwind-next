@@ -1,6 +1,6 @@
 import React from 'react';
-import { cn } from '../../../utils/cn';
-import type { BaseProps } from '../../../types';
+import { cn } from '../../../../utils/cn';
+import type { BaseProps } from '../../../../types';
 import type { UseBoundStore, StoreApi } from 'zustand';
 
 // Tipos para Next.js Link props

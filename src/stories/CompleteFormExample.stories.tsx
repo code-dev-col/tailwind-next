@@ -17,7 +17,7 @@ import { Badge } from '../components/atoms/feedback/Badge';
 import { Avatar } from '../components/atoms/Avatar';
 import { Separator } from '../components/atoms/layout/Separator';
 import { Spinner } from '../components/atoms/feedback/Spinner';
-import { Link } from '../components/atoms/Link';
+import { Link } from '../components/atoms/navigation/Link';
 
 import {
   FiUser,

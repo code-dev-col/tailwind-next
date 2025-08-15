@@ -51,7 +51,7 @@ export {
   type SkeletonProps,
 } from './components/atoms/feedback/Skeleton';
 export { ListItem, type ListItemProps } from './components/atoms/ListItem';
-export { Link, type LinkProps } from './components/atoms/Link';
+export { Link, type LinkProps } from './components/atoms/navigation/Link';
 export {
   Image,
   type ImageProps,
@@ -97,7 +97,7 @@ export {
   type BreadcrumbProps,
   type BreadcrumbBuilderProps,
   type BreadcrumbItem,
-} from './components/atoms/Breadcrumb';
+} from './components/atoms/navigation/Breadcrumb';
 export {
   Divider,
   Separator,
@@ -108,7 +108,7 @@ export {
   Accordion,
   type AccordionProps,
   type AccordionItemType,
-} from './components/atoms/Accordion';
+} from './components/atoms/navigation/Accordion';
 export {
   UnorderedList,
   type UnorderedListProps,

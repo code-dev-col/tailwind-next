@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { cn } from '../../../utils/cn';
-import type { BaseProps } from '../../../types';
+import { cn } from '../../../../utils/cn';
+import type { BaseProps } from '../../../../types';
 import { IoChevronDown } from 'react-icons/io5';
 
 export interface AccordionItemType {

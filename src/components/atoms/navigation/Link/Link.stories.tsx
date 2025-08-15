@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Link } from './Link';
-import { useLinkExamples } from '../../../stores/linkExamples.store';
+import { useLinkExamples } from '../../../../stores/linkExamples.store';
 import {
   FiHome,
   FiArrowRight,
@@ -10,7 +10,7 @@ import {
 } from 'react-icons/fi';
 
 const meta: Meta<typeof Link> = {
-  title: 'Atoms/Link',
+  title: 'Atoms/Navigation/Link',
   component: Link,
   parameters: {
     layout: 'centered',
@@ -456,4 +456,5 @@ export const Interactive: Story = {
     </div>
   ),
 };
+
 

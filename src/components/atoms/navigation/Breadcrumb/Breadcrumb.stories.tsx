@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Breadcrumb, BreadcrumbBuilder } from './Breadcrumb';
-import { useBreadcrumbExamples } from '../../../stores/breadcrumbExamples.store';
+import { useBreadcrumbExamples } from '../../../../stores/breadcrumbExamples.store';
 import {
   FiHome,
   FiFolder,
@@ -13,7 +13,7 @@ import {
 } from 'react-icons/fi';
 
 const meta: Meta<typeof Breadcrumb> = {
-  title: 'Atoms/Breadcrumb',
+  title: 'Atoms/Navigation/Breadcrumb',
   component: Breadcrumb,
   parameters: {
     layout: 'centered',
@@ -761,4 +761,5 @@ export const SpecialStates: Story = {
     );
   },
 };
+
 

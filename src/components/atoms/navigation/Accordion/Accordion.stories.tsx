@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Accordion } from './Accordion';
-import { useAccordionExamples } from '../../../stores/accordionExamples.store';
+import { useAccordionExamples } from '../../../../stores/accordionExamples.store';
 import {
   IoDocumentText,
   IoSettings,
@@ -29,7 +29,7 @@ import {
 } from 'react-icons/io5';
 
 const meta: Meta<typeof Accordion> = {
-  title: 'Atoms/Accordion',
+  title: 'Atoms/Navigation/Accordion',
   component: Accordion,
   parameters: {
     layout: 'centered',
@@ -533,30 +533,21 @@ export const ColorSchemes: Story = {
         <h3 className="text-sm font-medium mb-3 text-muted-foreground">
           Default (Primary) - FAQ General
         </h3>
-        <Accordion
-          items={faqItems.slice(0, 2)}
-          $colorScheme="default"
-        />
+        <Accordion items={faqItems.slice(0, 2)} $colorScheme="default" />
       </div>
 
       <div>
         <h3 className="text-sm font-medium mb-3 text-muted-foreground">
           Secondary (Turquesa) - Configuraciones de Usuario
         </h3>
-        <Accordion
-          items={settingsItems.slice(0, 2)}
-          $colorScheme="secondary"
-        />
+        <Accordion items={settingsItems.slice(0, 2)} $colorScheme="secondary" />
       </div>
 
       <div>
         <h3 className="text-sm font-medium mb-3 text-muted-foreground">
           Accent (Violeta) - Documentación API
         </h3>
-        <Accordion
-          items={developmentItems.slice(0, 2)}
-          $colorScheme="accent"
-        />
+        <Accordion items={developmentItems.slice(0, 2)} $colorScheme="accent" />
       </div>
 
       <div>
@@ -610,10 +601,7 @@ export const ColorSchemes: Story = {
         <h3 className="text-sm font-medium mb-3 text-muted-foreground">
           Minimal (Transparente) - Integración Sutil
         </h3>
-        <Accordion
-          items={faqItems.slice(0, 1)}
-          $colorScheme="default"
-        />
+        <Accordion items={faqItems.slice(0, 1)} $colorScheme="default" />
       </div>
     </div>
   ),
@@ -820,10 +808,7 @@ export const WithCustomization: Story = {
               Configuraciones integradas en el contexto de la tarjeta
             </p>
           </div>
-          <Accordion
-            items={settingsItems.slice(0, 2)}
-            $colorScheme="default"
-          />
+          <Accordion items={settingsItems.slice(0, 2)} $colorScheme="default" />
         </div>
       </div>
     </div>

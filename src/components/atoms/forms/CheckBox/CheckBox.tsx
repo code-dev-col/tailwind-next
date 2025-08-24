@@ -88,10 +88,10 @@ const getColorSchemeValues = (scheme: string) => {
   return colors[scheme as keyof typeof colors] || colors.default;
 };
 
-// 🎨 CSS-in-JS: SVG Icons como data URIs
+// 🎨 CSS-in-JS: SVG Icons como data URIs mejorados
 const getSvgIcons = () => ({
-  check: `url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z'/%3e%3c/svg%3e")`,
-  indeterminate: `url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M4 8h8v1H4z'/%3e%3c/svg%3e")`,
+  check: `url("data:image/svg+xml,%3csvg viewBox='0 0 18 18' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M13.354 4.146a.5.5 0 0 1 0 .708l-6.5 6.5a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L6.5 10.293l6.146-6.147a.5.5 0 0 1 .708 0z' stroke='white' stroke-width='1.5'/%3e%3c/svg%3e")`,
+  indeterminate: `url("data:image/svg+xml,%3csvg viewBox='0 0 18 18' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M3 8h12v1.5H3z'/%3e%3c/svg%3e")`,
 });
 
 // 🎨 Hook para CSS-in-JS dinámico con ::before pseudo-element
@@ -132,7 +132,7 @@ const useCheckboxStyles = (
         width: 0.65em;
         height: 0.65em;
         transform: scale(0);
-        transition: 120ms transform ease-in-out;
+        transition: none;
         transform-origin: bottom left;
         mask-size: contain;
         mask-repeat: no-repeat;
@@ -143,6 +143,7 @@ const useCheckboxStyles = (
       input[data-checkbox-id="${styleId}"]:checked::before,
       input[data-checkbox-id="${styleId}"][data-indeterminate="true"]::before {
         transform: scale(1);
+        transition: 120ms transform ease-in-out;
       }
       
       input[data-checkbox-id="${styleId}"]:checked::before {
@@ -294,7 +295,9 @@ const CheckBox = <T extends Record<string, any> = any>({
   const storeSetValue =
     $store && storeKey
       ? $store((state) => {
-          const setterName = `set${String(storeKey).charAt(0).toUpperCase() + String(storeKey).slice(1)}`;
+          const setterName = `set${
+            String(storeKey).charAt(0).toUpperCase() + String(storeKey).slice(1)
+          }`;
           return state[setterName as keyof typeof state];
         })
       : undefined;
@@ -439,4 +442,3 @@ const CheckBox = <T extends Record<string, any> = any>({
 CheckBox.displayName = 'CheckBox';
 
 export { CheckBox, type CheckBoxProps };
-

@@ -1,6 +1,3 @@
-# ignore storybook
-/.storybook
-
 # ignore .vscode
 /.vscode
 

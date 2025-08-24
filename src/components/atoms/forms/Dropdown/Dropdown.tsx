@@ -46,37 +46,37 @@ const colorSchemes = {
     border: 'border-input',
     background: 'bg-background',
     hover: 'hover:border-primary/50',
-    focus: 'focus:shadow-md',
+    focus: 'focus-visible:ring-primary/20',
   },
   secondary: {
     border: 'border-secondary/20',
     background: 'bg-background',
     hover: 'hover:border-secondary/40',
-    focus: 'focus:ring-secondary focus:shadow-md',
+    focus: 'focus-visible:ring-secondary/20',
   },
   destructive: {
     border: 'border-destructive',
     background: 'bg-background',
     hover: 'hover:border-destructive/70',
-    focus: 'focus:ring-destructive focus:shadow-md',
+    focus: 'focus-visible:ring-destructive/20',
   },
   accent: {
     border: 'border-accent/20',
     background: 'bg-background',
     hover: 'hover:border-accent/40',
-    focus: 'focus:ring-accent focus:shadow-md',
+    focus: 'focus-visible:ring-accent/20',
   },
   muted: {
     border: 'border-transparent',
     background: 'bg-muted/20',
     hover: 'hover:bg-muted/30',
-    focus: 'focus:bg-background focus:border-input focus:shadow-md',
+    focus: 'focus-visible:ring-muted/20',
   },
   minimal: {
     border: 'border-transparent',
     background: 'bg-transparent',
     hover: 'hover:bg-muted/10',
-    focus: 'focus:bg-background focus:border-input focus:shadow-md',
+    focus: 'focus-visible:ring-muted/20',
   },
   custom: {
     border: '',
@@ -87,7 +87,7 @@ const colorSchemes = {
 };
 
 const dropdownVariants = {
-  base: 'flex h-10 w-full items-center justify-between rounded-md px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-all duration-200 appearance-none cursor-pointer',
+  base: 'flex h-10 w-full items-center justify-between rounded-md border px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-all duration-200 appearance-none cursor-pointer',
   variants: {
     size: {
       default: 'h-10 px-3 py-2 text-sm',
@@ -136,8 +136,9 @@ const DropdownComponent = <T extends Record<string, any> = any>(
   const storeSetter =
     $store && storeKey
       ? $store((state) => {
-          const setterName =
-            `set${String(storeKey).charAt(0).toUpperCase()}${String(storeKey).slice(1)}` as keyof T;
+          const setterName = `set${String(storeKey)
+            .charAt(0)
+            .toUpperCase()}${String(storeKey).slice(1)}` as keyof T;
           return state[setterName] as (value: string) => void;
         })
       : undefined;
@@ -223,7 +224,7 @@ const DropdownComponent = <T extends Record<string, any> = any>(
 };
 
 const Dropdown = React.forwardRef(DropdownComponent) as <
-  T extends Record<string, any> = any,
+  T extends Record<string, any> = any
 >(
   props: DropdownProps<T> & { ref?: React.Ref<HTMLSelectElement> }
 ) => React.ReactElement;
@@ -232,4 +233,3 @@ const Dropdown = React.forwardRef(DropdownComponent) as <
 (Dropdown as any).displayName = 'Dropdown';
 
 export { Dropdown, type DropdownProps, type DropdownOption };
-

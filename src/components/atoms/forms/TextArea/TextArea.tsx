@@ -70,39 +70,37 @@ const colorSchemes = {
     border: 'border-input',
     background: 'bg-background',
     hover: 'hover:border-primary/50',
-    focus: 'focus-visible:shadow-md',
+    focus: 'focus-visible:ring-primary/20',
   },
   secondary: {
     border: 'border-secondary/20',
     background: 'bg-background',
     hover: 'hover:border-secondary/40',
-    focus: 'focus-visible:ring-secondary focus-visible:shadow-md',
+    focus: 'focus-visible:ring-secondary/20',
   },
   destructive: {
     border: 'border-destructive',
     background: 'bg-background',
     hover: 'hover:border-destructive/70',
-    focus: 'focus-visible:ring-destructive focus-visible:shadow-md',
+    focus: 'focus-visible:ring-destructive/20',
   },
   accent: {
     border: 'border-accent/20',
     background: 'bg-background',
     hover: 'hover:border-accent/40',
-    focus: 'focus-visible:ring-accent focus-visible:shadow-md',
+    focus: 'focus-visible:ring-accent/20',
   },
   muted: {
     border: 'border-muted',
     background: 'bg-muted/10',
     hover: 'hover:border-muted-foreground/30',
-    focus:
-      'focus-visible:bg-background focus-visible:border-input focus-visible:shadow-md',
+    focus: 'focus-visible:ring-foreground/20',
   },
   minimal: {
     border: 'border-transparent',
     background: 'bg-transparent',
     hover: 'hover:bg-muted/5',
-    focus:
-      'focus-visible:bg-background focus-visible:border-input focus-visible:shadow-md',
+    focus: 'focus-visible:ring-muted/20',
   },
   custom: {
     border: '',
@@ -113,7 +111,7 @@ const colorSchemes = {
 };
 
 const textAreaVariants = {
-  base: 'flex min-h-[80px] w-full rounded-md px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-all duration-200',
+  base: 'flex min-h-[80px] w-full rounded-md border px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-all duration-200',
   variants: {
     size: {
       default: 'min-h-[80px] px-3 py-2 text-sm',
@@ -193,8 +191,9 @@ const TextAreaComponent = <T extends Record<string, any> = any>(
   const storeSetter =
     $store && storeKey
       ? $store((state) => {
-          const setterName =
-            `set${String(storeKey).charAt(0).toUpperCase()}${String(storeKey).slice(1)}` as keyof T;
+          const setterName = `set${String(storeKey)
+            .charAt(0)
+            .toUpperCase()}${String(storeKey).slice(1)}` as keyof T;
           return state[setterName] as (value: string) => void;
         })
       : undefined;
@@ -356,7 +355,7 @@ const TextAreaComponent = <T extends Record<string, any> = any>(
 };
 
 const TextArea = React.forwardRef(TextAreaComponent) as <
-  T extends Record<string, any> = any,
+  T extends Record<string, any> = any
 >(
   props: TextAreaProps<T> & { ref?: React.Ref<HTMLTextAreaElement> }
 ) => React.ReactElement;
@@ -365,4 +364,3 @@ const TextArea = React.forwardRef(TextAreaComponent) as <
 (TextArea as any).displayName = 'TextArea';
 
 export { TextArea, type TextAreaProps };
-

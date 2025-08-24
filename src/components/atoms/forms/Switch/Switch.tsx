@@ -45,7 +45,7 @@ interface SwitchProps<T extends Record<string, any> = any> extends BaseProps {
 const colorSchemes = {
   default: {
     unchecked: 'bg-gray-300',
-    checked: 'data-[checked]:bg-foreground',
+    checked: 'data-[checked]:bg-primary',
   },
   secondary: {
     unchecked: 'bg-gray-300',
@@ -153,7 +153,9 @@ const Switch = React.forwardRef<HTMLButtonElement, SwitchProps>(
     const storeSetValue =
       $store && storeKey
         ? $store((state) => {
-            const setterName = `set${String(storeKey).charAt(0).toUpperCase()}${String(storeKey).slice(1)}`;
+            const setterName = `set${String(storeKey)
+              .charAt(0)
+              .toUpperCase()}${String(storeKey).slice(1)}`;
             return (state as any)[setterName];
           })
         : undefined;
@@ -304,4 +306,3 @@ const Switch = React.forwardRef<HTMLButtonElement, SwitchProps>(
 Switch.displayName = 'Switch';
 
 export { Switch, type SwitchProps };
-

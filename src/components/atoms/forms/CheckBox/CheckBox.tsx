@@ -88,10 +88,10 @@ const getColorSchemeValues = (scheme: string) => {
   return colors[scheme as keyof typeof colors] || colors.default;
 };
 
-// 🎨 CSS-in-JS: SVG Icons como data URIs mejorados
+// 🎨 CSS-in-JS: SVG Icons como data URIs mejorados y más grandes
 const getSvgIcons = () => ({
-  check: `url("data:image/svg+xml,%3csvg viewBox='0 0 18 18' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M13.354 4.146a.5.5 0 0 1 0 .708l-6.5 6.5a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L6.5 10.293l6.146-6.147a.5.5 0 0 1 .708 0z' stroke='white' stroke-width='1.5'/%3e%3c/svg%3e")`,
-  indeterminate: `url("data:image/svg+xml,%3csvg viewBox='0 0 18 18' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M3 8h12v1.5H3z'/%3e%3c/svg%3e")`,
+  check: `url("data:image/svg+xml,%3csvg viewBox='0 0 20 20' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M16.707 5.293a1 1 0 0 1 0 1.414l-8 8a1 1 0 0 1-1.414 0l-4-4a1 1 0 1 1 1.414-1.414L8 12.586l7.293-7.293a1 1 0 0 1 1.414 0z' stroke='white' stroke-width='1'/%3e%3c/svg%3e")`,
+  indeterminate: `url("data:image/svg+xml,%3csvg viewBox='0 0 20 20' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M4 9h12v2H4z'/%3e%3c/svg%3e")`,
 });
 
 // 🎨 Hook para CSS-in-JS dinámico con ::before pseudo-element
@@ -129,8 +129,8 @@ const useCheckboxStyles = (
       
       input[data-checkbox-id="${styleId}"]::before {
         content: "";
-        width: 0.65em;
-        height: 0.65em;
+        width: 0.75em;
+        height: 0.75em;
         transform: scale(0);
         transition: none;
         transform-origin: bottom left;
@@ -232,12 +232,12 @@ const colorSchemes = {
 } as const;
 
 const checkBoxVariants = {
-  base: 'peer h-4 w-4 shrink-0 rounded-sm border shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-all duration-200 cursor-pointer',
+  base: 'peer h-5 w-5 shrink-0 rounded-sm border shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-all duration-200 cursor-pointer',
   variants: {
     size: {
-      default: 'h-4 w-4',
-      sm: 'h-3 w-3',
-      lg: 'h-5 w-5',
+      default: 'h-5 w-5',
+      sm: 'h-4 w-4',
+      lg: 'h-6 w-6',
     },
   },
   defaultVariants: {

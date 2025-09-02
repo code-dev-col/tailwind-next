@@ -11,3 +11,6 @@
 *.log
 
 *storybook.log
+
+# ignore agent docs
+/agent_docs

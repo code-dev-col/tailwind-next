@@ -17,10 +17,10 @@
   --color-primary: hsl(202.1 93.7% 43.7%); /* Azul Apple icónico */
   --color-primary-foreground: hsl(0 0% 100%);
   --color-secondary: hsl(200 100% 70%); /* Azul cielo Apple más vibrante */
-  --color-secondary-foreground: hsl(0 0% 100%);
+  --color-secondary-foreground: hsl(220 14% 11);
   --color-destructive: hsl(360 100% 64%); /* Rojo Apple característico */
-  --color-destructive-foreground: hsl(0 0% 100%);
-  --color-accent: hsl(141 100% 84%); /* Rosa Apple suave */
+  --color-destructive-foreground: hsl(360 100% 45.9%);
+  --color-accent: hsl(227 100% 41.6%); /* Azul claro Apple */
   --color-accent-foreground: hsl(220 14% 11%);
   --color-success: hsl(145 85% 47%); /* Verde Apple natural */
   --color-success-foreground: hsl(0 0% 100%);

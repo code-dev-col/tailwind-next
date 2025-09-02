@@ -282,44 +282,43 @@ interface ComponentNameProps extends BaseProps {
 }
 
 const componentVariants = {
-  base: "base-classes-here",
+  base: 'base-classes-here',
   variants: {
     variant: {
-      primary: "variant-classes",
-      secondary: "variant-classes"
+      primary: 'variant-classes',
+      secondary: 'variant-classes',
     },
     size: {
-      sm: "size-classes",
-      md: "size-classes",
-      lg: "size-classes"
-    }
+      sm: 'size-classes',
+      md: 'size-classes',
+      lg: 'size-classes',
+    },
   },
   defaultVariants: {
     variant: 'primary',
-    size: 'md'
-  }
+    size: 'md',
+  },
 };
 
-const ComponentName = React.forwardRef<
-  HTMLElement,
-  ComponentNameProps
->(({ className, $variant, $size, $custom, ...props }, ref) => {
-  return (
-    <element
-      className={cn(
-        componentVariants.base,
-        componentVariants.variants.variant[$variant || 'primary'],
-        componentVariants.variants.size[$size || 'md'],
-        className,
-        $custom
-      )}
-      ref={ref}
-      {...props}
-    />
-  );
-});
+const ComponentName = React.forwardRef<HTMLElement, ComponentNameProps>(
+  ({ className, $variant, $size, $custom, ...props }, ref) => {
+    return (
+      <element
+        className={cn(
+          componentVariants.base,
+          componentVariants.variants.variant[$variant || 'primary'],
+          componentVariants.variants.size[$size || 'md'],
+          className,
+          $custom
+        )}
+        ref={ref}
+        {...props}
+      />
+    );
+  }
+);
 
-ComponentName.displayName = "ComponentName";
+ComponentName.displayName = 'ComponentName';
 
 export { ComponentName, type ComponentNameProps };
 ```
@@ -345,29 +344,23 @@ const Input = <T extends Record<string, any> = any>({
   ...props
 }: InputProps<T>) => {
   // storeKey pattern (nuevo)
-  const storeValue = $store && storeKey
-    ? $store((state) => state[storeKey])
-    : undefined;
+  const storeValue =
+    $store && storeKey ? $store((state) => state[storeKey]) : undefined;
 
   // Legacy pattern support
   const legacyStore = $storeString ? getZustandStore($storeString) : null;
-  const legacyValue = legacyStore ? useStore(legacyStore, (state: any) => state.value) : undefined;
+  const legacyValue = legacyStore
+    ? useStore(legacyStore, (state: any) => state.value)
+    : undefined;
 
   const finalValue = storeValue ?? legacyValue ?? '';
 
   // Security integration
-  const {
-    sanitizedValue,
-    hasSecurityWarning,
-    handleSecureChange
-  } = useSecureField(finalValue, { level: $security });
+  const { sanitizedValue, hasSecurityWarning, handleSecureChange } =
+    useSecureField(finalValue, { level: $security });
 
   return (
-    <input
-      value={sanitizedValue}
-      onChange={handleSecureChange}
-      {...props}
-    />
+    <input value={sanitizedValue} onChange={handleSecureChange} {...props} />
   );
 };
 ```
@@ -410,10 +403,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   render: () => (
-    <ComponentName
-      $store={useComponentExamples}
-      storeKey="defaultExample"
-    />
+    <ComponentName $store={useComponentExamples} storeKey="defaultExample" />
   ),
 };
 
@@ -493,8 +483,7 @@ export const Interactive: Story = {
         />
         <button
           onClick={clearAllComponent}
-          className="px-3 py-1 bg-gray-200 rounded text-sm"
-        >
+          className="px-3 py-1 bg-gray-200 rounded text-sm">
           Clear All
         </button>
       </div>
@@ -628,7 +617,10 @@ const gradient = getGradient('ocean-deep');
 - **Estado**: Patrón storeKey para mejor DX y tipado
 - **Escalabilidad**: Atomic Design estricto para crecimiento controlado
 
+## 📄 Documentación
+
+- **Archivos MD**: Todos los archivos de documentación en formato Markdown deben ser creados en el directorio `agent_docs/` para mantener la organización y facilitar el acceso a templates, guías y referencias técnicas
+
 ---
 
 **Estas instrucciones son mandatorias y no negociables para mantener la coherencia del sistema de diseño.**
-

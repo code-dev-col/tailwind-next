@@ -139,6 +139,10 @@ export {
   type FilterDropdownConfig,
   type FilterCheckboxConfig,
 } from './components/molecules/forms/FilterGroup';
+export {
+  ContactForm,
+  type ContactFormProps,
+} from './components/molecules/forms/ContactForm';
 export { cn } from './utils/cn';
 export * from './utils/gradients';
 export { useSecureField, type SecurityOptions } from './utils/useSecureField';

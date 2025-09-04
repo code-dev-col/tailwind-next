@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { FormField } from './FormField';
-import { useFormFieldExamples } from '../../../stores/formFieldExamples.store';
+import { useFormFieldExamples } from '../../../../stores/formFieldExamples.store';
 
 const meta: Meta<typeof FormField> = {
-  title: 'Molecules/FormField',
+  title: 'Molecules/Forms/FormField',
   component: FormField,
   parameters: {
     layout: 'padded',

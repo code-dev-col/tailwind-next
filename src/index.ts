@@ -115,11 +115,17 @@ export {
 export {
   UnorderedList,
   type UnorderedListProps,
-} from './components/molecules/UnorderedList';
+} from './components/molecules/display/UnorderedList';
 export {
   FormField,
   type FormFieldProps,
-} from './components/molecules/FormField';
+} from './components/molecules/forms/FormField';
+export {
+  SearchBox,
+  type SearchBoxProps,
+  type SearchVariant,
+  type SearchSize,
+} from './components/molecules/forms/SearchBox';
 export { cn } from './utils/cn';
 export * from './utils/gradients';
 export { useSecureField, type SecurityOptions } from './utils/useSecureField';

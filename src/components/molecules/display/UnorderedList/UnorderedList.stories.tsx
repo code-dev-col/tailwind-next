@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { UnorderedList } from './UnorderedList';
-import { ListItem } from '../../atoms/media/ListItem';
+import { ListItem } from '../../../atoms/media/ListItem';
 
 const meta: Meta<typeof UnorderedList> = {
-  title: 'Molecules/UnorderedList',
+  title: 'Molecules/Display/UnorderedList',
   component: UnorderedList,
   parameters: {
     layout: 'centered',
@@ -182,4 +182,3 @@ export const WithGradients: Story = {
     </UnorderedList>
   ),
 };
-

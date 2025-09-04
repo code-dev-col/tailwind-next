@@ -124,12 +124,11 @@ const inputVariants = {
   base: 'flex h-10 w-full rounded-md border px-3 py-2 text-sm shadow-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-all duration-200',
   variants: {
     variant: {
-      default:
-        'border-input bg-background hover:border-primary/50 focus-visible:shadow-md',
+      default: 'border-input bg-background hover:border-primary/50',
       destructive:
-        'border-destructive bg-background hover:border-destructive/70 focus-visible:ring-destructive focus-visible:shadow-md',
+        'border-destructive bg-background hover:border-destructive/70 focus-visible:ring-destructive',
       ghost:
-        'border-transparent bg-accent hover:bg-accent/80 focus-visible:bg-background focus-visible:border-input focus-visible:shadow-md',
+        'border-transparent bg-accent hover:bg-accent/80 focus-visible:bg-background focus-visible:border-input',
     },
     size: {
       default: 'h-10 px-3 py-2',
@@ -186,8 +185,9 @@ const InputComponent = <T extends Record<string, any> = any>(
   const storeSetter =
     $store && storeKey
       ? $store((state) => {
-          const setterName =
-            `set${String(storeKey).charAt(0).toUpperCase()}${String(storeKey).slice(1)}` as keyof T;
+          const setterName = `set${String(storeKey)
+            .charAt(0)
+            .toUpperCase()}${String(storeKey).slice(1)}` as keyof T;
           return state[setterName] as (value: string) => void;
         })
       : undefined;
@@ -274,7 +274,7 @@ const InputComponent = <T extends Record<string, any> = any>(
               currentColorScheme.text,
               currentColorScheme.placeholder,
               inputVariants.variants.size[$size || 'default'],
-              'focus-visible:shadow-md', // Mantener shadow por defecto
+              // Mantener shadow por defecto
               className
             )
       }
@@ -351,7 +351,7 @@ const InputComponent = <T extends Record<string, any> = any>(
 };
 
 const Input = React.forwardRef(InputComponent) as <
-  T extends Record<string, any> = any,
+  T extends Record<string, any> = any
 >(
   props: InputProps<T> & { ref?: React.Ref<HTMLInputElement> }
 ) => React.ReactElement;
@@ -360,4 +360,3 @@ const Input = React.forwardRef(InputComponent) as <
 (Input as any).displayName = 'Input';
 
 export { Input, type InputProps };
-

@@ -1,6 +1,6 @@
 import React from 'react';
-import { cn } from '../../../utils/cn';
-import type { BaseProps } from '../../../types';
+import { cn } from '../../../../utils/cn';
+import type { BaseProps } from '../../../../types';
 
 interface UnorderedListProps extends BaseProps {
   /**
@@ -139,4 +139,3 @@ const UnorderedList = React.forwardRef<HTMLUListElement, UnorderedListProps>(
 UnorderedList.displayName = 'UnorderedList';
 
 export { UnorderedList, type UnorderedListProps };
-

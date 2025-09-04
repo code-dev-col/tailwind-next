@@ -1,17 +1,17 @@
 import React from 'react';
-import { cn } from '../../../utils/cn';
-import type { BaseProps } from '../../../types';
+import { cn } from '../../../../utils/cn';
+import type { BaseProps } from '../../../../types';
 import { StoreApi, UseBoundStore } from 'zustand';
 
 // Importar todos los Atoms necesarios
-import { Container } from '../../atoms/layout/Container';
-import { Grid } from '../../atoms/layout/Grid';
-import { Divider } from '../../atoms/layout/Divider';
-import { Text } from '../../atoms/display/Text';
-import { Label } from '../../atoms/forms/Label';
-import { Input, type InputProps } from '../../atoms/forms/Input';
-import { TextArea, type TextAreaProps } from '../../atoms/forms/TextArea';
-import { Dropdown, type DropdownProps } from '../../atoms/forms/Dropdown';
+import { Container } from '../../../atoms/layout/Container';
+import { Grid } from '../../../atoms/layout/Grid';
+import { Divider } from '../../../atoms/layout/Divider';
+import { Text } from '../../../atoms/display/Text';
+import { Label } from '../../../atoms/forms/Label';
+import { Input, type InputProps } from '../../../atoms/forms/Input';
+import { TextArea, type TextAreaProps } from '../../../atoms/forms/TextArea';
+import { Dropdown, type DropdownProps } from '../../../atoms/forms/Dropdown';
 
 // Tipos de campo soportados
 type FieldType = 'input' | 'textarea' | 'dropdown';

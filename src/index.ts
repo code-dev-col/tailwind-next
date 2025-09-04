@@ -132,6 +132,13 @@ export {
   type LoginVariant,
   type LoginSize,
 } from './components/molecules/forms/LoginForm';
+export {
+  FilterGroup,
+  type FilterGroupProps,
+  type FilterOption,
+  type FilterDropdownConfig,
+  type FilterCheckboxConfig,
+} from './components/molecules/forms/FilterGroup';
 export { cn } from './utils/cn';
 export * from './utils/gradients';
 export { useSecureField, type SecurityOptions } from './utils/useSecureField';

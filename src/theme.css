@@ -4,228 +4,230 @@
  */
 
 @theme {
-  /* Colores base estilo Apple - Ultra modernos y sofisticados */
-  --color-background: hsl(0 0% 99%); /* Blanco casi puro como iOS */
-  --color-foreground: hsl(220 14% 11%); /* Negro suave Apple */
-  --color-muted: hsl(220 13% 96%); /* Gris ultraclaro Apple */
-  --color-muted-foreground: hsl(220 9% 46%); /* Gris medio Apple */
-  --color-border: hsl(220 13% 91%); /* Bordes suaves Apple */
-  --color-input: hsl(220 13% 95%); /* Inputs con tinte gris Apple */
-  --color-ring: hsl(202.1 93.7% 43.7%); /* Azul Apple característico */
+  /* Escala armónica de azules - Base principal */
+  --color-background: hsl(220 20% 98%); /* Azul muy claro, casi blanco */
+  --color-foreground: hsl(220 25% 15%); /* Azul muy oscuro para texto */
+  --color-muted: hsl(220 15% 94%); /* Azul ultraclaro para fondos */
+  --color-muted-foreground: hsl(220 12% 55%); /* Azul gris medio */
+  --color-border: hsl(220 18% 88%); /* Azul claro para bordes */
+  --color-input: hsl(220 16% 96%); /* Azul muy claro para inputs */
+  --color-ring: hsl(215 85% 55%); /* Azul medio para focus rings */
 
-  /* Primarios & semánticos - Paleta Apple moderna */
-  --color-primary: hsl(202.1 93.7% 43.7%); /* Azul Apple icónico */
+  /* Primarios - Escala de azules progresiva */
+  --color-primary: hsl(215 85% 55%); /* Azul principal vibrante */
   --color-primary-foreground: hsl(0 0% 100%);
-  --color-secondary: hsl(200 100% 70%); /* Azul cielo Apple más vibrante */
-  --color-secondary-foreground: hsl(220 14% 11);
-  --color-destructive: hsl(360 100% 76.5%); /* Rojo Apple característico */
-  --color-destructive-foreground: hsl(220 14% 11);
-  --color-accent: hsl(227 100% 72.7%);
-  --color-accent-foreground: hsl(220 14% 11%);
-  --color-success: hsl(145 85% 47%); /* Verde Apple natural */
-  --color-success-foreground: hsl(0 0% 100%);
-  --color-warning: hsl(35 91% 62%); /* Naranja Apple cálido */
-  --color-warning-foreground: hsl(0 0% 100%);
-  --color-popover: hsl(0 0% 100%);
-  --color-popover-foreground: hsl(220 14% 11%);
-  --color-card: hsl(0 0% 100%);
-  --color-card-foreground: hsl(220 14% 11%);
+  --color-secondary: hsl(210 75% 65%); /* Azul cielo más suave */
+  --color-secondary-foreground: hsl(220 25% 15%);
+  --color-accent: hsl(205 65% 75%); /* Azul claro para acentos */
+  --color-accent-foreground: hsl(220 25% 15%);
 
-  /* Radii estilo Apple - Más generosos y modernos */
-  --radius-xs: 4px; /* Mínimo más suave */
-  --radius-sm: 6px; /* Pequeño más redondeado */
-  --radius-md: 8px; /* Medio estilo Apple */
-  --radius-lg: 12px; /* Grande más pronunciado */
-  --radius-xl: 16px; /* Extra grande Apple */
-  --radius-2xl: 20px; /* Muy grande, estilo botones Apple */
+  /* Colores semánticos específicos */
+  --color-destructive: hsl(355 85% 60%); /* Rojo característico */
+  --color-destructive-foreground: hsl(0 0% 100%);
+  --color-warning: hsl(35 90% 58%); /* Naranja cálido */
+  --color-warning-foreground: hsl(0 0% 100%);
+  --color-success: hsl(155 70% 50%); /* Verde natural pero con tinte azul */
+  --color-success-foreground: hsl(0 0% 100%);
+
+  /* Elementos de interfaz en azul */
+  --color-popover: hsl(220 20% 98%);
+  --color-popover-foreground: hsl(220 25% 15%);
+  --color-card: hsl(220 20% 98%);
+  --color-card-foreground: hsl(220 25% 15%);
+
+  /* Radii estilo moderno */
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 20px;
   --radius-full: 9999px;
 
-  /* Sombras neumórficas para UI moderna */
-  --shadow-neumorphic-light: 8px 8px 16px hsl(230 20% 90%),
-    -8px -8px 16px hsl(0 0% 100%);
-  --shadow-neumorphic-light-soft: 4px 4px 12px hsl(230 20% 92%),
-    -4px -4px 12px hsl(0 0% 100%);
-  --shadow-neumorphic-inner: inset 4px 4px 8px hsl(230 20% 90%),
-    inset -4px -4px 8px hsl(0 0% 100%);
-  --shadow-neumorphic-inner-soft: inset 2px 2px 6px hsl(230 20% 92%),
-    inset -2px -2px 6px hsl(0 0% 100%);
+  /* Sombras sutiles en tonos azules */
+  --shadow-neumorphic-light: 0 2px 8px hsla(220 25% 15% / 0.04),
+    0 1px 3px hsla(220 25% 15% / 0.02);
+  --shadow-neumorphic-light-soft: 0 1px 4px hsla(220 25% 15% / 0.03),
+    0 1px 2px hsla(220 25% 15% / 0.01);
+  --shadow-neumorphic-inner: inset 0 1px 2px hsla(220 25% 15% / 0.06),
+    inset 0 1px 4px hsla(220 25% 15% / 0.04);
+  --shadow-neumorphic-inner-soft: inset 0 1px 1px hsla(220 25% 15% / 0.04),
+    inset 0 1px 2px hsla(220 25% 15% / 0.02);
 }
 
-/* Variables CSS adicionales para compatibilidad con shadcn/ui */
+/* Variables CSS para compatibilidad con shadcn/ui - Sincronizadas con @theme */
 :root {
-  /* Mapeo estilo Apple para shadcn/ui (HSL sin hsl()) */
-  --background: 0 0% 99%;
-  --foreground: 220 14% 11%;
-  --muted: 220 13% 96%;
-  --muted-foreground: 220 9% 46%;
-  --border: 220 13% 91%;
-  --input: 220 13% 95%;
-  --ring: 202.1 93.7% 43.7%;
-  --primary: 202.1 93.7% 43.7%;
-  --primary-foreground: 0 0% 100%;
-  --secondary: 200 100% 70%;
-  --secondary-foreground: 0 0% 100%;
-  --destructive: 360 100% 64%;
-  --destructive-foreground: 0 0% 100%;
-  --accent: 141 100% 84%;
-  --accent-foreground: 220 14% 11%;
-  --success: 145 85% 47%;
-  --success-foreground: 0 0% 100%;
-  --warning: 35 91% 62%;
-  --warning-foreground: 0 0% 100%;
-  --popover: 0 0% 100%;
-  --popover-foreground: 220 14% 11%;
-  --card: 0 0% 100%;
-  --card-foreground: 220 14% 11%;
-  --radius: 8px; /* Radios más suaves estilo Apple */
+  /* Escala armónica de azules (HSL sin hsl() para shadcn/ui) */
+  --background: 220 20% 98%;
+  --foreground: 220 25% 15%;
+  --muted: 220 15% 94%;
+  --muted-foreground: 220 12% 55%;
+  --border: 220 18% 88%;
+  --input: 220 16% 96%;
+  --ring: 215 85% 55%;
 
-  /* Sombras y gradientes actualizados estilo Apple */
+  /* Primarios - Escala de azules progresiva */
+  --primary: 215 85% 55%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 210 75% 65%;
+  --secondary-foreground: 220 25% 15%;
+  --accent: 205 65% 75%;
+  --accent-foreground: 220 25% 15%;
+
+  /* Colores semánticos específicos */
+  --destructive: 355 85% 60%;
+  --destructive-foreground: 0 0% 100%;
+  --warning: 35 90% 58%;
+  --warning-foreground: 0 0% 100%;
+  --success: 155 70% 50%;
+  --success-foreground: 0 0% 100%;
+
+  /* Elementos de interfaz */
+  --popover: 220 20% 98%;
+  --popover-foreground: 220 25% 15%;
+  --card: 220 20% 98%;
+  --card-foreground: 220 25% 15%;
+  --radius: 8px;
+
+  /* Sombras focus en azul */
   --shadow-focus: 0 0 0 2px hsl(var(--background)), 0 0 0 4px hsl(var(--ring));
 
-  /* Variables Apple adicionales */
-  --apple-blue: 202.1 93.7% 43.7%;
-  --apple-red: 360 100% 64%;
-  --apple-green: 145 85% 47%;
-  --apple-orange: 35 91% 62%;
-  --apple-pink: 141 100% 84%;
-  --apple-purple: 280 85% 70%;
-  --apple-gray: 220 9% 46%;
-  --apple-gray-2: 220 13% 91%;
-  --apple-gray-3: 220 13% 96%;
-  --apple-gray-4: 0 0% 99%;
-  --apple-gray-5: 220 14% 11%;
-  --apple-gray-6: 0 0% 8%;
-
-  /* Gradientes estilo Apple - Modernos y sofisticados */
+  /* Gradientes armónicos en azules */
   --gradient-primary: linear-gradient(
     135deg,
-    hsl(202.1 93.7% 43.7%) 0%,
-    hsl(217 91% 60%) 50%,
-    hsl(230 80% 70%) 100%
+    hsl(215 85% 55%) 0%,
+    hsl(210 80% 60%) 50%,
+    hsl(205 75% 65%) 100%
   );
   --gradient-secondary: linear-gradient(
     135deg,
-    hsl(200 100% 70%) 0%,
-    hsl(210 91% 75%) 50%,
-    hsl(220 85% 80%) 100%
-  );
-  --gradient-danger: linear-gradient(
-    135deg,
-    hsl(360 100% 64%) 0%,
-    hsl(350 85% 63%) 50%,
-    hsl(340 75% 68%) 100%
-  );
-  --gradient-success: linear-gradient(
-    135deg,
-    hsl(145 85% 47%) 0%,
-    hsl(155 80% 52%) 50%,
-    hsl(165 75% 57%) 100%
+    hsl(210 75% 65%) 0%,
+    hsl(205 70% 70%) 50%,
+    hsl(200 65% 75%) 100%
   );
   --gradient-accent: linear-gradient(
     135deg,
-    hsl(141 100% 84%) 0%,
-    hsl(325 85% 86%) 50%,
-    hsl(335 75% 88%) 100%
+    hsl(205 65% 75%) 0%,
+    hsl(200 60% 78%) 50%,
+    hsl(195 55% 82%) 100%
+  );
+  --gradient-danger: linear-gradient(
+    135deg,
+    hsl(355 85% 60%) 0%,
+    hsl(350 80% 63%) 50%,
+    hsl(345 75% 66%) 100%
   );
   --gradient-warning: linear-gradient(
     135deg,
-    hsl(35 91% 62%) 0%,
-    hsl(30 85% 65%) 50%,
-    hsl(25 80% 68%) 100%
+    hsl(35 90% 58%) 0%,
+    hsl(30 85% 62%) 50%,
+    hsl(25 80% 65%) 100%
+  );
+  --gradient-success: linear-gradient(
+    135deg,
+    hsl(155 70% 50%) 0%,
+    hsl(160 65% 55%) 50%,
+    hsl(165 60% 60%) 100%
   );
 
-  /* Sombras estilo Apple - Más sutiles y sofisticadas */
-  --shadow-neumorphic-light: 0 1px 3px hsla(220 14% 11% / 0.05),
-    0 4px 12px hsla(220 14% 11% / 0.04);
-  --shadow-neumorphic-light-soft: 0 1px 2px hsla(220 14% 11% / 0.03),
-    0 2px 8px hsla(220 14% 11% / 0.02);
-  --shadow-neumorphic-inner: inset 0 1px 2px hsla(220 14% 11% / 0.06),
-    inset 0 1px 4px hsla(220 14% 11% / 0.04);
-  --shadow-neumorphic-inner-soft: inset 0 1px 1px hsla(220 14% 11% / 0.04),
-    inset 0 1px 2px hsla(220 14% 11% / 0.02);
+  /* Sombras sutiles */
+  --shadow-neumorphic-light: 0 2px 8px hsla(220 25% 15% / 0.04),
+    0 1px 3px hsla(220 25% 15% / 0.02);
+  --shadow-neumorphic-light-soft: 0 1px 4px hsla(220 25% 15% / 0.03),
+    0 1px 2px hsla(220 25% 15% / 0.01);
+  --shadow-neumorphic-inner: inset 0 1px 2px hsla(220 25% 15% / 0.06),
+    inset 0 1px 4px hsla(220 25% 15% / 0.04);
+  --shadow-neumorphic-inner-soft: inset 0 1px 1px hsla(220 25% 15% / 0.04),
+    inset 0 1px 2px hsla(220 25% 15% / 0.02);
 }
 
-/* Dark mode tokens estilo Apple - Sofisticado y moderno */
+/* Dark mode - Escala armónica de azules oscuros */
 :root.dark {
-  /* @theme variables for dark mode - Estilo Apple Dark Mode */
-  --color-background: hsl(0 0% 8%); /* Negro profundo Apple */
-  --color-foreground: hsl(0 0% 98%); /* Blanco casi puro para texto */
-  --color-muted: hsl(0 0% 14%); /* Gris oscuro Apple */
-  --color-muted-foreground: hsl(0 0% 65%); /* Gris medio para dark mode */
-  --color-border: hsl(0 0% 20%); /* Bordes sutiles dark */
-  --color-input: hsl(0 0% 16%); /* Inputs dark Apple */
-  --color-ring: hsl(211 100% 60%); /* Azul Apple más brillante en dark */
-  --color-primary: hsl(211 100% 60%); /* Azul Apple ajustado para dark */
-  --color-primary-foreground: hsl(0 0% 8%);
-  --color-secondary: hsl(200 100% 75%); /* Azul cielo más brillante */
-  --color-secondary-foreground: hsl(0 0% 8%);
-  --color-destructive: hsl(360 100% 70%); /* Rojo Apple más brillante */
-  --color-destructive-foreground: hsl(0 0% 8%);
-  --color-accent: hsl(315 100% 88%); /* Rosa Apple más claro */
-  --color-accent-foreground: hsl(0 0% 8%);
-  --color-success: hsl(145 85% 55%); /* Verde Apple más brillante */
-  --color-success-foreground: hsl(0 0% 8%);
-  --color-warning: hsl(35 91% 70%); /* Naranja Apple más brillante */
-  --color-warning-foreground: hsl(0 0% 8%);
-  --color-popover: hsl(0 0% 8%);
-  --color-popover-foreground: hsl(0 0% 98%);
-  --color-card: hsl(0 0% 8%);
-  --color-card-foreground: hsl(0 0% 98%);
+  /* @theme variables for dark mode - Azules oscuros armónicos */
+  --color-background: hsl(220 25% 8%); /* Azul muy oscuro */
+  --color-foreground: hsl(220 15% 95%); /* Azul muy claro para texto */
+  --color-muted: hsl(220 20% 12%); /* Azul oscuro para fondos */
+  --color-muted-foreground: hsl(220 12% 65%); /* Azul gris medio */
+  --color-border: hsl(220 18% 18%); /* Azul oscuro para bordes */
+  --color-input: hsl(220 20% 10%); /* Azul muy oscuro para inputs */
+  --color-ring: hsl(215 85% 65%); /* Azul brillante para focus */
 
-  /* shadcn/ui compatibility - Dark mode Apple */
-  --background: 0 0% 8%;
-  --foreground: 0 0% 98%;
-  --muted: 0 0% 14%;
-  --muted-foreground: 0 0% 65%;
-  --border: 0 0% 20%;
-  --input: 0 0% 16%;
-  --ring: 211 100% 60%;
-  --primary: 211 100% 60%;
-  --primary-foreground: 0 0% 8%;
-  --secondary: 200 100% 75%;
-  --secondary-foreground: 0 0% 8%;
-  --destructive: 360 100% 70%;
-  --destructive-foreground: 0 0% 8%;
-  --accent: 315 100% 88%;
-  --accent-foreground: 0 0% 8%;
-  --success: 145 85% 55%;
-  --success-foreground: 0 0% 8%;
-  --warning: 35 91% 70%;
-  --warning-foreground: 0 0% 8%;
-  --popover: 0 0% 8%;
-  --popover-foreground: 0 0% 98%;
-  --card: 0 0% 8%;
-  --card-foreground: 0 0% 98%;
+  /* Primarios - Azules brillantes para dark mode */
+  --color-primary: hsl(215 85% 65%);
+  --color-primary-foreground: hsl(220 25% 8%);
+  --color-secondary: hsl(210 75% 70%);
+  --color-secondary-foreground: hsl(220 25% 8%);
+  --color-accent: hsl(205 65% 80%);
+  --color-accent-foreground: hsl(220 25% 8%);
 
-  /* Sombras Apple para dark mode */
-  --shadow-neumorphic-light: 0 1px 3px hsla(0 0% 0% / 0.12),
-    0 4px 12px hsla(0 0% 0% / 0.08);
-  --shadow-neumorphic-light-soft: 0 1px 2px hsla(0 0% 0% / 0.08),
-    0 2px 8px hsla(0 0% 0% / 0.04);
-  --shadow-neumorphic-inner: inset 0 1px 2px hsla(0 0% 0% / 0.15),
-    inset 0 1px 4px hsla(0 0% 0% / 0.1);
-  --shadow-neumorphic-inner-soft: inset 0 1px 1px hsla(0 0% 0% / 0.1),
-    inset 0 1px 2px hsla(0 0% 0% / 0.06);
+  /* Colores semánticos para dark mode */
+  --color-destructive: hsl(355 85% 65%);
+  --color-destructive-foreground: hsl(220 25% 8%);
+  --color-warning: hsl(35 90% 65%);
+  --color-warning-foreground: hsl(220 25% 8%);
+  --color-success: hsl(155 70% 55%);
+  --color-success-foreground: hsl(220 25% 8%);
+
+  /* Elementos de interfaz dark */
+  --color-popover: hsl(220 25% 8%);
+  --color-popover-foreground: hsl(220 15% 95%);
+  --color-card: hsl(220 25% 8%);
+  --color-card-foreground: hsl(220 15% 95%);
+
+  /* shadcn/ui compatibility - Dark mode */
+  --background: 220 25% 8%;
+  --foreground: 220 15% 95%;
+  --muted: 220 20% 12%;
+  --muted-foreground: 220 12% 65%;
+  --border: 220 18% 18%;
+  --input: 220 20% 10%;
+  --ring: 215 85% 65%;
+  --primary: 215 85% 65%;
+  --primary-foreground: 220 25% 8%;
+  --secondary: 210 75% 70%;
+  --secondary-foreground: 220 25% 8%;
+  --destructive: 355 85% 65%;
+  --destructive-foreground: 220 25% 8%;
+  --accent: 205 65% 80%;
+  --accent-foreground: 220 25% 8%;
+  --success: 155 70% 55%;
+  --success-foreground: 220 25% 8%;
+  --warning: 35 90% 65%;
+  --warning-foreground: 220 25% 8%;
+  --popover: 220 25% 8%;
+  --popover-foreground: 220 15% 95%;
+  --card: 220 25% 8%;
+  --card-foreground: 220 15% 95%;
+
+  /* Sombras para dark mode */
+  --shadow-neumorphic-light: 0 2px 8px hsla(220 25% 0% / 0.2),
+    0 1px 3px hsla(220 25% 0% / 0.1);
+  --shadow-neumorphic-light-soft: 0 1px 4px hsla(220 25% 0% / 0.15),
+    0 1px 2px hsla(220 25% 0% / 0.08);
+  --shadow-neumorphic-inner: inset 0 1px 2px hsla(220 25% 0% / 0.25),
+    inset 0 1px 4px hsla(220 25% 0% / 0.15);
+  --shadow-neumorphic-inner-soft: inset 0 1px 1px hsla(220 25% 0% / 0.2),
+    inset 0 1px 2px hsla(220 25% 0% / 0.1);
 }
 
-/* Helper classes Apple style - Gradientes y efectos modernos */
+/* Helper classes con escala armónica de azules */
 .bg-gradient-primary {
   background-image: var(--gradient-primary);
 }
 .bg-gradient-secondary {
   background-image: var(--gradient-secondary);
 }
-.bg-gradient-danger {
-  background-image: var(--gradient-danger);
-}
-.bg-gradient-success {
-  background-image: var(--gradient-success);
-}
 .bg-gradient-accent {
   background-image: var(--gradient-accent);
 }
+.bg-gradient-danger {
+  background-image: var(--gradient-danger);
+}
 .bg-gradient-warning {
   background-image: var(--gradient-warning);
+}
+.bg-gradient-success {
+  background-image: var(--gradient-success);
 }
 
 /* Clases de sombra neumórfica para uso directo */

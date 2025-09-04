@@ -40,43 +40,44 @@ interface CheckBoxProps<T extends Record<string, any> = any> extends BaseProps {
   onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
 }
 
-// 🎨 CSS-in-JS: Función para obtener colores por esquema
+// 🎨 CSS-in-JS: Función para obtener colores por esquema usando variables CSS del theme
 const getColorSchemeValues = (scheme: string) => {
+  // Usar CSS custom properties del theme.css para máxima personalización
   const colors = {
     default: {
-      primary: 'hsl(245 65% 65%)',
-      border: 'hsl(245 65% 65% / 0.5)',
-      focus: 'hsl(245 65% 65% / 0.2)',
+      primary: 'hsl(var(--primary))',
+      border: 'hsl(var(--primary) / 0.5)',
+      focus: 'hsl(var(--primary) / 0.2)',
     },
     secondary: {
-      primary: 'hsl(195 60% 55%)',
-      border: 'hsl(195 60% 55% / 0.5)',
-      focus: 'hsl(195 60% 55% / 0.2)',
+      primary: 'hsl(var(--secondary))',
+      border: 'hsl(var(--secondary) / 0.5)',
+      focus: 'hsl(var(--secondary) / 0.2)',
     },
     destructive: {
-      primary: 'hsl(358 65% 58%)',
-      border: 'hsl(358 65% 58% / 0.5)',
-      focus: 'hsl(358 65% 58% / 0.2)',
+      primary: 'hsl(var(--destructive))',
+      border: 'hsl(var(--destructive) / 0.5)',
+      focus: 'hsl(var(--destructive) / 0.2)',
     },
     accent: {
-      primary: 'hsl(270 50% 75%)',
-      border: 'hsl(270 50% 75% / 0.5)',
-      focus: 'hsl(270 50% 75% / 0.2)',
+      primary: 'hsl(var(--accent))',
+      border: 'hsl(var(--accent) / 0.5)',
+      focus: 'hsl(var(--accent) / 0.2)',
     },
     muted: {
-      primary: 'hsl(215 16% 47%)',
-      border: 'hsl(215 16% 47% / 0.5)',
-      focus: 'hsl(215 16% 47% / 0.2)',
+      primary: 'hsl(var(--muted-foreground))',
+      border: 'hsl(var(--muted-foreground) / 0.5)',
+      focus: 'hsl(var(--muted-foreground) / 0.2)',
     },
     minimal: {
-      primary: 'hsl(222 84% 5%)',
-      border: 'hsl(222 84% 5% / 0.3)',
-      focus: 'hsl(222 84% 5% / 0.1)',
+      primary: 'hsl(var(--foreground))',
+      border: 'hsl(var(--foreground) / 0.3)',
+      focus: 'hsl(var(--foreground) / 0.1)',
     },
     ghost: {
-      primary: 'hsl(245 65% 65%)',
-      border: 'hsl(245 65% 65% / 0.2)',
-      focus: 'hsl(245 65% 65% / 0.1)',
+      primary: 'hsl(var(--primary))',
+      border: 'hsl(var(--primary) / 0.2)',
+      focus: 'hsl(var(--primary) / 0.1)',
     },
     custom: {
       primary: 'currentColor',
@@ -165,7 +166,7 @@ const useCheckboxStyles = (
       }
       
       input[data-checkbox-id="${styleId}"]:disabled::before {
-        background-color: hsl(215 16% 47% / 0.5) !important;
+        background-color: hsl(var(--muted-foreground) / 0.5) !important;
       }
       
       @media (forced-colors: active) {
@@ -187,7 +188,7 @@ const useCheckboxStyles = (
   return inputRef;
 };
 
-// 🎨 Sistema de esquemas de color simplificado (solo para borders base de Tailwind)
+// 🎨 Sistema de esquemas de color usando theme.css
 const colorSchemes = {
   default: {
     border: 'border-primary/50',
@@ -210,9 +211,9 @@ const colorSchemes = {
     focusRing: 'focus-visible:ring-accent/20',
   },
   muted: {
-    border: 'border-muted',
-    hoverBorder: 'hover:border-muted-foreground/80',
-    focusRing: 'focus-visible:ring-muted/20',
+    border: 'border-muted-foreground/50',
+    hoverBorder: 'hover:border-muted-foreground',
+    focusRing: 'focus-visible:ring-muted-foreground/20',
   },
   minimal: {
     border: 'border-foreground/30',

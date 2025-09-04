@@ -126,6 +126,12 @@ export {
   type SearchVariant,
   type SearchSize,
 } from './components/molecules/forms/SearchBox';
+export {
+  LoginForm,
+  type LoginFormProps,
+  type LoginVariant,
+  type LoginSize,
+} from './components/molecules/forms/LoginForm';
 export { cn } from './utils/cn';
 export * from './utils/gradients';
 export { useSecureField, type SecurityOptions } from './utils/useSecureField';

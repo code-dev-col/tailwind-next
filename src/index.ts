@@ -65,6 +65,7 @@ export {
   type SpinnerProps,
   type SpinnerType,
 } from './components/atoms/feedback/Spinner';
+export { Meter, type MeterProps } from './components/atoms/feedback/Meter';
 export {
   Text,
   type TextProps,
@@ -143,6 +144,10 @@ export {
   ContactForm,
   type ContactFormProps,
 } from './components/molecules/forms/ContactForm';
+export {
+  UserCard,
+  type UserCardProps,
+} from './components/molecules/cards/UserCard';
 export { cn } from './utils/cn';
 export * from './utils/gradients';
 export { useSecureField, type SecurityOptions } from './utils/useSecureField';

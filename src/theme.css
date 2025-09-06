@@ -290,3 +290,192 @@
   transform: translateY(0);
   transition-duration: 100ms;
 }
+
+/* Estilos para meter con theme.css - Distribuibles con la biblioteca */
+@layer components {
+  /* Meter Base Styles */
+  .meter-base {
+    appearance: none;
+    border: none;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+
+  /* Primary meter styles */
+  .meter-primary::-webkit-meter-bar {
+    background: hsl(var(--muted) / 0.2);
+    border-radius: inherit;
+  }
+  .meter-primary::-webkit-meter-optimum-value {
+    background: hsl(var(--primary));
+    border-radius: inherit;
+  }
+  .meter-primary::-webkit-meter-suboptimum-value {
+    background: hsl(var(--warning));
+    border-radius: inherit;
+  }
+  .meter-primary::-webkit-meter-even-less-good-value {
+    background: hsl(var(--destructive));
+    border-radius: inherit;
+  }
+
+  /* Secondary meter styles */
+  .meter-secondary::-webkit-meter-bar {
+    background: hsl(var(--secondary) / 0.2);
+    border-radius: inherit;
+  }
+  .meter-secondary::-webkit-meter-optimum-value {
+    background: hsl(var(--secondary));
+    border-radius: inherit;
+  }
+  .meter-secondary::-webkit-meter-suboptimum-value {
+    background: hsl(var(--warning));
+    border-radius: inherit;
+  }
+  .meter-secondary::-webkit-meter-even-less-good-value {
+    background: hsl(var(--destructive));
+    border-radius: inherit;
+  }
+
+  /* Accent meter styles */
+  .meter-accent::-webkit-meter-bar {
+    background: hsl(var(--accent) / 0.2);
+    border-radius: inherit;
+  }
+  .meter-accent::-webkit-meter-optimum-value {
+    background: hsl(var(--accent));
+    border-radius: inherit;
+  }
+  .meter-accent::-webkit-meter-suboptimum-value {
+    background: hsl(var(--warning));
+    border-radius: inherit;
+  }
+  .meter-accent::-webkit-meter-even-less-good-value {
+    background: hsl(var(--destructive));
+    border-radius: inherit;
+  }
+
+  /* Destructive meter styles */
+  .meter-destructive::-webkit-meter-bar {
+    background: hsl(var(--destructive) / 0.2);
+    border-radius: inherit;
+  }
+  .meter-destructive::-webkit-meter-optimum-value {
+    background: hsl(var(--destructive));
+    border-radius: inherit;
+  }
+  .meter-destructive::-webkit-meter-suboptimum-value {
+    background: hsl(var(--destructive) / 0.8);
+    border-radius: inherit;
+  }
+  .meter-destructive::-webkit-meter-even-less-good-value {
+    background: hsl(var(--destructive) / 0.6);
+    border-radius: inherit;
+  }
+
+  /* Success meter styles */
+  .meter-success::-webkit-meter-bar {
+    background: hsl(var(--success) / 0.2);
+    border-radius: inherit;
+  }
+  .meter-success::-webkit-meter-optimum-value {
+    background: hsl(var(--success));
+    border-radius: inherit;
+  }
+  .meter-success::-webkit-meter-suboptimum-value {
+    background: hsl(var(--warning));
+    border-radius: inherit;
+  }
+  .meter-success::-webkit-meter-even-less-good-value {
+    background: hsl(var(--destructive));
+    border-radius: inherit;
+  }
+
+  /* Warning meter styles */
+  .meter-warning::-webkit-meter-bar {
+    background: hsl(var(--warning) / 0.2);
+    border-radius: inherit;
+  }
+  .meter-warning::-webkit-meter-optimum-value {
+    background: hsl(var(--warning));
+    border-radius: inherit;
+  }
+  .meter-warning::-webkit-meter-suboptimum-value {
+    background: hsl(var(--warning) / 0.8);
+    border-radius: inherit;
+  }
+  .meter-warning::-webkit-meter-even-less-good-value {
+    background: hsl(var(--destructive));
+    border-radius: inherit;
+  }
+
+  /* Muted meter styles */
+  .meter-muted::-webkit-meter-bar {
+    background: hsl(var(--muted) / 0.5);
+    border-radius: inherit;
+  }
+  .meter-muted::-webkit-meter-optimum-value {
+    background: hsl(var(--muted-foreground));
+    border-radius: inherit;
+  }
+  .meter-muted::-webkit-meter-suboptimum-value {
+    background: hsl(var(--muted-foreground) / 0.8);
+    border-radius: inherit;
+  }
+  .meter-muted::-webkit-meter-even-less-good-value {
+    background: hsl(var(--muted-foreground) / 0.6);
+    border-radius: inherit;
+  }
+
+  /* Minimal meter styles */
+  .meter-minimal::-webkit-meter-bar {
+    background: hsl(var(--foreground) / 0.1);
+    border-radius: inherit;
+  }
+  .meter-minimal::-webkit-meter-optimum-value {
+    background: hsl(var(--foreground) / 0.8);
+    border-radius: inherit;
+  }
+  .meter-minimal::-webkit-meter-suboptimum-value {
+    background: hsl(var(--foreground) / 0.6);
+    border-radius: inherit;
+  }
+  .meter-minimal::-webkit-meter-even-less-good-value {
+    background: hsl(var(--foreground) / 0.4);
+    border-radius: inherit;
+  }
+
+  /* Firefox support */
+  .meter-primary::-moz-meter-bar {
+    background: hsl(var(--primary));
+    border-radius: inherit;
+  }
+  .meter-secondary::-moz-meter-bar {
+    background: hsl(var(--secondary));
+    border-radius: inherit;
+  }
+  .meter-accent::-moz-meter-bar {
+    background: hsl(var(--accent));
+    border-radius: inherit;
+  }
+  .meter-destructive::-moz-meter-bar {
+    background: hsl(var(--destructive));
+    border-radius: inherit;
+  }
+  .meter-success::-moz-meter-bar {
+    background: hsl(var(--success));
+    border-radius: inherit;
+  }
+  .meter-warning::-moz-meter-bar {
+    background: hsl(var(--warning));
+    border-radius: inherit;
+  }
+  .meter-muted::-moz-meter-bar {
+    background: hsl(var(--muted-foreground));
+    border-radius: inherit;
+  }
+  .meter-minimal::-moz-meter-bar {
+    background: hsl(var(--foreground) / 0.8);
+    border-radius: inherit;
+  }
+}

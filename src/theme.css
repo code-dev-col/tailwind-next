@@ -26,7 +26,7 @@
   --color-destructive-foreground: hsl(0 0% 100%);
   --color-warning: hsl(35 90% 58%); /* Naranja cálido */
   --color-warning-foreground: hsl(0 0% 100%);
-  --color-success: hsl(155 70% 50%); /* Verde natural pero con tinte azul */
+  --color-success: hsl(137 70% 38.5%); /* Verde natural pero con tinte azul */
   --color-success-foreground: hsl(0 0% 100%);
 
   /* Elementos de interfaz en azul */
@@ -478,4 +478,18 @@
     background: hsl(var(--foreground) / 0.8);
     border-radius: inherit;
   }
+}
+
+/* Animaciones personalizadas para Skeleton */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 2s infinite;
 }

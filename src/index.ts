@@ -148,6 +148,10 @@ export {
   UserCard,
   type UserCardProps,
 } from './components/molecules/cards/UserCard';
+export {
+  StatCard,
+  type StatCardProps,
+} from './components/molecules/cards/StatCard';
 export { cn } from './utils/cn';
 export * from './utils/gradients';
 export { useSecureField, type SecurityOptions } from './utils/useSecureField';

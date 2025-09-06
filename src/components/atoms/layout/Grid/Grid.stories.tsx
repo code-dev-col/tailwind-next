@@ -18,6 +18,11 @@ const meta: Meta<typeof Grid> = {
       control: false,
       description: 'Los elementos que irán dentro del grid',
     },
+    $columns: {
+      control: 'select',
+      options: [1, 2, 3, 4, 5, 6, 'auto'],
+      description: 'Número de columnas o auto para auto-fit',
+    },
     $maxGridWidth: {
       control: 'text',
       description: 'Ancho máximo del grid (1200px, max-w-6xl, etc.)',
@@ -56,6 +61,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
+    $columns: 'auto',
     $maxGridWidth: '1200px',
     $gap: '1rem',
     $justifyContent: 'center',
@@ -90,6 +96,145 @@ export const Default: Story = {
           </Container>
         ))}
       </Grid>
+    </Container>
+  ),
+};
+
+export const ColumnVariations: Story = {
+  render: () => (
+    <Container $padding="p-6" className="space-y-12">
+      <Text as="h2" $size="2xl" $weight="bold" className="text-center">
+        Variaciones de Columnas ($columns)
+      </Text>
+
+      {/* 1 columna */}
+      <Container>
+        <Text as="h3" $size="lg" $weight="semibold" className="mb-4">
+          1 Columna ($columns=1)
+        </Text>
+        <Grid $columns={1} $gap="1rem" $maxGridWidth="600px">
+          {Array.from({ length: 3 }, (_, i) => (
+            <Container
+              key={i}
+              $backgroundColor="bg-blue-100"
+              $padding="p-4"
+              $borderRadius="rounded-lg"
+              $textAlign="center">
+              <Text $weight="bold">Item {i + 1}</Text>
+            </Container>
+          ))}
+        </Grid>
+      </Container>
+
+      {/* 2 columnas */}
+      <Container>
+        <Text as="h3" $size="lg" $weight="semibold" className="mb-4">
+          2 Columnas ($columns=2)
+        </Text>
+        <Grid $columns={2} $gap="1rem" $maxGridWidth="600px">
+          {Array.from({ length: 4 }, (_, i) => (
+            <Container
+              key={i}
+              $backgroundColor="bg-green-100"
+              $padding="p-4"
+              $borderRadius="rounded-lg"
+              $textAlign="center">
+              <Text $weight="bold">Item {i + 1}</Text>
+            </Container>
+          ))}
+        </Grid>
+      </Container>
+
+      {/* 3 columnas */}
+      <Container>
+        <Text as="h3" $size="lg" $weight="semibold" className="mb-4">
+          3 Columnas ($columns=3)
+        </Text>
+        <Grid $columns={3} $gap="1rem" $maxGridWidth="800px">
+          {Array.from({ length: 6 }, (_, i) => (
+            <Container
+              key={i}
+              $backgroundColor="bg-purple-100"
+              $padding="p-4"
+              $borderRadius="rounded-lg"
+              $textAlign="center">
+              <Text $weight="bold">Item {i + 1}</Text>
+            </Container>
+          ))}
+        </Grid>
+      </Container>
+
+      {/* 4 columnas */}
+      <Container>
+        <Text as="h3" $size="lg" $weight="semibold" className="mb-4">
+          4 Columnas ($columns=4)
+        </Text>
+        <Grid $columns={4} $gap="1rem" $maxGridWidth="1000px">
+          {Array.from({ length: 8 }, (_, i) => (
+            <Container
+              key={i}
+              $backgroundColor="bg-orange-100"
+              $padding="p-4"
+              $borderRadius="rounded-lg"
+              $textAlign="center">
+              <Text $weight="bold">Item {i + 1}</Text>
+            </Container>
+          ))}
+        </Grid>
+      </Container>
+
+      {/* Auto (por defecto) */}
+      <Container>
+        <Text as="h3" $size="lg" $weight="semibold" className="mb-4">
+          Auto-fit ($columns="auto" - por defecto)
+        </Text>
+        <Text $size="sm" $colorScheme="muted" className="mb-4">
+          Se adapta automáticamente según el espacio disponible (mínimo 230px
+          por columna)
+        </Text>
+        <Grid $columns="auto" $gap="1rem" $maxGridWidth="1000px">
+          {Array.from({ length: 8 }, (_, i) => (
+            <Container
+              key={i}
+              $backgroundColor="bg-red-100"
+              $padding="p-4"
+              $borderRadius="rounded-lg"
+              $textAlign="center">
+              <Text $weight="bold">Item {i + 1}</Text>
+            </Container>
+          ))}
+        </Grid>
+      </Container>
+
+      {/* Información sobre responsividad */}
+      <Container
+        $backgroundColor="bg-blue-50"
+        $padding="p-6"
+        $borderRadius="rounded-lg"
+        $borderWidth="border"
+        $borderColor="border-blue-200">
+        <Text as="h4" $weight="semibold" className="mb-3">
+          📱 Comportamiento Responsivo:
+        </Text>
+        <Container as="ul" className="text-sm space-y-2">
+          <li>
+            <Text as="strong">Móvil (&lt; 640px):</Text> Siempre 1 columna para
+            mejor legibilidad
+          </li>
+          <li>
+            <Text as="strong">Tablet (≥ 640px):</Text> Inicia con el número de
+            columnas especificado o auto-fit
+          </li>
+          <li>
+            <Text as="strong">Desktop (≥ 1024px):</Text> Columnas completas
+            según la especificación
+          </li>
+          <li>
+            <Text as="strong">Auto-fit:</Text> Se adapta automáticamente
+            manteniendo mínimo 230px por columna
+          </li>
+        </Container>
+      </Container>
     </Container>
   ),
 };
@@ -328,8 +473,8 @@ export const ResponsiveBehavior: Story = {
               {i < 4
                 ? 'Contenido corto'
                 : i < 8
-                  ? 'Contenido de longitud media para prueba'
-                  : 'Contenido más largo para demostrar cómo el grid se adapta automáticamente al contenido variable'}
+                ? 'Contenido de longitud media para prueba'
+                : 'Contenido más largo para demostrar cómo el grid se adapta automáticamente al contenido variable'}
             </Text>
           </Container>
         ))}
@@ -615,4 +760,3 @@ export const ShadowToggle: Story = {
     </Container>
   ),
 };
-

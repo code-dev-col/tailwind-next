@@ -4,6 +4,7 @@ import type { BaseProps } from '../../../../types';
 
 interface GridProps extends BaseProps {
   children?: React.ReactNode;
+  $columns?: 1 | 2 | 3 | 4 | 5 | 6 | 'auto' | string; // Número de columnas o 'auto' para auto-fit
   $maxGridWidth?: string; // Ancho máximo del grid (por defecto '1200px')
   $maxItemWidth?: string; // Ancho máximo para cada hijo (por defecto sin límite)
   $gap?: string; // Espaciado entre celdas (por defecto '1rem')
@@ -22,6 +23,15 @@ interface GridProps extends BaseProps {
 
 const gridVariants = {
   base: 'grid transition-all duration-200',
+  columns: {
+    1: 'grid-cols-1',
+    2: 'grid-cols-1 sm:grid-cols-2',
+    3: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3',
+    4: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4',
+    5: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5',
+    6: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6',
+    auto: 'grid-cols-1 sm:grid-cols-[repeat(auto-fit,minmax(min(230px,80%),0.9fr))]',
+  },
   justifyContent: {
     start: 'justify-start',
     end: 'justify-end',
@@ -54,6 +64,7 @@ const Grid = React.forwardRef<HTMLDivElement, GridProps>(
     {
       children,
       className,
+      $columns = 'auto',
       $maxGridWidth = '1200px',
       $maxItemWidth,
       $gap = '1rem',
@@ -66,6 +77,22 @@ const Grid = React.forwardRef<HTMLDivElement, GridProps>(
     },
     ref
   ) => {
+    // Función para obtener las clases de columnas
+    const getColumnsClass = (): string => {
+      if (typeof $columns === 'string') {
+        if ($columns === 'auto') {
+          return gridVariants.columns.auto;
+        }
+        // Si es un string custom, devolverlo tal como está
+        return $columns;
+      }
+      // Si es un número, usar las variantes predefinidas
+      return (
+        gridVariants.columns[$columns as keyof typeof gridVariants.columns] ||
+        gridVariants.columns.auto
+      );
+    };
+
     // Construir estilos dinámicos
     const dynamicStyles: React.CSSProperties & { [key: string]: any } = {};
 
@@ -87,9 +114,8 @@ const Grid = React.forwardRef<HTMLDivElement, GridProps>(
     // Clases base del grid
     const gridClasses = cn(
       gridVariants.base,
-      // Grid responsivo: 1 columna en móvil, auto-fit en desktop
-      'grid-cols-1',
-      'sm:grid-cols-[repeat(auto-fit,minmax(min(230px,80%),0.9fr))]',
+      // Aplicar columnas según la prop $columns
+      getColumnsClass(),
 
       // Aplicar clases Tailwind si son válidas
       isValidTailwindClass($gap) ? $gap : '',
@@ -142,4 +168,3 @@ const Grid = React.forwardRef<HTMLDivElement, GridProps>(
 Grid.displayName = 'Grid';
 
 export { Grid, type GridProps };
-

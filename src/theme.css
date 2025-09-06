@@ -56,30 +56,45 @@
 }
 
 /* Variables CSS para compatibilidad con shadcn/ui - Sincronizadas con @theme */
+/* IMPORTANTE: Estos valores DEBEN estar sincronizados con el bloque @theme de arriba */
+/* Formato: Los valores HSL van SIN hsl() wrapper para compatibilidad con shadcn/ui */
 :root {
   /* Escala armónica de azules (HSL sin hsl() para shadcn/ui) */
+  /* SYNC: --color-background: hsl(220 20% 98%) */
   --background: 220 20% 98%;
+  /* SYNC: --color-foreground: hsl(220 25% 15%) */
   --foreground: 220 25% 15%;
+  /* SYNC: --color-muted: hsl(220 15% 94%) */
   --muted: 220 15% 94%;
+  /* SYNC: --color-muted-foreground: hsl(220 12% 55%) */
   --muted-foreground: 220 12% 55%;
+  /* SYNC: --color-border: hsl(220 18% 88%) */
   --border: 220 18% 88%;
+  /* SYNC: --color-input: hsl(220 16% 96%) */
   --input: 220 16% 96%;
+  /* SYNC: --color-ring: hsl(215 85% 55%) */
   --ring: 215 85% 55%;
 
   /* Primarios - Escala de azules progresiva */
+  /* SYNC: --color-primary: hsl(215 85% 55%) */
   --primary: 215 85% 55%;
   --primary-foreground: 0 0% 100%;
+  /* SYNC: --color-secondary: hsl(210 75% 65%) */
   --secondary: 210 75% 65%;
   --secondary-foreground: 220 25% 15%;
-  --accent: 205 65% 75%;
+  /* SYNC: --color-accent: hsl(166 52.3% 53.5%) */
+  --accent: 166 52.3% 53.5%;
   --accent-foreground: 220 25% 15%;
 
   /* Colores semánticos específicos */
+  /* SYNC: --color-destructive: hsl(355 85% 60%) */
   --destructive: 355 85% 60%;
   --destructive-foreground: 0 0% 100%;
+  /* SYNC: --color-warning: hsl(35 90% 58%) */
   --warning: 35 90% 58%;
   --warning-foreground: 0 0% 100%;
-  --success: 155 70% 50%;
+  /* SYNC: --color-success: hsl(137 70% 38.5%) */
+  --success: 137 70% 38.5%;
   --success-foreground: 0 0% 100%;
 
   /* Elementos de interfaz */
@@ -142,6 +157,7 @@
 }
 
 /* Dark mode - Escala armónica de azules oscuros */
+/* IMPORTANTE: Versiones más brillantes de los colores base para dark mode */
 :root.dark {
   /* @theme variables for dark mode - Azules oscuros armónicos */
   --color-background: hsl(220 25% 8%); /* Azul muy oscuro */
@@ -153,19 +169,21 @@
   --color-ring: hsl(215 85% 65%); /* Azul brillante para focus */
 
   /* Primarios - Azules brillantes para dark mode */
+  /* NOTA: Valores +10% lightness respecto al light mode para mejor contraste */
   --color-primary: hsl(215 85% 65%);
   --color-primary-foreground: hsl(220 25% 8%);
   --color-secondary: hsl(210 75% 70%);
   --color-secondary-foreground: hsl(220 25% 8%);
-  --color-accent: hsl(205 65% 80%);
+  --color-accent: hsl(166 52.3% 63.5%);
   --color-accent-foreground: hsl(220 25% 8%);
 
   /* Colores semánticos para dark mode */
+  /* NOTA: Valores +5-10% lightness para mejor visibilidad en dark mode */
   --color-destructive: hsl(355 85% 65%);
   --color-destructive-foreground: hsl(220 25% 8%);
   --color-warning: hsl(35 90% 65%);
   --color-warning-foreground: hsl(220 25% 8%);
-  --color-success: hsl(155 70% 55%);
+  --color-success: hsl(137 70% 48.5%);
   --color-success-foreground: hsl(220 25% 8%);
 
   /* Elementos de interfaz dark */
@@ -175,6 +193,7 @@
   --color-card-foreground: hsl(220 15% 95%);
 
   /* shadcn/ui compatibility - Dark mode */
+  /* SYNC: Estos valores reflejan las variables @theme de arriba, sin hsl() wrapper */
   --background: 220 25% 8%;
   --foreground: 220 15% 95%;
   --muted: 220 20% 12%;
@@ -182,15 +201,18 @@
   --border: 220 18% 18%;
   --input: 220 20% 10%;
   --ring: 215 85% 65%;
+  /* SYNC: Primarios con valores dark mode (+10% lightness) */
   --primary: 215 85% 65%;
   --primary-foreground: 220 25% 8%;
   --secondary: 210 75% 70%;
   --secondary-foreground: 220 25% 8%;
   --destructive: 355 85% 65%;
   --destructive-foreground: 220 25% 8%;
-  --accent: 205 65% 80%;
+  /* SYNC: --color-accent: hsl(166 52.3% 63.5%) */
+  --accent: 166 52.3% 63.5%;
   --accent-foreground: 220 25% 8%;
-  --success: 155 70% 55%;
+  /* SYNC: --color-success: hsl(137 70% 48.5%) */
+  --success: 137 70% 48.5%;
   --success-foreground: 220 25% 8%;
   --warning: 35 90% 65%;
   --warning-foreground: 220 25% 8%;

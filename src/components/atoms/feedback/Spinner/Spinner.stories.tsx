@@ -30,7 +30,7 @@ export const Default: Story = {
 // ✅ Theme.css color schemes showcase
 export const ThemeColorSchemes: Story = {
   render: () => (
-    <div className="grid grid-cols-3 gap-6 p-4">
+    <div className="grid grid-cols-4 gap-6 p-4">
       <div className="text-center space-y-2">
         <Spinner $colorScheme="default" $type="ring" $size="lg" />
         <p className="text-sm text-muted-foreground">Default (Primary)</p>
@@ -49,6 +49,16 @@ export const ThemeColorSchemes: Story = {
       <div className="text-center space-y-2">
         <Spinner $colorScheme="accent" $type="ring" $size="lg" />
         <p className="text-sm text-muted-foreground">Accent (Violeta)</p>
+      </div>
+
+      <div className="text-center space-y-2">
+        <Spinner $colorScheme="success" $type="ring" $size="lg" />
+        <p className="text-sm text-muted-foreground">Success (Verde)</p>
+      </div>
+
+      <div className="text-center space-y-2">
+        <Spinner $colorScheme="warning" $type="ring" $size="lg" />
+        <p className="text-sm text-muted-foreground">Warning (Naranja)</p>
       </div>
 
       <div className="text-center space-y-2">
@@ -191,6 +201,8 @@ export const SpinnerTypes: Story = {
             'secondary',
             'destructive',
             'accent',
+            'success',
+            'warning',
           ];
           const colorScheme = colorSchemes[index % colorSchemes.length];
 
@@ -221,6 +233,8 @@ export const Sizes: Story = {
       'secondary',
       'accent',
       'destructive',
+      'success',
+      'warning',
       'muted',
       'minimal',
     ];
@@ -376,5 +390,3 @@ export const OverlayMode: Story = {
     );
   },
 };
-
-

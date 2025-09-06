@@ -65,6 +65,8 @@ interface SpinnerProps<T extends Record<string, any> = any> extends BaseProps {
     | 'secondary'
     | 'destructive'
     | 'accent'
+    | 'success'
+    | 'warning'
     | 'muted'
     | 'minimal'
     | 'custom';
@@ -152,6 +154,10 @@ const getSpinnerColor = (
       return 'hsl(var(--destructive))';
     case 'accent':
       return 'hsl(var(--accent))';
+    case 'success':
+      return 'hsl(var(--success))';
+    case 'warning':
+      return 'hsl(var(--warning))';
     case 'muted':
       return 'hsl(var(--muted-foreground))';
     case 'minimal':
@@ -287,4 +293,3 @@ const Spinner = React.forwardRef<HTMLDivElement, SpinnerProps>(
 Spinner.displayName = 'Spinner';
 
 export { Spinner, type SpinnerProps };
-

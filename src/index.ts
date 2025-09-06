@@ -114,6 +114,10 @@ export {
   type AccordionItemType,
 } from './components/atoms/navigation/Accordion';
 export {
+  NavigationItem,
+  type NavigationItemProps,
+} from './components/molecules/navigation/NavigationItem';
+export {
   UnorderedList,
   type UnorderedListProps,
 } from './components/molecules/display/UnorderedList';

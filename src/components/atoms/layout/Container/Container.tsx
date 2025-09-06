@@ -111,6 +111,47 @@ interface ContainerProps extends BaseProps {
 
   // Event handlers
   onClick?: (event: React.MouseEvent<HTMLElement>) => void;
+
+  // Accessibility props
+  role?: string;
+  'aria-label'?: string;
+  'aria-labelledby'?: string;
+  'aria-describedby'?: string;
+  'aria-expanded'?: boolean;
+  'aria-selected'?: boolean;
+  'aria-checked'?: boolean;
+  'aria-disabled'?: boolean;
+  'aria-hidden'?: boolean;
+  'aria-current'?: boolean | 'page' | 'step' | 'location' | 'date' | 'time';
+  'aria-live'?: 'off' | 'assertive' | 'polite';
+  'aria-atomic'?: boolean;
+  'aria-busy'?: boolean;
+  'aria-controls'?: string;
+  'aria-owns'?: string;
+  'aria-haspopup'?:
+    | boolean
+    | 'false'
+    | 'true'
+    | 'menu'
+    | 'listbox'
+    | 'tree'
+    | 'grid'
+    | 'dialog';
+  'aria-level'?: number;
+  'aria-posinset'?: number;
+  'aria-setsize'?: number;
+  'aria-orientation'?: 'horizontal' | 'vertical';
+  'aria-sort'?: 'none' | 'ascending' | 'descending' | 'other';
+  'aria-valuemin'?: number;
+  'aria-valuemax'?: number;
+  'aria-valuenow'?: number;
+  'aria-valuetext'?: string;
+
+  // Additional HTML attributes for accessibility
+  tabIndex?: number;
+  id?: string;
+  title?: string;
+  lang?: string;
 }
 
 const containerVariants = {

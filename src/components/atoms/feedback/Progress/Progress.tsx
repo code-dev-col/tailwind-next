@@ -17,10 +17,10 @@ interface ProgressProps<T extends Record<string, any> = any> extends BaseProps {
     | 'secondary'
     | 'destructive'
     | 'accent'
+    | 'success'
+    | 'warning'
     | 'muted'
     | 'minimal'
-    | 'outline'
-    | 'ghost'
     | 'custom';
 
   $size?: 'sm' | 'default' | 'lg';
@@ -47,177 +47,82 @@ interface ProgressProps<T extends Record<string, any> = any> extends BaseProps {
   id?: string;
 }
 
-// CSS-in-JS hook for self-contained Progress styles
-const useProgressStyles = () => {
-  React.useEffect(() => {
-    const styleId = 'progress-component-styles';
+// Configuración de variantes usando theme.css
+const progressVariants = {
+  base: 'relative overflow-hidden transition-all duration-200 ease-in-out',
 
-    if (document.getElementById(styleId)) return;
+  // Tamaños usando theme.css tokens
+  size: {
+    sm: 'h-2',
+    default: 'h-3',
+    lg: 'h-4',
+  },
 
-    const style = document.createElement('style');
-    style.id = styleId;
-    style.textContent = `
-      .progress-track {
-        background-color: hsl(var(--muted));
-        transition: all 200ms ease-in-out;
-        overflow: hidden;
-      }
+  // Formas usando theme.css radii
+  shape: {
+    rounded: 'rounded-full',
+    square: 'rounded-none',
+    circular: 'rounded-full',
+  },
 
-      .progress-fill {
-        height: 100%;
-        transition: all 300ms ease-out;
-        position: relative;
-      }
+  // Track (fondo) usando theme.css colors
+  track: {
+    default: 'bg-muted',
+    secondary: 'bg-secondary/20',
+    destructive: 'bg-destructive/20',
+    accent: 'bg-accent/20',
+    success: 'bg-success/20',
+    warning: 'bg-warning/20',
+    muted: 'bg-muted/50',
+    minimal: 'bg-foreground/10',
+    custom: '',
+  },
 
-      .progress-fill-striped {
-        background-image: repeating-linear-gradient(
-          45deg,
-          transparent,
-          transparent 0.25rem,
-          rgba(255,255,255,0.2) 0.25rem,
-          rgba(255,255,255,0.2) 0.5rem
-        );
-      }
+  // Fill (progreso) usando theme.css colors
+  fill: {
+    default: 'bg-primary',
+    secondary: 'bg-secondary',
+    destructive: 'bg-destructive',
+    accent: 'bg-accent',
+    success: 'bg-success',
+    warning: 'bg-warning',
+    muted: 'bg-muted-foreground',
+    minimal: 'bg-foreground/80',
+    custom: '',
+  },
 
-      .progress-fill-animated {
-        animation: progress-pulse 1.5s ease-in-out infinite;
-      }
+  // Stroke colors para progreso circular
+  stroke: {
+    default: 'stroke-primary',
+    secondary: 'stroke-secondary',
+    destructive: 'stroke-destructive',
+    accent: 'stroke-accent',
+    success: 'stroke-success',
+    warning: 'stroke-warning',
+    muted: 'stroke-muted-foreground',
+    minimal: 'stroke-foreground/80',
+    custom: '',
+  },
 
-      @keyframes progress-pulse {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0.8; }
-      }
-
-      .progress-fill-default {
-        background-color: hsl(var(--primary));
-      }
-
-      .progress-fill-secondary {
-        background-color: hsl(var(--secondary));
-      }
-
-      .progress-fill-destructive {
-        background-color: hsl(var(--destructive));
-      }
-
-      .progress-fill-accent {
-        background-color: hsl(var(--accent));
-      }
-
-      .progress-fill-muted {
-        background-color: hsl(var(--muted-foreground));
-      }
-
-      .progress-fill-minimal {
-        background-color: hsl(var(--border));
-      }
-
-      .progress-fill-outline {
-        background-color: transparent;
-        border: 2px solid hsl(var(--border));
-      }
-
-      .progress-fill-ghost {
-        background-color: hsl(var(--muted) / 0.5);
-      }
-
-      .progress-circular-track {
-        fill: none;
-        stroke: hsl(var(--muted));
-        transition: all 200ms ease-in-out;
-      }
-
-      .progress-circular-fill {
-        fill: none;
-        stroke-linecap: round;
-        transition: all 300ms ease-out;
-      }
-
-      .progress-circular-fill-default {
-        stroke: hsl(var(--primary));
-      }
-
-      .progress-circular-fill-secondary {
-        stroke: hsl(var(--secondary));
-      }
-
-      .progress-circular-fill-destructive {
-        stroke: hsl(var(--destructive));
-      }
-
-      .progress-circular-fill-accent {
-        stroke: hsl(var(--accent));
-      }
-
-      .progress-circular-fill-muted {
-        stroke: hsl(var(--muted-foreground));
-      }
-
-      .progress-circular-fill-minimal {
-        stroke: hsl(var(--border));
-      }
-
-      .progress-circular-fill-outline {
-        stroke: hsl(var(--border));
-        stroke-width: 2px;
-        stroke-dasharray: 4, 4;
-      }
-
-      .progress-circular-fill-ghost {
-        stroke: hsl(var(--muted-foreground) / 0.5);
-      }
-
-      .progress-label {
-        color: hsl(var(--foreground));
-        font-weight: 500;
-        margin-bottom: 0.5rem;
-      }
-
-      .progress-description {
-        color: hsl(var(--muted-foreground));
-        font-size: 0.75rem;
-        margin-top: 0.25rem;
-      }
-
-      .progress-value {
-        position: absolute;
-        inset: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 0.75rem;
-        font-weight: 500;
-        color: hsl(var(--foreground));
-      }
-
-      .progress-sm { height: 0.5rem; }
-      .progress-default { height: 0.75rem; }
-      .progress-lg { height: 1rem; }
-
-      .progress-rounded { border-radius: 9999px; }
-      .progress-square { border-radius: 0; }
-
-      .progress-text-sm { font-size: 0.75rem; }
-      .progress-text-default { font-size: 0.875rem; }
-      .progress-text-lg { font-size: 1rem; }
-    `;
-
-    document.head.appendChild(style);
-
-    return () => {
-      const existingStyle = document.getElementById(styleId);
-      if (existingStyle) {
-        existingStyle.remove();
-      }
-    };
-  }, []);
+  // Text colors usando theme.css
+  text: {
+    default: 'text-foreground',
+    secondary: 'text-secondary-foreground',
+    destructive: 'text-foreground',
+    accent: 'text-accent-foreground',
+    success: 'text-success-foreground',
+    warning: 'text-warning-foreground',
+    muted: 'text-muted-foreground',
+    minimal: 'text-foreground',
+    custom: 'text-foreground',
+  },
 };
 
-// Map legacy $variant to new $colorScheme
-const getColorScheme = (
-  $colorScheme?: ProgressProps['$colorScheme']
-): NonNullable<ProgressProps['$colorScheme']> => {
-  return $colorScheme || 'default';
+// Animaciones usando Tailwind CSS
+const progressAnimations = {
+  striped:
+    'bg-gradient-to-r from-transparent via-white/20 to-transparent bg-[length:1rem_1rem] animate-[slide_1s_ease-in-out_infinite]',
+  pulse: 'animate-pulse',
 };
 
 const Progress = React.forwardRef<HTMLDivElement, ProgressProps>(
@@ -247,9 +152,6 @@ const Progress = React.forwardRef<HTMLDivElement, ProgressProps>(
     },
     ref
   ) => {
-    // Initialize CSS-in-JS styles
-    useProgressStyles();
-
     // Store integration
     const storeValue =
       $store && storeKey ? $store((state) => state[storeKey]) : undefined;
@@ -257,9 +159,6 @@ const Progress = React.forwardRef<HTMLDivElement, ProgressProps>(
     // Value calculation
     const value = storeValue ?? controlledValue ?? 0;
     const percentage = Math.max(0, Math.min(100, (value / max) * 100));
-
-    // Get the final color scheme
-    const colorScheme = getColorScheme($colorScheme);
 
     // Circular progress calculations
     const radius = ($circularSize - $strokeWidth) / 2;
@@ -271,7 +170,6 @@ const Progress = React.forwardRef<HTMLDivElement, ProgressProps>(
     const commonProps = {
       ref,
       className: cn(
-        'relative',
         $shape === 'circular'
           ? 'inline-flex items-center justify-center'
           : 'w-full',
@@ -293,43 +191,63 @@ const Progress = React.forwardRef<HTMLDivElement, ProgressProps>(
       return (
         <div
           {...commonProps}
+          className={cn(
+            'relative inline-flex items-center justify-center',
+            className,
+            $custom
+          )}
           style={{ width: $circularSize, height: $circularSize }}>
           <svg
             className="transform -rotate-90"
             width={$circularSize}
             height={$circularSize}>
-            {/* Background track */}
+            {/* Background track usando theme.css */}
             <circle
               cx={$circularSize / 2}
               cy={$circularSize / 2}
               r={radius}
               strokeWidth={$strokeWidth}
-              className="progress-circular-track"
+              fill="none"
+              className={cn(
+                'transition-all duration-200 ease-in-out',
+                'stroke-muted/30' // Color consistente para el track circular
+              )}
             />
-            {/* Progress fill */}
+            {/* Progress fill usando theme.css */}
             <circle
               cx={$circularSize / 2}
               cy={$circularSize / 2}
               r={radius}
               strokeWidth={$strokeWidth}
+              fill="none"
+              strokeLinecap="round"
               strokeDasharray={strokeDasharray}
               strokeDashoffset={strokeDashoffset}
               className={cn(
-                'progress-circular-fill',
-                `progress-circular-fill-${colorScheme}`
+                'transition-all duration-300 ease-out',
+                progressVariants.stroke[$colorScheme] || 'stroke-primary', // Usar stroke predefinido
+                $animated && 'animate-pulse'
               )}
             />
           </svg>
 
-          {/* Center content */}
+          {/* Center content - Posicionado absoluto respecto al contenedor del SVG */}
           {($showValue || $showPercentage) && (
-            <div className="absolute inset-0 flex items-center justify-center">
+            <div
+              className="absolute inset-0 flex items-center justify-center pointer-events-none"
+              style={{
+                width: $circularSize,
+                height: $circularSize,
+                top: 0,
+                left: 0,
+              }}>
               <span
                 className={cn(
-                  'font-medium relative',
-                  $size === 'sm' && 'progress-text-sm',
-                  $size === 'default' && 'progress-text-default',
-                  $size === 'lg' && 'progress-text-lg'
+                  'font-medium text-center',
+                  progressVariants.text[$colorScheme],
+                  $size === 'sm' && 'text-xs',
+                  $size === 'default' && 'text-sm',
+                  $size === 'lg' && 'text-base'
                 )}>
                 {$showPercentage ? `${Math.round(percentage)}%` : value}
               </span>
@@ -342,23 +260,22 @@ const Progress = React.forwardRef<HTMLDivElement, ProgressProps>(
     // Render linear progress
     const progressElement = (
       <div {...commonProps}>
-        {/* Track */}
+        {/* Track usando theme.css */}
         <div
           className={cn(
-            'progress-track',
-            `progress-${$size}`,
-            $shape === 'rounded' && 'progress-rounded',
-            $shape === 'square' && 'progress-square'
+            progressVariants.base,
+            progressVariants.size[$size],
+            progressVariants.shape[$shape],
+            progressVariants.track[$colorScheme]
           )}>
-          {/* Fill */}
+          {/* Fill usando theme.css */}
           <div
             className={cn(
-              'progress-fill',
-              `progress-fill-${colorScheme}`,
-              $shape === 'rounded' && 'progress-rounded',
-              $shape === 'square' && 'progress-square',
-              $striped && 'progress-fill-striped',
-              $animated && 'progress-fill-animated'
+              'h-full transition-all duration-300 ease-out',
+              progressVariants.shape[$shape],
+              progressVariants.fill[$colorScheme],
+              $striped && progressAnimations.striped,
+              $animated && progressAnimations.pulse
             )}
             style={{
               width: `${percentage}%`,
@@ -369,10 +286,12 @@ const Progress = React.forwardRef<HTMLDivElement, ProgressProps>(
           {($showValue || $showPercentage) && (
             <div
               className={cn(
-                'progress-value',
-                $size === 'sm' && 'progress-text-sm',
-                $size === 'default' && 'progress-text-default',
-                $size === 'lg' && 'progress-text-lg'
+                'absolute inset-0 flex items-center justify-center',
+                'font-medium',
+                progressVariants.text[$colorScheme],
+                $size === 'sm' && 'text-xs',
+                $size === 'default' && 'text-sm',
+                $size === 'lg' && 'text-base'
               )}>
               {$showPercentage ? `${Math.round(percentage)}%` : value}
             </div>
@@ -384,18 +303,20 @@ const Progress = React.forwardRef<HTMLDivElement, ProgressProps>(
     // Wrap with label and description if provided
     if (label || description) {
       return (
-        <div className="w-full">
+        <div className="w-full space-y-2">
           {label && (
             <div
               className={cn(
-                'progress-label',
-                $size === 'sm' && 'progress-text-sm',
-                $size === 'default' && 'progress-text-default',
-                $size === 'lg' && 'progress-text-lg'
+                'flex items-center justify-between',
+                'font-medium',
+                progressVariants.text[$colorScheme],
+                $size === 'sm' && 'text-sm',
+                $size === 'default' && 'text-base',
+                $size === 'lg' && 'text-lg'
               )}>
-              {label}
+              <span>{label}</span>
               {($showValue || $showPercentage) && (
-                <span className="float-right">
+                <span className="text-muted-foreground">
                   {$showPercentage
                     ? `${Math.round(percentage)}%`
                     : `${value}/${max}`}
@@ -405,7 +326,7 @@ const Progress = React.forwardRef<HTMLDivElement, ProgressProps>(
           )}
           {progressElement}
           {description && (
-            <div className="progress-description">{description}</div>
+            <div className="text-xs text-muted-foreground">{description}</div>
           )}
         </div>
       );

@@ -409,6 +409,33 @@
     border-radius: inherit;
   }
 
+  /* Custom utility classes for stroke colors */
+  .stroke-success {
+    stroke: hsl(var(--success));
+  }
+
+  .stroke-warning {
+    stroke: hsl(var(--warning));
+  }
+
+  /* Custom utility classes for background colors */
+  .bg-success {
+    background-color: hsl(var(--success));
+  }
+
+  .bg-warning {
+    background-color: hsl(var(--warning));
+  }
+
+  /* Custom utility classes for text colors */
+  .text-success-foreground {
+    color: hsl(var(--success-foreground));
+  }
+
+  .text-warning-foreground {
+    color: hsl(var(--warning-foreground));
+  }
+
   /* Muted meter styles */
   .meter-muted::-webkit-meter-bar {
     background: hsl(var(--muted) / 0.5);
@@ -492,4 +519,14 @@
 
 .animate-shimmer {
   animation: shimmer 2s infinite;
+}
+
+/* Animación para Progress striped */
+@keyframes slide {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 1rem 0;
+  }
 }

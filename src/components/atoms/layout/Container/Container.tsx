@@ -108,6 +108,9 @@ interface ContainerProps extends BaseProps {
   as?: keyof JSX.IntrinsicElements;
   style?: React.CSSProperties;
   children?: React.ReactNode;
+
+  // Event handlers
+  onClick?: (event: React.MouseEvent<HTMLElement>) => void;
 }
 
 const containerVariants = {
@@ -348,6 +351,7 @@ const Container: React.FC<ContainerProps> = (props) => {
     as = 'div',
     style,
     children,
+    onClick,
     ...restProps
   } = props;
 
@@ -412,7 +416,11 @@ const Container: React.FC<ContainerProps> = (props) => {
   const finalClassName = buildClassName(props);
 
   return (
-    <Component className={finalClassName} style={dynamicStyles} {...restProps}>
+    <Component
+      className={finalClassName}
+      style={dynamicStyles}
+      onClick={onClick}
+      {...restProps}>
       {children}
     </Component>
   );
@@ -433,4 +441,3 @@ export {
   type TextAlign as ContainerTextAlign,
   type CursorType,
 };
-

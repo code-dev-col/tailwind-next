@@ -156,6 +156,10 @@ export {
   ProductCard,
   type ProductCardProps,
 } from './components/molecules/cards/ProductCard';
+export {
+  ArticleCard,
+  type ArticleCardProps,
+} from './components/molecules/cards/ArticleCard';
 export { cn } from './utils/cn';
 export * from './utils/gradients';
 export { useSecureField, type SecurityOptions } from './utils/useSecureField';

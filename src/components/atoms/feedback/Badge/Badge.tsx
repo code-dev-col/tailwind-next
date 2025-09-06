@@ -19,6 +19,9 @@ interface BadgeProps extends BaseProps {
   $size?: 'sm' | 'default' | 'lg';
   $custom?: string;
   children: React.ReactNode;
+
+  // Event handlers
+  onClick?: (event: React.MouseEvent<HTMLDivElement>) => void;
 }
 
 // 🎨 Sistema de esquemas de color con theme.css
@@ -93,6 +96,7 @@ const Badge = React.forwardRef<HTMLDivElement, BadgeProps>(
       $size = 'default',
       $custom,
       children,
+      onClick,
       ...props
     },
     ref
@@ -120,7 +124,12 @@ const Badge = React.forwardRef<HTMLDivElement, BadgeProps>(
         );
 
     return (
-      <div className={combinedClasses} ref={ref} {...props}>
+      <div
+        className={combinedClasses}
+        ref={ref}
+        onClick={onClick}
+        style={onClick ? { cursor: 'pointer' } : undefined}
+        {...props}>
         {children}
       </div>
     );
@@ -130,4 +139,3 @@ const Badge = React.forwardRef<HTMLDivElement, BadgeProps>(
 Badge.displayName = 'Badge';
 
 export { Badge, type BadgeProps };
-

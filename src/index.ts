@@ -195,6 +195,10 @@ export {
   ArticleCard,
   type ArticleCardProps,
 } from './components/molecules/cards/ArticleCard';
+export {
+  ImageCard,
+  type ImageCardProps,
+} from './components/molecules/media/ImageCard';
 export { cn } from './utils/cn';
 export * from './utils/gradients';
 export { useSecureField, type SecurityOptions } from './utils/useSecureField';

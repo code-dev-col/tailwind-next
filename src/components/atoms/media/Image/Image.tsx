@@ -200,14 +200,19 @@ const detectNextImage = (): React.ComponentType<any> | null => {
 
 // Componente Skeleton para loading
 const ImageSkeleton: React.FC<{ className?: string }> = ({ className }) => (
-  <div className={cn('animate-pulse bg-muted', className)} />
+  <div
+    className={cn(
+      'animate-pulse bg-muted w-full h-full min-h-[12rem]',
+      className
+    )}
+  />
 );
 
 // Componente de Fallback por defecto
 const DefaultFallback: React.FC<{ className?: string }> = ({ className }) => (
   <div
     className={cn(
-      'flex items-center justify-center bg-muted text-muted-foreground',
+      'flex items-center justify-center bg-muted text-muted-foreground w-full h-full min-h-[12rem]',
       className
     )}>
     <svg
@@ -356,4 +361,3 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
 Image.displayName = 'Image';
 
 export { Image, type ImageProps, type NextImageProps };
-

@@ -1,0 +1,229 @@
+/**
+ * Ejemplo de personalización de tema en un proyecto Next.js consumidor
+ * Archivo: styles/custom-theme.css
+ */
+
+/* Tema personalizado para proyecto consumidor */
+:root {
+  /* ===== COLORES PRINCIPALES ===== */
+  /* Paleta corporativa azul-verde */
+  --primary: 210 100% 50%; /* Azul corporativo principal */
+  --primary-foreground: 0 0% 100%; /* Texto blanco sobre azul */
+
+  --secondary: 180 100% 40%; /* Verde azulado (teal) */
+  --secondary-foreground: 0 0% 100%; /* Texto blanco sobre teal */
+
+  --accent: 45 100% 50%; /* Amarillo dorado para acentos */
+  --accent-foreground: 0 0% 0%; /* Texto negro sobre amarillo */
+
+  /* ===== COLORES SEMÁNTICOS ===== */
+  --destructive: 0 85% 60%; /* Rojo para errores */
+  --destructive-foreground: 0 0% 100%;
+
+  --warning: 35 100% 55%; /* Naranja para advertencias */
+  --warning-foreground: 0 0% 100%;
+
+  --success: 140 70% 45%; /* Verde para éxito */
+  --success-foreground: 0 0% 100%;
+
+  /* ===== COLORES NEUTROS ===== */
+  --background: 210 20% 98%; /* Fondo principal con tinte azul */
+  --foreground: 210 30% 8%; /* Texto principal */
+
+  --muted: 210 40% 95%; /* Fondos sutiles */
+  --muted-foreground: 210 20% 40%; /* Texto secundario */
+
+  --border: 210 30% 85%; /* Bordes */
+  --input: 210 40% 96%; /* Fondos de inputs */
+  --ring: 210 100% 50%; /* Anillos de foco */
+
+  /* ===== ELEMENTOS DE UI ===== */
+  --card: 0 0% 100%; /* Tarjetas */
+  --card-foreground: 210 30% 8%;
+
+  --popover: 0 0% 100%; /* Popovers */
+  --popover-foreground: 210 30% 8%;
+}
+
+/* Tema oscuro personalizado */
+:root.dark {
+  --primary: 210 100% 60%; /* Azul más brillante en oscuro */
+  --primary-foreground: 210 30% 8%;
+
+  --secondary: 180 100% 50%; /* Teal más brillante */
+  --secondary-foreground: 210 30% 8%;
+
+  --accent: 45 100% 60%; /* Amarillo más brillante */
+  --accent-foreground: 210 30% 8%;
+
+  --destructive: 0 85% 65%;
+  --destructive-foreground: 210 30% 8%;
+
+  --warning: 35 100% 60%;
+  --warning-foreground: 210 30% 8%;
+
+  --success: 140 70% 55%;
+  --success-foreground: 210 30% 8%;
+
+  --background: 210 30% 5%; /* Fondo muy oscuro */
+  --foreground: 210 20% 95%; /* Texto claro */
+
+  --muted: 210 25% 10%; /* Fondos sutiles oscuros */
+  --muted-foreground: 210 15% 60%; /* Texto secundario claro */
+
+  --border: 210 25% 15%; /* Bordes oscuros */
+  --input: 210 25% 8%; /* Inputs oscuros */
+  --ring: 210 100% 60%; /* Anillos de foco brillantes */
+
+  --card: 210 30% 5%; /* Tarjetas oscuras */
+  --card-foreground: 210 20% 95%;
+
+  --popover: 210 30% 5%; /* Popovers oscuros */
+  --popover-foreground: 210 20% 95%;
+}
+
+/* ===== GRADIENTES PERSONALIZADOS ===== */
+:root {
+  --gradient-primary: linear-gradient(
+    135deg,
+    hsl(210 100% 50%) 0%,
+    hsl(200 100% 55%) 50%,
+    hsl(190 100% 60%) 100%
+  );
+
+  --gradient-secondary: linear-gradient(
+    135deg,
+    hsl(180 100% 40%) 0%,
+    hsl(170 100% 45%) 50%,
+    hsl(160 100% 50%) 100%
+  );
+
+  --gradient-accent: linear-gradient(
+    135deg,
+    hsl(45 100% 50%) 0%,
+    hsl(40 100% 55%) 50%,
+    hsl(35 100% 60%) 100%
+  );
+}
+
+/* ===== CLASES HELPER CORPORATIVAS ===== */
+.brand-gradient {
+  background: linear-gradient(
+    135deg,
+    hsl(var(--primary)) 0%,
+    hsl(var(--secondary)) 100%
+  );
+}
+
+.brand-card {
+  background: hsl(var(--card));
+  border: 1px solid hsl(var(--border));
+  border-radius: 12px;
+  box-shadow: 0 1px 3px hsl(var(--foreground) / 0.05),
+    0 4px 12px hsl(var(--foreground) / 0.04);
+}
+
+.brand-button {
+  background: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+  border: 1px solid hsl(var(--primary));
+  border-radius: 8px;
+  transition: all 150ms ease;
+}
+
+.brand-button:hover {
+  background: hsl(var(--primary) / 0.9);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px hsl(var(--primary) / 0.25);
+}
+
+.brand-button:active {
+  transform: translateY(0);
+}
+
+/* ===== VARIABLES ESPECÍFICAS DEL PROYECTO ===== */
+:root {
+  /* Espaciado específico */
+  --brand-spacing-xs: 0.25rem;
+  --brand-spacing-sm: 0.5rem;
+  --brand-spacing-md: 1rem;
+  --brand-spacing-lg: 1.5rem;
+  --brand-spacing-xl: 2rem;
+
+  /* Tipografía corporativa */
+  --brand-font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --brand-font-size-xs: 0.75rem;
+  --brand-font-size-sm: 0.875rem;
+  --brand-font-size-base: 1rem;
+  --brand-font-size-lg: 1.125rem;
+  --brand-font-size-xl: 1.25rem;
+
+  /* Radios específicos */
+  --brand-radius-sm: 6px;
+  --brand-radius-md: 8px;
+  --brand-radius-lg: 12px;
+  --brand-radius-xl: 16px;
+}
+
+/* ===== SOBRESCRITURAS ESPECÍFICAS ===== */
+/* Personalizar componentes específicos si es necesario */
+.checkbox-brand {
+  --primary: 210 100% 50%;
+  --secondary: 180 100% 40%;
+}
+
+.button-brand {
+  --primary: 210 100% 50%;
+  --primary-foreground: 0 0% 100%;
+}
+
+.input-brand {
+  --border: 210 30% 85%;
+  --input: 210 40% 96%;
+  --ring: 210 100% 50%;
+}
+
+/* ===== MEDIA QUERIES ===== */
+@media (prefers-reduced-motion: reduce) {
+  .brand-button,
+  .brand-card {
+    transition: none;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  /* Auto dark mode si no se usa clase .dark */
+  .auto-dark {
+    --background: 210 30% 5%;
+    --foreground: 210 20% 95%;
+    --primary: 210 100% 60%;
+    /* ... resto de variables dark */
+  }
+}
+
+/* ===== UTILIDADES PARA DEBUG ===== */
+.debug-colors {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  background: hsl(var(--card));
+  border: 1px solid hsl(var(--border));
+  border-radius: 8px;
+  padding: 1rem;
+  font-size: 12px;
+  z-index: 9999;
+}
+
+.debug-colors::before {
+  content: 'Theme Colors:';
+  font-weight: bold;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.debug-colors::after {
+  content: 'Primary: ' attr(data-primary) '\A''Secondary: ' attr(data-secondary)
+    '\A''Background: ' attr(data-background);
+  white-space: pre-line;
+}
+

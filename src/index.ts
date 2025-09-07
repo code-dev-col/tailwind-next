@@ -163,6 +163,11 @@ export {
   type MenuItemProps,
 } from './components/molecules/navigation/MenuItem';
 export {
+  AlertMessage,
+  type AlertMessageProps,
+  type AlertAction,
+} from './components/molecules/feedback/AlertMessage';
+export {
   UserCard,
   type UserCardProps,
 } from './components/molecules/cards/UserCard';

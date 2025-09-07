@@ -95,3 +95,4 @@ export { useLinkExamples } from './linkExamples.store';
 export { useTextExamples } from './textExamples.store';
 export { useFormFieldExamples } from './formFieldExamples.store';
 export { useMenuItemExamples } from './menuItemExamples.store';
+export { useAlertMessageExamples } from './alertMessageExamples.store';

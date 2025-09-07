@@ -84,7 +84,7 @@ const colorSchemes = {
     icon: 'text-primary',
   },
   secondary: {
-    container: 'bg-secondary/10 border-secondary/20 text-secondary',
+    container: 'bg-secondary/3 border-secondary/20 text-secondary',
     title: 'text-secondary',
     value: 'text-secondary font-bold',
     subtitle: 'text-secondary/70',
@@ -110,7 +110,7 @@ const colorSchemes = {
     icon: 'text-destructive',
   },
   accent: {
-    container: 'bg-accent/10 border-accent/20 text-accent',
+    container: 'bg-accent/3 border-accent/20 text-accent',
     title: 'text-accent',
     value: 'text-accent font-bold',
     subtitle: 'text-accent/70',

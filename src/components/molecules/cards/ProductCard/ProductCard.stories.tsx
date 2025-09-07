@@ -7,6 +7,7 @@ import { Text } from '../../../atoms/display/Text';
 import { Button } from '../../../atoms/forms/Button';
 import { Input } from '../../../atoms/forms/Input';
 import { Dropdown } from '../../../atoms/forms/Dropdown';
+import { CheckBox } from '../../../atoms/forms/CheckBox';
 
 const meta: Meta<typeof ProductCard> = {
   title: 'Molecules/Cards/ProductCard',
@@ -592,16 +593,14 @@ export const ECommerceDemo: Story = {
             />
 
             <Container $display="flex" $alignItems="center" $gap="gap-2">
-              <input
-                type="checkbox"
+              <CheckBox
                 id="stock-filter"
                 checked={showOnlyInStock}
-                onChange={(e) => setShowOnlyInStock(e.target.checked)}
-                className="rounded border-border"
+                onChange={(checked) => setShowOnlyInStock(checked)}
+                label="Solo en stock"
+                $size="lg"
+                $colorScheme="default"
               />
-              <label htmlFor="stock-filter" className="text-sm">
-                Solo en stock
-              </label>
             </Container>
           </Grid>
         </Container>

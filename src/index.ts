@@ -159,6 +159,10 @@ export {
   type TabItem,
 } from './components/molecules/navigation/TabGroup';
 export {
+  MenuItem,
+  type MenuItemProps,
+} from './components/molecules/navigation/MenuItem';
+export {
   UserCard,
   type UserCardProps,
 } from './components/molecules/cards/UserCard';

@@ -94,3 +94,4 @@ export { useAvatarExamples } from './avatarExamples.store';
 export { useLinkExamples } from './linkExamples.store';
 export { useTextExamples } from './textExamples.store';
 export { useFormFieldExamples } from './formFieldExamples.store';
+export { useMenuItemExamples } from './menuItemExamples.store';

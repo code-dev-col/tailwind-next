@@ -172,6 +172,10 @@ export {
   type ProgressCardProps,
 } from './components/molecules/feedback/ProgressCard';
 export {
+  NotificationToast,
+  type NotificationToastProps,
+} from './components/molecules/feedback/NotificationToast';
+export {
   UserCard,
   type UserCardProps,
 } from './components/molecules/cards/UserCard';

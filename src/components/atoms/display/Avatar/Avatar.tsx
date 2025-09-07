@@ -15,6 +15,7 @@ interface AvatarProps<T extends Record<string, any> = any> extends BaseProps {
   // Theme.css color scheme
   $colorScheme?:
     | 'default'
+    | 'primary'
     | 'secondary'
     | 'destructive'
     | 'accent'
@@ -58,25 +59,54 @@ const generateFallback = (name?: string): string => {
   return (parts[0].charAt(0) + parts[1].charAt(0)).toUpperCase();
 };
 
+// 🎨 Sistema de esquemas de color con theme.css (usando variables :root sincronizadas)
+const colorSchemes = {
+  default: {
+    base: 'bg-muted/10 text-muted-foreground border-border',
+    hover: 'hover:bg-muted/15',
+    disabled: 'opacity-50',
+  },
+  primary: {
+    base: 'bg-primary/10 text-primary border-primary/20',
+    hover: 'hover:bg-primary/15',
+    disabled: 'opacity-50',
+  },
+  secondary: {
+    base: 'bg-secondary/10 text-secondary border-secondary/20',
+    hover: 'hover:bg-secondary/15',
+    disabled: 'opacity-50',
+  },
+  destructive: {
+    base: 'bg-destructive/10 text-destructive border-destructive/20',
+    hover: 'hover:bg-destructive/15',
+    disabled: 'opacity-50',
+  },
+  accent: {
+    base: 'bg-accent/10 text-accent border-accent/20',
+    hover: 'hover:bg-accent/15',
+    disabled: 'opacity-50',
+  },
+  muted: {
+    base: 'bg-muted text-muted-foreground border-border',
+    hover: 'hover:bg-muted/80',
+    disabled: 'opacity-50',
+  },
+  minimal: {
+    base: 'bg-transparent text-foreground/70 border-transparent',
+    hover: 'hover:bg-muted/10',
+    disabled: 'opacity-50',
+  },
+  custom: {
+    base: '',
+    hover: '',
+    disabled: '',
+  },
+};
+
 // Variant configurations using Tailwind classes
 const avatarVariants = {
   base: 'inline-flex items-center justify-center font-medium transition-all duration-200 select-none border shadow-sm',
   baseWithOverflow: 'overflow-hidden', // Only apply overflow when no status indicator
-
-  // Color schemes using theme.css variables
-  colorScheme: {
-    default:
-      'bg-muted/10 text-muted-foreground border-border hover:bg-muted/15',
-    secondary:
-      'bg-secondary/10 text-secondary border-secondary/20 hover:bg-secondary/15',
-    destructive:
-      'bg-destructive/10 text-destructive border-destructive/20 hover:bg-destructive/15',
-    accent: 'bg-accent/10 text-accent border-accent/20 hover:bg-accent/15',
-    muted: 'bg-muted text-muted-foreground border-border hover:bg-muted/80',
-    minimal:
-      'bg-transparent text-foreground border-transparent hover:bg-muted/10',
-    custom: '', // Empty for custom styling
-  },
 
   // Size variants
   size: {
@@ -161,6 +191,9 @@ const Avatar = React.forwardRef<HTMLDivElement, AvatarProps<any>>(
     const isClickable = Boolean(onClick);
     const hasStatus = $status !== 'none';
 
+    // Obtener esquema de color activo
+    const currentColorScheme = colorSchemes[$colorScheme];
+
     const handleImageLoad = () => {
       setImgLoaded(true);
       setImgError(false);
@@ -180,8 +213,9 @@ const Avatar = React.forwardRef<HTMLDivElement, AvatarProps<any>>(
           // Apply overflow-hidden only when no status indicator
           !hasStatus && avatarVariants.baseWithOverflow,
 
-          // Color scheme
-          avatarVariants.colorScheme[$colorScheme],
+          // Aplicar esquema de color
+          currentColorScheme.base,
+          currentColorScheme.hover,
 
           // Size
           avatarVariants.size[$size],
@@ -240,4 +274,3 @@ const Avatar = React.forwardRef<HTMLDivElement, AvatarProps<any>>(
 Avatar.displayName = 'Avatar';
 
 export { Avatar, type AvatarProps };
-

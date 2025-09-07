@@ -14,7 +14,7 @@
   --color-ring: hsl(215 85% 55%); /* Azul medio para focus rings */
 
   /* Primarios - Escala de azules progresiva */
-  --color-primary: hsl(142 85% 62.4%); /* Azul principal vibrante */
+  --color-primary: hsl(215 85% 55%); /* Azul principal vibrante */
   --color-primary-foreground: hsl(0 0% 100%);
   --color-secondary: hsl(210 75% 65%); /* Azul cielo más suave */
   --color-secondary-foreground: hsl(220 25% 15%);
@@ -77,7 +77,7 @@
 
   /* Primarios - Escala de azules progresiva */
   /* SYNC: --color-primary: hsl(215 85% 55%) */
-  --primary: 142 85% 62.4%;
+  --primary: 215 85% 55%;
   --primary-foreground: 0 0% 100%;
   /* SYNC: --color-secondary: hsl(210 75% 65%) */
   --secondary: 210 75% 65%;
@@ -202,7 +202,7 @@
   --input: 220 16% 96%;
   --ring: 215 85% 55%;
   /* SYNC: Primarios con valores dark mode (+10% lightness) */
-  --primary: 142 85% 62.4%;
+  --primary: 215 85% 65%;
   --primary-foreground: 0 0% 100%;
   --secondary: 210 75% 75%;
   --secondary-foreground: 220 25% 15%;

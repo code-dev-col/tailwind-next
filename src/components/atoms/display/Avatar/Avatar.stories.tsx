@@ -37,6 +37,10 @@ export const ColorSchemes: Story = {
         <p className="text-xs mt-1">Default</p>
       </div>
       <div className="text-center">
+        <Avatar $colorScheme="primary" fallback="PR" />
+        <p className="text-xs mt-1">Primary</p>
+      </div>
+      <div className="text-center">
         <Avatar
           $colorScheme="secondary"
           $store={useAvatarExamples}
@@ -89,7 +93,7 @@ export const Variants: Story = {
   render: () => (
     <div className="flex gap-4 items-center">
       <div className="text-center">
-        <Avatar fallback="DF" $variant="default" $colorScheme="secondary" />
+        <Avatar fallback="DF" $variant="default" $colorScheme="primary" />
         <p className="text-xs mt-1">Default</p>
       </div>
       <div className="text-center">
@@ -133,7 +137,7 @@ export const Sizes: Story = {
           storeKey="sizeExample"
           fallback="MD"
           $size="default"
-          $colorScheme="default"
+          $colorScheme="primary"
         />
         <p className="text-xs mt-1">Default</p>
       </div>
@@ -515,4 +519,3 @@ export const TeamExample: Story = {
     </div>
   ),
 };
-

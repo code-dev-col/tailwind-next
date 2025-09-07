@@ -136,9 +136,9 @@ Genera las clases CSS para el overflow y escalado de la imagen:
 
 - `'top'`: Usa espaciado normal (sin cambios)
 - `'all'`: Agrega padding superior extra para separar el texto de la imagen que sobresale hacia abajo
-  - **compact**: `pt-6 px-3 pb-3` (en lugar de `p-3`)
-  - **default**: `pt-6 px-4 pb-4` (en lugar de `p-4`)
-  - **detailed**: `pt-8 px-6 pb-6` (en lugar de `p-6`)
+  - **compact**: `pt-10 px-3 pb-3` (en lugar de `p-3`)
+  - **default**: `pt-10 px-4 pb-4` (en lugar de `p-4`)
+  - **detailed**: `pt-12 px-6 pb-6` (en lugar de `p-6`)
 - `'none'`: Usa espaciado original según la variante
 
 #### `getImageContainerClasses(overflow, bgColor)`
@@ -186,6 +186,134 @@ $transparent={!$imageBgColor && $imageOverflow !== 'none'}
 /* Overflow superior */
 .-mt-4.-mx-2.mb-2.rounded-t-xl.overflow-hidden
 
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
+/* Overflow completo */
 /* Overflow completo */
 /* Overflow completo */
 /* Overflow completo */

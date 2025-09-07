@@ -18,7 +18,7 @@
   --color-primary-foreground: hsl(0 0% 100%);
   --color-secondary: hsl(210 75% 65%); /* Azul cielo más suave */
   --color-secondary-foreground: hsl(220 25% 15%);
-  --color-accent: hsl(166 52.3% 40.9%); /* Azul claro para acentos */
+  --color-accent: hsl(172 52.3% 48.1%); /* Azul claro para acentos */
   --color-accent-foreground: hsl(220 25% 15%);
 
   /* Colores semánticos específicos */
@@ -83,7 +83,7 @@
   --secondary: 210 75% 65%;
   --secondary-foreground: 220 25% 15%;
   /* SYNC: --color-accent: hsl(166 52.3% 53.5%) */
-  --accent: 166 52.3% 40.9%;
+  --accent: 172 52.3% 48.1%;
   --accent-foreground: 220 25% 15%;
 
   /* Colores semánticos específicos */
@@ -209,7 +209,7 @@
   --destructive: 355 85% 70%;
   --destructive-foreground: 0 0% 100%;
   /* SYNC: --color-accent: hsl(166 52.3% 63.5%) */
-  --accent: 166 52.3% 40.9%;
+  --accent: 172 52.3% 48.1%;
   --accent-foreground: 220 25% 15%;
   /* SYNC: --color-success: hsl(137 70% 48.5%) */
   --success: 137 70% 38.5%;

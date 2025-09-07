@@ -386,14 +386,14 @@ const LoginForm = React.forwardRef<HTMLFormElement, LoginFormProps>(
                   $size="sm"
                   onClick={togglePasswordVisibility}
                   disabled={loading || disabled}
-                  className="absolute right-0 top-0 h-full px-3"
+                  className="absolute right-0 top-0 h-full px-3 group"
                   aria-label={
                     showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'
                   }>
                   <Icon
                     icon={showPassword ? FiEyeOff : FiEye}
                     $size="sm"
-                    className={currentColorScheme.subtitle}
+                    className="text-muted-foreground group-hover:text-white"
                   />
                 </Button>
               )}

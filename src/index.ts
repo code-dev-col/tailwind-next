@@ -154,6 +154,11 @@ export {
   type ContactFormProps,
 } from './components/molecules/forms/ContactForm';
 export {
+  TabGroup,
+  type TabGroupProps,
+  type TabItem,
+} from './components/molecules/navigation/TabGroup';
+export {
   UserCard,
   type UserCardProps,
 } from './components/molecules/cards/UserCard';

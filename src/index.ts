@@ -168,6 +168,10 @@ export {
   type AlertAction,
 } from './components/molecules/feedback/AlertMessage';
 export {
+  ProgressCard,
+  type ProgressCardProps,
+} from './components/molecules/feedback/ProgressCard';
+export {
   UserCard,
   type UserCardProps,
 } from './components/molecules/cards/UserCard';

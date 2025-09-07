@@ -58,42 +58,49 @@ const colorSchemes = {
     hover: 'hover:bg-primary/15',
     selected: 'bg-primary/25 text-primary ring-primary/50',
     disabled: 'opacity-50',
+    counter: 'bg-primary text-white',
   },
   secondary: {
     base: 'bg-secondary/10 text-secondary border-secondary/20',
     hover: 'hover:bg-secondary/15',
     selected: 'bg-secondary/25 text-secondary ring-secondary/50',
     disabled: 'opacity-50',
+    counter: 'bg-secondary text-white',
   },
   destructive: {
     base: 'bg-destructive/10 text-destructive border-destructive/20',
     hover: 'hover:bg-destructive/15',
     selected: 'bg-destructive/25 text-destructive ring-destructive/50',
     disabled: 'opacity-50',
+    counter: 'bg-destructive text-white',
   },
   accent: {
     base: 'bg-accent/10 text-accent border-accent/20',
     hover: 'hover:bg-accent/15',
     selected: 'bg-accent/25 text-accent ring-accent/50',
     disabled: 'opacity-50',
+    counter: 'bg-accent text-white',
   },
   muted: {
     base: 'bg-muted text-muted-foreground border-border',
     hover: 'hover:bg-muted/80',
     selected: 'bg-muted-foreground/20 text-foreground ring-muted-foreground/30',
     disabled: 'opacity-50',
+    counter: 'bg-muted-foreground text-white',
   },
   minimal: {
     base: 'bg-transparent text-foreground/70 border-foreground/20',
     hover: 'hover:bg-foreground/5',
     selected: 'bg-foreground/10 text-foreground ring-foreground/20',
     disabled: 'opacity-50',
+    counter: 'bg-foreground text-white',
   },
   custom: {
     base: '',
     hover: '',
     selected: '',
     disabled: '',
+    counter: '',
   },
 };
 
@@ -283,7 +290,11 @@ const Chip = React.forwardRef<HTMLDivElement, ChipProps>(
 
         {/* Contador */}
         {$count !== undefined && $count > 0 && (
-          <span className="flex-shrink-0 bg-current bg-opacity-20 text-current text-xs rounded-full px-1.5 py-0.5 min-w-[18px] text-center leading-none">
+          <span
+            className={cn(
+              'flex-shrink-0 text-xs rounded-full px-1.5 py-0.5 min-w-[18px] text-center leading-none font-medium',
+              currentColorScheme.counter
+            )}>
             {$count > 99 ? '99+' : $count}
           </span>
         )}
@@ -445,4 +456,3 @@ const ChipGroup = React.forwardRef<HTMLDivElement, ChipGroupProps>(
 ChipGroup.displayName = 'ChipGroup';
 
 export { Chip, ChipGroup, type ChipProps, type ChipGroupProps };
-

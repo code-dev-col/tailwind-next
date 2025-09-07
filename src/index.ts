@@ -103,6 +103,11 @@ export {
   type BreadcrumbItem,
 } from './components/atoms/navigation/Breadcrumb';
 export {
+  BreadcrumbNavigation,
+  type BreadcrumbNavigationProps,
+  type BreadcrumbAction,
+} from './components/molecules/navigation/BreadcrumbNavigation';
+export {
   Divider,
   Separator,
   type DividerProps,

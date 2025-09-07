@@ -360,112 +360,115 @@ const buildClassName = (props: ContainerProps): string => {
   return cn(classes.filter(Boolean).join(' '));
 };
 
-// Simplified Container component to avoid TypeScript union complexity
-const Container: React.FC<ContainerProps> = (props) => {
-  const {
-    className,
-    $margin,
-    $padding,
-    $width,
-    $height,
-    $minWidth,
-    $maxWidth,
-    $minHeight,
-    $maxHeight,
-    $backgroundColor,
-    $color,
-    $borderRadius,
-    $borderColor,
-    $borderWidth,
-    $boxShadow,
-    $isShadow,
-    $opacity,
-    $transform,
-    $filter,
-    $zIndex,
-    $top,
-    $right,
-    $bottom,
-    $left,
-    $inset,
-    $gap,
-    as = 'div',
-    style,
-    children,
-    onClick,
-    ...restProps
-  } = props;
+// Container component with forwardRef support for better flexibility
+const Container = React.forwardRef<HTMLElement, ContainerProps>(
+  (props, ref) => {
+    const {
+      className,
+      $margin,
+      $padding,
+      $width,
+      $height,
+      $minWidth,
+      $maxWidth,
+      $minHeight,
+      $maxHeight,
+      $backgroundColor,
+      $color,
+      $borderRadius,
+      $borderColor,
+      $borderWidth,
+      $boxShadow,
+      $isShadow,
+      $opacity,
+      $transform,
+      $filter,
+      $zIndex,
+      $top,
+      $right,
+      $bottom,
+      $left,
+      $inset,
+      $gap,
+      as = 'div',
+      style,
+      children,
+      onClick,
+      ...restProps
+    } = props;
 
-  const Component = as as any;
+    const Component = as as any;
 
-  // Build dynamic styles for custom values
-  const dynamicStyles: React.CSSProperties = {
-    ...style,
-  };
+    // Build dynamic styles for custom values
+    const dynamicStyles: React.CSSProperties = {
+      ...style,
+    };
 
-  // Handle custom values
-  if (
-    $margin &&
-    !$margin.includes('m-') &&
-    !$margin.includes('mx-') &&
-    !$margin.includes('my-')
-  ) {
-    dynamicStyles.margin = $margin;
+    // Handle custom values
+    if (
+      $margin &&
+      !$margin.includes('m-') &&
+      !$margin.includes('mx-') &&
+      !$margin.includes('my-')
+    ) {
+      dynamicStyles.margin = $margin;
+    }
+    if (
+      $padding &&
+      !$padding.includes('p-') &&
+      !$padding.includes('px-') &&
+      !$padding.includes('py-')
+    ) {
+      dynamicStyles.padding = $padding;
+    }
+    if ($width && !$width.includes('w-')) dynamicStyles.width = $width;
+    if ($height && !$height.includes('h-')) dynamicStyles.height = $height;
+    if ($minWidth) dynamicStyles.minWidth = $minWidth;
+    if ($maxWidth && !$maxWidth.includes('max-w-'))
+      dynamicStyles.maxWidth = $maxWidth;
+    if ($minHeight) dynamicStyles.minHeight = $minHeight;
+    if ($maxHeight) dynamicStyles.maxHeight = $maxHeight;
+    if ($backgroundColor && !$backgroundColor.includes('bg-'))
+      dynamicStyles.backgroundColor = $backgroundColor;
+    if ($color && !$color.includes('text-')) dynamicStyles.color = $color;
+    if ($borderRadius && !$borderRadius.includes('rounded'))
+      dynamicStyles.borderRadius = $borderRadius;
+    if ($borderColor && !$borderColor.includes('border-'))
+      dynamicStyles.borderColor = $borderColor;
+    if ($borderWidth && !$borderWidth.includes('border-'))
+      dynamicStyles.borderWidth = $borderWidth;
+    if ($boxShadow && !$boxShadow.includes('shadow'))
+      dynamicStyles.boxShadow = $boxShadow;
+    if ($opacity !== undefined) dynamicStyles.opacity = $opacity / 100;
+    if ($transform) dynamicStyles.transform = $transform;
+    if ($filter) dynamicStyles.filter = $filter;
+    if ($zIndex !== undefined) dynamicStyles.zIndex = $zIndex;
+    if ($top) dynamicStyles.top = $top;
+    if ($right) dynamicStyles.right = $right;
+    if ($bottom) dynamicStyles.bottom = $bottom;
+    if ($left) dynamicStyles.left = $left;
+    if ($inset) {
+      dynamicStyles.top = $inset;
+      dynamicStyles.right = $inset;
+      dynamicStyles.bottom = $inset;
+      dynamicStyles.left = $inset;
+    }
+    if ($gap && !$gap.includes('gap-')) dynamicStyles.gap = $gap;
+
+    const finalClassName = buildClassName(props);
+
+    return (
+      <Component
+        ref={ref}
+        className={finalClassName}
+        style={dynamicStyles}
+        onClick={onClick}
+        {...restProps}>
+        {children}
+      </Component>
+    );
   }
-  if (
-    $padding &&
-    !$padding.includes('p-') &&
-    !$padding.includes('px-') &&
-    !$padding.includes('py-')
-  ) {
-    dynamicStyles.padding = $padding;
-  }
-  if ($width && !$width.includes('w-')) dynamicStyles.width = $width;
-  if ($height && !$height.includes('h-')) dynamicStyles.height = $height;
-  if ($minWidth) dynamicStyles.minWidth = $minWidth;
-  if ($maxWidth && !$maxWidth.includes('max-w-'))
-    dynamicStyles.maxWidth = $maxWidth;
-  if ($minHeight) dynamicStyles.minHeight = $minHeight;
-  if ($maxHeight) dynamicStyles.maxHeight = $maxHeight;
-  if ($backgroundColor && !$backgroundColor.includes('bg-'))
-    dynamicStyles.backgroundColor = $backgroundColor;
-  if ($color && !$color.includes('text-')) dynamicStyles.color = $color;
-  if ($borderRadius && !$borderRadius.includes('rounded'))
-    dynamicStyles.borderRadius = $borderRadius;
-  if ($borderColor && !$borderColor.includes('border-'))
-    dynamicStyles.borderColor = $borderColor;
-  if ($borderWidth && !$borderWidth.includes('border-'))
-    dynamicStyles.borderWidth = $borderWidth;
-  if ($boxShadow && !$boxShadow.includes('shadow'))
-    dynamicStyles.boxShadow = $boxShadow;
-  if ($opacity !== undefined) dynamicStyles.opacity = $opacity / 100;
-  if ($transform) dynamicStyles.transform = $transform;
-  if ($filter) dynamicStyles.filter = $filter;
-  if ($zIndex !== undefined) dynamicStyles.zIndex = $zIndex;
-  if ($top) dynamicStyles.top = $top;
-  if ($right) dynamicStyles.right = $right;
-  if ($bottom) dynamicStyles.bottom = $bottom;
-  if ($left) dynamicStyles.left = $left;
-  if ($inset) {
-    dynamicStyles.top = $inset;
-    dynamicStyles.right = $inset;
-    dynamicStyles.bottom = $inset;
-    dynamicStyles.left = $inset;
-  }
-  if ($gap && !$gap.includes('gap-')) dynamicStyles.gap = $gap;
-
-  const finalClassName = buildClassName(props);
-
-  return (
-    <Component
-      className={finalClassName}
-      style={dynamicStyles}
-      onClick={onClick}
-      {...restProps}>
-      {children}
-    </Component>
-  );
-};
+);
 
 Container.displayName = 'Container';
 

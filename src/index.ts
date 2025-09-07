@@ -176,6 +176,10 @@ export {
   type NotificationToastProps,
 } from './components/molecules/feedback/NotificationToast';
 export {
+  EmptyState,
+  type EmptyStateProps,
+} from './components/molecules/feedback/EmptyState';
+export {
   UserCard,
   type UserCardProps,
 } from './components/molecules/cards/UserCard';

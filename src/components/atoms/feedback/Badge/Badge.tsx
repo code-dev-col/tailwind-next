@@ -27,54 +27,64 @@ interface BadgeProps extends BaseProps {
 // 🎨 Sistema de esquemas de color con theme.css
 const colorSchemes = {
   default: {
-    base: 'bg-primary text-primary-foreground border-primary',
+    base: 'bg-primary border-primary',
     hover: 'hover:bg-primary/80',
     focus: 'focus:ring-primary/20',
+    text: 'text-white',
   },
   secondary: {
-    base: 'bg-secondary text-secondary-foreground border-secondary',
+    base: 'bg-secondary border-secondary',
     hover: 'hover:bg-secondary/80',
     focus: 'focus:ring-secondary/20',
+    text: 'text-white',
   },
   destructive: {
-    base: 'bg-destructive text-destructive-foreground border-destructive',
+    base: 'bg-destructive border-destructive',
     hover: 'hover:bg-destructive/80',
     focus: 'focus:ring-destructive/20',
+    text: 'text-white',
   },
   accent: {
-    base: 'bg-accent text-accent-foreground border-accent',
+    base: 'bg-accent border-accent',
     hover: 'hover:bg-accent/80',
     focus: 'focus:ring-accent/20',
+    text: 'text-white',
   },
   muted: {
-    base: 'bg-muted text-muted-foreground border-muted',
+    base: 'bg-muted border-muted',
     hover: 'hover:bg-muted/80',
     focus: 'focus:ring-muted/20',
+    text: 'text-muted-foreground',
   },
   minimal: {
-    base: 'bg-transparent text-foreground border-transparent',
+    base: 'bg-transparent border-transparent',
     hover: 'hover:bg-foreground/10',
     focus: 'focus:ring-foreground/20',
+    text: 'text-foreground/70',
   },
   success: {
-    base: 'bg-green-500 text-white border-green-500',
-    hover: 'hover:bg-green-600',
-    focus: 'focus:ring-green-500/20',
+    base: 'bg-success border-success',
+    hover: 'hover:bg-success/80',
+    focus: 'focus:ring-success/20',
+    text: 'text-white',
   },
   warning: {
-    base: 'bg-yellow-500 text-white border-yellow-500',
-    hover: 'hover:bg-yellow-600',
-    focus: 'focus:ring-yellow-500/20',
+    base: 'bg-warning border-warning',
+    hover: 'hover:bg-warning/80',
+    focus: 'focus:ring-warning/20',
+    text: 'text-white',
   },
   outline: {
-    base: 'bg-transparent text-foreground border-border',
-    hover: 'hover:bg-accent hover:text-accent-foreground',
+    base: 'bg-transparent border-border',
+    hover: 'hover:bg-accent hover:text-white',
     focus: 'focus:ring-accent/20',
+    text: 'text-foreground',
   },
   custom: {
     base: '', // Vacío para personalización externa
     hover: '',
     focus: '',
+    text: '',
   },
 };
 
@@ -119,6 +129,7 @@ const Badge = React.forwardRef<HTMLDivElement, BadgeProps>(
           currentColorScheme.base,
           currentColorScheme.hover,
           currentColorScheme.focus,
+          currentColorScheme.text,
           sizeClasses,
           className
         );

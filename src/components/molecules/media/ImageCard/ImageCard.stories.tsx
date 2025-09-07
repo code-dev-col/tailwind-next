@@ -210,6 +210,93 @@ export const WithActions: Story = {
   ),
 };
 
+// Comparación de Object Fit en Overflow
+export const ObjectFitComparison: Story = {
+  render: () => (
+    <div className="space-y-8">
+      <div>
+        <h4 className="text-lg font-semibold mb-4">
+          Comparación Object Fit con Overflow
+        </h4>
+        <p className="text-sm text-muted-foreground mb-6">
+          Muestra cómo diferentes valores de object-fit afectan las imágenes con
+          overflow. Por defecto, las imágenes con overflow usan "contain" para
+          mostrar el producto completo.
+        </p>
+      </div>
+
+      <div className="grid grid-cols-3 gap-6">
+        <div className="space-y-3">
+          <ImageCard
+            src={sampleImages.example}
+            alt="Object Fit Cover"
+            title="Object Fit: Cover"
+            description="Imagen recortada pero llena todo el espacio"
+            $imageOverflow="all"
+            $objectFit="cover"
+            $imageBgColor="linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+            $colorScheme="primary"
+          />
+          <div className="text-center">
+            <p className="text-sm font-medium">cover</p>
+            <p className="text-xs text-muted-foreground">
+              Recorta para llenar el espacio
+            </p>
+          </div>
+        </div>
+
+        <div className="space-y-3">
+          <ImageCard
+            src={sampleImages.example}
+            alt="Object Fit Contain"
+            title="Object Fit: Contain"
+            description="Imagen completa visible sin recortes"
+            $imageOverflow="all"
+            $objectFit="contain"
+            $imageBgColor="linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+            $colorScheme="secondary"
+          />
+          <div className="text-center">
+            <p className="text-sm font-medium">contain (por defecto)</p>
+            <p className="text-xs text-muted-foreground">
+              Muestra el producto completo
+            </p>
+          </div>
+        </div>
+
+        <div className="space-y-3">
+          <ImageCard
+            src={sampleImages.example}
+            alt="Object Fit Fill"
+            title="Object Fit: Fill"
+            description="Imagen estirada para llenar el espacio"
+            $imageOverflow="all"
+            $objectFit="fill"
+            $imageBgColor="linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+            $colorScheme="accent"
+          />
+          <div className="text-center">
+            <p className="text-sm font-medium">fill</p>
+            <p className="text-xs text-muted-foreground">
+              Estira para llenar el espacio
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div className="p-4 bg-blue-50 rounded-lg">
+        <h5 className="font-medium text-blue-900 mb-2">💡 Recomendación</h5>
+        <p className="text-sm text-blue-800">
+          Para productos con overflow, se recomienda usar{' '}
+          <code className="bg-blue-100 px-1 rounded">contain</code> para mostrar
+          el producto completo sin recortes. El componente lo aplica
+          automáticamente cuando no se especifica $objectFit.
+        </p>
+      </div>
+    </div>
+  ),
+};
+
 // Aspectos de imagen
 export const ImageAspects: Story = {
   render: () => (

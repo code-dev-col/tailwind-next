@@ -9,6 +9,9 @@ import { Input } from '../../../atoms/forms/Input';
 import { Dropdown } from '../../../atoms/forms/Dropdown';
 import { CheckBox } from '../../../atoms/forms/CheckBox';
 
+// Imagen de ejemplo local para demos
+const sampleImage = '/src/assets/image-example.png';
+
 const meta: Meta<typeof ProductCard> = {
   title: 'Molecules/Cards/ProductCard',
   component: ProductCard,
@@ -773,5 +776,410 @@ export const RealTimeUpdates: Story = {
       </Container>
     );
   },
+};
+
+// Demostración de Overflow de Imagen
+export const ImageOverflowDemo: Story = {
+  render: () => (
+    <div className="space-y-8">
+      <div className="text-center space-y-2">
+        <h3 className="text-xl font-bold">
+          🎯 Overflow de Imagen en ProductCard
+        </h3>
+        <p className="text-muted-foreground">
+          Observa cómo las imágenes pueden sobresalir del contenedor para
+          efectos visuales impactantes
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {/* Sin overflow - normal */}
+        <div className="space-y-4">
+          <h4 className="text-center font-semibold text-green-700">
+            📱 Normal (100%)
+          </h4>
+          <div className="border-2 border-dashed border-green-300 p-6 bg-green-50">
+            <ProductCard
+              title="Producto Normal"
+              price="25000"
+              originalPrice="30000"
+              description="Imagen sin overflow"
+              imageUrl={sampleImage}
+              category="Tecnología"
+              rating={4.5}
+              reviewCount={128}
+              $imageOverflow="none"
+              $showActions={true}
+              onAddToCart={() => console.log('Agregado al carrito')}
+              onToggleFavorite={() => console.log('Favorito cambiado')}
+            />
+          </div>
+          <p className="text-sm text-green-600 text-center">
+            Imagen respeta los límites del contenedor
+          </p>
+        </div>
+
+        {/* Overflow superior - 3% */}
+        <div className="space-y-4">
+          <h4 className="text-center font-semibold text-blue-700">
+            ⬆️ Superior (103%)
+          </h4>
+          <div className="border-2 border-dashed border-blue-300 p-6 bg-blue-50">
+            <ProductCard
+              title="Producto Destacado"
+              price="45000"
+              originalPrice="50000"
+              description="Imagen con overflow superior"
+              imageUrl={sampleImage}
+              category="Premium"
+              rating={4.8}
+              reviewCount={89}
+              isNew={true}
+              $imageOverflow="top"
+              $showActions={true}
+              onAddToCart={() => console.log('Agregado al carrito')}
+              onToggleFavorite={() => console.log('Favorito cambiado')}
+            />
+          </div>
+          <p className="text-sm text-blue-600 text-center">
+            Imagen sobresale por arriba y se escala 3%
+          </p>
+        </div>
+
+        {/* Overflow completo - 10% */}
+        <div className="space-y-4">
+          <h4 className="text-center font-semibold text-purple-700">
+            🚀 Completo (110%)
+          </h4>
+          <div className="border-2 border-dashed border-purple-300 p-6 bg-purple-50">
+            <ProductCard
+              title="Producto Premium"
+              price="89000"
+              originalPrice="99000"
+              description="Imagen con overflow completo"
+              imageUrl={sampleImage}
+              category="Exclusivo"
+              rating={5.0}
+              reviewCount={245}
+              isNew={true}
+              discount="-10%"
+              $imageOverflow="all"
+              $showActions={true}
+              onAddToCart={() => console.log('Agregado al carrito')}
+              onToggleFavorite={() => console.log('Favorito cambiado')}
+            />
+          </div>
+          <p className="text-sm text-purple-600 text-center">
+            Imagen se agranda 10% y sobresale verticalmente
+          </p>
+        </div>
+      </div>
+
+      <div className="bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-lg p-6">
+        <h5 className="font-semibold text-blue-900 mb-3 flex items-center gap-2">
+          <span>💡</span> Funcionalidad de Overflow en ProductCard
+        </h5>
+        <div className="space-y-2 text-sm text-blue-800">
+          <p>
+            <strong>🎯 Casos de uso:</strong> Productos destacados, ofertas
+            especiales, items premium, productos nuevos que necesitan llamar la
+            atención.
+          </p>
+          <p>
+            <strong>✨ Características:</strong> Escalado automático,
+            transparencia opcional, espaciado inteligente del contenido,
+            transiciones suaves.
+          </p>
+          <p>
+            <strong>🔧 Implementación:</strong> Misma funcionalidad que
+            ImageCard - props $imageOverflow y $imageBgColor para control total.
+          </p>
+        </div>
+      </div>
+    </div>
+  ),
+};
+
+// Comparación de Object Fit en Overflow para ProductCard
+export const ObjectFitComparison: Story = {
+  render: () => (
+    <div className="space-y-8">
+      <div>
+        <h4 className="text-lg font-semibold mb-4">
+          Comparación Object Fit en ProductCard con Overflow
+        </h4>
+        <p className="text-sm text-muted-foreground mb-6">
+          Muestra cómo diferentes valores de object-fit afectan las imágenes de
+          productos con overflow. Por defecto, los productos con overflow usan
+          "contain" para mostrar el producto completo sin recortes.
+        </p>
+      </div>
+
+      <div className="grid grid-cols-3 gap-6">
+        <div className="space-y-3">
+          <div className="border-2 border-dashed border-red-300 p-4 bg-red-50">
+            <ProductCard
+              title="iPhone 15 Pro"
+              price="120000"
+              originalPrice="130000"
+              imageUrl={sampleImage}
+              category="Smartphones"
+              rating={4.9}
+              isNew={true}
+              $imageOverflow="all"
+              $imageBgColor="linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+              // Forzar cover para mostrar la diferencia
+              className="[&_img]:object-cover"
+            />
+          </div>
+          <div className="text-center">
+            <p className="text-sm font-medium text-red-700">cover</p>
+            <p className="text-xs text-muted-foreground">
+              Recorta la imagen del producto
+            </p>
+            <span className="text-xs text-red-600 font-medium">
+              ❌ No recomendado
+            </span>
+          </div>
+        </div>
+
+        <div className="space-y-3">
+          <div className="border-2 border-dashed border-green-300 p-4 bg-green-50">
+            <ProductCard
+              title="iPhone 15 Pro"
+              price="120000"
+              originalPrice="130000"
+              imageUrl={sampleImage}
+              category="Smartphones"
+              rating={4.9}
+              isNew={true}
+              $imageOverflow="all"
+              $imageBgColor="linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+              // contain es el valor por defecto para overflow
+            />
+          </div>
+          <div className="text-center">
+            <p className="text-sm font-medium text-green-700">
+              contain (automático)
+            </p>
+            <p className="text-xs text-muted-foreground">
+              Muestra el producto completo
+            </p>
+            <span className="text-xs text-green-600 font-medium">
+              ✅ Recomendado
+            </span>
+          </div>
+        </div>
+
+        <div className="space-y-3">
+          <div className="border-2 border-dashed border-orange-300 p-4 bg-orange-50">
+            <ProductCard
+              title="iPhone 15 Pro"
+              price="120000"
+              originalPrice="130000"
+              imageUrl={sampleImage}
+              category="Smartphones"
+              rating={4.9}
+              isNew={true}
+              $imageOverflow="all"
+              $imageBgColor="linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+              // Forzar fill para mostrar la diferencia
+              className="[&_img]:object-fill"
+            />
+          </div>
+          <div className="text-center">
+            <p className="text-sm font-medium text-orange-700">fill</p>
+            <p className="text-xs text-muted-foreground">
+              Estira y deforma el producto
+            </p>
+            <span className="text-xs text-orange-600 font-medium">
+              ⚠️ Usar con cuidado
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-2 gap-6">
+        <div className="p-4 bg-blue-50 rounded-lg">
+          <h5 className="font-medium text-blue-900 mb-2">
+            💡 Comportamiento Automático
+          </h5>
+          <p className="text-sm text-blue-800">
+            Cuando{' '}
+            <code className="bg-blue-100 px-1 rounded">$imageOverflow</code>{' '}
+            está activo, ProductCard automáticamente usa{' '}
+            <code className="bg-blue-100 px-1 rounded">
+              object-fit: contain
+            </code>{' '}
+            para mostrar el producto completo sin recortes.
+          </p>
+        </div>
+
+        <div className="p-4 bg-green-50 rounded-lg">
+          <h5 className="font-medium text-green-900 mb-2">🎯 Recomendación</h5>
+          <p className="text-sm text-green-800">
+            Para e-commerce, siempre es mejor mostrar el producto completo. Los
+            clientes necesitan ver exactamente lo que están comprando.
+          </p>
+        </div>
+      </div>
+    </div>
+  ),
+};
+
+// Demostración del Overlay Corregido con Overflow
+export const OverlayAndBordersDemo: Story = {
+  render: () => (
+    <div className="space-y-8">
+      <div>
+        <h4 className="text-lg font-semibold mb-4">
+          Overlay y Bordes Redondeados con Overflow
+        </h4>
+        <p className="text-sm text-muted-foreground mb-6">
+          Demuestra cómo el overlay aparece correctamente por encima de las
+          imágenes con overflow y cómo los bordes redondeados se adaptan
+          automáticamente. <strong>Haz hover para ver el overlay.</strong>
+        </p>
+      </div>
+
+      <div className="grid grid-cols-3 gap-6">
+        <div className="space-y-3">
+          <div className="border-2 border-dashed border-blue-300 p-4 bg-blue-50">
+            <ProductCard
+              title="Sin Overflow"
+              price="25000"
+              originalPrice="30000"
+              imageUrl={sampleImage}
+              category="Normal"
+              rating={4.5}
+              reviewCount={89}
+              $showActions={true}
+              onAddToCart={() => console.log('Carrito - Sin overflow')}
+              onToggleFavorite={() => console.log('Favorito - Sin overflow')}
+              onMoreActions={() => console.log('Más acciones - Sin overflow')}
+            />
+          </div>
+          <div className="text-center">
+            <p className="text-sm font-medium text-blue-700">
+              Sin overflow (normal)
+            </p>
+            <p className="text-xs text-muted-foreground">
+              Overlay con bordes rounded-lg
+            </p>
+          </div>
+        </div>
+
+        <div className="space-y-3">
+          <div className="border-2 border-dashed border-green-300 p-4 bg-green-50">
+            <ProductCard
+              title="Overflow Superior"
+              price="45000"
+              originalPrice="50000"
+              imageUrl={sampleImage}
+              category="Destacado"
+              rating={4.8}
+              reviewCount={156}
+              isNew={true}
+              $imageOverflow="top"
+              $showActions={true}
+              $showBadges={true}
+              onAddToCart={() => console.log('Carrito - Overflow top')}
+              onToggleFavorite={() => console.log('Favorito - Overflow top')}
+              onMoreActions={() => console.log('Más acciones - Overflow top')}
+            />
+          </div>
+          <div className="text-center">
+            <p className="text-sm font-medium text-green-700">Overflow top</p>
+            <p className="text-xs text-muted-foreground">
+              Overlay con bordes rounded-t-xl
+            </p>
+          </div>
+        </div>
+
+        <div className="space-y-3">
+          <div className="border-2 border-dashed border-purple-300 p-4 bg-purple-50">
+            <ProductCard
+              title="Overflow Completo"
+              price="89000"
+              originalPrice="99000"
+              imageUrl={sampleImage}
+              category="Premium"
+              rating={5.0}
+              reviewCount={312}
+              isNew={true}
+              discount="-10%"
+              $imageOverflow="all"
+              $imageBgColor="linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+              $showActions={true}
+              $showBadges={true}
+              onAddToCart={() => console.log('Carrito - Overflow all')}
+              onToggleFavorite={() => console.log('Favorito - Overflow all')}
+              onMoreActions={() => console.log('Más acciones - Overflow all')}
+            />
+          </div>
+          <div className="text-center">
+            <p className="text-sm font-medium text-purple-700">Overflow all</p>
+            <p className="text-xs text-muted-foreground">
+              Overlay con bordes rounded-xl
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-2 gap-6">
+        <div className="p-4 bg-green-50 rounded-lg border border-green-200">
+          <h5 className="font-medium text-green-900 mb-2 flex items-center gap-2">
+            <span>✅</span> Z-Index Corregido
+          </h5>
+          <div className="space-y-1 text-sm text-green-800">
+            <p>
+              • Imagen con overflow: <code>z-10</code>
+            </p>
+            <p>
+              • Overlay de acciones: <code>z-20</code>
+            </p>
+            <p>
+              • Badges y botones: <code>z-30</code>
+            </p>
+            <p>
+              • <strong>Resultado</strong>: Todo es clickeable
+            </p>
+          </div>
+        </div>
+
+        <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
+          <h5 className="font-medium text-blue-900 mb-2 flex items-center gap-2">
+            <span>🎨</span> Bordes Adaptativos
+          </h5>
+          <div className="space-y-1 text-sm text-blue-800">
+            <p>
+              • Sin overflow: <code>rounded-lg</code>
+            </p>
+            <p>
+              • Overflow top: <code>rounded-t-xl</code>
+            </p>
+            <p>
+              • Overflow all: <code>rounded-xl</code>
+            </p>
+            <p>
+              • <strong>Resultado</strong>: Consistencia visual
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div className="p-4 bg-yellow-50 rounded-lg border border-yellow-200">
+        <h5 className="font-medium text-yellow-900 mb-2 flex items-center gap-2">
+          <span>💡</span> Cómo Probar
+        </h5>
+        <p className="text-sm text-yellow-800">
+          <strong>Haz hover sobre cada ProductCard</strong> para ver cómo el
+          overlay aparece por encima de la imagen (incluso con overflow) y cómo
+          los bordes redondeados coinciden perfectamente con el contenedor.
+          Todos los botones del overlay son clickeables.
+        </p>
+      </div>
+    </div>
+  ),
 };
 

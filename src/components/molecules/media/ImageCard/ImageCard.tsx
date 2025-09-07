@@ -333,7 +333,11 @@ const ImageCard = React.forwardRef<HTMLDivElement, ImageCardProps>(
               src={src}
               alt={alt}
               $aspect={$aspect}
-              $objectFit={$objectFit}
+              $objectFit={
+                $imageOverflow !== 'none' && !$objectFit
+                  ? 'contain' // Por defecto 'contain' para overflow
+                  : $objectFit || 'cover' // Por defecto 'cover' normal
+              }
               $objectPosition={$objectPosition}
               $variant={
                 $imageOverflow !== 'none'

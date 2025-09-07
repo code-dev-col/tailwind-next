@@ -57,6 +57,7 @@ const meta: Meta<typeof Tooltip> = {
       control: 'select',
       options: [
         'default',
+        'primary',
         'secondary',
         'destructive',
         'accent',
@@ -110,6 +111,14 @@ export const ColorSchemes: Story = {
         $showArrow>
         <button className="px-3 py-2 bg-card text-card-foreground border border-border rounded">
           Default
+        </button>
+      </Tooltip>
+      <Tooltip
+        content="Tooltip primary indigo-lavanda vibrante"
+        $colorScheme="primary"
+        $showArrow>
+        <button className="px-3 py-2 bg-primary/10 text-primary border border-primary/20 rounded">
+          Primary
         </button>
       </Tooltip>
       <Tooltip
@@ -898,6 +907,7 @@ export const Interactive: Story = {
     ] as const;
     const colorSchemes = [
       'default',
+      'primary',
       'secondary',
       'destructive',
       'accent',
@@ -1119,4 +1129,3 @@ export const Interactive: Story = {
     },
   },
 };
-

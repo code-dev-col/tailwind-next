@@ -140,13 +140,115 @@ src/
 
 **TODOS los componentes con prop `$colorScheme` deben incluir:**
 
-1. **`default`**: Usa `primary` + `muted` (esquema base)
-2. **`secondary`**: Usa `secondary` + sus variaciones
-3. **`destructive`**: Usa `destructive` + sus variaciones
-4. **`accent`**: Usa `accent` + sus variaciones
-5. **`muted`**: Solo grises neutros para fondos sutiles
-6. **`minimal`**: Transparente + `foreground`
-7. **`custom`**: Vacío para personalización externa
+1. **`default`**: Usa colores neutros (`card`, `muted`) - esquema base para fondos sutiles
+2. **`primary`**: Usa `primary` + texto blanco - color principal vibrante del sistema
+3. **`secondary`**: Usa `secondary` + texto blanco - turquesa pastel complementario
+4. **`destructive`**: Usa `destructive` + texto blanco - errores y acciones críticas
+5. **`accent`**: Usa `accent` + texto blanco - acentos y elementos destacados
+6. **`muted`**: Solo grises neutros para fondos y elementos secundarios
+7. **`minimal`**: Transparente + `foreground` - estilo minimalista sin fondo
+8. **`custom`**: Vacío para personalización externa completa
+
+### Arquitectura de ColorSchemes Obligatoria
+
+**TODOS los componentes DEBEN implementar el objeto `colorSchemes` con las siguientes propiedades mínimas:**
+
+```typescript
+const colorSchemes = {
+  default: {
+    base: 'bg-card border-border', // Fondo neutro + borde sutil
+    text: 'text-card-foreground', // Texto principal
+    hover: 'hover:bg-muted/50', // Estado hover ligero
+    focus: 'focus:ring-ring/20', // Estado focus
+  },
+  primary: {
+    base: 'bg-primary border-primary', // Fondo primary sólido
+    text: 'text-white', // ← OBLIGATORIO: Texto blanco para contraste
+    hover: 'hover:bg-primary/80', // Hover más oscuro
+    focus: 'focus:ring-primary/20', // Focus ring primary
+  },
+  secondary: {
+    base: 'bg-secondary border-secondary', // Fondo secondary sólido
+    text: 'text-white', // ← OBLIGATORIO: Texto blanco para contraste
+    hover: 'hover:bg-secondary/80', // Hover más oscuro
+    focus: 'focus:ring-secondary/20', // Focus ring secondary
+  },
+  destructive: {
+    base: 'bg-destructive border-destructive', // Fondo destructive sólido
+    text: 'text-white', // ← OBLIGATORIO: Texto blanco para contraste
+    hover: 'hover:bg-destructive/80', // Hover más oscuro
+    focus: 'focus:ring-destructive/20', // Focus ring destructive
+  },
+  accent: {
+    base: 'bg-accent border-accent', // Fondo accent sólido
+    text: 'text-white', // ← OBLIGATORIO: Texto blanco para contraste
+    hover: 'hover:bg-accent/80', // Hover más oscuro
+    focus: 'focus:ring-accent/20', // Focus ring accent
+  },
+  muted: {
+    base: 'bg-muted border-muted', // Fondo muted sutil
+    text: 'text-muted-foreground', // Texto muted para legibilidad
+    hover: 'hover:bg-muted/80', // Hover más prominente
+    focus: 'focus:ring-muted/20', // Focus ring muted
+  },
+  minimal: {
+    base: 'bg-transparent border-transparent', // Sin fondo ni borde
+    text: 'text-foreground/70', // Texto sutil transparente
+    hover: 'hover:bg-foreground/10', // Hover muy ligero
+    focus: 'focus:ring-foreground/20', // Focus ring foreground
+  },
+  custom: {
+    base: '', // Vacío para personalización externa
+    text: '', // Vacío para personalización externa
+    hover: '', // Vacío para personalización externa
+    focus: '', // Vacío para personalización externa
+  },
+};
+```
+
+### Propiedades Adicionales por Tipo de Componente
+
+**Para componentes con contadores (Badge, Chip):**
+
+```typescript
+// Agregar propiedad counter en cada esquema
+primary: {
+  base: 'bg-primary border-primary',
+  text: 'text-white',
+  hover: 'hover:bg-primary/80',
+  focus: 'focus:ring-primary/20',
+  counter: 'bg-primary text-white',  // ← Contador con fondo sólido + texto blanco
+},
+```
+
+**Para componentes con múltiples estados (Accordion, Dropdown):**
+
+```typescript
+// Agregar propiedades de estado específicas
+default: {
+  base: 'bg-card border-border',
+  text: 'text-card-foreground',
+  hover: 'hover:bg-muted/50',
+  focus: 'focus:ring-ring/20',
+  active: 'bg-primary/10 text-primary',     // Estado activo/seleccionado
+  disabled: 'opacity-50',                   // Estado deshabilitado
+  chevron: 'text-muted-foreground',         // Iconos y chevrons
+},
+```
+
+**Para componentes de feedback (Tooltip, Badge):**
+
+```typescript
+// Agregar propiedades de presentación específicas
+primary: {
+  base: 'bg-primary border-primary',
+  text: 'text-white',
+  hover: 'hover:bg-primary/80',
+  focus: 'focus:ring-primary/20',
+  shadow: 'shadow-lg',                      // Sombra para destacar
+  border: 'border-primary/30',              // Borde sutil del mismo color
+},
+```
 
 ### Escalas de Claridad Obligatorias
 
@@ -190,6 +292,67 @@ const colorSchemes = {
   // ... otros esquemas siguiendo el mismo patrón
 };
 ```
+
+### Aplicación de ColorSchemes en Componentes
+
+**OBLIGATORIO: Usar la propiedad `text` explícitamente en el JSX:**
+
+```typescript
+// ✅ CORRECTO - Aplicar colorScheme.text explícitamente
+const Button = ({ $colorScheme = 'default', ...props }) => {
+  const currentColorScheme = colorSchemes[$colorScheme];
+
+  return (
+    <button
+      className={cn(
+        'base-button-classes',
+        currentColorScheme.base, // Fondo y borde
+        currentColorScheme.text, // ← OBLIGATORIO: Texto explícito
+        currentColorScheme.hover, // Estados hover
+        currentColorScheme.focus, // Estados focus
+        className
+      )}
+      {...props}
+    />
+  );
+};
+
+// ❌ INCORRECTO - No aplicar texto explícito
+const BadButton = ({ $colorScheme = 'default', ...props }) => {
+  const currentColorScheme = colorSchemes[$colorScheme];
+
+  return (
+    <button
+      className={cn(
+        'base-button-classes',
+        currentColorScheme.base, // Solo fondo, sin texto definido
+        className // Texto será inconsistente
+      )}
+      {...props}
+    />
+  );
+};
+```
+
+### Reglas de Contraste Obligatorias
+
+**Para fondos sólidos (`primary`, `secondary`, `destructive`, `accent`):**
+
+- ✅ **SIEMPRE** usar `text-white` para máximo contraste
+- ✅ **SIEMPRE** usar fondo sólido sin transparencia para legibilidad
+- ✅ **SIEMPRE** aplicar hover con `/80` para oscurecer el fondo
+
+**Para fondos sutiles (`default`, `muted`):**
+
+- ✅ **SIEMPRE** usar colores foreground apropiados (`text-card-foreground`, `text-muted-foreground`)
+- ✅ **SIEMPRE** usar fondos con transparencia para sutileza
+- ✅ **SIEMPRE** mantener contraste WCAG AA mínimo
+
+**Para fondos transparentes (`minimal`):**
+
+- ✅ **SIEMPRE** usar `text-foreground` con transparencia para sutileza
+- ✅ **SIEMPRE** usar `bg-transparent` o `bg-foreground/5` máximo
+- ✅ **SIEMPRE** aplicar hover muy ligero (`hover:bg-foreground/10`)
 
 ## 🏗️ Patrones de Desarrollo Obligatorios
 
@@ -451,6 +614,119 @@ export const WithGradients: Story = {
     </div>
   ),
 };
+
+export const ColorSchemes: Story = {
+  render: () => (
+    <div className="space-y-6">
+      <h4 className="text-lg font-semibold">Esquemas de Color theme.css</h4>
+
+      <div className="space-y-4">
+        <div>
+          <h5 className="text-sm font-medium mb-2 text-gray-700">Default</h5>
+          <div className="flex flex-wrap gap-2">
+            <ComponentName $colorScheme="default">Default</ComponentName>
+            <ComponentName $colorScheme="default" $size="sm">
+              Small
+            </ComponentName>
+            <ComponentName $colorScheme="default" $size="lg">
+              Large
+            </ComponentName>
+          </div>
+        </div>
+
+        <div>
+          <h5 className="text-sm font-medium mb-2 text-gray-700">Primary</h5>
+          <div className="flex flex-wrap gap-2">
+            <ComponentName $colorScheme="primary">Primary</ComponentName>
+            <ComponentName $colorScheme="primary" $size="sm">
+              Small
+            </ComponentName>
+            <ComponentName $colorScheme="primary" $size="lg">
+              Large
+            </ComponentName>
+          </div>
+        </div>
+
+        <div>
+          <h5 className="text-sm font-medium mb-2 text-gray-700">Secondary</h5>
+          <div className="flex flex-wrap gap-2">
+            <ComponentName $colorScheme="secondary">Secondary</ComponentName>
+            <ComponentName $colorScheme="secondary" $size="sm">
+              Small
+            </ComponentName>
+            <ComponentName $colorScheme="secondary" $size="lg">
+              Large
+            </ComponentName>
+          </div>
+        </div>
+
+        <div>
+          <h5 className="text-sm font-medium mb-2 text-gray-700">
+            Destructive
+          </h5>
+          <div className="flex flex-wrap gap-2">
+            <ComponentName $colorScheme="destructive">
+              Destructive
+            </ComponentName>
+            <ComponentName $colorScheme="destructive" $size="sm">
+              Small
+            </ComponentName>
+            <ComponentName $colorScheme="destructive" $size="lg">
+              Large
+            </ComponentName>
+          </div>
+        </div>
+
+        <div>
+          <h5 className="text-sm font-medium mb-2 text-gray-700">Accent</h5>
+          <div className="flex flex-wrap gap-2">
+            <ComponentName $colorScheme="accent">Accent</ComponentName>
+            <ComponentName $colorScheme="accent" $size="sm">
+              Small
+            </ComponentName>
+            <ComponentName $colorScheme="accent" $size="lg">
+              Large
+            </ComponentName>
+          </div>
+        </div>
+
+        <div>
+          <h5 className="text-sm font-medium mb-2 text-gray-700">Muted</h5>
+          <div className="flex flex-wrap gap-2">
+            <ComponentName $colorScheme="muted">Muted</ComponentName>
+            <ComponentName $colorScheme="muted" $size="sm">
+              Small
+            </ComponentName>
+            <ComponentName $colorScheme="muted" $size="lg">
+              Large
+            </ComponentName>
+          </div>
+        </div>
+
+        <div>
+          <h5 className="text-sm font-medium mb-2 text-gray-700">Minimal</h5>
+          <div className="flex flex-wrap gap-2">
+            <ComponentName $colorScheme="minimal">Minimal</ComponentName>
+            <ComponentName $colorScheme="minimal" $size="sm">
+              Small
+            </ComponentName>
+            <ComponentName $colorScheme="minimal" $size="lg">
+              Large
+            </ComponentName>
+          </div>
+        </div>
+      </div>
+
+      <div className="p-4 bg-gray-50 rounded-lg">
+        <p className="text-sm text-gray-600">
+          <strong>Esquemas de color theme.css:</strong> Estos esquemas utilizan
+          las variables CSS definidas en theme.css, proporcionando consistencia
+          visual y soporte para modo oscuro automático.
+        </p>
+      </div>
+    </div>
+  ),
+};
 ```
 
 ### Stories específicas para componentes con estado
@@ -533,6 +809,10 @@ const gradient = getGradient('ocean-deep');
 - [ ] Implementa `forwardRef` correctamente
 - [ ] Incluye `shadow-sm` por defecto en elementos interactivos
 - [ ] Soporta gradientes a través de `$custom` o props específicas
+- [ ] **Implementa objeto `colorSchemes` con 8 esquemas obligatorios** (default, primary, secondary, destructive, accent, muted, minimal, custom)
+- [ ] **Aplica propiedad `text` explícitamente en el JSX**
+- [ ] **Usa `text-white` en esquemas de fondo sólido** (primary, secondary, destructive, accent)
+- [ ] **Mantiene contraste WCAG AA en todos los esquemas**
 - [ ] Exporta tipos e interfaces
 - [ ] Incluye todas las stories obligatorias en Storybook
 - [ ] Categorizado correctamente en Atomic Design
@@ -547,6 +827,7 @@ const gradient = getGradient('ocean-deep');
 - [ ] Story `Default` básica
 - [ ] Story `Variants` mostrando todas las variantes
 - [ ] Story `Sizes` mostrando todos los tamaños
+- [ ] **Story `ColorSchemes` mostrando todos los 8 esquemas** (default, primary, secondary, destructive, accent, muted, minimal)
 - [ ] Story `WithGradients` demostrando gradientes
 - [ ] Story `WithStore` si usa Zustand
 - [ ] Story `WithSecurity` para componentes con validación
@@ -594,6 +875,9 @@ const gradient = getGradient('ocean-deep');
 10. **NO** usar colores que no estén en la paleta pastel definida
 11. **NO** crear CSS custom fuera del sistema de tokens `@theme`
 12. **NO** olvidar el prefijo `use` en hooks personalizados
+13. **NO** omitir el esquema `primary` en componentes con `$colorScheme`
+14. **NO** aplicar colores de texto sin usar la propiedad `text` del colorScheme
+15. **NO** usar fondos sólidos sin texto blanco para contraste
 
 ## 🔄 Flujo de Desarrollo
 
@@ -616,6 +900,9 @@ const gradient = getGradient('ocean-deep');
 - **Seguridad**: Validación automática integrada en todos los inputs
 - **Estado**: Patrón storeKey para mejor DX y tipado
 - **Escalabilidad**: Atomic Design estricto para crecimiento controlado
+- **ColorSchemes**: Todos los componentes deben implementar los 8 esquemas obligatorios
+- **Contraste**: Texto blanco obligatorio en fondos sólidos (primary, secondary, destructive, accent)
+- **Texto Explícito**: Siempre aplicar la propiedad `text` del colorScheme en el JSX
 
 ## 📄 Documentación
 

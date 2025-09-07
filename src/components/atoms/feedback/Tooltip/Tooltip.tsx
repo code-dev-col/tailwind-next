@@ -22,6 +22,7 @@ interface TooltipProps extends BaseProps {
   // Esquemas de color basados en theme.css
   $colorScheme?:
     | 'default'
+    | 'primary'
     | 'secondary'
     | 'destructive'
     | 'accent'
@@ -67,6 +68,12 @@ const colorSchemes = {
     text: 'text-card-foreground',
     border: 'border-border',
     shadow: 'shadow-md',
+  },
+  primary: {
+    background: 'bg-primary',
+    text: 'text-white',
+    border: 'border-primary/30',
+    shadow: 'shadow-lg',
   },
   secondary: {
     background: 'bg-secondary',
@@ -505,4 +512,3 @@ const TooltipGroup = React.forwardRef<HTMLDivElement, TooltipGroupProps>(
 TooltipGroup.displayName = 'TooltipGroup';
 
 export { Tooltip, TooltipGroup, type TooltipProps, type TooltipGroupProps };
-

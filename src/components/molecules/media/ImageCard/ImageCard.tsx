@@ -62,6 +62,10 @@ interface ImageCardProps<T extends Record<string, any> = any>
   enableHover?: boolean;
   loading?: boolean;
 
+  // Configuración avanzada de imagen
+  $imageOverflow?: 'none' | 'top' | 'all'; // Permite que la imagen sobresalga
+  $imageBgColor?: string; // Color de fondo personalizable para transparencias
+
   // Contenido adicional
   action?: React.ReactNode;
   footerContent?: React.ReactNode;
@@ -148,7 +152,7 @@ const badgePositions = {
 };
 
 const imageCardVariants = {
-  base: 'relative rounded-lg border overflow-hidden transition-all duration-300',
+  base: 'relative rounded-lg border transition-all duration-300',
   interactiveBase:
     'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
   variants: {
@@ -169,6 +173,60 @@ const imageCardVariants = {
     size: 'default' as const,
     variant: 'default' as const,
   },
+};
+
+// Funciones auxiliares para overflow y fondo de imagen
+const getMainContainerClasses = (overflow: 'none' | 'top' | 'all') => {
+  switch (overflow) {
+    case 'top':
+      return 'pt-6'; // Más espacio superior para imagen escalada 3%
+    case 'all':
+      return 'py-6'; // Solo espacio vertical, la imagen se centra automáticamente
+    default:
+      return '';
+  }
+};
+
+const getImageOverflowClasses = (overflow: 'none' | 'top' | 'all') => {
+  switch (overflow) {
+    case 'top':
+      return '-mt-6 mb-2 rounded-t-xl overflow-hidden relative z-10 scale-[1.03] bg-transparent';
+    case 'all':
+      return '-my-6 rounded-xl overflow-hidden relative z-10 scale-110 bg-transparent';
+    default:
+      return '';
+  }
+};
+
+const getContentSpacing = (
+  overflow: 'none' | 'top' | 'all',
+  variant: 'default' | 'compact' | 'detailed' | 'overlay'
+) => {
+  const baseSpacing =
+    variant === 'compact' ? 'p-3' : variant === 'detailed' ? 'p-6' : 'p-4';
+
+  switch (overflow) {
+    case 'all':
+      // Más espacio superior para evitar que la imagen tape el texto
+      return variant === 'compact'
+        ? 'pt-10 px-3 pb-3'
+        : variant === 'detailed'
+        ? 'pt-12 px-6 pb-6'
+        : 'pt-10 px-4 pb-4';
+    default:
+      return baseSpacing;
+  }
+};
+
+const getImageContainerClasses = (
+  overflow: 'none' | 'top' | 'all',
+  bgColor?: string
+) => {
+  const overflowClasses = overflow !== 'none' ? 'relative' : 'relative';
+  // Solo aplicar fondo si se especifica explícitamente
+  const bgClasses = bgColor ? '' : '';
+
+  return cn(overflowClasses, bgClasses);
 };
 
 const ImageCard = React.forwardRef<HTMLDivElement, ImageCardProps>(
@@ -195,6 +253,8 @@ const ImageCard = React.forwardRef<HTMLDivElement, ImageCardProps>(
       showDivider = true,
       enableHover = true,
       loading = false,
+      $imageOverflow = 'none',
+      $imageBgColor,
       action,
       footerContent,
       onClick,
@@ -214,155 +274,191 @@ const ImageCard = React.forwardRef<HTMLDivElement, ImageCardProps>(
     // Determinar si es interactivo
     const isInteractive = onClick !== undefined;
 
+    // Debug temporal para verificar valores
+    if (process.env.NODE_ENV === 'development' && $imageOverflow !== 'none') {
+      console.log('🔍 ImageCard overflow config:', {
+        $imageOverflow,
+        $imageBgColor,
+        willBeTransparent: !$imageBgColor,
+        src,
+      });
+    }
+
     return (
-      <Container
-        ref={ref}
+      <div
         className={cn(
-          imageCardVariants.base,
-          currentColorScheme.container,
-          imageCardVariants.variants.size[$size],
-          imageCardVariants.variants.variant[$variant],
-          enableHover && currentColorScheme.hover,
-          isInteractive && 'cursor-pointer',
-          isInteractive && imageCardVariants.interactiveBase,
-          isInteractive && currentColorScheme.focus,
-          className,
-          $custom
-        )}
-        onClick={isInteractive ? onClick : undefined}
-        role={isInteractive ? 'button' : undefined}
-        tabIndex={isInteractive ? 0 : undefined}
-        {...props}>
-        {/* Contenedor de Imagen */}
+          'relative', // Contenedor wrapper para permitir overflow
+          getMainContainerClasses($imageOverflow)
+        )}>
         <Container
+          ref={ref}
           className={cn(
-            'relative',
-            // Altura mínima para el estado de loading
-            loading && 'min-h-48',
-            $size === 'sm' && loading && 'min-h-32',
-            $size === 'lg' && loading && 'min-h-64'
-          )}>
-          {/* Imagen Principal */}
-          <Image
-            src={src}
-            alt={alt}
-            $aspect={$aspect}
-            $objectFit={$objectFit}
-            $objectPosition={$objectPosition}
-            $variant={$variant === 'overlay' ? 'default' : 'default'}
-            className={cn(
-              'w-full',
-              // Cuando está en loading, asegurar que ocupe toda la altura
-              loading && 'h-full',
-              $variant === 'overlay' && 'group-hover:scale-105'
-            )}
-            $showSkeleton={loading}
-            onImageLoad={onImageLoad}
-            onImageError={onImageError}
-          />
-
-          {/* Badge opcional */}
-          {showBadge && badgeText && (
-            <Container
-              className={cn('absolute z-10', badgePositions[badgePosition])}>
-              <Badge
-                $colorScheme={
-                  $colorScheme === 'primary' ? 'accent' : $colorScheme
-                }
-                $size="sm"
-                className="shadow-sm">
-                {badgeText}
-              </Badge>
-            </Container>
+            imageCardVariants.base,
+            currentColorScheme.container,
+            imageCardVariants.variants.size[$size],
+            imageCardVariants.variants.variant[$variant],
+            enableHover && currentColorScheme.hover,
+            isInteractive && 'cursor-pointer',
+            isInteractive && imageCardVariants.interactiveBase,
+            isInteractive && currentColorScheme.focus,
+            // Aplicar overflow condicionalmente
+            $imageOverflow === 'none' ? 'overflow-hidden' : 'overflow-visible',
+            className,
+            $custom
           )}
-
-          {/* Overlay con efecto hover para variante overlay */}
-          {($variant === 'overlay' || showOverlay) && (
-            <Container
+          onClick={isInteractive ? onClick : undefined}
+          role={isInteractive ? 'button' : undefined}
+          tabIndex={isInteractive ? 0 : undefined}
+          {...props}>
+          {/* Contenedor de Imagen */}
+          <Container
+            className={cn(
+              getImageContainerClasses($imageOverflow, $imageBgColor),
+              // Altura mínima para el estado de loading
+              loading && 'min-h-48',
+              $size === 'sm' && loading && 'min-h-32',
+              $size === 'lg' && loading && 'min-h-64',
+              // Asegurar transparencia cuando sea necesario
+              !$imageBgColor && $imageOverflow !== 'none' && 'bg-transparent'
+            )}
+            style={
+              $imageBgColor
+                ? {
+                    backgroundColor: $imageBgColor,
+                  }
+                : undefined
+            }>
+            {/* Imagen Principal */}
+            <Image
+              src={src}
+              alt={alt}
+              $aspect={$aspect}
+              $objectFit={$objectFit}
+              $objectPosition={$objectPosition}
+              $variant={
+                $imageOverflow !== 'none'
+                  ? 'overflow'
+                  : $variant === 'overlay'
+                  ? 'default'
+                  : 'default'
+              }
               className={cn(
-                'absolute inset-0 flex flex-col justify-end p-4',
-                $variant === 'overlay'
-                  ? 'opacity-0 group-hover:opacity-100'
-                  : 'bg-gradient-to-t from-black/70 to-transparent',
-                'transition-opacity duration-300'
-              )}>
+                'w-full transition-transform duration-300',
+                // Cuando está en loading, asegurar que ocupe toda la altura
+                loading && 'h-full',
+                $variant === 'overlay' && 'group-hover:scale-105',
+                // Aplicar clases de overflow
+                getImageOverflowClasses($imageOverflow)
+              )}
+              $showSkeleton={loading}
+              $transparent={!$imageBgColor && $imageOverflow !== 'none'}
+              onImageLoad={onImageLoad}
+              onImageError={onImageError}
+            />
+
+            {/* Badge opcional */}
+            {showBadge && badgeText && (
+              <Container
+                className={cn('absolute z-10', badgePositions[badgePosition])}>
+                <Badge
+                  $colorScheme={
+                    $colorScheme === 'primary' ? 'accent' : $colorScheme
+                  }
+                  $size="sm"
+                  className="shadow-sm">
+                  {badgeText}
+                </Badge>
+              </Container>
+            )}
+
+            {/* Overlay con efecto hover para variante overlay */}
+            {($variant === 'overlay' || showOverlay) && (
+              <Container
+                className={cn(
+                  'absolute inset-0 flex flex-col justify-end p-4',
+                  $variant === 'overlay'
+                    ? 'opacity-0 group-hover:opacity-100'
+                    : 'bg-gradient-to-t from-black/70 to-transparent',
+                  'transition-opacity duration-300'
+                )}>
+                {title && (
+                  <Text
+                    $size={
+                      $size === 'sm' ? 'base' : $size === 'lg' ? 'lg' : 'base'
+                    }
+                    $weight="semibold"
+                    className="text-white mb-1">
+                    {title}
+                  </Text>
+                )}
+
+                {description && (
+                  <Text $size="sm" className="text-white/90 line-clamp-2">
+                    {description}
+                  </Text>
+                )}
+              </Container>
+            )}
+          </Container>
+
+          {/* Contenido de texto (solo para variantes que no son overlay) */}
+          {$variant !== 'overlay' && (title || description) && (
+            <Container
+              className={cn(getContentSpacing($imageOverflow, $variant))}>
+              {/* Título */}
               {title && (
                 <Text
                   $size={
                     $size === 'sm' ? 'base' : $size === 'lg' ? 'lg' : 'base'
                   }
                   $weight="semibold"
-                  className="text-white mb-1">
+                  className={cn(currentColorScheme.text, 'line-clamp-2 mb-1')}>
                   {title}
                 </Text>
               )}
 
+              {/* Descripción */}
               {description && (
-                <Text $size="sm" className="text-white/90 line-clamp-2">
+                <Text
+                  $size={$size === 'sm' ? 'xs' : 'sm'}
+                  className={cn(
+                    currentColorScheme.textSecondary,
+                    $variant === 'detailed' ? 'line-clamp-3' : 'line-clamp-2'
+                  )}>
                   {description}
                 </Text>
               )}
             </Container>
           )}
+
+          {/* Separador opcional */}
+          {showDivider &&
+            (title || description) &&
+            (action || footerContent) && (
+              <Divider className="" $colorScheme="muted" />
+            )}
+
+          {/* Contenido del footer (botones, acciones, etc.) */}
+          {(action || footerContent) && (
+            <Container
+              className={cn(
+                'p-4',
+                $variant === 'compact' && 'p-3',
+                $variant === 'detailed' && 'p-6'
+              )}>
+              {action}
+              {footerContent}
+            </Container>
+          )}
+
+          {/* Para debug: mostrar valor del store */}
+          {process.env.NODE_ENV === 'development' && storeValue && (
+            <Container className="absolute bottom-0 right-0 p-1 bg-black/80 text-white text-xs rounded-tl">
+              {String(storeValue)}
+            </Container>
+          )}
         </Container>
-
-        {/* Contenido de texto (solo para variantes que no son overlay) */}
-        {$variant !== 'overlay' && (title || description) && (
-          <Container
-            className={cn(
-              'p-4',
-              $variant === 'compact' && 'p-3',
-              $variant === 'detailed' && 'p-6'
-            )}>
-            {/* Título */}
-            {title && (
-              <Text
-                $size={$size === 'sm' ? 'base' : $size === 'lg' ? 'lg' : 'base'}
-                $weight="semibold"
-                className={cn(currentColorScheme.text, 'line-clamp-2 mb-1')}>
-                {title}
-              </Text>
-            )}
-
-            {/* Descripción */}
-            {description && (
-              <Text
-                $size={$size === 'sm' ? 'xs' : 'sm'}
-                className={cn(
-                  currentColorScheme.textSecondary,
-                  $variant === 'detailed' ? 'line-clamp-3' : 'line-clamp-2'
-                )}>
-                {description}
-              </Text>
-            )}
-          </Container>
-        )}
-
-        {/* Separador opcional */}
-        {showDivider && (title || description) && (action || footerContent) && (
-          <Divider className="" $colorScheme="muted" />
-        )}
-
-        {/* Contenido del footer (botones, acciones, etc.) */}
-        {(action || footerContent) && (
-          <Container
-            className={cn(
-              'p-4',
-              $variant === 'compact' && 'p-3',
-              $variant === 'detailed' && 'p-6'
-            )}>
-            {action}
-            {footerContent}
-          </Container>
-        )}
-
-        {/* Para debug: mostrar valor del store */}
-        {process.env.NODE_ENV === 'development' && storeValue && (
-          <Container className="absolute bottom-0 right-0 p-1 bg-black/80 text-white text-xs rounded-tl">
-            {String(storeValue)}
-          </Container>
-        )}
-      </Container>
+      </div>
     );
   }
 );

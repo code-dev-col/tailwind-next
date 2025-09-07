@@ -26,6 +26,8 @@ const sampleImages = {
     'https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=500',
   architecture:
     'https://images.unsplash.com/photo-1511818966892-d7d671e672a2?ixlib=rb-4.0.3&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=500',
+  // Imagen local para ejemplos de overflow
+  example: '/src/assets/image-example.png',
 };
 
 // Historia predeterminada
@@ -649,6 +651,340 @@ export const WithGradients: Story = {
   ),
 };
 
+// Demostración visual del overflow real
+export const OverflowDemo: Story = {
+  render: () => (
+    <div className="space-y-8">
+      <div>
+        <h4 className="text-lg font-semibold mb-4">
+          Demostración Visual del Overflow Real
+        </h4>
+        <p className="text-sm text-muted-foreground mb-6">
+          Observa cómo la imagen sobresale realmente del contenedor de la
+          tarjeta. Las líneas punteadas muestran los límites del contenedor
+          padre.
+        </p>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {/* Sin overflow - contenedor con línea punteada */}
+          <div className="border-2 border-dashed border-gray-300 p-4 rounded-lg">
+            <div className="text-center mb-2">
+              <span className="text-xs font-medium text-gray-600">
+                Área del contenedor padre
+              </span>
+            </div>
+            <ImageCard
+              src={sampleImages.example}
+              alt="Sin overflow"
+              title="Sin Overflow"
+              description="La imagen está contenida dentro del borde"
+              $imageOverflow="none"
+              $size="default"
+              showBadge
+              badgeText="Normal"
+            />
+          </div>
+
+          {/* Overflow superior - contenedor con línea punteada */}
+          <div className="border-2 border-dashed border-blue-300 p-4 rounded-lg">
+            <div className="text-center mb-2">
+              <span className="text-xs font-medium text-blue-600">
+                Área del contenedor padre
+              </span>
+            </div>
+            <ImageCard
+              src={sampleImages.example}
+              alt="Overflow superior"
+              title="Overflow Superior"
+              description="La imagen sobresale por arriba del borde"
+              $imageOverflow="top"
+              $imageBgColor="#dbeafe"
+              $size="default"
+              showBadge
+              badgeText="Top"
+              badgePosition="top-right"
+            />
+          </div>
+
+          {/* Overflow completo - contenedor con línea punteada */}
+          <div className="border-2 border-dashed border-red-300 p-4 rounded-lg">
+            <div className="text-center mb-2">
+              <span className="text-xs font-medium text-red-600">
+                Área del contenedor padre
+              </span>
+            </div>
+            <ImageCard
+              src={sampleImages.example}
+              alt="Overflow completo"
+              title="Overflow Completo"
+              description="La imagen sobresale por todos lados del borde"
+              $imageOverflow="all"
+              $imageBgColor="#fee2e2"
+              $size="default"
+              showBadge
+              badgeText="All"
+              badgePosition="top-left"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className="p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+        <h5 className="font-medium text-yellow-900 mb-2">
+          🔍 Observa el Comportamiento
+        </h5>
+        <ul className="text-sm text-yellow-800 space-y-1">
+          <li>
+            • <strong>Sin overflow:</strong> La imagen respeta los límites del
+            contenedor
+          </li>
+          <li>
+            • <strong>Overflow superior:</strong> La imagen sobresale por arriba
+            y se <strong>escala 3%</strong>
+          </li>
+          <li>
+            • <strong>Overflow completo:</strong> La imagen sobresale por todos
+            lados y se <strong>escala 10%</strong>
+          </li>
+          <li>
+            • Las líneas punteadas representan el contenedor padre que incluye
+            la tarjeta
+          </li>
+          <li>
+            • ✨ <strong>Nuevo:</strong> Escalado automático para mejor efecto
+            visual
+          </li>
+        </ul>
+      </div>
+    </div>
+  ),
+};
+
+// Configuración avanzada de imagen con overflow y fondo personalizable
+export const AdvancedImageConfig: Story = {
+  render: () => (
+    <div className="space-y-8">
+      <div>
+        <h4 className="text-lg font-semibold mb-4">
+          Imagen con overflow y fondo personalizable
+        </h4>
+        <p className="text-sm text-muted-foreground mb-6">
+          Ideal para productos con transparencia que necesitan un fondo de color
+          específico y que sobresalgan visualmente de la tarjeta.
+        </p>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* Sin overflow */}
+          <div className="space-y-2">
+            <h5 className="text-sm font-medium text-center">Sin overflow</h5>
+            <ImageCard
+              src={sampleImages.example}
+              alt="Sin overflow"
+              title="Producto Normal"
+              description="Imagen sin overflow ni fondo personalizado"
+              $imageOverflow="none"
+              $size="default"
+              showBadge
+              badgeText="Normal"
+            />
+          </div>
+
+          {/* Overflow solo en la parte superior */}
+          <div className="space-y-2">
+            <h5 className="text-sm font-medium text-center">
+              Overflow superior
+            </h5>
+            <ImageCard
+              src={sampleImages.example}
+              alt="Overflow superior"
+              title="Producto Destacado"
+              description="Imagen sobresale por arriba"
+              $imageOverflow="top"
+              $imageBgColor="#f0f9ff"
+              $size="default"
+              showBadge
+              badgeText="Top"
+              badgePosition="top-right"
+            />
+          </div>
+
+          {/* Overflow completo */}
+          <div className="space-y-2">
+            <h5 className="text-sm font-medium text-center">
+              Overflow completo
+            </h5>
+            <ImageCard
+              src={sampleImages.example}
+              alt="Overflow completo"
+              title="Producto Premium"
+              description="Imagen sobresale completamente"
+              $imageOverflow="all"
+              $imageBgColor="#fef2f2"
+              $size="default"
+              showBadge
+              badgeText="Premium"
+              badgePosition="top-left"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h4 className="text-lg font-semibold mb-4">
+          Casos de uso con transparencia
+        </h4>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Ejemplo con fondo colorido para producto con transparencia */}
+          <ImageCard
+            src={sampleImages.example}
+            alt="Producto con transparencia"
+            title="Producto Gaming"
+            description="Imagen PNG con transparencia sobre fondo personalizado"
+            $imageOverflow="top"
+            $imageBgColor="#0f172a"
+            $colorScheme="primary"
+            showBadge
+            badgeText="Gaming"
+            badgePosition="bottom-right"
+          />
+
+          {/* Ejemplo con gradiente de fondo */}
+          <div
+            style={{
+              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+            }}
+            className="p-6 rounded-lg">
+            <ImageCard
+              src={sampleImages.example}
+              alt="Producto premium"
+              title="Producto Premium"
+              description="Con overflow completo y fondo dorado"
+              $imageOverflow="all"
+              $imageBgColor="#fbbf24"
+              $colorScheme="minimal"
+              showBadge
+              badgeText="Premium"
+              badgePosition="top-right"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  ),
+};
+
+// Configuración interactiva con store
+export const InteractiveAdvanced: Story = {
+  render: () => {
+    const {
+      advancedImageOverflow,
+      advancedImageBgColor,
+      overflowExample,
+      setAdvancedImageOverflow,
+      setAdvancedImageBgColor,
+      setOverflowExample,
+      clearAllImageCard,
+    } = useImageCardExamples();
+
+    return (
+      <div className="space-y-6">
+        <div>
+          <h4 className="text-lg font-semibold mb-4">
+            Configuración Interactiva Avanzada
+          </h4>
+
+          {/* Controles */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 p-4 bg-muted/20 rounded-lg">
+            <div>
+              <label className="block text-sm font-medium mb-2">
+                Overflow de imagen:
+              </label>
+              <select
+                value={advancedImageOverflow}
+                onChange={(e) =>
+                  setAdvancedImageOverflow(
+                    e.target.value as 'none' | 'top' | 'all'
+                  )
+                }
+                className="w-full p-2 border rounded">
+                <option value="none">Sin overflow</option>
+                <option value="top">Overflow superior</option>
+                <option value="all">Overflow completo</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium mb-2">
+                Color de fondo:
+              </label>
+              <input
+                type="color"
+                value={advancedImageBgColor}
+                onChange={(e) => setAdvancedImageBgColor(e.target.value)}
+                className="w-full h-10 rounded border"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium mb-2">
+                Texto del ejemplo:
+              </label>
+              <input
+                type="text"
+                value={overflowExample}
+                onChange={(e) => setOverflowExample(e.target.value)}
+                placeholder="Ingresa texto..."
+                className="w-full p-2 border rounded"
+              />
+            </div>
+          </div>
+
+          {/* Vista previa */}
+          <div className="border rounded-lg p-6 bg-white">
+            <ImageCard
+              src={sampleImages.example}
+              alt="Configuración avanzada"
+              title="Producto Configurado"
+              description={
+                overflowExample || 'Configura el overflow y fondo de la imagen'
+              }
+              $imageOverflow={advancedImageOverflow}
+              $imageBgColor={advancedImageBgColor}
+              showBadge
+              badgeText="Configurable"
+              badgePosition="top-right"
+              $colorScheme="primary"
+            />
+          </div>
+
+          <div className="mt-4">
+            <Button
+              onClick={clearAllImageCard}
+              $colorScheme="outline"
+              $size="sm">
+              Limpiar configuración
+            </Button>
+          </div>
+        </div>
+
+        <div className="p-4 bg-blue-50 rounded-lg">
+          <h5 className="font-medium text-blue-900 mb-2">
+            💡 Tip de Implementación
+          </h5>
+          <p className="text-sm text-blue-700">
+            <strong>Overflow:</strong> Usa <code>$imageOverflow="top"</code>{' '}
+            para productos destacados que necesiten sobresalir visualmente.
+            <br />
+            <strong>Fondo personalizable:</strong> Usa{' '}
+            <code>$imageBgColor="#color"</code> para productos con transparencia
+            que necesiten un fondo específico de marca.
+          </p>
+        </div>
+      </div>
+    );
+  },
+};
+
 // Ejemplo de loading
 export const LoadingState: Story = {
   render: () => (
@@ -668,6 +1004,113 @@ export const LoadingState: Story = {
         description="Estado normal"
         loading={false}
       />
+    </div>
+  ),
+};
+
+// Demostración del Escalado Visual
+export const ScalingDemo: Story = {
+  render: () => (
+    <div className="space-y-8">
+      <div className="text-center space-y-2">
+        <h3 className="text-xl font-bold">
+          🎯 Demostración del Escalado Visual
+        </h3>
+        <p className="text-muted-foreground">
+          Observa cómo las imágenes se agrandan cuando tienen overflow activado
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {/* Sin overflow - tamaño normal */}
+        <div className="space-y-4">
+          <h4 className="text-center font-semibold text-green-700">
+            📏 Normal (100%)
+          </h4>
+          <div className="border-2 border-dashed border-green-300 p-6 bg-green-50">
+            <ImageCard
+              src={sampleImages.tech}
+              alt="Tecnología normal"
+              title="Sin Overflow"
+              description="Imagen en tamaño normal"
+              $size="sm"
+              $imageOverflow="none"
+            />
+          </div>
+          <p className="text-sm text-green-600 text-center">
+            La imagen mantiene su tamaño original
+          </p>
+        </div>
+
+        {/* Overflow superior - escalado 3% */}
+        <div className="space-y-4">
+          <h4 className="text-center font-semibold text-blue-700">
+            📈 Superior (103%)
+          </h4>
+          <div className="border-2 border-dashed border-blue-300 p-6 bg-blue-50">
+            <ImageCard
+              src={sampleImages.tech}
+              alt="Tecnología overflow superior"
+              title="Overflow Top"
+              description="Imagen escalada 3%"
+              $size="sm"
+              $imageOverflow="top"
+            />
+          </div>
+          <p className="text-sm text-blue-600 text-center">
+            La imagen se agranda un 3% y sobresale por arriba
+          </p>
+        </div>
+
+        {/* Overflow completo - escalado 10% */}
+        <div className="space-y-4">
+          <h4 className="text-center font-semibold text-purple-700">
+            🚀 Completo (110%)
+          </h4>
+          <div className="border-2 border-dashed border-purple-300 p-6 bg-purple-50">
+            <ImageCard
+              src={sampleImages.tech}
+              alt="Tecnología overflow completo"
+              title="Overflow All"
+              description="Imagen escalada 10%"
+              $size="sm"
+              $imageOverflow="all"
+            />
+          </div>
+          <p className="text-sm text-purple-600 text-center">
+            La imagen se agranda un 10% y sobresale por arriba/abajo, con
+            espaciado optimizado del texto
+          </p>
+        </div>
+      </div>
+
+      <div className="bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-lg p-6">
+        <h5 className="font-semibold text-blue-900 mb-3 flex items-center gap-2">
+          <span>💡</span> Efecto Visual Mejorado
+        </h5>
+        <div className="space-y-2 text-sm text-blue-800">
+          <p>
+            <strong>¿Por qué escalamos las imágenes?</strong> El escalado hace
+            que el overflow sea más evidente y atractivo visualmente, creando un
+            efecto de "zoom" que llama la atención.
+          </p>
+          <p>
+            <strong>Escalado inteligente:</strong> El overflow superior usa un
+            escalado sutil (3%) mientras que el overflow completo usa un
+            escalado más prominente (10%).
+          </p>
+          <p>
+            <strong>Transiciones suaves:</strong> El escalado incluye
+            transiciones CSS para cambios fluidos entre estados.
+          </p>
+          <p>
+            <strong>✨ Mejoras recientes:</strong> Eliminados shadows/borders
+            automáticamente, corregida dirección del overflow superior, centrado
+            perfecto para overflow completo, y espaciado inteligente del
+            contenido de texto.
+          </p>
+        </div>
+      </div>
     </div>
   ),
 };

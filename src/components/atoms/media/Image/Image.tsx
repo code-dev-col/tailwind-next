@@ -75,7 +75,13 @@ interface ImageProps
   /**
    * Variante visual del contenedor
    */
-  $variant?: 'default' | 'rounded' | 'circle' | 'square' | 'bordered';
+  $variant?:
+    | 'default'
+    | 'rounded'
+    | 'circle'
+    | 'square'
+    | 'bordered'
+    | 'overflow';
 
   /**
    * Tamaño predefinido
@@ -113,6 +119,11 @@ interface ImageProps
   $custom?: string;
 
   /**
+   * Si debe tener fondo transparente (sin bg-muted)
+   */
+  $transparent?: boolean;
+
+  /**
    * Callback cuando la imagen carga exitosamente
    */
   onImageLoad?: () => void;
@@ -133,6 +144,7 @@ const imageVariants = {
       circle: 'rounded-full shadow-md',
       square: 'rounded-none shadow-sm',
       bordered: 'rounded-md border-2 border-border shadow-sm',
+      overflow: 'rounded-none', // Sin shadow ni border para overflow
     },
 
     size: {
@@ -251,6 +263,7 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
       $useNextImage = true,
       $nextProps = {},
       $custom,
+      $transparent = false,
       onImageLoad,
       onImageError,
       style,
@@ -265,6 +278,15 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
     const NextImage = detectNextImage();
     const shouldUseNextImage = $useNextImage && NextImage && !hasError;
 
+    // Debug temporal para verificar $transparent
+    if (process.env.NODE_ENV === 'development' && $transparent) {
+      console.log('🔍 Image with $transparent=true:', {
+        src,
+        $transparent,
+        alt,
+      });
+    }
+
     // Clases del contenedor
     const containerClasses = cn(
       imageVariants.base,
@@ -272,7 +294,9 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
       $size && imageVariants.variants.size[$size],
       $aspect !== 'auto' && imageVariants.variants.aspect[$aspect],
       $fill && imageVariants.variants.fill.true,
-      'relative overflow-hidden bg-muted',
+      'relative overflow-hidden',
+      // Aplicar bg-muted solo si no es transparente
+      !$transparent && 'bg-muted',
       className,
       $custom
     );

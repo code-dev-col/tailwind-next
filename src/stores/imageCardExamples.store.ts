@@ -53,6 +53,11 @@ export interface ImageCardExamplesState {
   showOverlay: boolean;
   enableHover: boolean;
 
+  // Configuración avanzada de imagen
+  advancedImageOverflow: 'none' | 'top' | 'all';
+  advancedImageBgColor: string;
+  overflowExample: string;
+
   // Setters para configuración dinámica
   setDynamicTitle: (value: string) => void;
   setDynamicDescription: (value: string) => void;
@@ -62,6 +67,11 @@ export interface ImageCardExamplesState {
   setShowBadge: (value: boolean) => void;
   setShowOverlay: (value: boolean) => void;
   setEnableHover: (value: boolean) => void;
+
+  // Setters para configuración avanzada
+  setAdvancedImageOverflow: (value: 'none' | 'top' | 'all') => void;
+  setAdvancedImageBgColor: (value: string) => void;
+  setOverflowExample: (value: string) => void;
 
   // Utilidad de limpieza
   clearAllImageCard: () => void;
@@ -101,6 +111,11 @@ export const useImageCardExamples = create<ImageCardExamplesState>((set) => ({
   showOverlay: true,
   enableHover: true,
 
+  // Configuración avanzada inicial
+  advancedImageOverflow: 'none',
+  advancedImageBgColor: '#ffffff',
+  overflowExample: '',
+
   // Setters para ejemplos
   setDefaultExample: (value: string) => set({ defaultExample: value }),
   setVariantExample: (value: string) => set({ variantExample: value }),
@@ -133,6 +148,13 @@ export const useImageCardExamples = create<ImageCardExamplesState>((set) => ({
   setShowOverlay: (value: boolean) => set({ showOverlay: value }),
   setEnableHover: (value: boolean) => set({ enableHover: value }),
 
+  // Setters para configuración avanzada
+  setAdvancedImageOverflow: (value: 'none' | 'top' | 'all') =>
+    set({ advancedImageOverflow: value }),
+  setAdvancedImageBgColor: (value: string) =>
+    set({ advancedImageBgColor: value }),
+  setOverflowExample: (value: string) => set({ overflowExample: value }),
+
   // Limpieza completa
   clearAllImageCard: () =>
     set({
@@ -163,6 +185,9 @@ export const useImageCardExamples = create<ImageCardExamplesState>((set) => ({
       showBadge: true,
       showOverlay: true,
       enableHover: true,
+      advancedImageOverflow: 'none',
+      advancedImageBgColor: '#ffffff',
+      overflowExample: '',
     }),
 }));
 

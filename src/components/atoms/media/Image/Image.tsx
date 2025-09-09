@@ -18,6 +18,7 @@ interface NextImageProps {
   loader?: (props: { src: string; width: number; quality?: number }) => string;
   onLoad?: () => void;
   onError?: () => void;
+  className?: string; // Permitir className
 }
 
 interface ImageProps
@@ -306,7 +307,7 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
       'w-full h-full transition-opacity duration-300',
       imageVariants.variants.objectFit[$objectFit],
       imageVariants.variants.objectPosition[$objectPosition],
-      isLoading && shouldUseNextImage ? 'opacity-0' : 'opacity-100'
+      isLoading ? 'opacity-0' : 'opacity-100'
     );
 
     // Handlers
@@ -340,7 +341,7 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
 
       // Usar Next.js Image
       if (shouldUseNextImage) {
-        const nextImageProps = {
+        const nextImageProps: NextImageProps = {
           src,
           alt,
           width: width || ($fill ? undefined : 400),

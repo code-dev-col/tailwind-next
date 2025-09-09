@@ -56,6 +56,10 @@ export {
 } from './components/atoms/media/ListItem';
 export { Link, type LinkProps } from './components/atoms/navigation/Link';
 export {
+  GalleryItem,
+  type GalleryItemProps,
+} from './components/molecules/media/GalleryItem';
+export {
   Image,
   type ImageProps,
   type NextImageProps,

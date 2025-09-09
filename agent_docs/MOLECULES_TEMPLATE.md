@@ -31,7 +31,7 @@ src/components/molecules/
 │   └── GalleryItem/    # Imagen + overlay + acciones
 └── display/            # 🔹 Presentación de información
     ├── UnorderedList/  # ✅ Ya existe - Lista estructurada con ListItems
-    ├── InfoSection/    # Título + descripción + datos
+    ├── InfoSection/    # ✅ Ya existe - Título + descripción + datos
     ├── HeaderSection/  # Título + subtítulo + acciones
     └── DataRow/        # Label + valor + acciones opcionales
 ```

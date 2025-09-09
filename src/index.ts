@@ -131,6 +131,11 @@ export {
   type UnorderedListProps,
 } from './components/molecules/display/UnorderedList';
 export {
+  InfoSection,
+  type InfoSectionProps,
+  type DataItem,
+} from './components/molecules/display/InfoSection';
+export {
   FormField,
   type FormFieldProps,
 } from './components/molecules/forms/FormField';
